@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerGenre">
+        <item>종합 베스트셀러</item>
+        <item>시/소설/수필</item>
+    </string-array>
+</resources>
