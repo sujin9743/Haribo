@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -12,6 +13,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_toolbar"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
     
     <TextView
-        android:id="@+id/idTxt"
+        android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -42,28 +50,167 @@
         android:text="*"
         android:textSize="20sp"
         android:textColor="#285A25"
-        app:layout_constraintLeft_toRightOf="@id/idTxt"
+        app:layout_constraintLeft_toRightOf="@id/id"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/idEtxt"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
         android:layout_marginTop="145dp"
         android:layout_marginLeft="50dp"
-        android:ems="8"
+        android:textSize="15sp"
+        android:textStyle="bold"
         android:background="@drawable/edit_box_line"
-        app:layout_constraintLeft_toRightOf="@id/idTxt"
+        app:layout_constraintLeft_toRightOf="@id/id"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:id="@+id/idCkBtn"
+        android:layout_width="80dp"
+        android:layout_height="43dp"
         android:layout_marginTop="140dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="33dp"
         android:text="중복확인"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
-        
+
+    <TextView
+        android:id="@+id/idCkTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="122dp"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idEtxt"/>
+
+    <TextView
+        android:id="@+id/pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:text="비밀번호"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/idCkTxt"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="*"
+        android:textSize="20sp"
+        android:textColor="#285A25"
+        app:layout_constraintLeft_toRightOf="@id/pw"
+        app:layout_constraintTop_toBottomOf="@id/idCkTxt" />
+
+    <EditText
+        android:id="@+id/pwEtxt"
+        android:layout_width="255dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="37dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:password="true"
+        android:background="@drawable/edit_box_line"
+        app:layout_constraintLeft_toRightOf="@id/pw"
+        app:layout_constraintTop_toBottomOf="@id/idCkTxt"/>
+
+    <TextView
+        android:id="@+id/pwCkTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="122dp"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pwEtxt"/>
+
+    <TextView
+        android:id="@+id/pwCk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="30dp"
+        android:text="비밀번호\n확인"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/pwCkTxt"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="23dp"
+        android:text="*"
+        android:textSize="20sp"
+        android:textColor="#285A25"
+        app:layout_constraintLeft_toRightOf="@id/pwCk"
+        app:layout_constraintTop_toBottomOf="@id/pwCkTxt" />
+
+    <EditText
+        android:id="@+id/pwCkEtxt"
+        android:layout_width="255dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="33dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:password="true"
+        android:background="@drawable/edit_box_line"
+        app:layout_constraintLeft_toRightOf="@id/pwCk"
+        app:layout_constraintTop_toBottomOf="@id/pwCkTxt"/>
+
+    <TextView
+        android:id="@+id/pwReCkTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="122dp"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pwCkEtxt"/>
+
+    <TextView
+        android:id="@+id/pwCkQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="30dp"
+        android:text="비밀번호\n확인질문"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/pwCk"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="25dp"
+        android:text="*"
+        android:textSize="20sp"
+        android:textColor="#285A25"
+        app:layout_constraintLeft_toRightOf="@id/pwCkQ"
+        app:layout_constraintTop_toBottomOf="@id/pwReCkTxt" />
+
+    <Spinner
+        android:id="@+id/pwQ_spinner"
+        android:layout_width="253dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="33dp"
+        android:background="@drawable/pw_spinner_box"
+        app:layout_constraintLeft_toRightOf="@id/pwCkQ"
+        app:layout_constraintTop_toBottomOf="@id/pwReCkTxt"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
