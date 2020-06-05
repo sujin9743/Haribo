@@ -26,7 +26,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="end"
-                    android:text="더보기" />
+                    android:text="더보기"
+                    android:onClick="moreGenreClick" />
             </LinearLayout>
             <!-- 사용자가 선택한 장르 순위를 보여주는 RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
@@ -38,7 +39,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#555555" />
+                android:background="#555555"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +51,8 @@
                     android:layout_weight="1"
                     android:text="하비북 베스트셀러"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="15sp"
+                    android:layout_margin="5sp"/>
 
                 <TextView
                     android:id="@+id/moreHBBRanking"
@@ -58,7 +60,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="end"
-                    android:text="더보기" />
+                    android:text="더보기"
+                    android:onClick="moreHBBClick"/>
             </LinearLayout>
             <!-- 하비북 사용자 베스트셀러를 보여주는 RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
