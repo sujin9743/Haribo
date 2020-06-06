@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import androidx.appcompat.widget.Toolbar; //Toolbar -> androidx 사용하는 경우
@@ -14,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignActivity extends AppCompatActivity {
-    Spinner pw_spinner;
+    Spinner pw_spinner, email_spinner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +36,12 @@ public class SignActivity extends AppCompatActivity {
         //spinner 항목 추가 방식
         pw_spinner_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         pw_spinner.setAdapter(pw_spinner_adapter);
+
+        //Todo 3.이메일 Spinner 설정
+        email_spinner = findViewById(R.id.email_spinner); //이메일 spinner
+        ArrayAdapter<String> email_spinner_adapter = new ArrayAdapter<>(this,
+                R.layout.spinner_text, (String[])getResources().getStringArray(R.array.email));
+        email_spinner_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        email_spinner.setAdapter(email_spinner_adapter);
     }
 }
