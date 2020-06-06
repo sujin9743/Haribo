@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class FindIdActivity extends AppCompatActivity {
 
-    Spinner email_fId_spinner;
+    Spinner email_spinner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,10 +27,10 @@ public class FindIdActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp); //뒤로가기 아이콘 지정
 
         //이메일 Spinner 설정
-        email_fId_spinner = findViewById(R.id.email_spinner); //이메일 spinner
+        email_spinner = findViewById(R.id.email_spinner); //이메일 spinner
         ArrayAdapter<String> email_spinner_adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_text, (String[])getResources().getStringArray(R.array.email));
         email_spinner_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        email_fId_spinner.setAdapter(email_spinner_adapter);
+        email_spinner.setAdapter(email_spinner_adapter);
     }
 }

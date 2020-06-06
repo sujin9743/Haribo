@@ -250,7 +250,6 @@
             android:layout_marginLeft="33dp"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:password="true"
             android:background="@drawable/edit_box_line"
             app:layout_constraintLeft_toRightOf="@id/pw_Ck_QA"
             app:layout_constraintTop_toBottomOf="@id/pwQ_spinner"/>
@@ -297,7 +296,6 @@
             android:layout_marginLeft="52dp"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:password="true"
             android:background="@drawable/edit_box_line"
             app:layout_constraintLeft_toRightOf="@id/email"
             app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Txt"/>
@@ -342,7 +340,6 @@
             android:layout_marginLeft="122dp"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:password="true"
             android:background="@drawable/edit_box_line"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_Ck_Txt"/>

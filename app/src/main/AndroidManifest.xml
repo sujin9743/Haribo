@@ -10,16 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".SignActivity"/>
+        <activity android:name=".SignCompleteActivity"/>
+        <activity android:name=".FindIdActivity"/>
+        <activity android:name=".FindIdResultActivity"/>
+        <activity android:name=".FindPwActivity"/>
+        <activity android:name=".ResetPwActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".SignActivity"/>
-        <activity android:name=".SignCompleteActivity"/>
-        <activity android:name=".FindIdActivity"/>
         <activity android:name=".SearchActivity"/>
     </application>
 
