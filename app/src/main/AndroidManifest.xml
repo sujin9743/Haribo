@@ -19,6 +19,7 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".SignActivity"/>
         <activity android:name=".SignCompleteActivity"/>
+        <activity android:name=".FindIdActivity"/>
         <activity android:name=".SearchActivity"/>
     </application>
 
