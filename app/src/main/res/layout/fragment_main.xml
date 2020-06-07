@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_margin="10dp">
+<!-- 메인화면의 순위 표시를 위한 Fragment -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!-- 사용자가 선택한 장르 중 순위 조회를 원하는 분야 선택 가능 -->
+                <Spinner
+                    android:id="@+id/spinnerRaking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/spinnerGenre" />
+
+                <TextView
+                    android:id="@+id/moreGenreRanking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="end"
+                    android:text="더보기"
+                    android:onClick="moreGenreClick" />
+            </LinearLayout>
+            <!-- 사용자가 선택한 장르 순위를 보여주는 RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genreRankingRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#555555"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="하비북 베스트셀러"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:layout_margin="5sp"/>
+
+                <TextView
+                    android:id="@+id/moreHBBRanking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="end"
+                    android:text="더보기"
+                    android:onClick="moreHBBClick"/>
+            </LinearLayout>
+            <!-- 하비북 사용자 베스트셀러를 보여주는 RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/HBBRankingRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+        </LinearLayout>
+</androidx.core.widget.NestedScrollView>

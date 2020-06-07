@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerGenre">
+        <item>종합 베스트셀러</item>
+        <item>시/소설/수필</item>
+    </string-array>
+
+    <string-array name="question">
+        <item>기억에 남는 추억의 장소는?</item>
+        <item>가장 친한 친구 이름은?</item>
+    </string-array>
+
+    <string-array name="email">
+        <item>naver.com</item>
+        <item>nate.com</item>
+    </string-array>
+</resources>

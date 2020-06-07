@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".SignActivity"/>
+        <activity android:name=".SignCompleteActivity"/>
+        <activity android:name=".FindIdActivity"/>
+        <activity android:name=".FindIdResultActivity"/>
+        <activity android:name=".FindPwActivity"/>
+        <activity android:name=".ResetPwActivity"/>
+        <activity android:name=".SearchActivity"/>
     </application>
 
 </manifest>

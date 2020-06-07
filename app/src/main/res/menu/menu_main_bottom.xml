@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/go_home_menu"
+        android:icon="@drawable/ic_outline_home_24"
+        android:title="홈메뉴" />
+    <item
+        android:id="@+id/go_create_menu"
+        android:icon="@drawable/ic_outline_create_24"
+        android:title="독후감 작성 메뉴" />
+    <item
+        android:id="@+id/go_message_menu"
+        android:icon="@drawable/ic_outline_chat_bubble_outline_24"
+        android:title="쪽지함 메뉴" />
+    <item
+        android:id="@+id/go_notification_menu"
+        android:icon="@drawable/ic_outline_notifications_24"
+        android:title="알림 메뉴" />
+    <item
+        android:id="@+id/go_my_menu"
+        android:icon="@drawable/ic_outline_person_outline_24"
+        android:title="마이 페이지 메뉴" />
+</menu>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_margin="10dp">
+<!-- 순위 목록 표시를 위한 Fragment -->
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rankingRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+</androidx.core.widget.NestedScrollView>

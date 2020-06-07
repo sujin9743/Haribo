@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/sign_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="57dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_toolbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:text="*은 필수 항목입니다."
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:layout_marginLeft="30dp"
+            android:text="아이디"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="90dp"
+            android:text="*"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/id"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/id_Edt"
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginLeft="50dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:background="@drawable/edit_box_line"
+            app:layout_constraintLeft_toRightOf="@id/id"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/id_Ck_Btn"
+            android:layout_width="80dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="33dp"
+            android:text="중복확인"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/id_Ck_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="122dp"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id_Edt"/>
+
+        <TextView
+            android:id="@+id/pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:text="비밀번호"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toBottomOf="@id/id_Ck_Txt"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="*"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/pw"
+            app:layout_constraintTop_toBottomOf="@id/id_Ck_Txt" />
+
+        <EditText
+            android:id="@+id/pw_Edt"
+            android:layout_width="255dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="37dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:password="true"
+            android:background="@drawable/edit_box_line"
+            app:layout_constraintLeft_toRightOf="@id/pw"
+            app:layout_constraintTop_toBottomOf="@id/id_Ck_Txt"/>
+
+        <TextView
+            android:id="@+id/pw_Ck_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="122dp"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pw_Edt"/>
+
+        <TextView
+            android:id="@+id/pw_Ck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="30dp"
+            android:text="비밀번호\n확인"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toBottomOf="@id/pw_Ck_Txt"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="23dp"
+            android:text="*"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/pw_Ck"
+            app:layout_constraintTop_toBottomOf="@id/pw_Ck_Txt" />
+
+        <EditText
+            android:id="@+id/pw_Ck_Edt"
+            android:layout_width="255dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="33dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:password="true"
+            android:background="@drawable/edit_box_line"
+            app:layout_constraintLeft_toRightOf="@id/pw_Ck"
+            app:layout_constraintTop_toBottomOf="@id/pw_Ck_Txt"/>
+
+        <TextView
+            android:id="@+id/pw_ReCk_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="122dp"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pw_Ck_Edt"/>
+
+        <TextView
+            android:id="@+id/pw_Ck_Q"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="30dp"
+            android:text="비밀번호\n확인질문"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toBottomOf="@id/pw_ReCk_Txt"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="25dp"
+            android:text="*"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/pw_Ck_Q"
+            app:layout_constraintTop_toBottomOf="@id/pw_ReCk_Txt" />
+
+        <Spinner
+            android:id="@+id/pwQ_spinner"
+            android:layout_width="253dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginLeft="33dp"
+            android:background="@drawable/pw_spinner_box"
+            app:layout_constraintLeft_toRightOf="@id/pw_Ck_Q"
+            app:layout_constraintTop_toBottomOf="@id/pw_ReCk_Txt"/>
+
+        <TextView
+            android:id="@+id/pw_Ck_QA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="30dp"
+            android:text="비밀번호\n확인답변"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toBottomOf="@id/pwQ_spinner"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="25dp"
+            android:text="*"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/pw_Ck_QA"
+            app:layout_constraintTop_toBottomOf="@id/pwQ_spinner" />
+
+        <EditText
+            android:id="@+id/pw_CkQA_Edt"
+            android:layout_width="255dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="33dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:background="@drawable/edit_box_line"
+            app:layout_constraintLeft_toRightOf="@id/pw_Ck_QA"
+            app:layout_constraintTop_toBottomOf="@id/pwQ_spinner"/>
+
+        <TextView
+            android:id="@+id/pw_CkQA_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="122dp"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Edt"/>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="30dp"
+            android:text="E-mail"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Txt"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="25dp"
+            android:text="*"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/email"
+            app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Txt" />
+
+        <EditText
+            android:id="@+id/email_id_edt"
+            android:layout_width="110dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="52dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:background="@drawable/edit_box_line"
+            app:layout_constraintLeft_toRightOf="@id/email"
+            app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Txt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:text="@"
+            android:textSize="20sp"
+            android:textColor="#285A25"
+            app:layout_constraintLeft_toRightOf="@id/email_id_edt"
+            app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Txt" />
+
+        <Spinner
+            android:id="@+id/email_spinner"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="36dp"
+            android:background="@drawable/pw_spinner_box"
+            app:layout_constraintLeft_toRightOf="@id/email_id_edt"
+            app:layout_constraintTop_toBottomOf="@id/pw_CkQA_Txt"/>
+
+        <TextView
+            android:id="@+id/email_Ck_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="122dp"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_id_edt"/>
+
+        <EditText
+            android:id="@+id/email_num_edt"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="122dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:background="@drawable/edit_box_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_Ck_Txt"/>
+
+        <Button
+            android:id="@+id/email_ck_btn"
+            android:layout_width="108dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="33dp"
+            android:text="인증번호 전송"
+            app:layout_constraintTop_toBottomOf="@id/email_Ck_Txt"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <CheckBox
+            android:id="@+id/clause_Ck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_num_edt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:layout_marginLeft="20dp"
+            android:text="이용 약관에 동의합니다. [필수]"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            app:layout_constraintLeft_toRightOf="@id/clause_Ck"
+            app:layout_constraintTop_toBottomOf="@id/email_num_edt"/>
+
+        <CheckBox
+            android:id="@+id/info_Ck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clause_Ck"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="13dp"
+            android:text="개인정보 수집 및 이용에 동의합니다. [필수]"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            app:layout_constraintLeft_toRightOf="@id/info_Ck"
+            app:layout_constraintTop_toBottomOf="@id/clause_Ck" />
+
+        <Button
+            android:id="@+id/sign_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="33dp"
+            android:layout_marginBottom="20dp"
+            android:text="다 음"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_ck_btn"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
