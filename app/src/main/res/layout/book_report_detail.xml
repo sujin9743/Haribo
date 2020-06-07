@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookReportDetail">
+    <LinearLayout
+        android:id="@+id/toolLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+       <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/backiconblack"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:id="@+id/forScrollLayout"
+            android:layout_width="match_parent"
+            android:layout_height="795dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/profileLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_launcher"></de.hdodenhof.circleimageview.CircleImageView>
+
+                <TextView
+                    android:id="@+id/profileText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:text="Dorothy"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/bookImgPage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:background="@color/testColor">
+
+            </androidx.viewpager.widget.ViewPager>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/hashTag1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="#해시태그"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/hashTag2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="7dp"
+                    android:text="#해시태그"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/hashTag3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="7dp"
+                    android:text="#해시태그"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="17sp"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/hashTag4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="7dp"
+                    android:text="#해시태그"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="17sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+            <LinearLayout
+                android:id="@+id/reportTitle_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="17dp">
+                <TextView
+                    android:id="@+id/reportTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="독후감 제목"
+                    android:textColor="#000000"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toTopOf="parent"
+                       android:layout_marginRight="17dp">
+
+                       <TextView
+                           android:id="@+id/report_bookName"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="도서이름"
+                           android:textColor="@color/darkGray"
+                           android:textSize="15sp" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="3dp"
+                           android:layout_marginRight="3dp"
+                           android:text="|"
+                           android:textColor="@color/darkGray"
+                           android:textSize="17sp" />
+
+                       <TextView
+                           android:id="@+id/report_bookMaker"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="저자"
+                           android:textColor="@color/darkGray"
+                           android:textSize="15sp" />
+                   </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:text="독후감 내용을 쓰는 중이다..블라블라블라블라 블블라 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 남산 위에 저 소나무 철갑을 두른 듯 바람서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세 가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세 무궁화 삼천리 화려강산 대한 사람 대한으로 길이 보전하세 이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세 무궁화 삼천리 화려강산 대한 사람 대한으로 길이 보전하세 이제 뭐쓰지..?우린 참 별나 서로를 부서지게 그리고 또 꼭껴안아 사이코사이코 우린 보고 말해 자꾸자꾸 다시안볼듯 싸우다가도 붙어다니기 말야 이해가 안된대 맞아 사이코사이코 맞아 서로 좋아 죽는 기운도 막 없어요 둘이 잘 만났대 헤이 첨볼 예예예 두렵지는 않아 흥미로울 뿐 어떻게 널 다룰까 우우우 어쩔줄을 몰라 매섭게 발로 차도 미소지짓는 너 우린 아름답고 참 슬픈 사이야 서로를 빛나게해 마치 달과 별처럼 그리고 또 껴안아 유갓미 삘링 라이크 사이코사이코 다시안볼듯 싸우다가도 이해가 안간대 야야양우우우
+마자마자마자 바보바보 " />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@color/basicGreen"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+        <ImageView
+            android:id="@+id/heartIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/heart"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="150"
+            android:textSize="30sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@color/white"
+            android:layout_marginTop="3dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textSize="30sp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
