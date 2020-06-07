@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">HobbyBook</string>
+    <string name="g0">가정/요리/뷰티</string>
+    <string name="g1">건강/취미/레저</string>
+    <string name="g2">경제경영</string>
+    <string name="g3">고 전</string>
+    <string name="g4">공무원 수험서</string>
+    <string name="g5">과 학</string>
+    <string name="g6">대학교재/전문서적</string>
+    <string name="g7">만 화</string>
+    <string name="g8">사회과학</string>
+    <string name="g9">소설/시/희곡</string>
+    <string name="g10">수험서/자격증</string>
+    <string name="g11">어린이</string>
+    <string name="g12">에세이</string>
+    <string name="g13">여 행</string>
+    <string name="g14">역 사</string>
+    <string name="g15">예술/대중문화</string>
+    <string name="g16">외국어</string>
+    <string name="g17">유 아</string>
+    <string name="g18">인문학</string>
+    <string name="g19">자기계발</string>
+    <string name="g20">장르소설</string>
+    <string name="g21">잡 지</string>
+    <string name="g22">전집/중고전집</string>
+    <string name="g23">종교/역학</string>
+    <string name="g24">좋은부모</string>
+    <string name="g25">청소년</string>
+    <string name="g26">컴퓨터/모바일</string>
+    <string name="g27">초등학교참고서</string>
+    <string name="g28">중학교참고서</string>
+    <string name="g29">고등학교참고서</string>
 </resources>
