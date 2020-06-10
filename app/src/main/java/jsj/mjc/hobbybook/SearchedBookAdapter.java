@@ -24,7 +24,6 @@ public class SearchedBookAdapter extends RecyclerView.Adapter<SearchedBookAdapte
             this.searchedBookIv = view.findViewById(R.id.bookListIv);
             this.searchedBookTitleTv = view.findViewById(R.id.bookTitleTv);
             this.searchedBookWriterTv = view.findViewById(R.id.bookWriterTv);
-
         }
     }
 
