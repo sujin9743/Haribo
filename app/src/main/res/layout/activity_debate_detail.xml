@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/dDetailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/dDetail_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:background="@null"
+            android:src="@drawable/ic_chevron_left_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/dDetail_more_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10sp"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_more_vert_24" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dDetailToolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/dDetail_writerIv"
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:layout_margin="10sp"
+                    android:src="@drawable/ic_outline_person_outline_24"
+                    android:tint="#8E8E8E" />
+
+                <TextView
+                    android:id="@+id/dDetail_writerTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10sp"
+                    android:text="작성자닉네임"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/dDetail_iv"
+                android:layout_width="match_parent"
+                android:layout_height="250sp"
+                android:layout_margin="10sp"
+                android:src="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/dDetail_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:text="토론글제목제목"
+                android:textColor="#000000"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/dDetail_text_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="형 나 경찰이야 지금 내가 미친 짓 하고 있는 거 알아요 형이 나 지금 죽일 수도 있는 거 알아요 근데 나 형 더 이상 속이면 안 될 거 같아요 진짜 미안해요 형 확인 절차? 환인 절차!!!! 멀쩡한 사람을 빵에 가둔 것도 모자라서 이제는 사람을 불에 태워 죽이겠다는 거구나. 아우 예 알겠습니다 내가 앞으로는 절대 나 믿으라고 강요 안 할게요, 아유, 진짜, 아유 근데 나는 형 믿어요 아유 여기 참 후지다 야 형 출세 많이 했다"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="10sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020.06.10. 12:16"
+                    android:textColor="#275925"
+                    android:id="@+id/dDetail_date_tv"/>
+
+                <View
+                    android:layout_width="0sp"
+                    android:layout_height="0sp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_outline_chat_bubble_outline_24"
+                    android:padding="5sp"
+                    android:text="12"
+                    android:drawableTint="#275925"
+                    android:textColor="#275925"
+                    android:layout_gravity="end"
+                    android:id="@+id/dDetail_comNum_tv"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="#8E8E8E"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dDetail_comment_RV"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:id="@+id/dDetail_myIv"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_margin="10sp"
+            android:src="@drawable/ic_outline_person_outline_24"
+            android:tint="#8E8E8E" />
+
+        <EditText
+            android:layout_width="320sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/edit_box_line" />
+
+        <ImageButton
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:background="#ffffff"
+            android:src="@drawable/ic_baseline_chevron_right_24" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
