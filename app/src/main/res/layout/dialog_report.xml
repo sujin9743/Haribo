@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="270sp"
+    android:layout_height="wrap_content"
+    android:padding="10sp">
+
+    <TextView
+        android:id="@+id/report_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp"
+        android:text="신고 사유 선택"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/report_radioG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/report_title_tv">
+
+        <RadioButton
+            android:id="@+id/report_c1_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:text="부적절한 언어 표현/비속어/비하" />
+
+        <RadioButton
+            android:id="@+id/report_c2_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:text="상업적 광고 및 판매" />
+
+        <RadioButton
+            android:id="@+id/report_c3_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:text="음란물/불건전한 만남 및 대화" />
+
+        <RadioButton
+            android:id="@+id/report_c4_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:text="도배/낚시" />
+
+        <RadioButton
+            android:id="@+id/report_c5_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:text="기타" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/report_c_et"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_box_line"
+        android:hint="내용을 입력해 주세요."
+        android:padding="5sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/report_radioG" />
+
+    <LinearLayout
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/report_c_et"
+        app:layout_constraintTop_toBottomOf="@id/report_c_et">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="취소"
+            android:textColor="#ffffff"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="확인"
+            android:textColor="#ffffff"
+            android:backgroundTint="#275925"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,6 +27,10 @@
         <activity android:name=".ResetPwActivity"/>
         <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".SearchActivity"/>
+        <activity android:name=".DebateAddActivity"/>
+        <activity android:name=".DebateDetailActivity"/>
+        <activity android:name=".DebateListActivity"/>
+        <activity android:name=".DebateSearchActivity"/>
     </application>
 
 </manifest>

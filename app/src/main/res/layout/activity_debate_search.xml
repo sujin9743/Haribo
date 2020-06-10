@@ -49,10 +49,10 @@
 
     <ImageButton
         android:id="@+id/debateS_write_btn"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
         android:background="@null"
-        android:padding="5sp"
+        android:layout_margin="15sp"
         android:scaleType="centerCrop"
         android:src="@drawable/feather"
         app:layout_constraintBottom_toBottomOf="parent"
