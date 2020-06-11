@@ -12,6 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateViewHolder> {
+    public interface OnItemClickListenr {
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListenr debateListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.debateListener = listener;
+    }
+
     private ArrayList<Debate> debateList;
 
     public class DebateViewHolder extends RecyclerView.ViewHolder {
@@ -28,6 +38,18 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
             this.debateDateTv = view.findViewById(R.id.debate_date_tv);
             this.debateCommentTv = view.findViewById(R.id.debate_comment_tv);
             this.debateIv = view.findViewById(R.id.debate_iv);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (debateListener != null) {
+                            debateListener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -55,7 +77,8 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
 
         if (debateList.get(position).getDebateImageUrl().equals("1"))
             viewHolder.debateIv.setVisibility(View.GONE);
-        else viewHolder.debateIv.setImageResource(R.drawable.ic_baseline_android_24); //추후 Glide 통해 이미지 변경
+        else
+            viewHolder.debateIv.setImageResource(R.drawable.ic_baseline_android_24); //추후 Glide 통해 이미지 변경
     }
 
     public int getItemCount() {

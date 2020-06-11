@@ -30,20 +30,6 @@
             android:src="@drawable/ic_baseline_bookmark_24" />
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
-        android:layout_width="0sp"
-        android:layout_height="0sp"
-        app:layout_constraintBottom_toTopOf="@id/dAdd_bottomView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/debateAddToolbar">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10sp">
-
             <EditText
                 android:id="@+id/dAdd_title_et"
                 android:layout_width="match_parent"
@@ -51,18 +37,24 @@
                 android:backgroundTint="#275925"
                 android:hint="제목을 입력해 주세요."
                 android:textColor="#275925"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:layout_margin="5sp"
+                app:layout_constraintTop_toBottomOf="@id/debateAddToolbar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <EditText
                 android:id="@+id/dAdd_text_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0sp"
                 android:background="@null"
                 android:gravity="top"
-                android:padding="5sp"
-                android:textColor="#000000" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_margin="5sp"
+                android:textColor="#000000"
+                app:layout_constraintTop_toBottomOf="@id/dAdd_title_et"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dAdd_bottomView"/>
 
     <View
         android:id="@+id/dAdd_bottomView"

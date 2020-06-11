@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -19,11 +20,15 @@ import java.util.Random;
 public class DebateListActivity extends AppCompatActivity {
     private ArrayList<Debate> debateArrayList;
     private DebateAdapter debateAdapter;
+    public static Context context_dList;
+    public static String imgNum;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debate_list);
+
+
 
         RecyclerView recyclerView = findViewById(R.id.dList_RV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -67,6 +72,15 @@ public class DebateListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DebateListActivity.this, DebateAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        debateAdapter.setOnItemClickListener(new DebateAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                imgNum = debateArrayList.get(position).getDebateImageUrl();
+                Intent intent = new Intent(DebateListActivity.this, DebateDetailActivity.class);
                 startActivity(intent);
             }
         });

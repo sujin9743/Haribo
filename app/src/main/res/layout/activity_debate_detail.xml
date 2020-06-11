@@ -32,7 +32,7 @@
             android:src="@drawable/ic_baseline_more_vert_24" />
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dDetailToolbar">
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250sp"
                 android:layout_margin="10sp"
-                android:src="@color/colorAccent" />
+                android:src="@color/colorAccent"/>
 
             <TextView
                 android:id="@+id/dDetail_title_tv"
@@ -129,10 +129,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dDetail_comment_RV"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:scrollbars="none" />
+                android:layout_height="wrap_content"
+                android:paddingBottom="110sp" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -152,7 +152,7 @@
             android:tint="#8E8E8E" />
 
         <EditText
-            android:layout_width="320sp"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/edit_box_line" />

@@ -6,14 +6,14 @@
     android:padding="10sp">
 
     <ImageView
+        android:id="@+id/dReply_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_subdirectory_arrow_right_24"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/dReply_iv"
-        android:visibility="gone"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/dComment_iv"
@@ -38,8 +38,8 @@
         android:id="@+id/dComment_more_btn"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:padding="5sp"
         android:background="#ffffff"
+        android:padding="5sp"
         android:src="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,15 +55,16 @@
         app:layout_constraintTop_toTopOf="@id/dComment_more_btn" />
 
     <TextView
+        android:id="@+id/dComment_text_tv"
         android:layout_width="0sp"
         android:layout_height="wrap_content"
+        android:layout_margin="5sp"
         android:text="어디 한 번 또 길게 써보자 예시를 넣는 게 디자인보다 힘들 수 있다는 생각이 들었는데 그래도 역시 디자인 두 번 하고 싶지는 않네 데이터 열심히 쳐야겠다"
         android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/dComment_iv"
+        android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/dReply_iv"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="5sp"
-        android:textSize="15sp" />
+        app:layout_constraintTop_toBottomOf="@id/dComment_iv" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
