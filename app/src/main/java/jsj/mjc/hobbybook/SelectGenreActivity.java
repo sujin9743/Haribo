@@ -1,33 +1,59 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class SelectGenreActivity extends AppCompatActivity {
+
+    Button [] genreBtn = new Button[30];
+    static int [] select_state = new int[30]; //버튼 클릭 횟수를 저장하는 변수
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_genre);
 
-        //Toolbar 설정
-        Toolbar toolbar = findViewById(R.id.select_genre_toolbar); //Toolbar
-        setSupportActionBar(toolbar); //Toolbar 적용
-        getSupportActionBar().setTitle("장르 선택"); //Toolbar title
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //toolbar 뒤로가기 아이콘
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp); //뒤로가기 아이콘
-
+        //선택된 장르 버튼 색상 변경
+        int i;
+        for(i=0; i<genreBtn.length; i++) {
+            genreBtn[i] = findViewById(R.id.g0+i);
+            select_state[i] = 0;
+        }
+        for(i=0; i<genreBtn.length; i++) {
+            genreBtn[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.g0: {
+                                int id_num = 0;
+                                setBtnColorChange(v, id_num); //버튼 색 변경 사용자 정의 함수 호출
+                                break;
+                            }
+                        }
+                }
+            });
+        }
     }
 
-    //Toolbar에 건너뛰기 버튼 삽입
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.genre_toolbar_menu, menu);
-        return true;
+    //버튼 클릭 횟수에 따른 색상 변경 함수
+    public void setBtnColorChange(View v, int i) {
+        if(select_state[i] == 0) {
+            v.setBackgroundResource(R.drawable.genre_select_btn_box);
+            select_state[i] ++;
+        } else if (select_state[i] == 1){
+            v.setBackgroundResource(R.drawable.genre_btn_box);
+            select_state[i] = 0;
+        }
     }
 }
