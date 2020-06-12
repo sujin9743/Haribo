@@ -13,22 +13,22 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".BookReportDetail"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SignActivity"/>
         <activity android:name=".SignCompleteActivity"/>
         <activity android:name=".FindIdActivity"/>
         <activity android:name=".FindIdResultActivity"/>
         <activity android:name=".FindPwActivity"/>
         <activity android:name=".ResetPwActivity"/>
-        <activity android:name=".SelectGenreActivity">
-
-        </activity>
+        <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".SearchActivity"/>
-        <activity android:name=".RecommendUserActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".RecommendUserActivity"/>
+        <activity android:name=".RecommendBookActivity">
         </activity>
         <activity android:name=".DebateAddActivity"/>
         <activity android:name=".DebateDetailActivity"/>

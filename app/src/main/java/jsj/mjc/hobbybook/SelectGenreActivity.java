@@ -9,6 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,8 @@ public class SelectGenreActivity extends AppCompatActivity {
 
     Button [] genreBtn = new Button[30];
     static int [] select_state = new int[30]; //버튼 클릭 횟수를 저장하는 변수
+    TextView genre_btn;
+    ImageButton genre_backBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +50,26 @@ public class SelectGenreActivity extends AppCompatActivity {
                 }
             });
         }
+
+        //툴바 뒤로가기
+        genre_backBtn = findViewById(R.id.genre_backBtn);
+        genre_backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        //완료 버튼 클릭 시
+        genre_btn = findViewById(R.id.genre_btn);
+        genre_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignCompleteActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     //버튼 클릭 횟수에 따른 색상 변경 함수

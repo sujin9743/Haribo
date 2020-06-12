@@ -13,7 +13,7 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <ImageButton
-            android:id="@+id/userRc_backBtn"
+            android:id="@+id/genre_backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -29,6 +29,7 @@
             android:textSize="20sp"/>
 
         <TextView
+            android:id="@+id/genre_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="220dp"
