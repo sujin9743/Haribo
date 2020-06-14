@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/realTime_bookReport"
+        android:title="실시간 독후감" />
+    <item
+        android:id="@+id/write_bookReport"
+        android:title="독후감 작성" />
+    <item
+        android:id="@+id/recommend_user"
+        android:title="사용자 추천" />
+    <item
+        android:id="@+id/recommend_book"
+        android:title="도서 추천" />
+    <item
+        android:id="@+id/debate"
+        android:title="토론게시판" />
+</menu>
