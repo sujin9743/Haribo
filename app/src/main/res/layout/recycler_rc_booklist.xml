@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/bookImg"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_box_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:text="책 제목라라라라라라라"
+        android:textColor="#285A25"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/bookImg"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/bookWirter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="지은이"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/bookImg"
+        app:layout_constraintTop_toBottomOf="@id/bookTitle"/>
+
+    <TextView
+        android:id="@+id/bookPublisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:text="출판사"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/bookWirter"
+        app:layout_constraintTop_toBottomOf="@id/bookTitle"/>
+
+    <RatingBar
+        android:id="@+id/bookRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:rating="4.5"
+        style="?android:attr/ratingBarStyleIndicator"
+        app:layout_constraintLeft_toRightOf="@id/bookImg"
+        app:layout_constraintTop_toBottomOf="@id/bookWirter"/>
+
+    <TextView
+        android:id="@+id/bookRateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:text="(4.5)"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/bookRate"
+        app:layout_constraintTop_toBottomOf="@id/bookPublisher"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
