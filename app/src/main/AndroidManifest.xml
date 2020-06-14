@@ -11,6 +11,10 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".BookReportDetail"/>
         <activity android:name=".LoginActivity"/>
@@ -20,20 +24,16 @@
         <activity android:name=".FindIdResultActivity"/>
         <activity android:name=".FindPwActivity"/>
         <activity android:name=".ResetPwActivity"/>
-        <activity android:name=".SelectGenreActivity">
-
-        </activity>
+        <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".SearchActivity"/>
-        <activity android:name=".RecommendUserActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".RecommendUserActivity"/>
+        <activity android:name=".UserFeedActivity"/>
         <activity android:name=".DebateAddActivity"/>
         <activity android:name=".DebateDetailActivity"/>
         <activity android:name=".DebateListActivity"/>
         <activity android:name=".DebateSearchActivity"/>
+        <activity android:name=".MessageViewActivity"/>
+        <activity android:name=".MessageSendActivity"/>
     </application>
 
 </manifest>
