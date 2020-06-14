@@ -1,13 +1,13 @@
 package jsj.mjc.hobbybook;
 
 public class FeedReadBookItem {
-    private String bookCoverImgUrl;
+    //private String bookCoverImgUrl;
 
-    public FeedReadBookItem(String bookCoverImgUrl) {
-        this.bookCoverImgUrl = bookCoverImgUrl;
-    }
+    //public FeedReadBookItem(String bookCoverImgUrl) {
+    //    this.bookCoverImgUrl = bookCoverImgUrl;
+    //}
 
-    public String getBookCoverImgUrl() {
-        return bookCoverImgUrl;
-    }
+    //public String getBookCoverImgUrl() {
+    //    return bookCoverImgUrl;
+    //}
 }

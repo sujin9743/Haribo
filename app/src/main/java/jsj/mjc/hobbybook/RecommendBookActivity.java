@@ -19,6 +19,7 @@ public class RecommendBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_recommend);
 
+        //RecyclerView
         booklist = new ArrayList<>();
         bookListAdapter = new RecommendBookAdapter(booklist);
 

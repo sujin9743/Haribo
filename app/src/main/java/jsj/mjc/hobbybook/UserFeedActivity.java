@@ -5,14 +5,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class UserFeedActivity extends AppCompatActivity {
-    RecyclerView bookReport_list_recycler;
+    ArrayList<FeedReadBookItem> uF_readBookList;
+    FeedReadBookAdapter uF_feedReadBookAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +32,25 @@ public class UserFeedActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
 
+        //RecyclerView
+        uF_readBookList = new ArrayList<>();
+        uF_feedReadBookAdapter = new FeedReadBookAdapter(uF_readBookList);
+
+        RecyclerView bookCover_recycler = findViewById(R.id.bookCover_recycler);
+        //context와 spanCount(한 줄을 몇 개 칸으로 나눌지)
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        bookCover_recycler.setLayoutManager(gridLayoutManager);
+
+        //recyclerView 구분선 추가
+        //bookRc_recycler.addItemDecoration(new DividerItemDecoration(bookRc_recycler.getContext(), 1));
+
+        //todo 1. RecyclerView 책표지 데이터 삽입
+        for(int i=0; i<10; i++) {
+            FeedReadBookItem data = new FeedReadBookItem();
+            uF_readBookList.add(data);
+        }
+
+        bookCover_recycler.setAdapter(uF_feedReadBookAdapter);
 
     }
 

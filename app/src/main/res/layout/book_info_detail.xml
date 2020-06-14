@@ -79,7 +79,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/lightBeige">
+                    android:background="@color/beige">
 
                 </androidx.recyclerview.widget.RecyclerView>
                 <androidx.recyclerview.widget.RecyclerView
