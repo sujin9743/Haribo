@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bookSerch"
+        android:icon="@drawable/ic_baseline_insert_photo_24"
+        android:title="도서검색" />
+   <item
+        android:id="@+id/imgAdd"
+        android:icon="@drawable/ic_baseline_insert_photo_24"
+        android:title="이미지추가" />
+    <item
+        android:id="@+id/hashTag"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="해시태그" />
+    <item
+        android:id="@+id/pub_pri"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="공개비공개" />
+</menu>
