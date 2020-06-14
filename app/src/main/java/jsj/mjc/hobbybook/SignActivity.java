@@ -1,7 +1,11 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 
@@ -16,17 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignActivity extends AppCompatActivity {
     Spinner pw_spinner, email_spinner;
+    ImageButton sign_backBtn;
+    Button sign_btn;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign);
-
-        //Toolbar 설정
-        Toolbar toolbar = findViewById(R.id.sign_toolbar); //Toolbar
-        setSupportActionBar(toolbar); //Toolbar 적용
-        getSupportActionBar().setTitle("회원가입"); //Toolbar title
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //toolbar 뒤로가기 아이콘
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp); //뒤로가기 아이콘 지정
 
         //비밀번호 확인 Spinner 설정
         pw_spinner = findViewById(R.id.pwQ_spinner); //비밀번호 확인 질문 spinner
@@ -43,5 +42,24 @@ public class SignActivity extends AppCompatActivity {
                 R.layout.spinner_text, (String[])getResources().getStringArray(R.array.email));
         email_spinner_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         email_spinner.setAdapter(email_spinner_adapter);
+
+        //툴바 뒤로가기
+        sign_backBtn = findViewById(R.id.sign_backBtn);
+        sign_backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        //다음 버튼 클릭 시
+        sign_btn = findViewById(R.id.sign_btn);
+        sign_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

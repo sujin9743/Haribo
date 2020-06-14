@@ -1,22 +1,49 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class FindIdResultActivity extends AppCompatActivity {
+    ImageButton findId_result_backBtn;
+    Button findPw_Btn, login_Btn;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_id_result);
 
-        //Toolbar 설정
-        Toolbar toolbar = findViewById(R.id.findID_Result_toolbar); //Toolbar
-        setSupportActionBar(toolbar); //Toolbar 적용
-        getSupportActionBar().setTitle("아이디 찾기"); //Toolbar title
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //toolbar 뒤로가기 아이콘
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp); //뒤로가기 아이콘 지정
+        //툴바 뒤로가기
+        findId_result_backBtn = findViewById(R.id.findId_result_backBtn);
+        findId_result_backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        //비밀번호 찾기 클릭 시
+        findPw_Btn = findViewById(R.id.findPw_Btn);
+        findPw_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FindPwActivity.class);
+                startActivity(intent);
+            }
+        });
+        //로그인하기 클릭 시
+        login_Btn = findViewById(R.id.login_Btn);
+        login_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

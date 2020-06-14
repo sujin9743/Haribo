@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mView_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/mView_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:background="@null"
+            android:src="@drawable/ic_chevron_left_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/mView_more_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10sp"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_more_vert_24" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/mView_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="보낸사람"
+        android:textColor="@color/darkGreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mView_toolbar" />
+
+    <TextView
+        android:id="@+id/mView_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" > 받는사람"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/mView_sender"
+        app:layout_constraintTop_toTopOf="@id/mView_sender" />
+
+    <TextView
+        android:id="@+id/mView_sendDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="2020.06.14. 11:42"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mView_toolbar" />
+
+    <TextView
+        android:id="@+id/mView_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="구급대 구급대 불러요 빨리! 구급대 요청했으니 급세 도착할 겁니다. 팀장님 괜찮으십니까? 어서! 대식의 뛰는 소리 그놈 맞는 겁니까? 체형이랑 걷는 걸음은 좐전히 똑같아."
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mView_sender" />
+</androidx.constraintlayout.widget.ConstraintLayout>

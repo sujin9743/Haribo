@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_profileImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:civ_border_width="1dp"
         app:civ_border_color="#000000"
         android:src="@drawable/ic_outline_person_outline_24"
@@ -30,10 +30,11 @@
         android:id="@+id/user_btn"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:text="팔로우"
+        android:layout_marginTop="5dp"
+        android:text="팔로잉"
+        android:textColor="@color/white"
         android:textSize="15sp"
-        android:background="@drawable/round_btn_shape"
+        android:background="@drawable/round_btn_darkgreen"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

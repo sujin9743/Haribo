@@ -8,7 +8,6 @@
     <color name = "darkGray">#2D2D2D</color>
     <color name = "basicGreen">#59A655</color>
     <color name="white">#ffffff</color>
-    <color name="notice">#FCF9F0</color>
-    <color name="lightBeige">#F0EAC6</color>
-
+    <color name="lightGreen">#65E65E</color>
+    <color name="beige">#EDE5C2</color>
 </resources>
