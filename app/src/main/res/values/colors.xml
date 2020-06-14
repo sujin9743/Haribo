@@ -5,10 +5,12 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="testColor">#A5C9A0</color>
     <color name="darkGreen">#285A25</color>
-    <color name ="darkGray">#2D2D2D</color>
-    <color name ="basicGreen">#59A655</color>
-    <color name="black">#000000</color>
+    <color name = "darkGray">#2D2D2D</color>
+    <color name = "basicGreen">#59A655</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="lightGreen">#65E65E</color>
     <color name="beige">#EDE5C2</color>
+    <color name="notice">#FCF9F0</color>
+
 </resources>

@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendUserActivity extends AppCompatActivity {
-   // ArrayList<UserlistItem> userlist;
-    //UserListAdapter userListAdapter;
+    ArrayList<UserlistItem> userlist;
+    UserListAdapter userListAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
