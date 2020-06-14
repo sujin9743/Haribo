@@ -29,7 +29,6 @@ public class DebateListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_debate_list);
 
 
-
         RecyclerView recyclerView = findViewById(R.id.dList_RV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

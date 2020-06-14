@@ -14,4 +14,10 @@
         <item>naver.com</item>
         <item>nate.com</item>
     </string-array>
+
+    <string-array name="messageSpinner">
+        <item>전체 쪽지함</item>
+        <item>받은 쪽지함</item>
+        <item>보낸 쪽지함</item>
+    </string-array>
 </resources>
