@@ -26,35 +26,35 @@
         app:layout_constraintTop_toBottomOf="@id/report_title_tv">
 
         <RadioButton
-            android:id="@+id/report_c1_rbtn"
+            android:id="@+id/report_rbtn_c0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:text="부적절한 언어 표현/비속어/비하" />
 
         <RadioButton
-            android:id="@+id/report_c2_rbtn"
+            android:id="@+id/report_rbtn_c1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:text="상업적 광고 및 판매" />
 
         <RadioButton
-            android:id="@+id/report_c3_rbtn"
+            android:id="@+id/report_rbtn_c2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:text="음란물/불건전한 만남 및 대화" />
 
         <RadioButton
-            android:id="@+id/report_c4_rbtn"
+            android:id="@+id/report_rbtn_c3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:text="도배/낚시" />
 
         <RadioButton
-            android:id="@+id/report_c5_rbtn"
+            android:id="@+id/report_rbtn_c4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -85,6 +85,7 @@
             android:layout_weight="1"
             android:text="취소"
             android:textColor="#ffffff"
+            android:id="@+id/report_cancel_btn"
             />
 
         <Button
@@ -93,7 +94,7 @@
             android:layout_weight="1"
             android:text="확인"
             android:textColor="#ffffff"
-            android:backgroundTint="#275925"/>
+            android:id="@+id/report_ok_btn"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
