@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 HomeFragment homeFragment = new HomeFragment();
 MessageFragment messageFragment = new MessageFragment();
 RankingFragment rankingFragment = new RankingFragment();
+MyFeedFragment myFeedFragment = new MyFeedFragment();
 Toolbar mainToolbar, moreToolbar;
 TextView rankingToolbarText;
 boolean inHome = true;
@@ -110,6 +111,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 switch (item.getItemId()){
                     case R.id.go_home_menu :
                         goHome();
@@ -119,7 +121,6 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
                         return true;
                     case R.id.go_message_menu :
                         inHome = false;
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.main_frameLayout, messageFragment).commit();
                         return true;
                     case R.id.go_notification_menu :
@@ -127,6 +128,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
                         return true;
                     case R.id.go_my_menu :
                         inHome = false;
+                        transaction.replace(R.id.main_frameLayout, myFeedFragment).commit();
                         return true;
                 }
                 return false;
