@@ -27,6 +27,7 @@
         <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".RecommendUserActivity"/>
+        <activity android:name=".RecommendBookActivity"/>
         <activity android:name=".UserFeedActivity"/>
         <activity android:name=".MyFeedActivity"/>
         <activity android:name=".DebateAddActivity"/>
