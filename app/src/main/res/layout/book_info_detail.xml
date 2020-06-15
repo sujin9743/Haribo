@@ -105,12 +105,13 @@
                 android:layout_height="wrap_content"
                 android:text="독후감 보러가기"
                 android:layout_margin="5dp"
+                android:textColor="@color/darkGreen"
                 android:textSize="15sp"/>
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/testimg"
+                android:src="@drawable/letsgo_bookreport"
                 android:layout_marginLeft="270dp"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

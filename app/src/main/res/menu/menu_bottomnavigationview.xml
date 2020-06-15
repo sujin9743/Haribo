@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/bookSerch"
-        android:icon="@drawable/ic_baseline_insert_photo_24"
+        android:icon="@drawable/searchbook"
         android:title="도서검색" />
    <item
         android:id="@+id/imgAdd"
@@ -11,10 +11,10 @@
         android:title="이미지추가" />
     <item
         android:id="@+id/hashTag"
-        android:icon="@android:drawable/ic_menu_call"
+        android:icon="@drawable/hashtag"
         android:title="해시태그" />
     <item
         android:id="@+id/pub_pri"
-        android:icon="@android:drawable/ic_menu_call"
+        android:icon="@drawable/ic_lock_open_24dp"
         android:title="공개비공개" />
 </menu>
