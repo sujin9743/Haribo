@@ -2,6 +2,8 @@ package jsj.mjc.hobbybook;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -18,6 +20,15 @@ public class RecommendBookActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_recommend);
+
+        //툴바 뒤로가기
+        ImageButton bookRc_backBtn = findViewById(R.id.bookRc_backBtn);
+        bookRc_backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //RecyclerView
         booklist = new ArrayList<>();

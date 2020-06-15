@@ -1,29 +1,38 @@
 package jsj.mjc.hobbybook;
 
 import android.os.Bundle;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyFeedActivity extends AppCompatActivity {
+public class MyFeedFragment extends Fragment {
+
     ArrayList<FeedReadBookItem> mF_readBookList;
     FeedReadBookAdapter mF_feedReadBookAdapter;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.myfeed);
 
-        //RecyclerView
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.myfeed, container, false);
+
+
+//RecyclerView
         mF_readBookList = new ArrayList<>();
         mF_feedReadBookAdapter = new FeedReadBookAdapter(mF_readBookList);
 
-        RecyclerView myFeed_bookCover_recycler = findViewById(R.id.myFeed_bookCover_recycler);
+        RecyclerView myFeed_bookCover_recycler = view.findViewById(R.id.myFeed_bookCover_recycler);
         //context와 spanCount(한 줄을 몇 개 칸으로 나눌지)
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         myFeed_bookCover_recycler.setLayoutManager(gridLayoutManager);
 
         //recyclerView 구분선 추가
@@ -36,5 +45,7 @@ public class MyFeedActivity extends AppCompatActivity {
         }
 
         myFeed_bookCover_recycler.setAdapter(mF_feedReadBookAdapter);
+
+        return view;
     }
 }

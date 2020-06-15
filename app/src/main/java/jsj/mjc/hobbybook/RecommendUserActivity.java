@@ -3,6 +3,9 @@ package jsj.mjc.hobbybook;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -21,6 +24,16 @@ public class RecommendUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_recommend);
 
+        //툴바 뒤로가기 버튼
+        ImageButton userRc_backBtn = findViewById(R.id.userRc_backBtn);
+        userRc_backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //RecyclerView
         userlist = new ArrayList<>();
         userListAdapter = new UserListAdapter(userlist);
 
