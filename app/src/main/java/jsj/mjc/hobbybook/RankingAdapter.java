@@ -45,7 +45,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
     @Override
     public void onBindViewHolder(@NonNull RankingViewHolder viewHolder, int position) {
         viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
-        viewHolder.rankingIv.setImageResource(R.drawable.ic_baseline_android_24); //추후 Glide 통해 이미지 변경
+        viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
         viewHolder.rankingWriterTv.setText(rankingList.get(position).getRankingWriter());
     }

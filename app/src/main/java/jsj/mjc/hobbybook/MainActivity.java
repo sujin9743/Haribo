@@ -25,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
 HomeFragment homeFragment = new HomeFragment();
 MessageFragment messageFragment = new MessageFragment();
 RankingFragment rankingFragment = new RankingFragment();
+MyFeedFragment myFeedFragment = new MyFeedFragment();
 Toolbar mainToolbar, moreToolbar;
 TextView rankingToolbarText;
 boolean inHome = true;
 DrawerLayout drawerLayout;
 View drawerView;
 Button nav_closeBtn;
-TextView recommend_user;
+TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,26 @@ TextView recommend_user;
             }
         });
 
+        //NavigationDrawer 내부 도서 추천 Text 클릭 시 화면 이동
+        recommend_book = findViewById(R.id.recommend_book);
+        recommend_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RecommendBookActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //NavigationDrawer 내부 토론게시판 메뉴 클릭 시 화면 이동
+        go_debage = findViewById(R.id.debate);
+        go_debage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DebateListActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.main_bnv);
         //첫 화면을 HomeFragment(순위 화면)으로 설정
@@ -90,6 +111,7 @@ TextView recommend_user;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 switch (item.getItemId()){
                     case R.id.go_home_menu :
                         goHome();
@@ -99,7 +121,6 @@ TextView recommend_user;
                         return true;
                     case R.id.go_message_menu :
                         inHome = false;
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.main_frameLayout, messageFragment).commit();
                         return true;
                     case R.id.go_notification_menu :
@@ -107,6 +128,7 @@ TextView recommend_user;
                         return true;
                     case R.id.go_my_menu :
                         inHome = false;
+                        transaction.replace(R.id.main_frameLayout, myFeedFragment).commit();
                         return true;
                 }
                 return false;

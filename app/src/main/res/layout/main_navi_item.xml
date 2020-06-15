@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="도서 추천"
+            android:text="토론 게시판"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"

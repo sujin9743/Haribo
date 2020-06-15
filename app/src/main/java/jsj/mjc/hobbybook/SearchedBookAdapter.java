@@ -41,7 +41,7 @@ public class SearchedBookAdapter extends RecyclerView.Adapter<SearchedBookAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SearchedBookViewHolder viewHolder, int position) {
-        viewHolder.searchedBookIv.setImageResource(R.drawable.ic_baseline_android_24); //추후 Glide 통해 이미지 변경
+        viewHolder.searchedBookIv.setImageResource(R.drawable.testimg); //추후 Glide 통해 이미지 변경
         viewHolder.searchedBookTitleTv.setText(searchedBookList.get(position).getBookTitle());
         viewHolder.searchedBookWriterTv.setText(searchedBookList.get(position).getBookWriter());
     }

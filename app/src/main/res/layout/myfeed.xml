@@ -138,13 +138,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line"
-        app:layout_constraintBottom_toTopOf="@id/myFeed_bnv"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/myFeed_bnv"
-        style="@style/Bnv_Style"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
