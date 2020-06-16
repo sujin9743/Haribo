@@ -77,11 +77,12 @@ public class UserFeedActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.home:
                 finish();
-            case R.id.overflow_report: {
-            }
-            case R.id.overflow_block: {
-            }
+            //case R.id.overflow_report: {
+            //}
+            //case R.id.overflow_block: {
+            //}
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 }
