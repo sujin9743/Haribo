@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,15 @@ public class RecommendBookActivity extends AppCompatActivity {
             RecommendBookItem data = new RecommendBookItem("책 제목"+i, "지은이"+i, "출판사"+i, (float)4.5, "(4.5)");
             booklist.add(data);
         }
-
         bookRc_recycler.setAdapter(bookListAdapter);
+
+        //RecyclerView 항목 클릭 구현
+        bookListAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getApplicationContext(), MBookInfoDetail.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -49,7 +50,15 @@ public class RecommendUserActivity extends AppCompatActivity {
             UserlistItem data = new UserlistItem("하리보", "팔로우");
             userlist.add(data);
         }
-
         userRc_recycler.setAdapter(userListAdapter);
+
+        //RecyclerView 항목 클릭 구현
+        userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getApplicationContext(), UserFeedActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -18,6 +18,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     private ArrayList<UserlistItem> userlist;
 
+    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListenr mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.mListener = listener;
+    }
+
    public class UserListViewHolder extends RecyclerView.ViewHolder {
 
        CircleImageView user_profileImg;
@@ -29,6 +39,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
            user_profileImg = itemView.findViewById(R.id.user_profileImg);
            user_id = itemView.findViewById(R.id.user_id);
            user_btn = itemView.findViewById(R.id.user_btn);
+
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) { //항목마다 ClickListener 설정
+                   int position = getAdapterPosition();
+                   if (position != RecyclerView.NO_POSITION) {
+                       if (mListener != null) {
+                           mListener.onItemClick(v, position);
+                       }
+                   }
+               }
+           });
        }
    }
 
