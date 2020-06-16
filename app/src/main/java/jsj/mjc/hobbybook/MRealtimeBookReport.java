@@ -61,8 +61,7 @@ public class MRealtimeBookReport extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class );
-                startActivity(intent);
+                finish();
             }
         });
         serchBtn.setOnClickListener(new View.OnClickListener() {
