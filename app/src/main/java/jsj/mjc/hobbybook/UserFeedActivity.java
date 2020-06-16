@@ -1,9 +1,11 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -49,8 +51,16 @@ public class UserFeedActivity extends AppCompatActivity {
             FeedReadBookItem data = new FeedReadBookItem();
             uF_readBookList.add(data);
         }
-
         bookCover_recycler.setAdapter(uF_feedReadBookAdapter);
+
+        //RecyclerView 항목 클릭 구현
+        uF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getApplicationContext(), MBookReportDetail.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

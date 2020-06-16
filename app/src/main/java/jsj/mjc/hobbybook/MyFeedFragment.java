@@ -51,8 +51,16 @@ public class MyFeedFragment extends Fragment {
             FeedReadBookItem data = new FeedReadBookItem();
             mF_readBookList.add(data);
         }
-
         myFeed_bookCover_recycler.setAdapter(mF_feedReadBookAdapter);
+
+        //RecyclerView 항목 클릭 구현
+        mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getContext(), MBookReportDetail.class);
+                startActivity(intent);
+            }
+        });
 
         //setting 버튼 클릭 시 BottomSheetDialog
         setting_btn = view.findViewById(R.id.setting_btn);
@@ -104,6 +112,7 @@ public class MyFeedFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         return view;
     }
 }

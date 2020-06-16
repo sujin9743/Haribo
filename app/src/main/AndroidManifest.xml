@@ -13,8 +13,12 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".BookReportDetail"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SignActivity"/>
         <activity android:name=".SignCompleteActivity"/>
         <activity android:name=".FindIdActivity"/>
@@ -35,21 +39,12 @@
         <activity android:name=".DebateSearchActivity"/>
         <activity android:name=".MessageViewActivity"/>
         <activity android:name=".MessageSendActivity"/>
-        <activity android:name=".MRealtimeBookReport">
-
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".MRealtimeBookReport"/>
         <activity android:name=".MRealtimeBookReportSearch"/>
         <activity android:name=".BookReportWrite"/>
         <activity android:name=".MBookInfoDetail"/>
         <activity android:name=".MBookReportDetail"/>
         <activity android:name=".MBookComment"/>
-        <activity android:name=".MNotice"/>
     </application>
 
 </manifest>

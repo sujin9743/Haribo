@@ -17,6 +17,7 @@ public class RecommendBookAdapter extends RecyclerView.Adapter<RecommendBookAdap
 
     private ArrayList<RecommendBookItem> booklist;
 
+
     public class RecommendBookViewHolder extends RecyclerView.ViewHolder {
 
         ImageView bookImg;

@@ -18,6 +18,16 @@ public class FeedReadBookAdapter extends RecyclerView.Adapter<FeedReadBookAdapte
 
     private ArrayList<FeedReadBookItem> readBookList;
 
+    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListenr mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.mListener = listener;
+    }
+
     public class FeedReadBookViewHolder extends RecyclerView.ViewHolder {
 
         ImageView bookCoverImg;
@@ -25,6 +35,18 @@ public class FeedReadBookAdapter extends RecyclerView.Adapter<FeedReadBookAdapte
         public FeedReadBookViewHolder(@NonNull View itemView) {
             super(itemView);
             bookCoverImg = itemView.findViewById(R.id.bookcoverImg);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { //항목마다 ClickListener 설정
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 
