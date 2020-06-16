@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -58,6 +59,14 @@ public class SearchActivity extends AppCompatActivity {
                     }
                     bookAdapter.notifyDataSetChanged();
                 }
+            }
+        });
+
+        bookAdapter.setOnItemClickListener(new SearchedBookAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(SearchActivity.this, MBookInfoDetail.class);
+                startActivity(intent);
             }
         });
     }

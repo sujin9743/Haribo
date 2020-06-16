@@ -54,7 +54,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public void onBindViewHolder(@NonNull UserListViewHolder viewHolder, int position) {
         viewHolder.user_profileImg.setImageResource(R.drawable.ic_baseline_android_24);
         viewHolder.user_id.setText(userlist.get(position).getId());
-        viewHolder.user_btn.setText("팔로우");
+        viewHolder.user_btn.setText(userlist.get(position).getBtnTxt());
     }
 
     @Override

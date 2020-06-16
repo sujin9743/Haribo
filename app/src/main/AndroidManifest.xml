@@ -28,6 +28,7 @@
         <activity android:name=".UserFeedActivity"/>
         <activity android:name=".ModifyProfileActivity"/>
         <activity android:name=".AlarmSettingActivity"/>
+        <activity android:name=".BlockUserListActivity"/>
         <activity android:name=".DebateAddActivity"/>
         <activity android:name=".DebateDetailActivity"/>
         <activity android:name=".DebateListActivity"/>

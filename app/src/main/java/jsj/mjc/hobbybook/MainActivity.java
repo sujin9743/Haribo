@@ -26,6 +26,7 @@ HomeFragment homeFragment = new HomeFragment();
 MessageFragment messageFragment = new MessageFragment();
 RankingFragment rankingFragment = new RankingFragment();
 MyFeedFragment myFeedFragment = new MyFeedFragment();
+MNotice mNotice = new MNotice();
 Toolbar mainToolbar, moreToolbar;
 TextView rankingToolbarText;
 boolean inHome = true;
@@ -64,6 +65,27 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
                 drawerLayout.closeDrawer(drawerView);
             }
         });
+
+        //NavigationDrawer 내부 실시간 독후감 Text 클릭 시 화면 이동
+        realtimebr = findViewById(R.id.realTime_bookReport);
+        realtimebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MRealtimeBookReport.class);
+                startActivity(intent);
+            }
+        });
+
+        //NavigationDrawer 내부 독후감 작성 Text 클릭 시 화면 이동
+        addbr = findViewById(R.id.write_bookReport);
+        addbr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), BookReportWrite.class);
+                startActivity(intent);
+            }
+        });
+
         //NavigationDrawer 내부 사용자 추천 Text 클릭 시 화면 이동
         recommend_user = findViewById(R.id.recommend_user);
         recommend_user.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +140,8 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
                         return true;
                     case R.id.go_create_menu :
                         inHome = false;
+                        Intent intent = new Intent(getApplicationContext(), BookReportWrite.class);
+                        startActivity(intent);
                         return true;
                     case R.id.go_message_menu :
                         inHome = false;
@@ -125,6 +149,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
                         return true;
                     case R.id.go_notification_menu :
                         inHome = false;
+                        transaction.replace(R.id.main_frameLayout, mNotice).commit();
                         return true;
                     case R.id.go_my_menu :
                         inHome = false;
