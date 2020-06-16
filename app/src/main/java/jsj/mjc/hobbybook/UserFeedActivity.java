@@ -75,7 +75,7 @@ public class UserFeedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
+            case android.R.id.home:
                 finish();
             //case R.id.overflow_report: {
             //}
