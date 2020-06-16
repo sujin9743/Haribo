@@ -2,6 +2,7 @@ package jsj.mjc.hobbybook;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,14 @@ public class RankingFragment extends Fragment {
             rankingArrayList.add(data);
         }
         rankingAdapter.notifyDataSetChanged();
+
+        rankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

@@ -12,6 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class SearchedBookAdapter extends RecyclerView.Adapter<SearchedBookAdapter.SearchedBookViewHolder> {
+    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListenr mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.mListener = listener;
+    }
+
     private ArrayList<SearchedBook> searchedBookList;
 
     public class SearchedBookViewHolder extends RecyclerView.ViewHolder {
@@ -24,6 +34,18 @@ public class SearchedBookAdapter extends RecyclerView.Adapter<SearchedBookAdapte
             this.searchedBookIv = view.findViewById(R.id.bookListIv);
             this.searchedBookTitleTv = view.findViewById(R.id.bookTitleTv);
             this.searchedBookWriterTv = view.findViewById(R.id.bookWriterTv);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { //항목마다 ClickListener 설정
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 

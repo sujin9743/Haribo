@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,22 @@ public class HomeFragment extends Fragment {
 
         gRankingAdapter.notifyDataSetChanged();
         hbbRankingAdapter.notifyDataSetChanged();
+
+        gRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                startActivity(intent);
+            }
+        });
+
+        hbbRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                startActivity(intent);
+            }
+        });
 
         //TODO 사용자가 선택한 장르만 Adapt 설정
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
