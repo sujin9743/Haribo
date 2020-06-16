@@ -17,6 +17,16 @@ public class RecommendBookAdapter extends RecyclerView.Adapter<RecommendBookAdap
 
     private ArrayList<RecommendBookItem> booklist;
 
+    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListenr mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.mListener = listener;
+    }
+
 
     public class RecommendBookViewHolder extends RecyclerView.ViewHolder {
 
@@ -32,6 +42,18 @@ public class RecommendBookAdapter extends RecyclerView.Adapter<RecommendBookAdap
             bookPublisher = itemView.findViewById(R.id.bookPublisher);
             bookRate = itemView.findViewById(R.id.bookRate);
             bookRateTxt = itemView.findViewById(R.id.bookRateTxt);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { //항목마다 ClickListener 설정
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 
