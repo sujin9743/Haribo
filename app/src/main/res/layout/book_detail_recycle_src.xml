@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/writerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="작가 지음"
+                />
+            <TextView
+                android:id="@+id/justBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | "
+                />
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출판사 이름"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/introBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="책소개"
+            android:textColor="#1B1B1B"/>
+        <TextView
+            android:id="@+id/bookInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가끔 생각한다 당신과 함께한 시간이 꿈 같았다라는.
+그만큼 행복했다는 의미보다, 잠에서 깨어나면 다시 꾸고 싶어도 못 꾸고, 현실엔
+없으니. 다시 꾸지 못 하는건 당연하여 슬프지 않다. 그리움이 진흙이라면 내 옷과 얼굴이
+엉망이 된대도 그 진흙을 잔뜩 묻힐것이다. 그리고 다시 깨끗히 빨고, 씻어낼 것이다.
+진흙을 묻히며 행복했고, 즐거웠고, 힘들었으리라. 그래도 묻힐 것이다. 그리고 씻어낼
+것이다. 깨끗해진. 다시 돌아온 모습을 보고 뿌듯해할것이다. 그리고 다시 진흙을 묻히리라
+"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
