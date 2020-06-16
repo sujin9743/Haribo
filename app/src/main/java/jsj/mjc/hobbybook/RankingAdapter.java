@@ -12,6 +12,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingViewHolder> {
+    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListenr mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.mListener = listener;
+    }
+
     private ArrayList<Ranking> rankingList;
 
     public class RankingViewHolder extends RecyclerView.ViewHolder {
@@ -27,6 +37,17 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
             this.rankingTitleTv = view.findViewById(R.id.rankingTitleTv);
             this.rankingWriterTv = view.findViewById(R.id.rankingWriterTv);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { //항목마다 ClickListener 설정
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 
