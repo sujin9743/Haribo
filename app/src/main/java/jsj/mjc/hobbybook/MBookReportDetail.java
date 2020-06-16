@@ -69,6 +69,14 @@ public class MBookReportDetail extends AppCompatActivity {
          }
      });
 
+     forReview = findViewById(R.id.forReview);
+     forReview.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+             Intent i = new Intent(getApplicationContext(), MBookComment.class);
+             startActivity(i);
+         }
+     });
     }
 
 }

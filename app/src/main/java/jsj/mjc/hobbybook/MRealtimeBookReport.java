@@ -29,7 +29,35 @@ public class MRealtimeBookReport extends AppCompatActivity {
         profileImg = findViewById(R.id.profileImg);
         profileText = findViewById(R.id.profileText);
         addBookReport = findViewById(R.id.addBookReport);
+        bookCreator = findViewById(R.id.bookCreator);
+        bookName = findViewById(R.id.bookName);
+        bookImgPage = findViewById(R.id.bookImgPage);
 
+
+        bookName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                startActivity(i);
+            }
+        });
+        bookCreator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                startActivity(i);
+            }
+});
+        bookImgPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                startActivity(i);
+            }
+        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
