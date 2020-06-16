@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 
 public class MNotice extends Fragment {
 
-    ImageView backBtn;
     Context mContext;
 
     @Nullable
@@ -22,13 +21,6 @@ public class MNotice extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.notice, container, false);
 
-        backBtn = view.findViewById(R.id.backBtn);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
         return view;
     }
 
