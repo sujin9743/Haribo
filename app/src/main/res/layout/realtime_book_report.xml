@@ -106,7 +106,7 @@
                         android:id="@+id/binHeart"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/binheart"
+                        android:src="@drawable/heart_line"
                         android:layout_marginTop="6dp"
                         android:layout_marginLeft="60dp"/>
                     <TextView
@@ -196,7 +196,7 @@
                         android:id="@+id/binHeart2"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/heart"
+                        android:src="@drawable/heart_line"
                         android:layout_marginTop="6dp"
                         android:layout_marginLeft="60dp"/>
                     <TextView
