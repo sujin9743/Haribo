@@ -38,6 +38,12 @@
         <activity android:name=".DebateSearchActivity"/>
         <activity android:name=".MessageViewActivity"/>
         <activity android:name=".MessageSendActivity"/>
+        <activity android:name=".MRealtimeBookReport"/>
+        <activity android:name=".MRealtimeBookReportSearch"/>
+        <activity android:name=".BookReportWrite"/>
+        <activity android:name=".MBookInfoDetail"/>
+        <activity android:name=".MBookReportDetail"/>
+
     </application>
 
 </manifest>
