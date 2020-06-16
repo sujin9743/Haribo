@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MNotice extends AppCompatActivity {
 
     ImageView backBtn;
-    
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notice);
