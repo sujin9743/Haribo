@@ -56,7 +56,7 @@ public class SelectGenreActivity extends AppCompatActivity {
         genre_backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
