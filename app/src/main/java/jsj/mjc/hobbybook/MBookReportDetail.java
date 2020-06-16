@@ -36,8 +36,7 @@ public class MBookReportDetail extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MRealtimeBookReport.class);
-                startActivity(i);
+                finish();
             }
         });
         porfileLayout.setOnClickListener(new View.OnClickListener() {
