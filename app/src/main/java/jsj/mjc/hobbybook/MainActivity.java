@@ -26,6 +26,7 @@ HomeFragment homeFragment = new HomeFragment();
 MessageFragment messageFragment = new MessageFragment();
 RankingFragment rankingFragment = new RankingFragment();
 MyFeedFragment myFeedFragment = new MyFeedFragment();
+MNotice mNotice = new MNotice();
 Toolbar mainToolbar, moreToolbar;
 TextView rankingToolbarText;
 boolean inHome = true;
@@ -148,6 +149,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
                         return true;
                     case R.id.go_notification_menu :
                         inHome = false;
+                        transaction.replace(R.id.main_frameLayout, mNotice).commit();
                         return true;
                     case R.id.go_my_menu :
                         inHome = false;
