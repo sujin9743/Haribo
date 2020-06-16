@@ -21,8 +21,7 @@ public class MRealtimeBookReportSearch extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MRealtimeBookReport.class);
-                startActivity(i);
+               finish();
             }
         });
 
