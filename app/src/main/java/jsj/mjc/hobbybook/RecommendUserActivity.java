@@ -46,7 +46,7 @@ public class RecommendUserActivity extends AppCompatActivity {
 
         //임시 데이터 삽입
         for(int i=0; i<20; i++) {
-            UserlistItem data = new UserlistItem("하리보");
+            UserlistItem data = new UserlistItem("하리보", "팔로우");
             userlist.add(data);
         }
 
