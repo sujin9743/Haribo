@@ -6,9 +6,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserFeedActivity extends AppCompatActivity {
     ArrayList<FeedReadBookItem> uF_readBookList;
     FeedReadBookAdapter uF_feedReadBookAdapter;
+    TextView follower_count_txt, following_count_txt;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,23 @@ public class UserFeedActivity extends AppCompatActivity {
             }
         });
 
+        //팔로잉/팔로워 목록 조회 화면 이동
+        follower_count_txt = findViewById(R.id.follower_count_txt);
+        follower_count_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
+                startActivity(intent);
+            }
+        });
+        following_count_txt = findViewById(R.id.following_count_txt);
+        following_count_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -77,8 +97,11 @@ public class UserFeedActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-            //case R.id.overflow_report: {
-            //}
+                return true;
+            case R.id.overflow_report:
+                ReportDialog reportDialog = new ReportDialog(UserFeedActivity.this);
+                reportDialog.show();
+                return true;
             //case R.id.overflow_block: {
             //}
             default:

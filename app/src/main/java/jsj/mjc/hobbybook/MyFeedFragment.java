@@ -30,7 +30,7 @@ public class MyFeedFragment extends Fragment {
     FeedReadBookAdapter mF_feedReadBookAdapter;
     BottomSheetDialog bottomSheetDialog;
     ImageButton setting_btn;
-    TextView alarm_setting, block_setting, genre_setting, logout;
+    TextView alarm_setting, block_setting, genre_setting, logout, myFeed_follower_count_txt, myFeed_following_count_txt;
     Button myFeed_profile_btn;
     @Nullable
     @Override
@@ -58,6 +58,24 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(getContext(), MBookReportDetail.class);
+                startActivity(intent);
+            }
+        });
+
+        //팔로잉/팔로워 목록 조회 화면 이동
+        myFeed_follower_count_txt = view.findViewById(R.id.myFeed_follower_count_txt);
+        myFeed_follower_count_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FollowListActivity.class);
+                startActivity(intent);
+            }
+        });
+        myFeed_following_count_txt = view.findViewById(R.id.myFeed_following_count_txt);
+        myFeed_following_count_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FollowListActivity.class);
                 startActivity(intent);
             }
         });
