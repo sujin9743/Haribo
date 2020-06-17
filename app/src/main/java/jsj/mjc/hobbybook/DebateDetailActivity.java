@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,6 +36,18 @@ public class DebateDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
 
+        LinearLayout writer = findViewById(R.id.dDetail_writer);
+
+        //토론글 작성자 프로필 사진, 닉네임 클릭 시 해당 사용자의 피드로 이동
+        writer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DebateDetailActivity.this, UserFeedActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //토론글에 달린 댓글 목록 구현
         RecyclerView recyclerView = findViewById(R.id.dDetail_comment_RV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -46,7 +60,7 @@ public class DebateDetailActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(gDividerItemDecoration);
 
         for (int i = 0; i < 20; i++) {
-            int j = (int)(Math.random() * 3);
+            int j = (int) (Math.random() * 3);
             DebateComment data = new DebateComment("" + i, "" + j, "댓글 예시 댓글 예시 예쁘게 보이도록 조금만 길게 써보자 으랏차 으랏차 우리는 모두 친구",
                     "댓글 작성자" + i, "2020.06.12. 12:34");
             debateCommentArrayList.add(data);
@@ -55,7 +69,8 @@ public class DebateDetailActivity extends AppCompatActivity {
 
         ImageView dDetail_iv = findViewById(R.id.dDetail_iv);
 
-        String str = ((DebateListActivity)DebateListActivity.context_dList).imgNum;
+        //이미지가 없는 토론글의 경우 ImageView를 보이지 않게 함
+        String str = ((DebateListActivity) DebateListActivity.context_dList).imgNum;
 
         if (str.equals("1"))
             dDetail_iv.setVisibility(View.GONE);

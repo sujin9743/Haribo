@@ -19,6 +19,7 @@ public class MessageFragment extends Fragment {
     private ArrayList<Message> messageArrayList;
     private MessageAdapter messageAdapter;
     Context mContext;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -37,10 +38,10 @@ public class MessageFragment extends Fragment {
 
         for (int i = 0; i < 20; i++) {
             int color;
-            int j = (int)(Math.random() * 3);
+            int j = (int) (Math.random() * 3);
             String s = "보낸사람";
             String r = " > 나";
-            if(j == 1) {
+            if (j == 1) {
                 color = getResources().getColor(R.color.beige);
             } else {
                 color = getResources().getColor(R.color.white);

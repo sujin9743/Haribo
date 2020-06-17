@@ -13,27 +13,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-//import androidx.navigation.NavController;
-//import androidx.navigation.Navigation;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-HomeFragment homeFragment = new HomeFragment();
-MessageFragment messageFragment = new MessageFragment();
-RankingFragment rankingFragment = new RankingFragment();
-MyFeedFragment myFeedFragment = new MyFeedFragment();
-MNotice mNotice = new MNotice();
-Toolbar mainToolbar, moreToolbar;
-TextView rankingToolbarText;
-boolean inHome = true;
-DrawerLayout drawerLayout;
-View drawerView;
-Button nav_closeBtn;
-TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
+    HomeFragment homeFragment = new HomeFragment();
+    MessageFragment messageFragment = new MessageFragment();
+    RankingFragment rankingFragment = new RankingFragment();
+    MyFeedFragment myFeedFragment = new MyFeedFragment();
+    MNotice mNotice = new MNotice();
+    Toolbar mainToolbar, moreToolbar;
+    TextView rankingToolbarText;
+    boolean inHome = true, inDrawer = false;
+    DrawerLayout drawerLayout;
+    View drawerView;
+    Button nav_closeBtn;
+    TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +118,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frameLayout, homeFragment).commit();
 
+        //툴바의 검색 버튼 누를 시 도서 검색창 오픈
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,24 +131,29 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                switch (item.getItemId()){
-                    case R.id.go_home_menu :
+                switch (item.getItemId()) {
+                    //BottomNavigationView 첫 번째 아이템 누를 시 홈으로 이동
+                    case R.id.go_home_menu:
                         goHome();
                         return true;
-                    case R.id.go_create_menu :
+                    //BottomNavigationView 두 번째 아이템 누를 시 독후감 작성 화면 오픈
+                    case R.id.go_create_menu:
                         inHome = false;
                         Intent intent = new Intent(getApplicationContext(), BookReportWrite.class);
                         startActivity(intent);
                         return true;
-                    case R.id.go_message_menu :
+                    //BottomNavigationView 세 번째 아이템 누를 시 쪽지함으로 이동
+                    case R.id.go_message_menu:
                         inHome = false;
                         transaction.replace(R.id.main_frameLayout, messageFragment).commit();
                         return true;
-                    case R.id.go_notification_menu :
+                    //BottomNavigationView 네 번째 아이템 누를 시 알림으로 이동
+                    case R.id.go_notification_menu:
                         inHome = false;
                         transaction.replace(R.id.main_frameLayout, mNotice).commit();
                         return true;
-                    case R.id.go_my_menu :
+                    //BottomNavigationView 다섯 번째 아이템 누를 시 마이피드로 이동
+                    case R.id.go_my_menu:
                         inHome = false;
                         transaction.replace(R.id.main_frameLayout, myFeedFragment).commit();
                         return true;
@@ -163,7 +165,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         main_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    goHome();
+                goHome();
             }
         });
     }
@@ -174,16 +176,19 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 
         }
+
         //Drawer가 오픈된 상황일 때 호출
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-
+            inDrawer = true;
         }
+
         //Drawer가 닫힌 상황일 때 호출
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
-
+            inDrawer = false;
         }
+
         //특정 상태가 변경될 때 호출
         @Override
         public void onDrawerStateChanged(int newState) {
@@ -204,7 +209,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
     }
 
     //장르별 순위 더보기 클릭 시
-    public void moreGenreClick(View v){
+    public void moreGenreClick(View v) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frameLayout, rankingFragment).commit();
         mainToolbar.setVisibility(View.INVISIBLE);
@@ -212,8 +217,9 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         inHome = false;
         rankingToolbarText.setText(HomeFragment.getSelectedGenre());
     }
+
     //하비북 사용자 순위 더보기 클릭 시
-    public void moreHBBClick(View v){
+    public void moreHBBClick(View v) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frameLayout, rankingFragment).commit();
         mainToolbar.setVisibility(View.INVISIBLE);
@@ -222,7 +228,7 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         rankingToolbarText.setText("하비북 베스트셀러");
     }
 
-    public void goHome() {
+    public void goHome() { //홈 화면으로 이동하는 함수
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frameLayout, homeFragment).commit();
         mainToolbar.setVisibility(View.VISIBLE);
@@ -230,11 +236,15 @@ TextView realtimebr, addbr, recommend_user, recommend_book, go_debage;
         inHome = true;
     }
 
-    public void onBackPressed(){ //뒤로가기 버튼 눌렀을 때 처리
-        if (inHome){ //순위 더보기 화면에 있다면 Home화면으로 돌아감
-            super.onBackPressed();
+    public void onBackPressed() { //뒤로가기 버튼 눌렀을 때 처리
+        if (inDrawer) { //Drawer가 열려 있을 경우
+            drawerLayout.closeDrawer(drawerView);
         } else {
-            goHome();
+            if (inHome) { //HomeFragment를 보고 있는지 여부
+                super.onBackPressed();
+            } else {
+                goHome();
+            }
         }
     }
 }

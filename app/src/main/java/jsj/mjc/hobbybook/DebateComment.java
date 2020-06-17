@@ -47,7 +47,7 @@ public class DebateComment {
         this.dcDate = dcDate;
     }
 
-    DebateComment (String dcNum, String rcNum, String dcText, String dcWriter, String dcDate) {
+    DebateComment(String dcNum, String rcNum, String dcText, String dcWriter, String dcDate) {
         this.dcNum = dcNum;
         this.rcNum = rcNum;
         this.dcText = dcText;

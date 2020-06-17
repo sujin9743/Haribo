@@ -75,10 +75,11 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
 
         viewHolder.debateCommentTv.setText(String.valueOf(debateList.get(position).getDebateComment()));
 
+        //이미지가 없는 토론글은 이미지 미리보기 ImageView보이지 않음
         if (debateList.get(position).getDebateImageUrl().equals("1"))
             viewHolder.debateIv.setVisibility(View.GONE);
         else
-            viewHolder.debateIv.setImageResource(R.drawable.ic_baseline_android_24); //추후 Glide 통해 이미지 변경
+            viewHolder.debateIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
     }
 
     public int getItemCount() {

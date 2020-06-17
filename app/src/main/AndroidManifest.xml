@@ -33,6 +33,7 @@
         <activity android:name=".ModifyProfileActivity"/>
         <activity android:name=".AlarmSettingActivity"/>
         <activity android:name=".BlockUserListActivity"/>
+        <activity android:name=".FollowListActivity"/>
         <activity android:name=".DebateAddActivity"/>
         <activity android:name=".DebateDetailActivity"/>
         <activity android:name=".DebateListActivity"/>

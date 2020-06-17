@@ -41,7 +41,7 @@ public class DebateListActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(gDividerItemDecoration);
 
         for (int i = 0; i < 20; i++) {
-            int j = (int)(Math.random() * 3);
+            int j = (int) (Math.random() * 3);
             Debate data = new Debate("", "토론글 제목" + i, "토론글의 내용을 한 줄로 보는 거 어떻게 생각해? 완전 좋지 않니",
                     "2020.06.11 14:16", "작성자" + i, 20, "" + j);
             debateArrayList.add(data);
