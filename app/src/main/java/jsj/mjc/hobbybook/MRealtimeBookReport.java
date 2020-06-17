@@ -2,9 +2,11 @@ package jsj.mjc.hobbybook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ public class MRealtimeBookReport extends AppCompatActivity {
     CircleImageView profileImg;
     TextView profileText, bookName, bookCreator, likeCount, commentCnt;
     ViewPager bookImgPage;
+    LinearLayout viewPageLayout, commentLayout;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,8 @@ public class MRealtimeBookReport extends AppCompatActivity {
         addBookReport = findViewById(R.id.addBookReport);
         bookCreator = findViewById(R.id.bookCreator);
         bookName = findViewById(R.id.bookName);
-        bookImgPage = findViewById(R.id.bookImgPage);
+        viewPageLayout = findViewById(R.id.viewPageLayout);
+        commentLayout  = findViewById(R.id.commentLayout);
 
 
         bookName.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +54,7 @@ public class MRealtimeBookReport extends AppCompatActivity {
                 startActivity(i);
             }
 });
-        bookImgPage.setOnClickListener(new View.OnClickListener() {
+      viewPageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -91,6 +95,21 @@ public class MRealtimeBookReport extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(),BookReportWrite.class);
                 startActivity(i);
             }
+        });
+        commentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),MBookComment.class);
+                startActivity(i);
+            }
+        });
+
+        Heart = findViewById(R.id.Heart);
+        Heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+
         });
     }
 

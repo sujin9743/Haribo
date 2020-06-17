@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ public class MBookInfoDetail extends AppCompatActivity {
 
     ImageView backBtn;
     LinearLayout letsGoReport;
+    TextView reviewBtn;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
@@ -28,6 +30,15 @@ public class MBookInfoDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                startActivity(i);
+            }
+        });
+
+        reviewBtn = findViewById(R.id.reviewBtn);
+        reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MReviewDialog.class);
                 startActivity(i);
             }
         });

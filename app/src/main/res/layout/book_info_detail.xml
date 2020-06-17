@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/allLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -66,6 +67,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             style="?android:attr/ratingBarStyleIndicator"/>
                         <TextView
+                            android:id="@+id/reviewBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="리뷰 남기기"
@@ -80,8 +82,17 @@
                     android:id="@+id/bookDetailRecycle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/beige"/>
+                    android:background="@color/beige">
 
+                </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviewLayout"
+                    android:backgroundTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/beige">
+
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
         </ScrollView>
@@ -90,10 +101,9 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="55dp"
             android:background="@color/beige">
 
             <TextView
@@ -110,5 +120,12 @@
                 android:src="@drawable/letsgo_bookreport"
                 android:layout_marginLeft="270dp"/>
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/userRc_bnv"
+        style="@style/Bnv_Style"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
