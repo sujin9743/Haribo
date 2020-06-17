@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/dDetail_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -43,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10sp"
-                    android:text="작성자닉네임"
+                    android:text="하리보"
                     android:textColor="#000000"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -54,7 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="250sp"
                 android:layout_margin="10sp"
-                android:src="@color/colorAccent"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/testimg" />
 
             <TextView
                 android:id="@+id/dDetail_title_tv"
@@ -81,32 +83,33 @@
                 android:padding="10sp">
 
                 <TextView
+                    android:id="@+id/dDetail_date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2020.06.10. 12:16"
-                    android:textColor="#275925"
-                    android:id="@+id/dDetail_date_tv"/>
+                    android:textColor="#275925" />
 
                 <View
                     android:layout_width="0sp"
                     android:layout_height="0sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/dDetail_comNum_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:drawableStart="@drawable/ic_outline_chat_bubble_outline_24"
+                    android:drawableTint="#275925"
                     android:padding="5sp"
                     android:text="12"
-                    android:drawableTint="#275925"
-                    android:textColor="#275925"
-                    android:layout_gravity="end"
-                    android:id="@+id/dDetail_comNum_tv"/>
+                    android:textColor="#275925" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1sp"
-                android:background="#8E8E8E"/>
+                android:background="#8E8E8E" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dDetail_comment_RV"
