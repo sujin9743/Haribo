@@ -79,7 +79,7 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
         if (debateList.get(position).getDebateImageUrl().equals("1"))
             viewHolder.debateIv.setVisibility(View.GONE);
         else
-            viewHolder.debateIv.setImageResource(R.drawable.ic_baseline_android_24); //추후 Glide 통해 이미지 변경
+            viewHolder.debateIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
     }
 
     public int getItemCount() {
