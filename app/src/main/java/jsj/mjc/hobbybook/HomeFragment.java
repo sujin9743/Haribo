@@ -24,6 +24,8 @@ public class HomeFragment extends Fragment {
     private ArrayList<Ranking> gRankingArrayList;
     private ArrayList<Ranking> hbbRankingArrayList;
     private RankingAdapter gRankingAdapter;
+
+
     private RankingAdapter hbbRankingAdapter;
     private int count;
     private int max = 5; //불러올 순위 수
