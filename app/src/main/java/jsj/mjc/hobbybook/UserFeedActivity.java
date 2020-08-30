@@ -48,9 +48,6 @@ public class UserFeedActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         bookCover_recycler.setLayoutManager(gridLayoutManager);
 
-        //recyclerView 구분선 추가
-        //bookRc_recycler.addItemDecoration(new DividerItemDecoration(bookRc_recycler.getContext(), 1));
-
         //todo 1. RecyclerView 책표지 데이터 삽입
         for(int i=0; i<10; i++) {
             FeedReadBookItem data = new FeedReadBookItem();
