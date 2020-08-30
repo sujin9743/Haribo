@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".BookReportWrite">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,7 +41,7 @@
         <activity android:name=".MessageSendActivity"/>
         <activity android:name=".MRealtimeBookReport"/>
         <activity android:name=".MRealtimeBookReportSearch"/>
-        <activity android:name=".BookReportWrite"/>
+
         <activity android:name=".MBookInfoDetail"/>
         <activity android:name=".MBookReportDetail"/>
         <activity android:name=".MBookComment"/>
