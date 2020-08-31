@@ -12,4 +12,5 @@
     <color name="lightGreen">#65E65E</color>
     <color name="beige">#EDE5C2</color>
     <color name="notice">#FCF9F0</color>
+    <color name="feedLine">#BDBDBD</color>
 </resources>

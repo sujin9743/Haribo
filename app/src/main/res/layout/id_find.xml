@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="아이디 찾기"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
     </androidx.appcompat.widget.Toolbar>
@@ -37,7 +37,7 @@
         android:layout_marginLeft="30dp"
         android:text="E-mail"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -61,7 +61,7 @@
         android:layout_marginTop="150dp"
         android:text="@"
         android:textSize="20sp"
-        android:textColor="#285A25"
+        android:textColor="@color/darkGreen"
         app:layout_constraintLeft_toRightOf="@id/email_fId_edt"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,8 +93,8 @@
         android:layout_marginTop="70dp"
         android:text="확 인"
         android:textSize="20sp"
-        android:textColor="#ffffff"
-        android:background="#000000"
+        android:textColor="@color/white"
+        android:background="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_Ck_Txt"/>
