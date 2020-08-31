@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="아이디 찾기"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
     </androidx.appcompat.widget.Toolbar>
@@ -36,7 +36,7 @@
         android:layout_marginTop="150dp"
         android:text="회원님의 아이디는"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="190dp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="230dp"
         android:text="입니다."
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -69,8 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="330dp"
         android:text="비 밀 번 호 찾 기"
-        android:textColor="#ffffff"
-        android:background="#000000"
+        android:textColor="@color/white"
+        android:background="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/login_Btn"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -80,9 +80,9 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="330dp"
-        android:background="#000000"
+        android:background="@color/black"
         android:text="로 그 인 하 기"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toRightOf="@id/findPw_Btn"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
