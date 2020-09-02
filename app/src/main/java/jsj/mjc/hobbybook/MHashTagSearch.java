@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+//바텀에서 해시태그 아이콘 클릭시 넘어가는 플래그먼트
 public class MHashTagSearch extends Fragment {
     @Nullable
     @Override

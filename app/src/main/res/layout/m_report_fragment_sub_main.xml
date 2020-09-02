@@ -43,13 +43,14 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:orientation="vertical">
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="도서 제목"
                 android:textSize="20dp"
                 android:textColor="#000000"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:background="@null"/>
             <EditText
                 android:layout_width="380dp"
                 android:layout_height="40dp"
@@ -62,7 +63,6 @@
                     android:id="@+id/hashTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#임시"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="@color/basicGreen"/>
@@ -70,7 +70,6 @@
                     android:id="@+id/hashTag2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#임시해"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
@@ -79,7 +78,6 @@
                     android:id="@+id/hashTag3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#임시해시태그"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
@@ -88,24 +86,22 @@
                     android:id="@+id/hashTag4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#임시해시태그"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/basicGreen"/>
             </LinearLayout>
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="별이 가득한 여름밤에 우리 눈부시게 아름다운 그림, 모든게 다 바래다 지워져도 간직하고 있을게 내 눈을 보면서 넌 어떤 생각해 나는 별 보면서 널 생각해 넌 알 수 있겠니 지금 우리 사이 세상에서 제일 특별해 별이 가득한 여름밤에 우리 눈부시게 아름다운 그림 다시 그 날이 오면 "/>
+            android:background="@null"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/testimg"/>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
             </LinearLayout>
         </ScrollView>

@@ -48,7 +48,7 @@ public class BookReportWrite extends AppCompatActivity {
     }
 
 
-    //바텀 공개유무 아이콘 클릭시
+    //자물쇠 아이콘 클릭시 이벤트 처리
     private class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
