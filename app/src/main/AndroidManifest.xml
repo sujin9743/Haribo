@@ -18,7 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignActivity"/>
-        <activity android:name=".BookReportWrite"/>
         <activity android:name=".SignCompleteActivity"/>
         <activity android:name=".FindIdActivity"/>
         <activity android:name=".FindIdResultActivity"/>
