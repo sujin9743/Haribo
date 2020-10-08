@@ -44,6 +44,9 @@
         <activity android:name=".MBookInfoDetail"/>
         <activity android:name=".MBookReportDetail"/>
         <activity android:name=".MBookComment"/>
+        <activity android:name=".MBookWriteMain"/>
+        <activity android:name=".MHashTagSearch"/>
+        <activity android:name=".MBookSearch"/>
 
     </application>
 

@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         addbr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BookReportWrite.class);
+                Intent intent = new Intent(getApplicationContext(), MBookWriteMain.class);
                 startActivity(intent);
             }
         });
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                     //BottomNavigationView 두 번째 아이템 누를 시 독후감 작성 화면 오픈
                     case R.id.go_create_menu:
                         inHome = false;
-                        Intent intent = new Intent(getApplicationContext(), BookReportWrite.class);
+                        Intent intent = new Intent(getApplicationContext(), MBookWriteMain.class);
                         startActivity(intent);
                         return true;
                     //BottomNavigationView 세 번째 아이템 누를 시 쪽지함으로 이동

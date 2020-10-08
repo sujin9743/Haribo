@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -11,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MBookWriteMain extends AppCompatActivity {
-    ImageView backBtn, bookSearchIcon, addImgIcon, hashIcon, keyIcon;
+    ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon;
     TextView shareBtn;
 
     int i = 1;
@@ -24,7 +25,7 @@ public class MBookWriteMain extends AppCompatActivity {
         backBtn = findViewById(R.id.backBtn);
         bookSearchIcon = findViewById(R.id.bookSearchIcon);
         addImgIcon = findViewById(R.id.addImgIcon);
-        hashIcon =findViewById(R.id.hashTag);
+        hashTagIcon =findViewById(R.id.hashTagIcon);
         keyIcon = findViewById(R.id.keyIcon);
         shareBtn = findViewById(R.id.shareBtn);
 
@@ -32,7 +33,8 @@ public class MBookWriteMain extends AppCompatActivity {
         bookSearchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(getApplicationContext(),MBookSearch.class);
+                startActivity(i);
             }
         });
         addImgIcon.setOnClickListener(new View.OnClickListener() {
@@ -41,10 +43,11 @@ public class MBookWriteMain extends AppCompatActivity {
 
             }
         });
-        hashIcon.setOnClickListener(new View.OnClickListener() {
+        hashTagIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(getApplicationContext(),MHashTagSearch.class);
+                startActivity(i);
             }
         });
         keyIcon.setOnClickListener(new View.OnClickListener() { //독후감 게시물 공개유무
@@ -52,7 +55,11 @@ public class MBookWriteMain extends AppCompatActivity {
             public void onClick(View view) {
                 //i변수로 공개윰 판별(1:공개, 0:비공개)
               if(i==1){     //공개 상태이므로 비공개로 전환
-
+                  keyIcon.setImageResource(R.drawable.ic_lock_24dp);
+                  i=0;
+              }else if(i==0){
+                  keyIcon.setImageResource(R.drawable.ic_lock_open_24dp);
+                  i=1;
               }
             }
         });
