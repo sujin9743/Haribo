@@ -31,7 +31,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class RankingFragment extends Fragment {
-    private ArrayList<Ranking> rankingArrayList = null;
+    ArrayList<Ranking> rankingArrayList = new ArrayList<>();
     //private RankingAdapter rankingAdapter;
     RecyclerView recyclerView;
     private int count;
@@ -47,10 +47,9 @@ public class RankingFragment extends Fragment {
     TextView rankingNumTv, rankingTitleTv, rankingWriterTv;
     ImageView rankingIv;
 
-
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
         rankingNumTv = view.findViewById(R.id.rankingNumTv);
@@ -59,6 +58,8 @@ public class RankingFragment extends Fragment {
         rankingIv = view.findViewById(R.id.rankingIv);
 
         recyclerView = view.findViewById(R.id.rankingRV);
+        recyclerView.setHasFixedSize(true);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -87,7 +88,7 @@ public class RankingFragment extends Fragment {
     }
 
     //알라딘 API에서 데이터 불러오기
-    public class MyAsyncTask extends AsyncTask<String, Void, String> {
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... strings) {
 
@@ -107,44 +108,41 @@ public class RankingFragment extends Fragment {
                 XmlPullParser parser = factory.newPullParser();
                 parser.setInput(new InputStreamReader(is, "UTF-8"));
 
-                String tag;
                 int eventType = parser.getEventType();
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     switch (eventType) {
                         case XmlPullParser.START_DOCUMENT:
-                            rankingArrayList = new ArrayList<Ranking>();
                             break;
-                        case XmlPullParser.END_DOCUMENT:
+                        case XmlPullParser.START_TAG:
+                            if(parser.getName().equals("item")) {
+                                item = new Ranking();
+                            }
+                            else if(parser.getName().equals("bestRank")) {
+                                parser.next();
+                                if(item!=null) item.setRankingNum(parser.getText());
+                            }
+                            else if(parser.getName().equals("title")) {
+                                parser.next();
+                                if(item!=null) item.setRankingTitle(parser.getText());
+                            }
+                            else if(parser.getName().equals("author")) {
+                                parser.next();
+                                if(item!=null) item.setRankingWriter(parser.getText());
+                            }
+                            else if(parser.getName().equals("cover")) {
+                                parser.next();
+                                if(item!=null) item.setRankingImageUrl(parser.getText());
+                            }
+                            break;
+                        case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
                             if(parser.getName().equals("item") && item != null) {
                                 rankingArrayList.add(item);
                             }
                             break;
-                        case XmlPullParser.START_TAG:
-                            if(parser.getName().equals("item")) {
-                                item = new Ranking();
-                            }
-                            if(parser.getName().equals("bestRank")) b_bestRank = true;
-                            if(parser.getName().equals("isbn")) b_title = true;
-                            if(parser.getName().equals("author")) b_author = true;
-                            if(parser.getName().equals("cover")) b_cover = true;
-                            break;
-                        case XmlPullParser.TEXT:
-                            if(b_bestRank) {
-                                item.setRankingNum(parser.getText());
-                                b_bestRank = false;
-                            } else if(b_title) {
-                                item.setRankingTitle(parser.getText());
-                                b_title = false;
-                            } else if(b_author) {
-                                item.setRankingWriter(parser.getText());
-                                b_author = false;
-                            } else if(b_cover) {
-                                item.setRankingImageUrl(parser.getText());
-                                b_cover = false;
-                            }
+                        case XmlPullParser.END_DOCUMENT:
                             break;
                     }
                     eventType = parser.next();
@@ -163,7 +161,7 @@ public class RankingFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            RankingAdapter rankingAdapter = new RankingAdapter(getContext() ,rankingArrayList);
+            RankingAdapter rankingAdapter = new RankingAdapter(mContext, rankingArrayList);
             recyclerView.setAdapter(rankingAdapter);
         }
     }
