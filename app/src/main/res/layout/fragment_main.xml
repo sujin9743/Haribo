@@ -13,6 +13,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <!-- 사용자가 선택한 장르 중 순위 조회를 원하는 분야 선택 가능 -->
+
                 <Spinner
                     android:id="@+id/spinnerRaking"
                     android:layout_width="wrap_content"

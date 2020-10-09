@@ -45,9 +45,7 @@
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:src="@drawable/testimg"
-                    android:background="@color/testColor"/>
+                    android:layout_height="250dp"/>
                 <TextView
                     android:id="@+id/bookName"
                     android:layout_width="wrap_content"

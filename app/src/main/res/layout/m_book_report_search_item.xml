@@ -7,8 +7,6 @@
     android:id="@+id/bookReportImg"
     android:layout_width="100dp"
     android:layout_height="150dp"
-    android:src="@drawable/test_img"
-    android:background="@color/testColor"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     android:layout_margin="20dp"/>
@@ -25,7 +23,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="바람이 숨 쉬어 당신의 머리를 만지다"
             android:textColor="@color/darkGreen"
             android:textSize="15dp"
             android:textStyle="bold"
@@ -36,28 +33,19 @@
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저자이름"
-                />
+                android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" | "/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="출판사"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
         <TextView
             android:layout_width="250dp"
             android:layout_height="110dp"
-            android:textColor="@color/darkGray"
-            android:text="I know I want it 입에 바른 소린 이제 그만할게
-Cause I deserve it deserve it 혹시 잠깐 내가 미워지더라도 걱정 안 할게
-Cause I know you I know you 내 눈을 자꾸 피해봐 네 맘을 자꾸 숨겨봐 나에게서
-도망쳐봐 No no 감았던 눈을 떴을 때 문득 내가 떠오를 때 You are gonna be mine again
-You're gonna say more more more more more and more 멈추지 못해 More more more and more
-그러니 한 번 더 I wanna have more more more more more and more"/>
+            android:textColor="@color/darkGray" />
     </LinearLayout>
 
 
