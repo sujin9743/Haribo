@@ -3,6 +3,8 @@ package jsj.mjc.hobbybook;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingViewHolder> {
+    private LayoutInflater mInflater;
+    private Context mContext;
+
     public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
         void onItemClick(View v, int position);
     }
@@ -51,8 +56,10 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         }
     }
 
-    public RankingAdapter(ArrayList<Ranking> list) {
+    public RankingAdapter(Context context, ArrayList<Ranking> list) {
         this.rankingList = list;
+        this.mInflater = LayoutInflater.from(context);
+        this.mContext = context;
     }
 
     @NonNull
@@ -66,7 +73,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
     @Override
     public void onBindViewHolder(@NonNull RankingViewHolder viewHolder, int position) {
         viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
-        viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
+        //viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
         viewHolder.rankingWriterTv.setText(rankingList.get(position).getRankingWriter());
     }

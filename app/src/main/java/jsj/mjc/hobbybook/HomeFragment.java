@@ -44,11 +44,11 @@ public class HomeFragment extends Fragment {
         hbbRecyclerView.setLayoutManager(hbbLinearLayoutManager);
 
         gRankingArrayList = new ArrayList<>();
-        gRankingAdapter = new RankingAdapter(gRankingArrayList);
+        gRankingAdapter = new RankingAdapter(getContext(), gRankingArrayList);
         gRecyclerView.setAdapter(gRankingAdapter);
 
         hbbRankingArrayList = new ArrayList<>();
-        hbbRankingAdapter = new RankingAdapter(hbbRankingArrayList);
+        hbbRankingAdapter = new RankingAdapter(getContext(), hbbRankingArrayList);
         hbbRecyclerView.setAdapter(hbbRankingAdapter);
 
         DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(mContext, gLinearLayoutManager.getOrientation());
@@ -57,15 +57,15 @@ public class HomeFragment extends Fragment {
         DividerItemDecoration hbbDividerItemDecoration = new DividerItemDecoration(mContext, hbbLinearLayoutManager.getOrientation());
         gRecyclerView.addItemDecoration(hbbDividerItemDecoration);
         //TODO 추후에 알라딘 API, 평점 및 리뷰에서 가져온 데이터 삽입
-        for (count = 1; count <= max; count++) { //TODO Spinner 값에 따른 데이터 변경 처리
-            Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
-            gRankingArrayList.add(data);
-        }
+        //for (count = 1; count <= max; count++) { //TODO Spinner 값에 따른 데이터 변경 처리
+        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
+        //    gRankingArrayList.add(data);
+        //}
 
-        for (count = 1; count <= max; count++) {
-            Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
-            hbbRankingArrayList.add(data);
-        }
+        //for (count = 1; count <= max; count++) {
+        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
+        //    hbbRankingArrayList.add(data);
+        //}
 
         gRankingAdapter.notifyDataSetChanged();
         hbbRankingAdapter.notifyDataSetChanged();

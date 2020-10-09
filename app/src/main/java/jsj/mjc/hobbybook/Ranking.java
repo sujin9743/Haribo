@@ -38,10 +38,10 @@ public class Ranking {
         this.rankingWriter = rankingWriter;
     }
 
-    public Ranking(String rankingNum, String rankingImageUrl, String rankingTitle, String rankingWriter) {
-        this.rankingNum = rankingNum;
-        this.rankingImageUrl = rankingImageUrl;
-        this.rankingTitle = rankingTitle;
-        this.rankingWriter = rankingWriter;
-    }
+    //public Ranking(String rankingNum, String rankingImageUrl, String rankingTitle, String rankingWriter) {
+    //    this.rankingNum = rankingNum;
+    //    this.rankingImageUrl = rankingImageUrl;
+    //    this.rankingTitle = rankingTitle;
+    //    this.rankingWriter = rankingWriter;
+    //}
 }
