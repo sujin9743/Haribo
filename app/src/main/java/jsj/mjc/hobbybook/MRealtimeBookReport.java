@@ -92,7 +92,7 @@ public class MRealtimeBookReport extends AppCompatActivity {
         addBookReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),BookReportWrite.class);
+                Intent i = new Intent(getApplicationContext(),MBookWriteMain.class);
                 startActivity(i);
             }
         });

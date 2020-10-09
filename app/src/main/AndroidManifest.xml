@@ -14,8 +14,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -44,10 +44,13 @@
         <activity android:name=".MessageSendActivity"/>
         <activity android:name=".MRealtimeBookReport"/>
         <activity android:name=".MRealtimeBookReportSearch"/>
-        <activity android:name=".BookReportWrite"/>
+
         <activity android:name=".MBookInfoDetail"/>
         <activity android:name=".MBookReportDetail"/>
         <activity android:name=".MBookComment"/>
+        <activity android:name=".MBookWriteMain"/>
+        <activity android:name=".MHashTagSearch"/>
+        <activity android:name=".MBookSearch"/>
 
     </application>
 

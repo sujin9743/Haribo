@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+//조민주
 
 public class MBookReportDetail extends AppCompatActivity {
     ImageView backBtn,heartIcon;
@@ -54,7 +55,10 @@ public class MBookReportDetail extends AppCompatActivity {
                 startActivity(i);
             }
         });
-*/     forBookInfo.setOnClickListener(new View.OnClickListener() {
+
+*/
+    //도서 정보 상세 페이지로 이동
+    forBookInfo.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
              Intent i = new Intent(getApplicationContext(),MBookInfoDetail.class);
@@ -68,6 +72,7 @@ public class MBookReportDetail extends AppCompatActivity {
          }
      });
 
+     //리뷰 페이지으로 이동
      forReview = findViewById(R.id.forReview);
      forReview.setOnClickListener(new View.OnClickListener() {
          @Override
