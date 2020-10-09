@@ -40,4 +40,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.1.1'//Toolbar 사용을 위함
     implementation 'de.hdodenhof:circleimageview:3.0.0' //circleImageView 사용을 위함
     implementation 'com.google.android.material:material:1.2.0-alpha02' //BottomSheetDialog 사용을 위함
+    implementation 'com.github.bumptech.glide:glide:4.9.0' //Glide사용
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }

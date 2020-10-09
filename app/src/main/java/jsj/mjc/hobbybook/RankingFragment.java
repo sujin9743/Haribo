@@ -86,6 +86,7 @@ public class RankingFragment extends Fragment {
         return view;
     }
 
+    //알라딘 API에서 데이터 불러오기
     public class MyAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -126,7 +127,7 @@ public class RankingFragment extends Fragment {
                                 item = new Ranking();
                             }
                             if(parser.getName().equals("bestRank")) b_bestRank = true;
-                            if(parser.getName().equals("Title")) b_title = true;
+                            if(parser.getName().equals("isbn")) b_title = true;
                             if(parser.getName().equals("author")) b_author = true;
                             if(parser.getName().equals("cover")) b_cover = true;
                             break;

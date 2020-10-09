@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingViewHolder> {
@@ -76,6 +78,8 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         //viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
         viewHolder.rankingWriterTv.setText(rankingList.get(position).getRankingWriter());
+        //이미지 로딩 라이브러리 Glide 사용
+        Glide.with(viewHolder.itemView.getContext()).load(rankingList.get(position).getRankingImageUrl()).into(viewHolder.rankingIv);
     }
 
     public int getItemCount() {
