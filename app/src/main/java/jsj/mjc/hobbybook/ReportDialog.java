@@ -18,6 +18,7 @@ public class ReportDialog extends Dialog{
     RadioGroup radioGroup;
     RadioButton [] radioButtons = new RadioButton[cNum];
     static int [] rbtnIds = new int[cNum];
+
     public ReportDialog(Context context) {
         super(context);
         mContext = context;

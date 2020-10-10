@@ -38,8 +38,9 @@ public class MBookInfoDetail extends AppCompatActivity {
         reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MReviewDialog.class);
-                startActivity(i);
+                MReviewDialog mReviewDialog = new MReviewDialog(MBookInfoDetail.this);
+                mReviewDialog.show();
+
             }
         });
 
