@@ -111,8 +111,11 @@ public class UserFeedActivity extends AppCompatActivity {
                 ReportDialog reportDialog = new ReportDialog(UserFeedActivity.this);
                 reportDialog.show();
                 return true;
-            //case R.id.overflow_block: {
-            //}
+            case R.id.overflow_block: {
+                MCutOffDialog mCutOffDialog = new MCutOffDialog(UserFeedActivity.this);
+                mCutOffDialog.show();
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
