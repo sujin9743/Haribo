@@ -25,12 +25,31 @@ public class UserFeedActivity extends AppCompatActivity {
     ArrayList<FeedReadBookItem> uF_readBookList;
     FeedReadBookAdapter uF_feedReadBookAdapter;
     TextView follower_count_txt, following_count_txt;
-    Button message_btn;
+    Button message_btn,followBtn;
+    int i = 0;// 팔로우 유무 확인(조민주)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_feed);
 
+
+        //조민주 추가 : 팔로잉 버튼 클릭 반응 기능
+        followBtn = findViewById(R.id.follow_btn);
+        followBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //0이면 팔로잉 전, 1이면 팔로잉한 상태
+                if(i==0){
+                    followBtn.setBackgroundResource(R.drawable.round_btn_gray);
+                    followBtn.setText("팔로잉");
+                    i++;
+                }else if(i==1){
+                    followBtn.setBackgroundResource(R.drawable.round_btn_darkgreen);
+                    followBtn.setText("팔로우");
+                    i--;
+                }
+            }
+        });
 
         //툴바 설정
         Toolbar userFeed_toolbar = (Toolbar) findViewById(R.id.userFeed_toolbar);
