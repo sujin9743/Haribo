@@ -58,6 +58,14 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         }
     }
 
+    public void removeItem(int position) {
+        for(int i=0; i<5; i++) {
+            rankingList.remove(position);
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+        }
+    }
+
     public RankingAdapter(Context context, ArrayList<Ranking> list) {
         this.rankingList = list;
         this.mInflater = LayoutInflater.from(context);

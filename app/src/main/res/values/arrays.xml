@@ -2,7 +2,30 @@
 <resources>
     <string-array name="spinnerGenre">
         <item>종합 베스트셀러</item>
-        <item>시/소설/수필</item>
+        <item>가정/요리/뷰티</item>
+        <item>건강/취미/레저</item>
+        <item>경제경영</item>
+        <item>고전</item>
+        <item>공무원 수험서</item>
+        <item>과학</item>
+        <item>대학교재/전문서적</item>
+        <item>만화</item>
+        <item>사회과학</item>
+        <item>소설/시/희곡</item>
+        <item>수험서/자격증</item>
+        <item>어린이</item>
+        <item>에세이</item>
+        <item>여행</item>
+        <item>역사</item>
+        <item>예술/대중문화</item>
+        <item>외국어</item>
+        <item>유아</item>
+        <item>인문학</item>
+        <item>자기계발</item>
+        <item>장르소설</item>
+        <item>잡지</item>
+        <item>전집/중고전집</item>
+        <item>종교/역학</item>
     </string-array>
 
     <string-array name="question">
