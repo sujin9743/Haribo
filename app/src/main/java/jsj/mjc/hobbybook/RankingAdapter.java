@@ -58,8 +58,16 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         }
     }
 
-    public void removeItem(int position) {
+    public void removeHFItem(int position) {
         for(int i=0; i<5; i++) {
+            rankingList.remove(position);
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void removeRFItem(int position) {
+        for(int i=0; i<20; i++) {
             rankingList.remove(position);
             notifyItemRemoved(position);
             notifyDataSetChanged();

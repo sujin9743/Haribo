@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -76,7 +77,7 @@ public class RankingFragment extends Fragment {
         protected String doInBackground(String... strings) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + dataKey +
-                    "&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=Book&output=xml&Version=20131101";
+                    "&QueryType=Bestseller&CategoryId=" + HomeFragment.selectGenreNum + "&MaxResults=20&start=1&SearchTarget=Book&output=xml&Version=20131101";
 
             try {
                 URL url = new URL(requestUrl);
@@ -140,6 +141,9 @@ public class RankingFragment extends Fragment {
             super.onPostExecute(s);
 
             RankingAdapter rankingAdapter = new RankingAdapter(mContext, rankingArrayList);
+            if(rankingArrayList.size() > 20) {
+                rankingAdapter.removeRFItem(0);
+            }
             recyclerView.setAdapter(rankingAdapter);
 
             rankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {

@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     private int max = 5; //불러올 순위 수
     private Context mContext;
     public static String selectedGenre;
-    public int selectGenreNum;
+    public static int selectGenreNum;
 
     //API연동
     final String TAG = "HomeFragment";
@@ -220,7 +220,7 @@ public class HomeFragment extends Fragment {
 
             gRankingAdapter = new RankingAdapter(mContext, gRankingArrayList);
             if(gRankingArrayList.size() > 5) {
-                gRankingAdapter.removeItem(0);
+                gRankingAdapter.removeHFItem(0);
             }
             gRecyclerView.setAdapter(gRankingAdapter);
 
