@@ -33,6 +33,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
        CircleImageView user_profileImg;
        TextView user_id;
        Button user_btn;
+       int i=0;
+
 
        public UserListViewHolder(@NonNull View itemView) {
            super(itemView);
@@ -40,6 +42,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
            user_id = itemView.findViewById(R.id.user_id);
            user_btn = itemView.findViewById(R.id.user_btn);
 
+
+           user_btn.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   if(i==0){
+                       user_btn.setBackgroundResource(R.drawable.round_btn_gray);
+                       user_btn.setText("팔로잉");
+                       i++;
+                   }else if(i==1){
+                       user_btn.setBackgroundResource(R.drawable.round_btn_darkgreen);
+                       user_btn.setText("팔로우");
+                       i--;
+               }}
+
+           });
            itemView.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) { //항목마다 ClickListener 설정
