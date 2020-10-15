@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FollowingFragment extends Fragment {
+public class FollowingFragment extends Fragment { //팔로잉 TAB
     ArrayList<UserlistItem> userlist;
     UserListAdapter userListAdapter;
     @Nullable

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MRealtimeBookReport extends AppCompatActivity {
 
 
-    ImageView backBtn, serchBtn,Heart,addBookReport;
+    ImageView backBtn, serchBtn, Heart, addBookReport;
     CircleImageView profileImg;
     TextView profileText, bookName, bookCreator, likeCount, commentCnt;
     ViewPager bookImgPage;
@@ -35,7 +36,7 @@ public class MRealtimeBookReport extends AppCompatActivity {
         bookCreator = findViewById(R.id.bookCreator);
         bookName = findViewById(R.id.bookName);
         viewPageLayout = findViewById(R.id.viewPageLayout);
-        commentLayout  = findViewById(R.id.commentLayout);
+        commentLayout = findViewById(R.id.commentLayout);
 
 
         bookName.setOnClickListener(new View.OnClickListener() {
@@ -53,8 +54,8 @@ public class MRealtimeBookReport extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                 startActivity(i);
             }
-});
-      viewPageLayout.setOnClickListener(new View.OnClickListener() {
+        });
+        viewPageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -72,34 +73,34 @@ public class MRealtimeBookReport extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MRealtimeBookReport.this, MRealtimeBookReportSearch.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         });
         profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),UserFeedActivity.class);
+                Intent i = new Intent(getApplicationContext(), UserFeedActivity.class);
                 startActivity(i);
             }
         });
         profileText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),UserFeedActivity.class);
+                Intent i = new Intent(getApplicationContext(), UserFeedActivity.class);
                 startActivity(i);
             }
         });
         addBookReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MBookWriteMain.class);
+                Intent i = new Intent(getApplicationContext(), MBookWriteMain.class);
                 startActivity(i);
             }
         });
         commentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MBookComment.class);
+                Intent i = new Intent(getApplicationContext(), MBookComment.class);
                 startActivity(i);
             }
         });
@@ -111,6 +112,7 @@ public class MRealtimeBookReport extends AppCompatActivity {
             }
 
         });
+
     }
 
 }

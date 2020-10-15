@@ -14,7 +14,6 @@ public class AlarmSettingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.push_alarm_setting);
-
         //툴바 설정
         Toolbar profile_modify_toolbar = (Toolbar) findViewById(R.id.push_toolbar);
         setSupportActionBar(profile_modify_toolbar);

@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,28 +9,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class UserFeedActivity extends AppCompatActivity {
     ArrayList<FeedReadBookItem> uF_readBookList;
     FeedReadBookAdapter uF_feedReadBookAdapter;
     TextView follower_count_txt, following_count_txt;
-    Button message_btn;
+    Button message_btn, follow_btn;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_feed);
+
+        follow_btn = findViewById(R.id.follow_btn); //팔로잉 btn
+
+        follow_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (follow_btn.getText().equals("팔로잉")) {
+                    follow_btn.setText("Message");
+                    //Toast.makeText(getApplicationContext(),"확인",Toast.LENGTH_SHORT).show();
+                }
+                else
+                    follow_btn.setText("팔로잉");
+            }
+        });
 
 
         //툴바 설정
@@ -49,7 +62,7 @@ public class UserFeedActivity extends AppCompatActivity {
         bookCover_recycler.setLayoutManager(gridLayoutManager);
 
         //todo 1. RecyclerView 책표지 데이터 삽입
-        for(int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             FeedReadBookItem data = new FeedReadBookItem();
             uF_readBookList.add(data);
         }

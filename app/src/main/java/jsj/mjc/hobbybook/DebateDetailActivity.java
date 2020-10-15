@@ -95,7 +95,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                 ReportDialog reportDialog = new ReportDialog(DebateDetailActivity.this);
                 reportDialog.show();
                 break;
-            case R.id.overflow_block:
+            case R.id.overflow_block: //팔로잉 화면_차단
         }
         return super.onOptionsItemSelected(item);
     }
