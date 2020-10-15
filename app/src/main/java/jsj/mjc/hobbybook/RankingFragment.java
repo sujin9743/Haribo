@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
 
 public class RankingFragment extends Fragment {
     ArrayList<Ranking> rankingArrayList = new ArrayList<>();
-    //private RankingAdapter rankingAdapter;
     RecyclerView recyclerView;
     private int count;
     private int max = 20; //불러올 순위 수
@@ -44,18 +44,10 @@ public class RankingFragment extends Fragment {
     private String requestUrl;
     Ranking item = null;
 
-    TextView rankingNumTv, rankingTitleTv, rankingWriterTv;
-    ImageView rankingIv;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
-
-        rankingNumTv = view.findViewById(R.id.rankingNumTv);
-        rankingTitleTv = view.findViewById(R.id.rankingTitleTv);
-        rankingWriterTv = view.findViewById(R.id.rankingWriterTv);
-        rankingIv = view.findViewById(R.id.rankingIv);
 
         recyclerView = view.findViewById(R.id.rankingRV);
         recyclerView.setHasFixedSize(true);
@@ -66,8 +58,8 @@ public class RankingFragment extends Fragment {
         DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(mContext, linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(gDividerItemDecoration);
 
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute();
+        BestsellerAsyncTask bestsellerAsyncTask = new BestsellerAsyncTask();
+        bestsellerAsyncTask.execute();
 
         //TODO 추후에 어디 더보기인지에 따라 알라딘 API, 평점 및 리뷰에서 가져온 데이터 삽입
         //for (count = 1; count <= max; count++) {
@@ -76,31 +68,18 @@ public class RankingFragment extends Fragment {
         //}
         //rankingAdapter.notifyDataSetChanged();
 
-        //rankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
-        //    @Override
-        //    public void onItemClick(View v, int position) {
-        // Intent intent = new Intent(mContext, MBookInfoDetail.class);
-        //        startActivity(intent);
-        //    }
-        //});
-
         return view;
     }
 
     //알라딘 API에서 데이터 불러오기
-    public class MyAsyncTask extends AsyncTask<String, String, String> {
+    public class BestsellerAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... strings) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + dataKey +
-                    "&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=Book&output=xml&Version=20131101";
+                    "&QueryType=Bestseller&CategoryId=" + HomeFragment.selectGenreNum + "&MaxResults=20&start=1&SearchTarget=Book&output=xml&Version=20131101";
 
             try {
-                boolean b_title = false;
-                boolean b_author = false;
-                boolean b_cover = false;
-                boolean b_bestRank = false;
-
                 URL url = new URL(requestUrl);
                 InputStream is = url.openStream();
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -162,7 +141,18 @@ public class RankingFragment extends Fragment {
             super.onPostExecute(s);
 
             RankingAdapter rankingAdapter = new RankingAdapter(mContext, rankingArrayList);
+            if(rankingArrayList.size() > 20) {
+                rankingAdapter.removeRFItem(0);
+            }
             recyclerView.setAdapter(rankingAdapter);
+
+            rankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
