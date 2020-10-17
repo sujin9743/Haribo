@@ -44,7 +44,6 @@
         <activity android:name=".DebateSearchActivity"/>
         <activity android:name=".MessageViewActivity"/>
         <activity android:name=".MessageSendActivity"/>
-        <activity android:name=".MRealtimeBookReport"/>
         <activity android:name=".MRealtimeBookReportSearch"/>
 
         <activity android:name=".MBookInfoDetail"/>
@@ -55,6 +54,8 @@
         <activity android:name=".MBookSearch"/>
         <activity android:name=".MReviewDialog"/>
         <activity android:name=".MCutOffDialog"/>
+        <activity android:name=".MRealtimeBookreportRecycler"/>
+        <activity android:name=".MRealtimeBookreportAdapter"/>
 
 
     </application>
