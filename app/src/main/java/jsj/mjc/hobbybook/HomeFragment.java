@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -227,14 +228,8 @@ public class HomeFragment extends Fragment {
             gRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
                 @Override
                 public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(mContext, MBookInfoDetail.class);
-                    startActivity(intent);
-                }
-            });
-
-            gRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
-                @Override
-                public void onItemClick(View v, int position) {
+                    int selectISBN = position;
+                    Toast.makeText(getContext(), selectISBN+"isbn", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, MBookInfoDetail.class);
                     startActivity(intent);
                 }
