@@ -17,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.MRealtimeBookreportViewHolder> {
     @NonNull
 
-    private ArrayList<MRealtime> MRealtime;
+    private ArrayList<MRealtime> MRealtime =null;
 
     public MRealtimeBookreportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.m_realtime_bookreport_recycler,parent, false);
