@@ -3,6 +3,8 @@ package jsj.mjc.hobbybook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MBookWriteMain extends AppCompatActivity {
     ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon;
     TextView shareBtn;
+    private static final int PICK_FROM_ALBUM=1;
 
     int i = 1;
 
@@ -40,6 +43,11 @@ public class MBookWriteMain extends AppCompatActivity {
         addImgIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent=new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent,PICK_FROM_ALBUM);
+                //Log.d("태그","메시지");
 
             }
         });
@@ -70,6 +78,8 @@ public class MBookWriteMain extends AppCompatActivity {
                 finish();
             }
         });
+
     }
+
 }
 
