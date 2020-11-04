@@ -2,6 +2,7 @@ package jsj.mjc.hobbybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,7 +16,10 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar; //Toolbar -> androidx 사용하는 경우
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +27,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignActivity extends AppCompatActivity {
     Spinner pw_spinner, email_spinner;
@@ -34,8 +42,8 @@ public class SignActivity extends AppCompatActivity {
     CheckBox clause_Ck, info_Ck;
     TextView pw_ReCk_Txt;
     boolean id_chk = false, pw_chk = false, email_chk = false;
-    //firebase realtime database reference(지은)
-    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("member");
+    //firebase firestore 선언(지은)
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,19 +111,7 @@ public class SignActivity extends AppCompatActivity {
                     Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     //파이어베이스에 입력한 아이디 멤버 추가
-                    DatabaseReference conditionRef = rootRef.child(id_Edt.getText().toString());
-                    conditionRef.child("nickname").setValue(id_Edt.getText().toString());
-                    conditionRef.child("pw").setValue(pw_Edt.getText().toString());
-                    conditionRef.child("pw_q").setValue(pw_spinner.getSelectedItem().toString());
-                    conditionRef.child("pw_a").setValue(pw_CkQA_Edt.getText().toString());
-                    conditionRef.child("email_f").setValue(email_id_edt.getText().toString());
-                    conditionRef.child("email_b").setValue(email_spinner.getSelectedItem().toString());
-                    conditionRef.child("profile_img").setValue(null);
-                    conditionRef.child("report_c").setValue(0);
-                    conditionRef.child("noti_cm").setValue(false);
-                    conditionRef.child("noti_ms").setValue(false);
-                    conditionRef.child("noti_fl").setValue(false);
-                    conditionRef.child("noti_lk").setValue(false);
+
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
                     startActivity(intent);
                 }
