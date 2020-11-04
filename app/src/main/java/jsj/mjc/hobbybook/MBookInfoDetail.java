@@ -7,16 +7,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MBookInfoDetail extends AppCompatActivity {
 
-    ImageView backBtn;
+    ImageView backBtn, bookImage;
     LinearLayout letsGoReport;
-    TextView reviewBtn;
+    TextView reviewBtn, bookName;
+
+    String getBookImage, getBookTitle;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
+
+        bookImage = findViewById(R.id.bookImage);
+        bookName = findViewById(R.id.bookName);
+
+        getBookImage = getIntent().getStringExtra("image");
+        getBookTitle = getIntent().getStringExtra("title");
+
+        Glide.with(getApplicationContext()).load(getBookImage).into(bookImage);
+        bookName.setText(getBookTitle);
 
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {

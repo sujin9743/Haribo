@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,8 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
                 public void onClick(View v) { //항목마다 ClickListener 설정
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        if (mListener != null) {
-                            mListener.onItemClick(v, position);
+                        if (RankingAdapter.this.mListener != null) {
+                            RankingAdapter.this.mListener.onItemClick(v, position);
                         }
                     }
                 }
@@ -58,7 +59,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         }
     }
 
-    public void removeHFItem(int position) {
+    public void removeHFItem(int position) { //HomeFragment
         for(int i=0; i<5; i++) {
             rankingList.remove(position);
             notifyItemRemoved(position);
@@ -66,7 +67,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         }
     }
 
-    public void removeRFItem(int position) {
+    public void removeRFItem(int position) { //RankingFragment
         for(int i=0; i<20; i++) {
             rankingList.remove(position);
             notifyItemRemoved(position);
@@ -90,6 +91,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
 
     @Override
     public void onBindViewHolder(@NonNull RankingViewHolder viewHolder, int position) {
+        viewHolder.rankingNumTv.setTag(position);
         viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
         //viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
