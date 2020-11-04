@@ -201,6 +201,7 @@
             android:layout_marginLeft="122dp"
             android:textSize="12sp"
             android:visibility="gone"
+            android:text="@string/pw_ReCk_Txt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pw_Ck_Edt"/>
 

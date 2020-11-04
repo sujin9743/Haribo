@@ -5,27 +5,52 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar; //Toolbar -> androidx 사용하는 경우
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class SignActivity extends AppCompatActivity {
     Spinner pw_spinner, email_spinner;
     ImageButton sign_backBtn;
-    Button sign_btn;
+    Button id_Ck_Btn, sign_btn;
+    EditText id_Edt, pw_Edt, pw_Ck_Edt, pw_CkQA_Edt, email_id_edt, email_num_edt;
+    CheckBox clause_Ck, info_Ck;
+    TextView pw_ReCk_Txt;
+    boolean id_chk = false, pw_chk = false, email_chk = false;
+    //firebase realtime database reference(지은)
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("member");
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign);
+
+        id_Edt = findViewById(R.id.id_Edt);
+        pw_Edt = findViewById(R.id.pw_Edt);
+        pw_Ck_Edt = findViewById(R.id.pw_Ck_Edt);
+        pw_CkQA_Edt = findViewById(R.id.pw_CkQA_Edt);
+        email_id_edt = findViewById(R.id.email_id_edt);
+        email_num_edt = findViewById(R.id.email_num_edt);
+        clause_Ck = findViewById(R.id.clause_Ck);
+        info_Ck = findViewById(R.id.info_Ck);
+        pw_ReCk_Txt = findViewById(R.id.pw_ReCk_Txt);
 
         //비밀번호 확인 Spinner 설정
         pw_spinner = findViewById(R.id.pwQ_spinner); //비밀번호 확인 질문 spinner
@@ -52,13 +77,48 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
+        //아이디 중복확인 버튼(지은)
+        id_Ck_Btn = findViewById(R.id.id_Ck_Btn);
+        id_Ck_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //아이디 중복확인 내용 넣어야 함(지은)
+            }
+        });
+
         //다음 버튼 클릭 시
         sign_btn = findViewById(R.id.sign_btn);
         sign_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
-                startActivity(intent);
+                //아직 아이디 중복확인, 이메일 확인을 추가하지 않았음(지은)
+                if (pw_Edt.getText().toString().equals(pw_Ck_Edt.getText().toString())) {
+                    pw_chk = true;
+                    pw_ReCk_Txt.setVisibility(View.GONE);
+                } else {
+                    pw_chk = false;
+                    pw_ReCk_Txt.setVisibility(View.VISIBLE);
+                }
+                if (id_Edt.getText().toString().equals("") || pw_Edt.getText().toString().equals("") || pw_CkQA_Edt.getText().toString().equals("") || email_id_edt.getText().toString().equals("") ||pw_chk || !clause_Ck.isChecked() || !info_Ck.isChecked()) {
+                    Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                } else {
+                    //파이어베이스에 입력한 아이디 멤버 추가
+                    DatabaseReference conditionRef = rootRef.child(id_Edt.getText().toString());
+                    conditionRef.child("nickname").setValue(id_Edt.getText().toString());
+                    conditionRef.child("pw").setValue(pw_Edt.getText().toString());
+                    conditionRef.child("pw_q").setValue(pw_spinner.getSelectedItem().toString());
+                    conditionRef.child("pw_a").setValue(pw_CkQA_Edt.getText().toString());
+                    conditionRef.child("email_f").setValue(email_id_edt.getText().toString());
+                    conditionRef.child("email_b").setValue(email_spinner.getSelectedItem().toString());
+                    conditionRef.child("profile_img").setValue(null);
+                    conditionRef.child("report_c").setValue(0);
+                    conditionRef.child("noti_cm").setValue(false);
+                    conditionRef.child("noti_ms").setValue(false);
+                    conditionRef.child("noti_fl").setValue(false);
+                    conditionRef.child("noti_lk").setValue(false);
+                    Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
