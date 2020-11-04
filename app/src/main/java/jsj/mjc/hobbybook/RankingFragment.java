@@ -148,8 +148,14 @@ public class RankingFragment extends Fragment {
 
             rankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
                 @Override
-                public void onItemClick(View v, int position) {
+                public void onItemClick(View v, int position) { //책 누르면 도서 상세정보 페이지로 이동
+                    String title, image;
+                    title = rankingArrayList.get(position).getRankingTitle();
+                    image = rankingArrayList.get(position).getRankingImageUrl();
+
                     Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                    intent.putExtra("title", title);
+                    intent.putExtra("image", image);
                     startActivity(intent);
                 }
             });

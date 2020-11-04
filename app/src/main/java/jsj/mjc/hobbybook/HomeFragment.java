@@ -227,10 +227,13 @@ public class HomeFragment extends Fragment {
 
             gRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
                 @Override
-                public void onItemClick(View v, int position) {
-                    int selectISBN = position;
-                    Toast.makeText(getContext(), selectISBN+"isbn", Toast.LENGTH_SHORT).show();
+                public void onItemClick(View v, int position) { //책 누르면 도서 상세페이지로 이동
+                    String title, image;
+                    title = gRankingArrayList.get(position).getRankingTitle();
+                    image = gRankingArrayList.get(position).getRankingImageUrl();
                     Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                    intent.putExtra("title", title);
+                    intent.putExtra("image", image);
                     startActivity(intent);
                 }
             });
