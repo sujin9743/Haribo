@@ -30,4 +30,6 @@
     <string name="g27">초등학교참고서</string>
     <string name="g28">중학교참고서</string>
     <string name="g29">고등학교참고서</string>
+
+    <string name="pw_ReCk_Txt">비밀번호를 확인해 주세요.</string>
 </resources>
