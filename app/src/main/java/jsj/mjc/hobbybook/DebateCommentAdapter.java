@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
         protected TextView dcTextTv;
         protected ImageView dcWriterIv;
         protected ImageView reCommentIv;
+        protected ImageButton dCommentMoreBtn;  //조민주
 
         public DebateCommentViewHolder(View view) {
             super(view);
@@ -29,6 +31,14 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
             this.dcTextTv = view.findViewById(R.id.dComment_text_tv);
             this.dcWriterIv = view.findViewById(R.id.debate_comment_tv);
             this.reCommentIv = view.findViewById(R.id.dReply_iv);
+            this.dCommentMoreBtn = view.findViewById(R.id.dComment_more_btn);
+
+            dCommentMoreBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 

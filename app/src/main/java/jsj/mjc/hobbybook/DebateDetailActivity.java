@@ -96,6 +96,8 @@ public class DebateDetailActivity extends AppCompatActivity {
                 reportDialog.show();
                 break;
             case R.id.overflow_block:
+                MCutOffDialog mCutOffDialog = new MCutOffDialog(DebateDetailActivity.this);
+                mCutOffDialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
