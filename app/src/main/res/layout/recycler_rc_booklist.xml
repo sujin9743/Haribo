@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:rating="4.5"
+        android:rating="0"
         style="?android:attr/ratingBarStyleIndicator"
         app:layout_constraintLeft_toRightOf="@id/bookImg"
         app:layout_constraintTop_toBottomOf="@id/bookWirter"/>
