@@ -55,7 +55,7 @@ public class SelectGenreActivity extends AppCompatActivity {
                                 int id_num = 0;
                                 setBtnColorChange(v, id_num); //버튼 색 변경 사용자 정의 함수 호출
                                 break;
-                            }
+                            }//CHO
                             case R.id.g1: {
                                 int id_num = 1;
                                 setBtnColorChange(v, id_num);
@@ -221,7 +221,7 @@ public class SelectGenreActivity extends AppCompatActivity {
 
             //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지
             public void onClick(View v) {
-
+                //CHO
                 if(changeGen == 1){
                     Toast.makeText(getApplicationContext(),"선호장르 변경 완료",Toast.LENGTH_SHORT).show();
                     finish();
@@ -234,7 +234,7 @@ public class SelectGenreActivity extends AppCompatActivity {
 
         //cho 파이어베이스
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("/bookre_like/dQXjHuu0bivSfsn6x1pO");
+        DatabaseReference ref = database.getReference("");
 
     }
 

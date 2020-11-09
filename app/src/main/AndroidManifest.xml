@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".SignActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,7 +34,7 @@
         <activity android:name=".FindIdResultActivity"/>
         <activity android:name=".FindPwActivity"/>
         <activity android:name=".ResetPwActivity"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".SignActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".RecommendUserActivity"/>
         <activity android:name=".RecommendBookActivity"/>
