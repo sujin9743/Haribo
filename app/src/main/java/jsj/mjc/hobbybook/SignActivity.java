@@ -90,7 +90,7 @@ public class SignActivity extends AppCompatActivity {
         id_Ck_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //아이디 중복확인 내용 넣어야 함(지은)
+                id_chk = true;
             }
         });
 
@@ -107,11 +107,9 @@ public class SignActivity extends AppCompatActivity {
                     pw_chk = false;
                     pw_ReCk_Txt.setVisibility(View.VISIBLE);
                 }
-                if (id_Edt.getText().toString().equals("") || pw_Edt.getText().toString().equals("") || pw_CkQA_Edt.getText().toString().equals("") || email_id_edt.getText().toString().equals("") ||pw_chk || !clause_Ck.isChecked() || !info_Ck.isChecked()) {
+                if (id_Edt.getText().toString().equals("") || pw_Edt.getText().toString().equals("") || pw_CkQA_Edt.getText().toString().equals("") || email_id_edt.getText().toString().equals("") || !id_chk || !pw_chk || !clause_Ck.isChecked() || !info_Ck.isChecked()) {
                     Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
-                    //파이어베이스에 입력한 아이디 멤버 추가
-
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
                     intent.putExtra("changeGen",0);
                     startActivity(intent);
