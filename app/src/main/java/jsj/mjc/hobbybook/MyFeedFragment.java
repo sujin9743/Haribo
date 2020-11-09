@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,6 +34,7 @@ public class MyFeedFragment extends Fragment {
     ImageButton setting_btn;
     TextView alarm_setting, block_setting, genre_setting, logout, myFeed_follower_count_txt, myFeed_following_count_txt;
     Button myFeed_profile_btn;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -117,7 +120,9 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SelectGenreActivity.class);
+                intent.putExtra("changeGen", 1);    //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지 구분하려고
                 startActivity(intent);
+
             }
         });
         logout = v.findViewById(R.id.logout);

@@ -21,20 +21,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".SignActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".SignActivity"/>
+        <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".SignCompleteActivity"/>
         <activity android:name=".FindIdActivity"/>
         <activity android:name=".FindIdResultActivity"/>
         <activity android:name=".FindPwActivity"/>
         <activity android:name=".ResetPwActivity"/>
-        <activity android:name=".SelectGenreActivity"/>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".RecommendUserActivity"/>
         <activity android:name=".RecommendBookActivity"/>

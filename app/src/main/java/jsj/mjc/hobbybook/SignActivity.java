@@ -113,6 +113,7 @@ public class SignActivity extends AppCompatActivity {
                     //파이어베이스에 입력한 아이디 멤버 추가
 
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
+                    intent.putExtra("changeGen",0);
                     startActivity(intent);
                 }
             }
