@@ -85,6 +85,7 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
+
         //아이디 중복확인 버튼(지은)
         id_Ck_Btn = findViewById(R.id.id_Ck_Btn);
         id_Ck_Btn.setOnClickListener(new View.OnClickListener() {
