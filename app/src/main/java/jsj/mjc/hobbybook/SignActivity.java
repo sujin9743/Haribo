@@ -111,6 +111,7 @@ public class SignActivity extends AppCompatActivity {
                     Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
+                    intent.putExtra("changeGen",0);
                     startActivity(intent);
                 }
             }

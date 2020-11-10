@@ -33,6 +33,7 @@ public class MessageFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+
         messageArrayList = new ArrayList<>();
         messageAdapter = new MessageAdapter(messageArrayList);
         recyclerView.setAdapter(messageAdapter);
