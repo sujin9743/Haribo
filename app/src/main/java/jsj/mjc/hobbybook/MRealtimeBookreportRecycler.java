@@ -8,33 +8,43 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class MRealtimeBookreportRecycler extends AppCompatActivity {
-
-    private ArrayList<MRealtime> mRealtimeList;
-    private MRealtimeBookreportAdapter mAdapter;
-
     ImageView addBtn,backBtn, searchBtn;
+
+
+    RecyclerView recyclerView = null;
+    MRealtimeBookreportAdapter adapter = null;
+    ArrayList<MRealtime> list = new ArrayList<MRealtime>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_realtime_bookreport_recycler);
 
 
+        recyclerView = findViewById(R.id.mRecycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        adapter = new MRealtimeBookreportAdapter(list);
+        recyclerView.setAdapter(adapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        for(int i = 0;i<10;i++){
+            MRealtime data = new MRealtime("도로시","드래곤라자"+ " | ","이영도","150","30");
+            list.add(data);
+        }
 
 
-        RecyclerView mRecycler = findViewById(R.id.mRecycler);
-        LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
-        mRecycler.setLayoutManager(mLinearLayout);
 
-        mRealtimeList = new ArrayList<>();
-
-        mAdapter = new MRealtimeBookreportAdapter(mRealtimeList);
-        mRecycler.setAdapter(mAdapter);
+        adapter.notifyDataSetChanged();
 
 
 
@@ -64,6 +74,8 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
 
     }

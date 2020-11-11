@@ -1,5 +1,7 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,46 +16,62 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.MRealtimeBookreportViewHolder> {
-    @NonNull
+public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.ViewHolder>{
 
-    private ArrayList<MRealtime> MRealtime =null;
+    private ArrayList<MRealtime> mRealtime = null;
 
-    public MRealtimeBookreportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.m_realtime_bookreport_recycler,parent, false);
-        MRealtimeBookreportViewHolder viewHolder = new MRealtimeBookreportViewHolder(v);
-        return viewHolder;
+    MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
+        this.mRealtime = list;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MRealtimeBookreportViewHolder holder, int position) {
-        //샘플데이터 삽입
+    public MRealtimeBookreportAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.m_realtime_bookreport_list, parent, false);
+        MRealtimeBookreportAdapter.ViewHolder vh = new MRealtimeBookreportAdapter.ViewHolder(view);
+
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
+        MRealtime item = mRealtime.get(position);
+
+        //holder.profileImg.set..(item.getProfileImg());
+        holder.profileText.setText(item.getProfileText());
+        holder.bookName.setText(item.getBookName());
+        holder.bookCreator.setText(item.getBookCreator());
+        holder.likeCnt.setText(item.getLikeCnt());
+        holder.commentCnt.setText(item.getCommentCnt());
+        //holder.bookImgPage.setBookImgPage(item.getBookImgPage());
+        //holder.heart.setHeart(item.getHeart());
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRealtime.size();
     }
 
-    public class MRealtimeBookreportViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         protected CircleImageView profileImg;
-        protected TextView profileText, bookName, bookCreator, likeCnt, commentCnt;
+        protected TextView profileText, bookName, bookCreator,likeCnt, commentCnt;
         protected ViewPager bookImgPage;
         protected ImageView heart;
-        public MRealtimeBookreportViewHolder(@NonNull View view) {
-            super(view);
-            this.profileImg = view.findViewById(R.id.profileImg);
-            this.profileText = view.findViewById(R.id.profileImg);
-            this.bookName = view.findViewById(R.id.bookName);
-            this.bookCreator = view.findViewById(R.id.bookCreator);
-            this.likeCnt = view.findViewById(R.id.likeCnt);
-            this.commentCnt = view.findViewById(R.id.commentCnt);
-            this.bookImgPage = view.findViewById(R.id.bookImgPage);
-            this.heart = view.findViewById(R.id.heart);
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            this.profileImg = itemView.findViewById(R.id.profileImg);
+            this.profileText = itemView.findViewById(R.id.profileText);
+            this.bookName = itemView.findViewById(R.id.bookName);
+            this.bookCreator = itemView.findViewById(R.id.bookCreator);
+            this.likeCnt = itemView.findViewById(R.id.likeCnt);
+            this.commentCnt = itemView.findViewById(R.id.commentCnt);
+            this.bookImgPage = itemView.findViewById(R.id.bookImgPage);
+            this.heart = itemView.findViewById(R.id.heart);
         }
     }
-    public MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
-        this.MRealtime = list;
-    }
-
 }
