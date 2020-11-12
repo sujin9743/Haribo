@@ -125,7 +125,7 @@ public class SignActivity extends AppCompatActivity {
         sign_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //아직 아이디 중복확인, 이메일 확인을 추가하지 않았음(지은)
+                //이메일 확인을 추가하지 않았음(지은)
                 if (pw_Edt.getText().toString().equals(pw_Ck_Edt.getText().toString())) {
                     pw_chk = true;
                     pw_ReCk_Txt.setVisibility(View.GONE);
@@ -161,8 +161,8 @@ public class SignActivity extends AppCompatActivity {
                     //category 컬렉션 데이터 등록
                     Map<String, Object> cate = new HashMap<>();
                     cate.put("mem_id", id_Edt.getText().toString());
-                    for(int i = 1; i <= 31; i++) {
-                        cate.put("c" + i, false);
+                    for(int i = 1; i <= 24; i++) {
+                        cate.put("" + i, false);
                     }
                     db.collection("category").document(id_Edt.getText().toString()).set(cate).addOnFailureListener(new OnFailureListener() {
                         @Override
