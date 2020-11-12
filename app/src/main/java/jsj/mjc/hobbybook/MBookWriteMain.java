@@ -9,14 +9,31 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.Tag;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MBookWriteMain extends AppCompatActivity {
     ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon;
     TextView shareBtn;
+    EditText bookName,reportName, contents;
+    TextView hashtag1,hashtag2,hashtag3,hashtag4;
     private static final int PICK_FROM_ALBUM=1;
+
+    private FirebaseFirestore db;
 
     int i = 1;
 
@@ -25,6 +42,24 @@ public class MBookWriteMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_report_write_main);
 
+
+        //파이어베이스
+        db = FirebaseFirestore.getInstance();
+        final Map<String, Object> saveReport = new HashMap<>();
+
+
+        bookName = findViewById(R.id.bookName);
+        reportName = findViewById(R.id.reportName);
+        hashtag1 = findViewById(R.id.hashTag1);
+        hashtag2 = findViewById(R.id.hashTag2);
+        hashtag3 = findViewById(R.id.hashTag3);
+        hashtag4 = findViewById(R.id.hashTag4);
+        contents = findViewById(R.id.contents);
+
+
+
+
+
         backBtn = findViewById(R.id.backBtn);
         bookSearchIcon = findViewById(R.id.bookSearchIcon);
         addImgIcon = findViewById(R.id.addImgIcon);
@@ -32,6 +67,35 @@ public class MBookWriteMain extends AppCompatActivity {
         keyIcon = findViewById(R.id.keyIcon);
         shareBtn = findViewById(R.id.shareBtn);
 
+
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                saveReport.put("bookisbn",bookName.getText().toString());
+                saveReport.put("br_content",contents.getText().toString());
+                //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
+                saveReport.put("br_title",reportName.getText().toString());
+                saveReport.put("has1",hashtag1.getText().toString());
+                saveReport.put("has2",hashtag2.getText().toString());
+                saveReport.put("has3",hashtag3.getText().toString());
+                saveReport.put("has4",hashtag4.getText().toString());
+
+
+                //입력한 모든 데이터 서버에 저장
+                db.collection("bookre").add(saveReport).addOnSuccessListener(new OnSuccessListener<DocumentReference>(){
+                    public void onSuccess(DocumentReference documentReference){
+                        //성공
+                        Log.d("돼라쩜", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                }).addOnFailureListener(new OnFailureListener(){
+                    public void onFailure(@NonNull Exception e){
+
+                    }
+                });
+
+            }
+        });
         //하단바 아이콘 클릭시
         bookSearchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,15 +126,19 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //i변수로 공개윰 판별(1:공개, 0:비공개)
-              if(i==1){     //공개 상태이므로 비공개로 전환
+              if(i==1){
+                  saveReport.put("br_open","true"); //서버 공개 저장
                   keyIcon.setImageResource(R.drawable.ic_lock_24dp);
                   i=0;
               }else if(i==0){
+                  saveReport.put("br_open","false");
                   keyIcon.setImageResource(R.drawable.ic_lock_open_24dp);
                   i=1;
+
               }
             }
         });
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +147,11 @@ public class MBookWriteMain extends AppCompatActivity {
             }
         });
 
+
+
+
     }
+
 
 }
 
