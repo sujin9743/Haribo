@@ -154,6 +154,7 @@
             android:layout_marginLeft="122dp"
             android:textSize="12sp"
             android:visibility="gone"
+            android:text="@string/pw_ReCk_Txt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modify_pwCk_edt"/>
 
@@ -246,7 +247,8 @@
             android:textColor="@color/black"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modify_email_ck_btn"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/modify_del_tv"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
