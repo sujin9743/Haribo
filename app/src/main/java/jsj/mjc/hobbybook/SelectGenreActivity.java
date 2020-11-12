@@ -227,7 +227,9 @@ public class SelectGenreActivity extends AppCompatActivity {
                     finish();
                 }else{
                 Intent intent = new Intent(getApplicationContext(), SignCompleteActivity.class);
-                startActivity(intent);}
+                startActivity(intent);
+                finish();
+                }
             }
         });
 

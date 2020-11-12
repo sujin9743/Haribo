@@ -132,6 +132,8 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
+                //임시로 test2 아이디 변경을 택함
+                intent.putExtra("loginId", "test2");
                 startActivity(intent);
             }
         });

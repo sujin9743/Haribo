@@ -174,6 +174,7 @@ public class SignActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
                     intent.putExtra("changeGen",0);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
