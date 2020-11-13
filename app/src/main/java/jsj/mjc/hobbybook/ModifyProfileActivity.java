@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class ModifyProfileActivity extends AppCompatActivity {
     Spinner modify_email_spinner;
+    String loginId = "test";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
