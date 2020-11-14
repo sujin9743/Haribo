@@ -2,6 +2,7 @@ package jsj.mjc.hobbybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,9 +18,8 @@ import java.util.ArrayList;
 public class MRealtimeBookreportRecycler extends AppCompatActivity {
     ImageView addBtn,backBtn, searchBtn;
 
-
     RecyclerView recyclerView = null;
-    MRealtimeBookreportAdapter adapter = null;
+    MRealtimeBookreportAdapter adapter;
     ArrayList<MRealtime> list = new ArrayList<MRealtime>();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,27 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adapter = new MRealtimeBookreportAdapter(list);
-        recyclerView.setAdapter(adapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         for(int i = 0;i<10;i++){
-            MRealtime data = new MRealtime("도로시","드래곤라자"+ " | ","이영도","150","30");
+            MRealtime data = new MRealtime("도로시","82년생의 김지영"+ " | ","82살 김지영을 읽고","150","30");
             list.add(data);
         }
 
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                startActivity(i);
+            }
+        });
 
 
-        adapter.notifyDataSetChanged();
+
 
 
 
