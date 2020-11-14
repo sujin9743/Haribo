@@ -123,32 +123,25 @@ public class MHashTagSearch extends AppCompatActivity{
         });
 
 
-        Intent intent = getIntent();
-        String hash01,hash02, hash03, hash04;
-        hash01= intent.getStringExtra("hash1");
-        hash02= intent.getStringExtra("hash2");
-        hash03= intent.getStringExtra("hash3");
-        hash04= intent.getStringExtra("hash4");
 
-        hash1.setText(hash01);
-        hash2.setText(hash02);
-        hash3.setText(hash03);
-        hash4.setText(hash04);
+
+
 
         //입력한 해시태그 독후감작성 페이지로 값전달
         okBtn = findViewById(R.id.okBtn);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent();
                 i.putExtra("hash1",h1);
                 i.putExtra("hash2",h2);
                 i.putExtra("hash1",h3);
                 i.putExtra("hash2",h4);
-                Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-              setResult(RESULT_OK,i);
-              finish();
+                setResult(RESULT_OK,i);
+                finish();
 
+                Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
 
             }
         });
