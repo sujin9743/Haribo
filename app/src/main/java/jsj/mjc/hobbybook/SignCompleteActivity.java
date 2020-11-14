@@ -23,5 +23,6 @@ public class SignCompleteActivity extends AppCompatActivity {
                 finish();
             }
         });
+        //
     }
 }
