@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "37068556932-i7lld4d7f8s4m6haf0ulfgcnvep80cn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jsj.mjc.hobbybook",
+            "certificate_hash": "7ed875cb7efd7ec9fa97d8662dd2c34f60e196fc"
+          }
+        },
+        {
           "client_id": "37068556932-oplng4s01anomvu3rqciamgk0u2nnkk4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
