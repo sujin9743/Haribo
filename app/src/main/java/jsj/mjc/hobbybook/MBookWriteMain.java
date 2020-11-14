@@ -1,11 +1,13 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -27,10 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MBookWriteMain extends AppCompatActivity {
-    ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon;
+    ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon, imgSearchBookCover;//sj
     TextView shareBtn;
     EditText bookName,reportName, contents;
     TextView hashtag1,hashtag2,hashtag3,hashtag4;
+    Button imgDeleteBtn; //sj(이미지 삭제 버튼)
     private static final int PICK_FROM_ALBUM=1;
 
     private FirebaseFirestore db;
@@ -44,6 +48,8 @@ public class MBookWriteMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_report_write_main);
 
+        imgSearchBookCover = findViewById(R.id.imgSearchBookCover);
+        imgDeleteBtn = findViewById(R.id.imgDeleteBtn);
 
         //파이어베이스
         db = FirebaseFirestore.getInstance();
@@ -104,10 +110,11 @@ public class MBookWriteMain extends AppCompatActivity {
         bookSearchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MBookSearch.class);
-                startActivity(i);
+                Intent intentA = new Intent(getApplicationContext(),MBookSearch.class);
+                startActivityForResult(intentA, request_Code);
             }
         });
+
         addImgIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,13 +165,29 @@ public class MBookWriteMain extends AppCompatActivity {
                 startActivityForResult(intent, request_Code);
             }
         });
+
+        //sj
+        imgDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgSearchBookCover.setImageResource(0);
+                imgDeleteBtn.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //수진 (검색한 책 표지 불러오기)
+        if(requestCode == 1 && resultCode == RESULT_OK) {
+            String img = data.getStringExtra("image");
+            Glide.with(getApplicationContext()).load(data.getStringExtra("image")).into(imgSearchBookCover);
+            imgDeleteBtn.setVisibility(View.VISIBLE);
+        }
 
             if (resultCode == RESULT_OK) {
+
                 String hash1, hash2, hash3, hash4;
                 hash1 = data.getStringExtra("hash1");
                 hash2 = data.getStringExtra("hash2");
