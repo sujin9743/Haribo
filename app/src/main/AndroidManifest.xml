@@ -27,6 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignActivity"/>
+        <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".SignCompleteActivity"/>
         <activity android:name=".FindIdActivity"/>
