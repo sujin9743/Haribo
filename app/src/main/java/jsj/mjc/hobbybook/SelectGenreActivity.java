@@ -23,6 +23,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -259,16 +261,15 @@ public class SelectGenreActivity extends AppCompatActivity {
         //user.put("last","Lovelace");
 
         //firestore 카테고리 db 저장
-        //todo.지은이한테 아이디 db 받아오기
-        firebaseFirestore.collection("category").document("member_test").set(category).addOnSuccessListener(new OnSuccessListener<Void>() {
+        /*firebaseFirestore.collection("category").document("member_test").set(category).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("태그", "저장 성공1");
             }
-        });
+        });*/
 
-         /*//firestore where문
-        CollectionReference questionRef=firebaseFirestore.collection("member");
+         //firestore where문
+       /* CollectionReference questionRef=firebaseFirestore.collection("member");
         questionRef.document("test").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
