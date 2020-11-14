@@ -248,6 +248,7 @@ public class SelectGenreActivity extends AppCompatActivity {
         } else if (select_state[i] == 1){
             v.setBackgroundResource(R.drawable.genre_btn_box);
             select_state[i] = 0;
+            //
         }
     }
 }
