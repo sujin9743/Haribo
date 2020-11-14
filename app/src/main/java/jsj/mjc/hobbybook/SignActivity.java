@@ -160,7 +160,6 @@ public class SignActivity extends AppCompatActivity {
                     intent.putExtra("changeGen",0);
                     startActivity(intent);
                     finish();
-                    //
                 }
             }
         });
