@@ -86,9 +86,8 @@ public class MHashTagSearch extends AppCompatActivity{
                            }
                        }
                    }
-
-
                 }
+                Log.d("TAG", "해시태그: " + h1 + h2 + h3 + h4);
             }
         });
 
@@ -123,10 +122,6 @@ public class MHashTagSearch extends AppCompatActivity{
         });
 
 
-
-
-
-
         //입력한 해시태그 독후감작성 페이지로 값전달
         okBtn = findViewById(R.id.okBtn);
         okBtn.setOnClickListener(new View.OnClickListener() {
@@ -136,12 +131,12 @@ public class MHashTagSearch extends AppCompatActivity{
                 Intent i = new Intent();
                 i.putExtra("hash1",h1);
                 i.putExtra("hash2",h2);
-                i.putExtra("hash1",h3);
-                i.putExtra("hash2",h4);
+                i.putExtra("hash3",h3);
+                i.putExtra("hash4",h4);
                 setResult(RESULT_OK,i);
                 finish();
 
-                Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+                //Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
 
             }
         });

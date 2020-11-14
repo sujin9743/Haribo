@@ -20,12 +20,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,9 +44,14 @@ public class MBookWriteMain extends AppCompatActivity {
 
     int i = 1;
 
-    int request_Code = 1;
+    int img_request_Code = 1;
+    int hash_request_Code = 2;
     final static int CODE=1;    //해시태그 intent 구분
-    @Override
+
+    String bookCoverImg; //sj
+    String hash1, hash2, hash3, hash4;
+    String isbn;
+   @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_report_write_main);
@@ -66,9 +74,6 @@ public class MBookWriteMain extends AppCompatActivity {
         contents = findViewById(R.id.contents);
 
 
-
-
-
         backBtn = findViewById(R.id.backBtn);
         bookSearchIcon = findViewById(R.id.bookSearchIcon);
         addImgIcon = findViewById(R.id.addImgIcon);
@@ -82,14 +87,16 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                saveReport.put("bookisbn",bookName.getText().toString());
+                saveReport.put("bookisbn",isbn);
                 saveReport.put("br_content",contents.getText().toString());
                 //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
+                saveReport.put("br_img", bookCoverImg);
                 saveReport.put("br_title",reportName.getText().toString());
-                saveReport.put("has1",hashtag1.getText().toString());
-                saveReport.put("has2",hashtag2.getText().toString());
-                saveReport.put("has3",hashtag3.getText().toString());
-                saveReport.put("has4",hashtag4.getText().toString());
+                saveReport.put("has1", hash1);
+                saveReport.put("has2", hash2);
+                saveReport.put("has3", hash3);
+                saveReport.put("has4", hash4);
+                saveReport.put("date", new Timestamp(new Date()));
 
 
                 //입력한 모든 데이터 서버에 저장
@@ -104,6 +111,8 @@ public class MBookWriteMain extends AppCompatActivity {
                     }
                 });
 
+                finish();
+
             }
         });
         //하단바 아이콘 클릭시
@@ -111,7 +120,7 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentA = new Intent(getApplicationContext(),MBookSearch.class);
-                startActivityForResult(intentA, request_Code);
+                startActivityForResult(intentA, img_request_Code);
             }
         });
 
@@ -162,7 +171,7 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MHashTagSearch.class);
-                startActivityForResult(intent, request_Code);
+                startActivityForResult(intent, hash_request_Code);
             }
         });
 
@@ -171,6 +180,7 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 imgSearchBookCover.setImageResource(0);
+                bookCoverImg = null;
                 imgDeleteBtn.setVisibility(View.INVISIBLE);
             }
         });
@@ -181,30 +191,27 @@ public class MBookWriteMain extends AppCompatActivity {
 
         //수진 (검색한 책 표지 불러오기)
         if(requestCode == 1 && resultCode == RESULT_OK) {
-            String img = data.getStringExtra("image");
-            Glide.with(getApplicationContext()).load(data.getStringExtra("image")).into(imgSearchBookCover);
+            bookCoverImg = data.getStringExtra("image");
+            isbn = data.getStringExtra("isbn");
+            Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
         }
 
-            if (resultCode == RESULT_OK) {
+        //입력한 해시태그 불러오기
+        if (requestCode == 2 && resultCode == RESULT_OK) {
 
-                String hash1, hash2, hash3, hash4;
-                hash1 = data.getStringExtra("hash1");
-                hash2 = data.getStringExtra("hash2");
-                hash3 = data.getStringExtra("hash3");
-                hash4 = data.getStringExtra("hash4");
+            hash1 = data.getStringExtra("hash1");
+            hash2 = data.getStringExtra("hash2");
+            hash3 = data.getStringExtra("hash3");
+            hash4 = data.getStringExtra("hash4");
 
-                Log.d(hash1 + hash2, "onClick: 222222222ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+            Log.d("TAG", "해시태그: " + hash1 + hash2 + hash3 + hash4);
 
-                hashtag1.setText(hash1);
-                hashtag2.setText(hash2);
-                hashtag3.setText(hash3);
-                hashtag4.setText(hash4);
-                Log.d(hashtag1.getText().toString() + hash2, "onClick: 23333333333333ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-            }else{
-                Toast.makeText(getApplicationContext(),"오류 발생 ",Toast.LENGTH_SHORT).show();
-
-            }
+            hashtag1.setText(hash1);
+            hashtag2.setText(hash2);
+            hashtag3.setText(hash3);
+            hashtag4.setText(hash4);
+        }
     }
 }
 
