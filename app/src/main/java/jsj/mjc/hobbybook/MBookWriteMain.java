@@ -37,6 +37,7 @@ public class MBookWriteMain extends AppCompatActivity {
 
     int i = 1;
 
+    int request_Code = 1;
     final static int CODE=1;    //해시태그 intent 구분
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,17 +119,11 @@ public class MBookWriteMain extends AppCompatActivity {
 
             }
         });
-        hashTagIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MBookWriteMain.this,MHashTagSearch.class);
-                i.putExtra("hash1",hashtag1.getText().toString());
-                i.putExtra("hash2",hashtag2.getText().toString());
-                i.putExtra("hash3",hashtag3.getText().toString());
-                i.putExtra("hash4",hashtag4.getText().toString());
-                startActivityForResult(i, CODE);
-            }
-        });
+
+
+
+
+
         keyIcon.setOnClickListener(new View.OnClickListener() { //독후감 게시물 공개유무
             @Override
             public void onClick(View view) {
@@ -156,32 +151,37 @@ public class MBookWriteMain extends AppCompatActivity {
 
 
 
-
+        hashTagIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MHashTagSearch.class);
+                startActivityForResult(intent, request_Code);
+            }
+        });
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    //MHashTagSearch에서 입력한 해시태그 값
-                    String hash1, hash2, hash3, hash4;
-                    hash1 = data.getStringExtra("hash1");
-                    hash2 = data.getStringExtra("hash2");
-                    hash3 = data.getStringExtra("hash3");
-                    hash4 = data.getStringExtra("hash4");
 
-                    Log.d(hash1 + hash2, "onClick: 222222222ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
 
-                    hashtag1.setText(hash1);
-                    hashtag2.setText(hash2);
-                    hashtag3.setText(hash3);
-                    hashtag4.setText(hash4);
-                } else {
-                }
-                break;
-        }
+            if (resultCode == RESULT_OK) {
+                String hash1, hash2, hash3, hash4;
+                hash1 = data.getStringExtra("hash1");
+                hash2 = data.getStringExtra("hash2");
+                hash3 = data.getStringExtra("hash3");
+                hash4 = data.getStringExtra("hash4");
+
+                Log.d(hash1 + hash2, "onClick: 222222222ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+
+                hashtag1.setText(hash1);
+                hashtag2.setText(hash2);
+                hashtag3.setText(hash3);
+                hashtag4.setText(hash4);
+                Log.d(hashtag1.getText().toString() + hash2, "onClick: 23333333333333ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+            }else{
+                Toast.makeText(getApplicationContext(),"오류 발생 ",Toast.LENGTH_SHORT).show();
+
+            }
     }
-
-
 }
 
