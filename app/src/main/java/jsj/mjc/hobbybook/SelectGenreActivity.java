@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,8 +20,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SelectGenreActivity extends AppCompatActivity {
 
@@ -234,9 +240,69 @@ public class SelectGenreActivity extends AppCompatActivity {
         });
 
 
-        //cho 파이어베이스
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("");
+        //firestore
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        //카테고리 HashMap 생성
+        Map<Integer, Boolean> category = new HashMap<>();
+
+        //카테고리 HashMap 키, 값 설정
+        for (int j = 1; j <= 30; j++) {
+            category.put(j, false);
+        }
+
+        //사용자 HashMap 생성
+        Map<String, String> user = new HashMap<>();
+        user.put("test", "test");
+
+        //user.put("first","Ada");
+        //user.put("last","Lovelace");
+
+        //firestore 카테고리 db 저장
+        //todo.지은이한테 아이디 db 받아오기
+        firebaseFirestore.collection("category").document("member_test").set(category).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("태그", "저장 성공1");
+            }
+        });
+
+         /*//firestore where문
+                CollectionReference questionRef=firebaseFirestore.collection("member");
+                questionRef.document("test").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.d("태그","불러오기 성공");
+                        Toast.makeText(getApplicationContext(),"확인",Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+
+          /*firebaseFirestore.collection("category").add(category).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("태그", "저장 성공1");
+                    }
+                });*/
+
+        //firestore 유저 db 저장
+        firebaseFirestore.collection("member").document("member_test").set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("태그", "저장 성공2");
+            }
+        });
+
+                /*//로그인 버튼 클릭시 데이터를 firestore에서 불러옴
+                CollectionReference questionRef = firebaseFirestore.collection("follow");
+
+                //firestore test용 주석
+
+                questionRef.whereEqualTo("follower", "test").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d("태그", "성공");
+                    }
+                });*/
 
     }
 
@@ -248,7 +314,7 @@ public class SelectGenreActivity extends AppCompatActivity {
         } else if (select_state[i] == 1){
             v.setBackgroundResource(R.drawable.genre_btn_box);
             select_state[i] = 0;
-            
+            //
         }
     }
 }
