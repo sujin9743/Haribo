@@ -28,6 +28,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class RecommendBookActivity extends AppCompatActivity {
     RecommendBookItem bookItem = null;
 
     float bookRating;
-    public static int selectGenre;
+    int selectGenre;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -92,41 +93,112 @@ public class RecommendBookActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()) {
                         HashMap map = (HashMap) document.getData();
-                        for(int i=0; i<map.size(); i++) {
+                        for(int i=0; i<map.size()-1; i++) {
                             String selectGenreNum = Integer.toString(i+1);
-                            String selectGenreBool = map.get(Integer.toString(i+1)).toString();
-                            if (selectGenreBool == "true") {
+                            String selectGenreBool = map.get(selectGenreNum).toString();
+                            if(selectGenreBool == "true") {
                                 switch (selectGenreNum) {
                                     //장르 여러 개 선택했을 때 구현해야 함
-                                    case "1": selectGenre = 1230; break;
-                                    case "2": selectGenre = 55890; break;
-                                    case "3": selectGenre = 170; break;
-                                    case "4": selectGenre = 38414; break;
-                                    case "5": selectGenre = 39398; break;
-                                    case "6": selectGenre = 987; break;
-                                    case "7": selectGenre = 8257; break;
-                                    case "8": selectGenre = 2551; break;
-                                    case "9": selectGenre = 8259; break;
-                                    case "10": selectGenre = 1; break;
-                                    case "11": selectGenre = 1383; break;
-                                    case "12": selectGenre = 1108; break;
-                                    case "13": selectGenre = 55889; break;
-                                    case "14": selectGenre = 1196; break;
-                                    case "15": selectGenre = 74; break;
-                                    case "16": selectGenre = 517; break;
-                                    case "17": selectGenre = 1322; break;
-                                    case "18": selectGenre = 13789; break;
-                                    case "19": selectGenre = 656; break;
-                                    case "20": selectGenre = 336; break;
-                                    case "21": selectGenre = 112011; break;
-                                    case "22": selectGenre = 28402; break;
-                                    case "23": selectGenre = 17195; break;
-                                    case "24": selectGenre = 38410; break;
+                                    case "1": {
+                                        selectGenre = 1230;
+                                        break;
+                                    }
+                                    case "2": {
+                                        selectGenre = 55890;
+                                        break;
+                                    }
+                                    case "3": {
+                                        selectGenre = 170;
+                                        break;
+                                    }
+                                    case "4": {
+                                        selectGenre = 38414;
+                                        apiConnect();
+                                        break;
+                                    }
+                                    case "5": {
+                                        selectGenre = 39398;
+                                        break;
+                                    }
+                                    case "6": {
+                                        selectGenre = 987;
+                                        break;
+                                    }
+                                    case "7": {
+                                        selectGenre = 8257;
+                                        break;
+                                    }
+                                    case "8": {
+                                        selectGenre = 2551;
+                                        break;
+                                    }
+                                    case "9": {
+                                        selectGenre = 8259;
+                                        break;
+                                    }
+                                    case "10": {
+                                        selectGenre = 1;
+                                        break;
+                                    }
+                                    case "11": {
+                                        selectGenre = 1383;
+                                        break;
+                                    }
+                                    case "12": {
+                                        selectGenre = 1108;
+                                        break;
+                                    }
+                                    case "13": {
+                                        selectGenre = 55889;
+                                        break;
+                                    }
+                                    case "14": {
+                                        selectGenre = 1196;
+                                        break;
+                                    }
+                                    case "15": {
+                                        selectGenre = 74;
+                                        break;
+                                    }
+                                    case "16": {
+                                        selectGenre = 517;
+                                        break;
+                                    }
+                                    case "17": {
+                                        selectGenre = 1322;
+                                        break;
+                                    }
+                                    case "18": {
+                                        selectGenre = 13789;
+                                        break;
+                                    }
+                                    case "19": {
+                                        selectGenre = 656;
+                                        break;
+                                    }
+                                    case "20": {
+                                        selectGenre = 336;
+                                        break;
+                                    }
+                                    case "21": {
+                                        selectGenre = 112011;
+                                        break;
+                                    }
+                                    case "22": {
+                                        selectGenre = 28402;
+                                        break;
+                                    }
+                                    case "23": {
+                                        selectGenre = 17195;
+                                        break;
+                                    }
+                                    case "24": {
+                                        selectGenre = 38410;
+                                        break;
+                                    }
                                 }
                                 Log.d("TAG", "data: " + selectGenre);
-                                //API 연동
-                                RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
-                                recommendBookAsyncTask.execute();
+                                apiConnect();
                             }
                         }
                     } else {
@@ -135,6 +207,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
+                //으앙
             }
         });
         /*//임시 데이터 삽입
@@ -230,6 +303,7 @@ public class RecommendBookActivity extends AppCompatActivity {
 
             RecommendBookAdapter bookListAdapter = new RecommendBookAdapter(booklist);
             bookRc_recycler.setAdapter(bookListAdapter);
+            Log.d("TAG", "genre: " + selectGenre);
 
             bookListAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
                 @Override
@@ -245,5 +319,10 @@ public class RecommendBookActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void apiConnect() {
+        RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
+        recommendBookAsyncTask.execute();
     }
 }
