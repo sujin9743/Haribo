@@ -207,6 +207,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
+                //으앙
             }
         });
         /*//임시 데이터 삽입
