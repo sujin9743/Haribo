@@ -268,14 +268,14 @@ public class SelectGenreActivity extends AppCompatActivity {
         });
 
          /*//firestore where문
-                CollectionReference questionRef=firebaseFirestore.collection("member");
-                questionRef.document("test").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Log.d("태그","불러오기 성공");
-                        Toast.makeText(getApplicationContext(),"확인",Toast.LENGTH_SHORT).show();
-                    }
-                });*/
+        CollectionReference questionRef=firebaseFirestore.collection("member");
+        questionRef.document("test").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.d("태그","불러오기 성공");
+                Toast.makeText(getApplicationContext(),"확인",Toast.LENGTH_SHORT).show();
+            }
+        });*/
 
           /*firebaseFirestore.collection("category").add(category).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -303,6 +303,7 @@ public class SelectGenreActivity extends AppCompatActivity {
                         Log.d("태그", "성공");
                     }
                 });*/
+                //으앙
 
     }
 
