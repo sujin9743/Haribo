@@ -19,6 +19,7 @@ public class MBookReportDetail extends AppCompatActivity {
     ViewPager bookImgPage;
     LinearLayout forBookInfo,forReview,porfileLayout;
 
+    int i =0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_report_detail);
@@ -65,14 +66,27 @@ public class MBookReportDetail extends AppCompatActivity {
              startActivity(i);
          }
      });
-     heartIcon.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-             heartIcon.setImageResource(R.drawable.heart_line);
-         }
-     });
 
-     //리뷰 페이지으로 이동
+
+
+
+    heartIcon.setImageResource(R.drawable.heart_line);
+    heartIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  //0이면 빈하트
+                if (i==0){
+                    heartIcon.setImageResource(R.drawable.heart_full);
+                    i=1;
+                }else{
+                    heartIcon.setImageResource(R.drawable.heart_line);
+                    i=0;
+                }
+            }
+        });
+
+
+        //리뷰 페이지으로 이동
      forReview = findViewById(R.id.forReview);
      forReview.setOnClickListener(new View.OnClickListener() {
          @Override
