@@ -28,13 +28,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".SignCompleteActivity"/>
         <activity android:name=".FindIdActivity"/>
         <activity android:name=".FindIdResultActivity"/>
         <activity android:name=".FindPwActivity"/>
         <activity android:name=".ResetPwActivity"/>
-        <activity android:name=".SignActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".RecommendUserActivity"/>
         <activity android:name=".RecommendBookActivity"/>
