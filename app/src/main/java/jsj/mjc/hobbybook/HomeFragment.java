@@ -105,14 +105,14 @@ public class HomeFragment extends Fragment {
                 switch (selectedGenre) {
                     case "종합 베스트셀러": selectGenreNum = 0; break;
                     case "가정/요리/뷰티": selectGenreNum = 1230; break;
-                    case "건강/취미/레저": selectGenreNum = 78344; break;
-                    case "경제경영": selectGenreNum = 78346; break;
+                    case "건강/취미/레저": selectGenreNum = 55890; break;
+                    case "경제경영": selectGenreNum = 170; break;
                     case "고전": selectGenreNum = 38414; break;
                     case "공무원 수험서": selectGenreNum = 39398; break;
                     case "과학": selectGenreNum = 987; break;
                     case "대학교재/전문서적": selectGenreNum = 8257; break;
                     case "만화": selectGenreNum = 2551; break;
-                    case "사회과학": selectGenreNum = 789; break;
+                    case "사회과학": selectGenreNum = 8259; break;
                     case "소설/시/희곡": selectGenreNum = 1; break;
                     case "수험서/자격증": selectGenreNum = 1383; break;
                     case "어린이": selectGenreNum = 1108; break;
@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment {
                     case "자기계발": selectGenreNum = 336; break;
                     case "장르소설": selectGenreNum = 112011; break;
                     case "잡지": selectGenreNum = 28402; break;
-                    case "전집/중고전집": selectGenreNum = 38426; break;
+                    case "전집/중고전집": selectGenreNum = 17195; break;
                     case "종교/역학": selectGenreNum = 38410; break;
                 }
                 BestsellerAsyncTask bestsellerAsyncTask = new BestsellerAsyncTask();

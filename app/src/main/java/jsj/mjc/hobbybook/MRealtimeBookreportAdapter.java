@@ -1,59 +1,140 @@
 package jsj.mjc.hobbybook;
 
+import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.MRealtimeBookreportViewHolder> {
-    @NonNull
+import static jsj.mjc.hobbybook.R.drawable.heart_full;
+import static jsj.mjc.hobbybook.R.drawable.heart_line;
 
-    private ArrayList<MRealtime> MRealtime =null;
+public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.ViewHolder>{
+    //리스트 하나 클릭시 이동
 
-    public MRealtimeBookreportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.m_realtime_bookreport_recycler,parent, false);
-        MRealtimeBookreportViewHolder viewHolder = new MRealtimeBookreportViewHolder(v);
-        return viewHolder;
+
+    public interface OnItemClickListenr {
+        void onItemClick(View v, int position);
+    }
+    private OnItemClickListenr rlistener = null;
+    public void setOnItemClickListener(OnItemClickListenr listener){this.rlistener = listener;}
+
+
+
+
+
+    private ArrayList<MRealtime> mRealtime = null;
+
+    MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
+        this.mRealtime = list;
+    }
+
+
+    @Override
+    public MRealtimeBookreportAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.m_realtime_bookreport_list, parent, false);
+        MRealtimeBookreportAdapter.ViewHolder vh = new MRealtimeBookreportAdapter.ViewHolder(view);
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MRealtimeBookreportViewHolder holder, int position) {
-        //샘플데이터 삽입
+    public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
+        MRealtime item = mRealtime.get(position);
+
+        //holder.profileImg.set..(item.getProfileImg());
+        holder.profileText.setText(item.getProfileText());
+        holder.bookName.setText(item.getBookName());
+        holder.bookCreator.setText(item.getBookCreator());
+        holder.likeCnt.setText(item.getLikeCnt());
+        holder.commentCnt.setText(item.getCommentCnt());
+        //holder.bookImgPage.setBookImgPage(item.getBookImgPage());
+        //holder.heart.setHeart(item.getHeart());
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRealtime.size();
     }
 
-    public class MRealtimeBookreportViewHolder extends RecyclerView.ViewHolder {
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         protected CircleImageView profileImg;
-        protected TextView profileText, bookName, bookCreator, likeCnt, commentCnt;
+        protected TextView profileText, bookName, bookCreator,likeCnt, commentCnt;
         protected ViewPager bookImgPage;
         protected ImageView heart;
-        public MRealtimeBookreportViewHolder(@NonNull View view) {
-            super(view);
-            this.profileImg = view.findViewById(R.id.profileImg);
-            this.profileText = view.findViewById(R.id.profileImg);
-            this.bookName = view.findViewById(R.id.bookName);
-            this.bookCreator = view.findViewById(R.id.bookCreator);
-            this.likeCnt = view.findViewById(R.id.likeCnt);
-            this.commentCnt = view.findViewById(R.id.commentCnt);
-            this.bookImgPage = view.findViewById(R.id.bookImgPage);
-            this.heart = view.findViewById(R.id.heart);
+
+
+        int i = 0;
+        int intLikeCnt;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            this.profileImg = itemView.findViewById(R.id.profileImg);
+            this.profileText = itemView.findViewById(R.id.profileText);
+            this.bookName = itemView.findViewById(R.id.bookName);
+            this.bookCreator = itemView.findViewById(R.id.bookCreator);
+            this.likeCnt = itemView.findViewById(R.id.likeCnt);
+            this.commentCnt = itemView.findViewById(R.id.commentCnt);
+            this.bookImgPage = itemView.findViewById(R.id.bookImgPage);
+            this.heart = itemView.findViewById(R.id.heart);
+
+            String lCnt = likeCnt.getText().toString();
+            intLikeCnt = Integer.parseInt(lCnt);
+
+
+            heart.setImageResource(heart_line);
+            heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    if(i == 0){
+                        heart.setImageResource(heart_full);
+                        i++;
+                        intLikeCnt++;
+
+                    }else{
+                        heart.setImageResource(heart_line);
+                        i--;
+                    }
+
+
+                }
+
+            });
+
+
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION);
+                    if(rlistener !=null){
+                        rlistener.onItemClick(v,position);
+                    }
+                }
+            });
         }
     }
-    public MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
-        this.MRealtime = list;
-    }
-
 }

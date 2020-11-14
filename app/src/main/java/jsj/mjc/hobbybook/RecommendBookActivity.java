@@ -2,11 +2,24 @@ package jsj.mjc.hobbybook;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,7 +31,11 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -36,7 +53,10 @@ public class RecommendBookActivity extends AppCompatActivity {
     RecommendBookItem bookItem = null;
 
     float bookRating;
-    String selectGenre;
+    public static int selectGenre;
+
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,8 +81,62 @@ public class RecommendBookActivity extends AppCompatActivity {
         //recyclerView 구분선 추가
         bookRc_recycler.addItemDecoration(new DividerItemDecoration(bookRc_recycler.getContext(), 1));
 
-        RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
-        recommendBookAsyncTask.execute();
+        //firebase
+        final FirebaseFirestore rcBook_DB = FirebaseFirestore.getInstance();
+
+        //test로만 작업(사용자 id 저장 필요)
+        rcBook_DB.collection("category").document("test").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()) {
+                        HashMap map = (HashMap) document.getData();
+                        for(int i=0; i<map.size(); i++) {
+                            String selectGenreNum = Integer.toString(i+1);
+                            String selectGenreBool = map.get(Integer.toString(i+1)).toString();
+                            if (selectGenreBool == "true") {
+                                switch (selectGenreNum) {
+                                    //장르 여러 개 선택했을 때 구현해야 함
+                                    case "1": selectGenre = 1230; break;
+                                    case "2": selectGenre = 55890; break;
+                                    case "3": selectGenre = 170; break;
+                                    case "4": selectGenre = 38414; break;
+                                    case "5": selectGenre = 39398; break;
+                                    case "6": selectGenre = 987; break;
+                                    case "7": selectGenre = 8257; break;
+                                    case "8": selectGenre = 2551; break;
+                                    case "9": selectGenre = 8259; break;
+                                    case "10": selectGenre = 1; break;
+                                    case "11": selectGenre = 1383; break;
+                                    case "12": selectGenre = 1108; break;
+                                    case "13": selectGenre = 55889; break;
+                                    case "14": selectGenre = 1196; break;
+                                    case "15": selectGenre = 74; break;
+                                    case "16": selectGenre = 517; break;
+                                    case "17": selectGenre = 1322; break;
+                                    case "18": selectGenre = 13789; break;
+                                    case "19": selectGenre = 656; break;
+                                    case "20": selectGenre = 336; break;
+                                    case "21": selectGenre = 112011; break;
+                                    case "22": selectGenre = 28402; break;
+                                    case "23": selectGenre = 17195; break;
+                                    case "24": selectGenre = 38410; break;
+                                }
+                                Log.d("TAG", "data: " + selectGenre);
+                                //API 연동
+                                RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
+                                recommendBookAsyncTask.execute();
+                            }
+                        }
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
         /*//임시 데이터 삽입
         for(int i=0; i<10; i++) {
             RecommendBookItem data = new RecommendBookItem("책 제목"+i, "지은이"+i, "출판사"+i, (float)4.5, "(4.5)");
@@ -72,7 +146,7 @@ public class RecommendBookActivity extends AppCompatActivity {
         /*//RecyclerView 항목 클릭 구현
         bookListAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(Vi ew v, int position) {
                 Intent intent = new Intent(getApplicationContext(), MBookInfoDetail.class);
                 startActivity(intent);
             }
@@ -85,7 +159,7 @@ public class RecommendBookActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + dataKey +
-                    "&QueryType=ItemEditorChoice&CategoryId=38414&MaxResults=20&start=1&SearchTarget=Book&output=xml&Version=20131101";
+                    "&QueryType=ItemEditorChoice&CategoryId=" + selectGenre + "&MaxResults=5&start=1&SearchTarget=Book&output=xml&Version=20131101";;
 
             try {
                 URL url = new URL(requestUrl);
