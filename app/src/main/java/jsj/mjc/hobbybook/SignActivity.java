@@ -13,49 +13,18 @@ package jsj.mjc.hobbybook;
         import android.widget.TextView;
         import android.widget.Toast;
 
-
-<<<<<<<<< Temporary merge branch 1
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-=========
-        import java.lang.reflect.Array;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.Map;
->>>>>>>>> Temporary merge branch 2
 
         import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AlertDialog;
-        import androidx.appcompat.widget.Toolbar; //Toolbar -> androidx 사용하는 경우
         import androidx.appcompat.app.AppCompatActivity;
 
         import androidx.annotation.Nullable;
-        import androidx.appcompat.app.AppCompatActivity;
-
-<<<<<<<<< Temporary merge branch 1
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-=========
-        import com.google.android.gms.tasks.OnFailureListener;
-        import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.firestore.DocumentReference;
-        import com.google.firebase.firestore.FirebaseFirestore;
->>>>>>>>> Temporary merge branch 2
 
 public class SignActivity extends AppCompatActivity {
     Spinner pw_spinner, email_spinner;
