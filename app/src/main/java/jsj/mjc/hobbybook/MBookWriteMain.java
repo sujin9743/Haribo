@@ -1,12 +1,13 @@
 package jsj.mjc.hobbybook;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -28,23 +30,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MBookWriteMain extends AppCompatActivity {
-    ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon;
+    ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon, imgSearchBookCover;//sj
     TextView shareBtn;
     EditText bookName,reportName, contents;
     TextView hashtag1,hashtag2,hashtag3,hashtag4;
+    Button imgDeleteBtn; //sj(이미지 삭제 버튼)
     private static final int PICK_FROM_ALBUM=1;
 
     private FirebaseFirestore db;
 
     int i = 1;
 
-    int REQUEST_CODE = 1;
+    int request_Code = 1;
     final static int CODE=1;    //해시태그 intent 구분
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_report_write_main);
 
+        imgSearchBookCover = findViewById(R.id.imgSearchBookCover);
+        imgDeleteBtn = findViewById(R.id.imgDeleteBtn);
 
         //파이어베이스
         db = FirebaseFirestore.getInstance();
@@ -105,10 +110,11 @@ public class MBookWriteMain extends AppCompatActivity {
         bookSearchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MBookSearch.class);
-                startActivity(i);
+                Intent intentA = new Intent(getApplicationContext(),MBookSearch.class);
+                startActivityForResult(intentA, request_Code);
             }
         });
+
         addImgIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,22 +162,49 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MHashTagSearch.class);
-                startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent, request_Code);
             }
         });
 
+        //sj
+        imgDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgSearchBookCover.setImageResource(0);
+                imgDeleteBtn.setVisibility(View.INVISIBLE);
+            }
+        });
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode != Activity.RESULT_OK) {
-                return;
-            }
-            String hash1 = data.getStringExtra("hash1");
-            hashtag1.setText("#"+hash1);
+
+        //수진 (검색한 책 표지 불러오기)
+        if(requestCode == 1 && resultCode == RESULT_OK) {
+            String img = data.getStringExtra("image");
+            Glide.with(getApplicationContext()).load(data.getStringExtra("image")).into(imgSearchBookCover);
+            imgDeleteBtn.setVisibility(View.VISIBLE);
         }
+
+            if (resultCode == RESULT_OK) {
+
+                String hash1, hash2, hash3, hash4;
+                hash1 = data.getStringExtra("hash1");
+                hash2 = data.getStringExtra("hash2");
+                hash3 = data.getStringExtra("hash3");
+                hash4 = data.getStringExtra("hash4");
+
+                Log.d(hash1 + hash2, "onClick: 222222222ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+
+                hashtag1.setText(hash1);
+                hashtag2.setText(hash2);
+                hashtag3.setText(hash3);
+                hashtag4.setText(hash4);
+                Log.d(hashtag1.getText().toString() + hash2, "onClick: 23333333333333ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+            }else{
+                Toast.makeText(getApplicationContext(),"오류 발생 ",Toast.LENGTH_SHORT).show();
+
+            }
     }
-
-
 }
 
