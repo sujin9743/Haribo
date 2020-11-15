@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -19,12 +20,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +43,9 @@ public class ModifyProfileActivity extends AppCompatActivity {
     CircleImageView modify_profile_Img;
     EditText modify_id_edt, modify_pw_edt, modify_pwCk_edt, modify_email_id_edt;
     TextView modify_del_tv, modify_pwReCk_txt;
+    Button add_profile_Img;
     boolean pw_chk = false;
+    StorageReference storageRef;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference docRef = db.collection("member").document(loginId);
 
@@ -54,7 +61,6 @@ public class ModifyProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_24dp);
 
-        modify_profile_Img = findViewById(R.id.modify_profile_Img);
         modify_id_edt = findViewById(R.id.modify_id_edt);
         modify_pw_edt = findViewById(R.id.modify_pw_edt);
         modify_pwCk_edt = findViewById(R.id.modify_pwCk_edt);
@@ -70,12 +76,31 @@ public class ModifyProfileActivity extends AppCompatActivity {
         modify_email_spinner.setAdapter(email_spinner_adapter);
 
         //갤러리 사진 받기
+        storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".png");
+        modify_profile_Img = findViewById(R.id.modify_profile_Img);
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(ModifyProfileActivity.this).load(uri).into(modify_profile_Img);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+            }
+        });
         modify_profile_Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Intent.ACTION_PICK);
-                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent,PICK_FROM_ALBUM);
+                changeImg();
+            }
+        });
+        add_profile_Img = findViewById(R.id.add_profile_Img);
+        add_profile_Img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeImg();
             }
         });
 
@@ -149,5 +174,11 @@ public class ModifyProfileActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void changeImg () {
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent,PICK_FROM_ALBUM);
     }
 }
