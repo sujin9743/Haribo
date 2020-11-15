@@ -69,10 +69,10 @@ public class UserFeedActivity extends AppCompatActivity {
 
         //todo 1. RecyclerView 책표지 데이터 삽입
         for(int i=0; i<10; i++) {
-            FeedReadBookItem data = new FeedReadBookItem();
-            uF_readBookList.add(data);
+            //FeedReadBookItem data = new FeedReadBookItem();
+            //uF_readBookList.add(data);
         }
-        bookCover_recycler.setAdapter(uF_feedReadBookAdapter);
+       // bookCover_recycler.setAdapter(uF_feedReadBookAdapter);
 
         //RecyclerView 항목 클릭 구현
         uF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {

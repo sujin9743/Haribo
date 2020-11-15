@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
@@ -77,22 +78,7 @@ public class MyFeedFragment extends Fragment {
         //context와 spanCount(한 줄을 몇 개 칸으로 나눌지)
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         myFeed_bookCover_recycler.setLayoutManager(gridLayoutManager);
-
-        //todo 1. RecyclerView 책표지 데이터 삽입
-        for(int i=0; i<10; i++) {
-            FeedReadBookItem data = new FeedReadBookItem();
-            mF_readBookList.add(data);
-        }
         myFeed_bookCover_recycler.setAdapter(mF_feedReadBookAdapter);
-
-        //RecyclerView 항목 클릭 구현
-        mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Intent intent = new Intent(getContext(), MBookReportDetail.class);
-                startActivity(intent);
-            }
-        });
 
         //팔로잉/팔로워 목록 조회 화면 이동
         myFeed_follower_count_txt = view.findViewById(R.id.myFeed_follower_count_txt);
@@ -161,11 +147,10 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });
-
-
 
         return view;
     }
@@ -201,27 +186,12 @@ public class MyFeedFragment extends Fragment {
                 }
             }
         });
-        //독서 기록 로드
-        db.collection("bookre").whereEqualTo("mem_id", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        read++;
-                    }
-                } else {
-                    Log.d("lll", "독서 기록 로드 오류 : ", task.getException());
-                }
-                myFeed_book_count_txt.setText(""+read);
-            }
-        });
         //팔로잉 로드
         db.collection("follow").whereEqualTo("follower", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("lll", document.getId() + " => " + document.getData());
                                 following++;
                             }
                         } else {
@@ -242,6 +212,33 @@ public class MyFeedFragment extends Fragment {
                     Log.d("lll", "팔로워 로드 오류 : ", task.getException());
                 }
                 myFeed_follower_count_txt.setText(""+follower);
+            }
+        });
+        //독서 기록, 독후감 로드
+        mF_readBookList.clear();
+        db.collection("bookre").whereEqualTo("mem_id", loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
+                        mF_readBookList.add(data);
+                        //RecyclerView 항목 클릭 구현
+                        mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
+                            @Override
+                            public void onItemClick(View v, int position) {
+                                Intent intent = new Intent(getContext(), MBookReportDetail.class);
+                                intent.putExtra("bookre_num", mF_readBookList.get(position).getbookReNum());
+                                startActivity(intent);
+                            }
+                        });
+                        read++;
+                    }
+                } else {
+                    Log.d("lll", "독후감 오류 : ", task.getException());
+                }
+                mF_feedReadBookAdapter.notifyDataSetChanged();
+                myFeed_book_count_txt.setText(""+read);
             }
         });
     }

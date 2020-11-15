@@ -38,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ModifyProfileActivity extends AppCompatActivity {
     Spinner modify_email_spinner;
-    String loginId = "test";
+    String loginId;
     private static final int PICK_FROM_ALBUM=1;
     CircleImageView modify_profile_Img;
     EditText modify_id_edt, modify_pw_edt, modify_pwCk_edt, modify_email_id_edt;
@@ -47,12 +47,15 @@ public class ModifyProfileActivity extends AppCompatActivity {
     boolean pw_chk = false;
     StorageReference storageRef;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference docRef = db.collection("member").document(loginId);
+    DocumentReference docRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myprofile_modify);
+
+        loginId = getIntent().getStringExtra("loginId");
+        docRef = db.collection("member").document(loginId);
 
         //툴바 설정
         Toolbar profile_modify_toolbar = (Toolbar) findViewById(R.id.profile_modify_toolbar);

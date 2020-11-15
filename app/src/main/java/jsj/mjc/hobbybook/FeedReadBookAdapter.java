@@ -14,6 +14,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 public class FeedReadBookAdapter extends RecyclerView.Adapter<FeedReadBookAdapter.FeedReadBookViewHolder> {
 
     private ArrayList<FeedReadBookItem> readBookList;
@@ -69,7 +71,7 @@ public class FeedReadBookAdapter extends RecyclerView.Adapter<FeedReadBookAdapte
     //position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     @Override
     public void onBindViewHolder(@NonNull FeedReadBookViewHolder holder, int position) {
-        holder.bookCoverImg.setImageResource(R.drawable.test_img);
+        Glide.with(holder.itemView.getContext()).load(readBookList.get(position).getBookCoverImgUrl()).into(holder.bookCoverImg);
     }
 
     @Override
