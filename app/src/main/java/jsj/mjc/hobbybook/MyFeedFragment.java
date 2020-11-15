@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,18 +50,20 @@ public class MyFeedFragment extends Fragment {
     FeedReadBookAdapter mF_feedReadBookAdapter;
     BottomSheetDialog bottomSheetDialog;
     ImageButton setting_btn;
-    TextView alarm_setting, block_setting, genre_setting, logout, myFeed_follower_count_txt, myFeed_following_count_txt, myFeed_user_id;
+    TextView alarm_setting, block_setting, genre_setting, logout, myFeed_book_count_txt, myFeed_follower_count_txt, myFeed_following_count_txt, myFeed_user_id;
     Button myFeed_profile_btn;
     CircleImageView myFeed_profileImg;
     String loginId = "test";
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
+    int following, follower, read;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.myfeed, container, false);
 
+        myFeed_book_count_txt = view.findViewById(R.id.myFeed_book_count_txt);
         myFeed_user_id = view.findViewById(R.id.myFeed_user_id);
         myFeed_profileImg = view.findViewById(R.id.myFeed_profileImg);
 
@@ -169,7 +173,23 @@ public class MyFeedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        following = 0;
+        follower = 0;
+        read = 0;
+        //프로필 사진 로드
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".png");
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(MyFeedFragment.this).load(uri).into(myFeed_profileImg);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+            }
+        });
+        //닉네임 로드
         db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -181,18 +201,48 @@ public class MyFeedFragment extends Fragment {
                 }
             }
         });
-        StorageReference imgRef = storageRef.child("profile_img/test.png");
-        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        //독서 기록 로드
+        db.collection("bookre").whereEqualTo("mem_id", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(MyFeedFragment.this).load(uri).into(myFeed_profileImg);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d("엉엉", "뭔 오류냐 : " + exception);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        read++;
+                    }
+                } else {
+                    Log.d("lll", "독서 기록 로드 오류 : ", task.getException());
+                }
+                myFeed_book_count_txt.setText(""+read);
             }
         });
-
+        //팔로잉 로드
+        db.collection("follow").whereEqualTo("follower", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("lll", document.getId() + " => " + document.getData());
+                                following++;
+                            }
+                        } else {
+                            Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                        }
+                        myFeed_following_count_txt.setText(""+following);
+                    }
+        });
+        //팔로워 로드
+        db.collection("follow").whereEqualTo("followee", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        follower++;
+                    }
+                } else {
+                    Log.d("lll", "팔로워 로드 오류 : ", task.getException());
+                }
+                myFeed_follower_count_txt.setText(""+follower);
+            }
+        });
     }
 }

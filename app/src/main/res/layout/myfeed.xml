@@ -56,69 +56,73 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="70dp"
-        android:text="2"
+        android:text="0"
         android:textSize="25sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/myFeed_profileImg"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="@id/read_txt"
+        app:layout_constraintRight_toRightOf="@id/read_txt"/>
 
     <TextView
+        android:id="@+id/read_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginRight="75dp"
         android:text="독서 기록"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/myFeed_book_count_txt"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintRight_toLeftOf="@id/follower_txt" />
 
     <TextView
         android:id="@+id/myFeed_follower_count_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="110dp"
-        android:text="10"
+        android:gravity="center"
+        android:text="0"
         android:textSize="25sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/myFeed_profileImg"
-        app:layout_constraintLeft_toRightOf="@id/myFeed_book_count_txt"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
+        android:id="@+id/follower_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="190dp"
         android:text="팔로워"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/myFeed_follower_count_txt"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
         android:id="@+id/myFeed_following_count_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="95dp"
-        android:text="20"
+        android:text="0"
         android:textSize="25sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/myFeed_profileImg"
-        app:layout_constraintLeft_toRightOf="@id/myFeed_follower_count_txt"/>
+        app:layout_constraintRight_toRightOf="@+id/following_txt"
+        app:layout_constraintLeft_toLeftOf="@+id/following_txt"/>
 
     <TextView
+        android:id="@+id/following_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="312dp"
+        android:layout_marginLeft="85dp"
         android:text="팔로잉"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/myFeed_book_count_txt"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toRightOf="@id/follower_txt" />
 
     <LinearLayout
         android:id="@+id/line"
