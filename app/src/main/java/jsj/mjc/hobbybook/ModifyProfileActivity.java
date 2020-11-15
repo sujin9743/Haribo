@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -69,7 +71,6 @@ public class ModifyProfileActivity extends AppCompatActivity {
         modify_pwCk_edt = findViewById(R.id.modify_pwCk_edt);
         modify_pwReCk_txt = findViewById(R.id.modify_pwReCk_txt);
         modify_email_id_edt = findViewById(R.id.modify_email_id_edt);
-        modify_del_tv = findViewById(R.id.modify_del_tv);
 
         //이메일 Spinner 설정
         modify_email_spinner = findViewById(R.id.modify_email_spinner); //이메일 spinner
@@ -126,6 +127,33 @@ public class ModifyProfileActivity extends AppCompatActivity {
                         modify_email_spinner.setSelection(email_b_num);
                     }
                 }
+            }
+        });
+
+        modify_del_tv = findViewById(R.id.modify_del_tv);
+        modify_del_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModifyProfileActivity.this);
+                builder.setTitle("회원 탈퇴").setMessage("정말로 탈퇴하시겠습니까? 탈퇴할 경우 데이터를 복구할 수 없습니다.").setCancelable(true);
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setPositiveButton("탈퇴", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(ModifyProfileActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        MainActivity.mainActivity.finish();
+                        finish();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }

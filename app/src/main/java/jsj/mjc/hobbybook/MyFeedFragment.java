@@ -141,6 +141,14 @@ public class MyFeedFragment extends Fragment {
             }
         });
         logout = v.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         myFeed_profile_btn = view.findViewById(R.id.myFeed_profile_btn);
         myFeed_profile_btn.setOnClickListener(new View.OnClickListener() {
