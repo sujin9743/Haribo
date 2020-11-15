@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,7 +64,6 @@ public class MyFeedFragment extends Fragment {
         myFeed_profileImg = view.findViewById(R.id.myFeed_profileImg);
 
         storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imgRef = storageRef.child("profile_img/" + loginId + ".png");
 
         //RecyclerView
         mF_readBookList = new ArrayList<>();
@@ -180,5 +181,18 @@ public class MyFeedFragment extends Fragment {
                 }
             }
         });
+        StorageReference imgRef = storageRef.child("profile_img/test.png");
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(MyFeedFragment.this).load(uri).into(myFeed_profileImg);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("엉엉", "뭔 오류냐 : " + exception);
+            }
+        });
+
     }
 }
