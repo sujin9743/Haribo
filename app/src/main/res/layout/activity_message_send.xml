@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/mSend_back_btn"
+            android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
@@ -21,14 +21,14 @@
             android:src="@drawable/ic_chevron_left_black_24dp" />
 
         <EditText
-            android:id="@+id/mSend_reciever"
+            android:id="@+id/sendName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
             android:text="받는사람 님에게" />
 
         <ImageButton
-            android:id="@+id/mSend_mSend_okay_btn"
+            android:id="@+id/okBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -37,7 +38,7 @@ public class MBookWriteMain extends AppCompatActivity {
 
     int i = 1;
 
-    int request_Code = 1;
+    int REQUEST_CODE = 1;
     final static int CODE=1;    //해시태그 intent 구분
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,33 +156,22 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MHashTagSearch.class);
-                startActivityForResult(intent, request_Code);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
-    }
 
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
-            if (resultCode == RESULT_OK) {
-                String hash1, hash2, hash3, hash4;
-                hash1 = data.getStringExtra("hash1");
-                hash2 = data.getStringExtra("hash2");
-                hash3 = data.getStringExtra("hash3");
-                hash4 = data.getStringExtra("hash4");
-
-                Log.d(hash1 + hash2, "onClick: 222222222ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-
-                hashtag1.setText(hash1);
-                hashtag2.setText(hash2);
-                hashtag3.setText(hash3);
-                hashtag4.setText(hash4);
-                Log.d(hashtag1.getText().toString() + hash2, "onClick: 23333333333333ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-            }else{
-                Toast.makeText(getApplicationContext(),"오류 발생 ",Toast.LENGTH_SHORT).show();
-
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode != Activity.RESULT_OK) {
+                return;
             }
+            String hash1 = data.getStringExtra("hash1");
+            hashtag1.setText("#"+hash1);
+        }
     }
+
+
 }
 

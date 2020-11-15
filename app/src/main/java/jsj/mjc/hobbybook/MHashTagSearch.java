@@ -141,8 +141,6 @@ public class MHashTagSearch extends AppCompatActivity{
                 setResult(RESULT_OK,i);
                 finish();
 
-                Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-
             }
         });
 

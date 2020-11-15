@@ -2,6 +2,7 @@ package jsj.mjc.hobbybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserFeedActivity extends AppCompatActivity {
     ArrayList<FeedReadBookItem> uF_readBookList;
     FeedReadBookAdapter uF_feedReadBookAdapter;
-    TextView follower_count_txt, following_count_txt;
+    TextView follower_count_txt, following_count_txt, user_id;
     Button message_btn,followBtn;
     int i = 0;// 팔로우 유무 확인(조민주)
     @Override
@@ -33,6 +34,8 @@ public class UserFeedActivity extends AppCompatActivity {
         setContentView(R.layout.user_feed);
 
 
+        //cho 추가
+        user_id = findViewById(R.id.user_id);
         //조민주 추가 : 팔로잉 버튼 클릭 반응 기능
         followBtn = findViewById(R.id.follow_btn);
         followBtn.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +109,10 @@ public class UserFeedActivity extends AppCompatActivity {
         message_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //cho 추가
+                String userId = user_id.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), MessageSendActivity.class);
+                intent.putExtra("userID",userId);
                 startActivity(intent);
             }
         });
