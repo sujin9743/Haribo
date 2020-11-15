@@ -3,11 +3,14 @@ package jsj.mjc.hobbybook;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -19,10 +22,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.RequiresApi;
@@ -44,7 +51,7 @@ public class MyFeedFragment extends Fragment {
     CircleImageView myFeed_profileImg;
     String loginId = "test";
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    StorageReference storageRef = storage.getReference();
+    StorageReference storageRef;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
@@ -53,6 +60,9 @@ public class MyFeedFragment extends Fragment {
 
         myFeed_user_id = view.findViewById(R.id.myFeed_user_id);
         myFeed_profileImg = view.findViewById(R.id.myFeed_profileImg);
+
+        storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId + ".png");
 
         //RecyclerView
         mF_readBookList = new ArrayList<>();

@@ -154,7 +154,6 @@ public class SignActivity extends AppCompatActivity {
                     user.put("pw_a", pw_CkQA_Edt.getText().toString());
                     user.put("email_f", email_id_edt.getText().toString());
                     user.put("email_b", email_spinner.getSelectedItem().toString());
-                    user.put("profile_img", "");
                     user.put("report_c", 0);
                     user.put("noti_cm", false);
                     user.put("noti_fl", false);
