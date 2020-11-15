@@ -50,7 +50,7 @@ public class MBookWriteMain extends AppCompatActivity {
 
     String bookCoverImg; //sj
     String hash1, hash2, hash3, hash4;
-    String isbn;
+    String isbn, title, author;
    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +92,14 @@ public class MBookWriteMain extends AppCompatActivity {
                 //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
                 saveReport.put("br_img", bookCoverImg);
                 saveReport.put("br_title",reportName.getText().toString());
+                saveReport.put("book_title",title);
+                saveReport.put("book_author",author);
                 saveReport.put("has1", hash1);
                 saveReport.put("has2", hash2);
                 saveReport.put("has3", hash3);
                 saveReport.put("has4", hash4);
                 saveReport.put("date", new Timestamp(new Date()));
+                saveReport.put("mem_id", "test");
 
 
                 //입력한 모든 데이터 서버에 저장
@@ -182,6 +185,9 @@ public class MBookWriteMain extends AppCompatActivity {
                 imgSearchBookCover.setImageResource(0);
                 bookCoverImg = null;
                 imgDeleteBtn.setVisibility(View.INVISIBLE);
+                isbn = null;
+                title = null;
+                author = null;
             }
         });
     }
@@ -193,6 +199,8 @@ public class MBookWriteMain extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK) {
             bookCoverImg = data.getStringExtra("image");
             isbn = data.getStringExtra("isbn");
+            title = data.getStringExtra("title");
+            author = data.getStringExtra("author");
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
         }

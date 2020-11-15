@@ -101,6 +101,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()) {
                         HashMap map = (HashMap) document.getData();
+                        Log.d("TAG", "data: " + map);
                         for(int i=0; i<map.size()-1; i++) {
                             String selectGenreNum = Integer.toString(i+1);
                             String selectGenreBool = map.get(selectGenreNum).toString();
