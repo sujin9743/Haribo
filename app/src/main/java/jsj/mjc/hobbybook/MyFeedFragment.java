@@ -224,12 +224,13 @@ public class MyFeedFragment extends Fragment {
         });
         //독서 기록, 독후감 로드
         mF_readBookList.clear();
-        db.collection("bookre").whereEqualTo("mem_id", loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("bookre").whereEqualTo("mem_id", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
+                        Log.d("lll", "왜!!!");
                         mF_readBookList.add(data);
                         //RecyclerView 항목 클릭 구현
                         mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
