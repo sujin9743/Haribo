@@ -3,11 +3,14 @@ package jsj.mjc.hobbybook;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -18,7 +21,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,19 +38,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyFeedFragment extends Fragment {
 
     ArrayList<FeedReadBookItem> mF_readBookList;
     FeedReadBookAdapter mF_feedReadBookAdapter;
     BottomSheetDialog bottomSheetDialog;
     ImageButton setting_btn;
-    TextView alarm_setting, block_setting, genre_setting, logout, myFeed_follower_count_txt, myFeed_following_count_txt;
+    TextView alarm_setting, block_setting, genre_setting, logout, myFeed_follower_count_txt, myFeed_following_count_txt, myFeed_user_id;
     Button myFeed_profile_btn;
+    CircleImageView myFeed_profileImg;
+    String loginId = "test";
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    StorageReference storageRef;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.myfeed, container, false);
+
+        myFeed_user_id = view.findViewById(R.id.myFeed_user_id);
+        myFeed_profileImg = view.findViewById(R.id.myFeed_profileImg);
+
+        storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId + ".png");
 
         //RecyclerView
         mF_readBookList = new ArrayList<>();
@@ -132,12 +156,29 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
-                //임시로 test2 아이디 변경을 택함
-                intent.putExtra("loginId", "test2");
                 startActivity(intent);
             }
         });
 
+
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        myFeed_user_id.setText(doc.getString("nickname"));
+                    }
+                }
+            }
+        });
     }
 }
