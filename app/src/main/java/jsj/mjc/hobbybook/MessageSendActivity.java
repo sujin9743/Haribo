@@ -56,7 +56,7 @@ public class MessageSendActivity extends AppCompatActivity {
                 //쪽지 보낸 시간
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
-                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy년 MM월 dd일 HH시mm분ss초");
+                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
                 String formatDate = sdfNow.format(date);
 
                 saveMessage.put("inputtime",formatDate );
@@ -71,7 +71,7 @@ public class MessageSendActivity extends AppCompatActivity {
                 saveMessage.put("send_mem", "test");
 
                 // TODO: 2020-11-15 document() 괄호안에 고정 문자 수정해야됨   
-                db.collection("message").document("test").set(saveMessage).addOnFailureListener(new OnFailureListener() {
+                db.collection("message").document("test4").set(saveMessage).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
