@@ -8,19 +8,34 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import androidx.annotation.LongDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MRealtimeBookreportRecycler extends AppCompatActivity {
     ImageView addBtn,backBtn, searchBtn;
 
     RecyclerView recyclerView = null;
     MRealtimeBookreportAdapter adapter;
-    ArrayList<MRealtime> list = new ArrayList<MRealtime>();
+    ArrayList<MRealtime> list = new ArrayList<>();
+    MRealtime item = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,35 +43,52 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.mRecycler);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new MRealtimeBookreportAdapter(list);
+        //recyclerView 구분선 추가
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        //firebase
+        final FirebaseFirestore rtBook_DB = FirebaseFirestore.getInstance();
 
-        for(int i = 0;i<10;i++){
-            MRealtime data = new MRealtime("도로시","82년생의 김지영"+ " | ","82살 김지영을 읽고","150","30");
-            list.add(data);
-        }
-
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
+        rtBook_DB.collection("bookre").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onItemClick(View v, int position) {
-                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
-                startActivity(i);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                //data-set가져오기
+                   String br_img, book_title, book_author;
+                   DocumentSnapshot doc =  task.getResult().getDocuments().get(task.getResult().size() - 1);
+                   if(task.getResult().size() > 0) {
+                       Log.d("TAG", "i: " + doc);
+                       Log.d("TAG", "data: " + doc.getData());
+                       //Log.d("TAG", "data2: "+doc.getData().get("br_img").toString());
+                       Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
+                       Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
+                       Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
+                       item.setBookImgPage(doc.getData().get("br_img").toString());
+                       item.setBookName(doc.getData().get("book_title").toString());
+                       item.setBookCreator(doc.getData().get("book_author").toString());
+                   }
+                list.add(item);
+                MRealtimeBookreportAdapter adapter = new MRealtimeBookreportAdapter(list);
+                recyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                        startActivity(i);
+                    }
+                });
             }
         });
 
+        //for(int i = 0;i<10;i++){
+        //    MRealtime data = new MRealtime("도로시","82년생의 김지영"+ " | ","82살 김지영을 읽고","150","30");
+        //    list.add(data);
+        //}
 
-
-
-
-
-
+        //recyclerView.setAdapter(adapter);
 
 
         addBtn = findViewById(R.id.addBookReport);
