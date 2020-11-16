@@ -201,7 +201,7 @@ public class MBookWriteMain extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
             //cho 도서명
-            String bTitle = data.getStringExtra("br_title");
+            String bTitle = data.getStringExtra("title");
             bookName.setText(bTitle);
         }
 
