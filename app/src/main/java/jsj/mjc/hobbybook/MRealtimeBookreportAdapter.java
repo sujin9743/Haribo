@@ -53,7 +53,6 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
             this.profileImg = itemView.findViewById(R.id.profileImg);
             this.profileText = itemView.findViewById(R.id.profileText);
             this.bookName = itemView.findViewById(R.id.bookName);
-            this.bookCreator = itemView.findViewById(R.id.bookCreator);
             this.likeCnt = itemView.findViewById(R.id.likeCnt);
             this.commentCnt = itemView.findViewById(R.id.commentCnt);
             this.bookImgPage = itemView.findViewById(R.id.bookImgPage);
@@ -113,10 +112,10 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
 
     @Override
     public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
-        //holder.profileImg.set..(item.getProfileImg());
+        Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getProfileImg()).into(holder.profileImg);
         holder.profileText.setText(mRealtime.get(position).getProfileText());
-        holder.bookName.setText(mRealtime.get(position).getBookName());
-        holder.bookCreator.setText(mRealtime.get(position).getBookCreator());
+        holder.bookName.setText(mRealtime.get(position).getBrTitle());
+        //holder.bookCreator.setText(mRealtime.get(position).getBookCreator());
         holder.likeCnt.setText(mRealtime.get(position).getLikeCnt());
         holder.commentCnt.setText(mRealtime.get(position).getCommentCnt());
         //holder.bookImgPage.setImageURI(item.getBookImgPage());
