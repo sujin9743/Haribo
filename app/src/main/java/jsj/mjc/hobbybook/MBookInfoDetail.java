@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -45,6 +46,8 @@ public class MBookInfoDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                 startActivity(i);
+
+                Toast.makeText(getApplicationContext(),"좋아요가 가장 많은 독후감 게시물로 이동됩니다.",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,6 +57,8 @@ public class MBookInfoDetail extends AppCompatActivity {
             public void onClick(View view) {
                 MReviewDialog mReviewDialog = new MReviewDialog(MBookInfoDetail.this);
                 mReviewDialog.show();
+
+
 
             }
         });
