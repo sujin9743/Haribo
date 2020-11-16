@@ -172,6 +172,7 @@ public class MBookSearch extends AppCompatActivity {
                 public void onItemClick(View v, int position) { //책 누르면 도서 표지 저장
                     String image;
                     image = booklist.get(position).getBookImgUrl();
+                    //도서제목 저장
                     title = booklist.get(position).getBookTitle();
                     author = booklist.get(position).getBookWriter();
                     isbn = booklist.get(position).getBookIsbn();

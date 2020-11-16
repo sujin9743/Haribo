@@ -59,6 +59,7 @@ public class UserFeedActivity extends AppCompatActivity {
 
         //TODO putExtra getStringExtra 사용해서 어느 계정으로 어느 회원 보고 있는지 처리
 
+        //민주 푸시
         book_count_txt = findViewById(R.id.book_count_txt);
         user_id = findViewById(R.id.user_id);
         userFeed_profileImg = findViewById(R.id.userFeed_profileImg);
