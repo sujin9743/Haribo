@@ -87,6 +87,12 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //저장 시간 구함
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
+                String formatDate = sdfNow.format(date);
+
                 saveReport.put("bookisbn",isbn);
                 saveReport.put("br_content",contents.getText().toString());
                 //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
@@ -96,17 +102,15 @@ public class MBookWriteMain extends AppCompatActivity {
                 saveReport.put("has2", hash2);
                 saveReport.put("has3", hash3);
                 saveReport.put("has4", hash4);
-                saveReport.put("date", new Timestamp(new Date()));
+                saveReport.put("date", formatDate);
+
+
 
 
                 //입력한 모든 데이터 서버에 저장
-                db.collection("bookre").add(saveReport).addOnSuccessListener(new OnSuccessListener<DocumentReference>(){
-                    public void onSuccess(DocumentReference documentReference){
-                        //성공
-                        Log.d("돼라쩜", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                }).addOnFailureListener(new OnFailureListener(){
-                    public void onFailure(@NonNull Exception e){
+                db.collection("bookre").document("test").set(saveReport).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
                     }
                 });
@@ -182,6 +186,7 @@ public class MBookWriteMain extends AppCompatActivity {
                 imgSearchBookCover.setImageResource(0);
                 bookCoverImg = null;
                 imgDeleteBtn.setVisibility(View.INVISIBLE);
+
             }
         });
     }
@@ -195,6 +200,9 @@ public class MBookWriteMain extends AppCompatActivity {
             isbn = data.getStringExtra("isbn");
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
+            //cho 도서명
+            String bTitle = data.getStringExtra("br_title");
+            bookName.setText(bTitle);
         }
 
         //입력한 해시태그 불러오기

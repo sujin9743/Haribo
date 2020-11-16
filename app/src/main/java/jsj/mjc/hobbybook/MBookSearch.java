@@ -46,12 +46,13 @@ public class MBookSearch extends AppCompatActivity {
     public String dataKey = "ttbw_wowoo1406002";
     private String requestUrl;
     RecommendBookItem bookItem = null;
-    String isbn;
+    String isbn,bTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_search);
+
 
         ImageView backBtn;
         TextView okBtn;
@@ -117,7 +118,9 @@ public class MBookSearch extends AppCompatActivity {
                             }
                             else if(parser.getName().equals("title")) {
                                 parser.next();
-                                if(bookItem!=null) bookItem.setBookTitle(parser.getText());
+                                if(bookItem!=null) {
+                                    bookItem.setBookTitle(parser.getText());
+                                }
                             }
                             else if(parser.getName().equals("author")) {
                                 parser.next();
@@ -176,6 +179,8 @@ public class MBookSearch extends AppCompatActivity {
                     Intent intentB = new Intent();
                     intentB.putExtra("image", image);
                     intentB.putExtra("isbn", isbn);
+                    //cho 도서명 보내기
+                    intentB.putExtra("br_title",bTitle);
                     setResult(RESULT_OK, intentB);
                     finish();
                 }
