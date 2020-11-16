@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    public static MainActivity mainActivity;
     HomeFragment homeFragment = new HomeFragment();
     MessageFragment messageFragment = new MessageFragment();
     RankingFragment rankingFragment = new RankingFragment();
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainActivity = this;
 
         ImageButton search_btn = findViewById(R.id.main_search_btn);
         ImageButton main_back_btn = findViewById(R.id.main_back_btn);

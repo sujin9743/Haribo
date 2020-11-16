@@ -32,10 +32,10 @@ import java.util.List;
 public class MRealtimeBookreportRecycler extends AppCompatActivity {
     ImageView addBtn,backBtn, searchBtn;
 
-    RecyclerView recyclerView = null;
+    RecyclerView recyclerView;
     MRealtimeBookreportAdapter adapter;
     ArrayList<MRealtime> list = new ArrayList<>();
-    MRealtime item = null;
+    MRealtime item;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +44,15 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.mRecycler);
 
+        adapter = new MRealtimeBookreportAdapter(list);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //recyclerView 구분선 추가
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
+
+        recyclerView.setAdapter(adapter);
 
         //firebase
         final FirebaseFirestore rtBook_DB = FirebaseFirestore.getInstance();
@@ -58,28 +62,32 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 //data-set가져오기
                    String br_img, book_title, book_author;
-                   DocumentSnapshot doc =  task.getResult().getDocuments().get(task.getResult().size() - 1);
-                   if(task.getResult().size() > 0) {
-                       Log.d("TAG", "i: " + doc);
-                       Log.d("TAG", "data: " + doc.getData());
-                       //Log.d("TAG", "data2: "+doc.getData().get("br_img").toString());
-                       Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
-                       Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
-                       Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
-                       item.setBookImgPage(doc.getData().get("br_img").toString());
-                       item.setBookName(doc.getData().get("book_title").toString());
-                       item.setBookCreator(doc.getData().get("book_author").toString());
+                   if(task.isSuccessful())
+                    {
+                        item = new MRealtime();
+                        for(int i=0; i<task.getResult().size(); i++) {
+                            DocumentSnapshot doc = task.getResult().getDocuments().get(i);
+                            Log.d("TAG", "data: " + doc);
+                            Log.d("TAG", "data: " + doc.getData());
+                            Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
+                            Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
+                            Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
+                            item.setBookImgPage(doc.getData().get("br_img").toString());
+                            item.setBookName(doc.getData().get("book_title").toString());
+                            item.setBookCreator(doc.getData().get("book_author").toString());
+                            list.add(item);
+                            adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
+                                @Override
+                                public void onItemClick(View v, int position) {
+                                    Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                                    startActivity(i);
+                                }
+                            });
+                            adapter.notifyDataSetChanged();
+                            //adapter = new MRealtimeBookreportAdapter(list);
+                        }
+                        //recyclerView.setAdapter(adapter);
                    }
-                list.add(item);
-                MRealtimeBookreportAdapter adapter = new MRealtimeBookreportAdapter(list);
-                recyclerView.setAdapter(adapter);
-                adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
-                    @Override
-                    public void onItemClick(View v, int position) {
-                        Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
-                        startActivity(i);
-                    }
-                });
             }
         });
 
