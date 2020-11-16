@@ -44,14 +44,13 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.mRecycler);
 
-        adapter = new MRealtimeBookreportAdapter(list);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //recyclerView 구분선 추가
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
 
+        adapter = new MRealtimeBookreportAdapter(list);
         recyclerView.setAdapter(adapter);
 
         //firebase
