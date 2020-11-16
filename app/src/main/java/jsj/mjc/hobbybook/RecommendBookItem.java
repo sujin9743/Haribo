@@ -3,7 +3,7 @@ package jsj.mjc.hobbybook;
 public class RecommendBookItem {
 
     private String bookImgUrl;
-    private String bookTitle, bookWriter, bookPublisher, bookRateTxt;
+    private String bookTitle, bookWriter, bookPublisher, bookRateTxt, bookIsbn;
     float bookRate;
 
     /*public RecommendBookItem(String bookTitle, String bookWriter, String bookPublisher, float bookRate, String bookRateTxt) {
@@ -42,6 +42,8 @@ public class RecommendBookItem {
         this.bookPublisher = bookPublisher;
     }
 
+    public void setBookIsbn(String bookIsbn) { this.bookIsbn = bookIsbn; }
+
     public String getBookPublisher() {
         return bookPublisher;
     }
@@ -60,5 +62,9 @@ public class RecommendBookItem {
 
     public String getBookRateTxt() {
         return bookRateTxt;
+    }
+
+    public String getBookIsbn() {
+        return bookIsbn;
     }
 }

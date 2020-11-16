@@ -13,7 +13,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MRealtime {
     private Drawable profileImg;    //circleimg
     private String profileText, bookName, bookCreator,likeCnt, commentCnt;
-    private Drawable bookImgPage;       //viewpager임
+    private String bookImgPage;       //viewpager임
     private Drawable heart;             //imageview
 
     public void setProfileImg(Drawable pImg){
@@ -34,7 +34,7 @@ public class MRealtime {
     public void setCommentCnt(String cCnt){
         commentCnt = cCnt;
     }
-    public void setBookImgPage(Drawable bImgPage){
+    public void setBookImgPage(String bImgPage){
         bookImgPage = bImgPage;
     }
     public void setHeart(Drawable h){
@@ -42,36 +42,37 @@ public class MRealtime {
     }
 
     public Drawable getProfileImg(){
-        return this.profileImg;
+        return profileImg;
     }
     public String getProfileText(){
-        return this.profileText;
+        return profileText;
     }
     public String getBookName(){
-        return this.bookName;
+        return bookName;
     }
     public String getBookCreator(){
-        return this.bookCreator;
+        return bookCreator;
     }
     public String getLikeCnt(){
-        return this.likeCnt;
+        return likeCnt;
     }
     public String getCommentCnt(){
-        return this.commentCnt;
+        return commentCnt;
     }
-    public Drawable getBookImgPage(){
-        return this.bookImgPage;
+    public String getBookImgPage(){
+        return bookImgPage;
     }
     public Drawable getHeart(){
-        return this.heart;
+        return heart;
     }
 
-    MRealtime(String profileText, String bookName, String bookCreator, String likeCnt, String commentCnt){
+    /*MRealtime(String profileText, String img, String bookName, String bookCreator, String likeCnt, String commentCnt){
         this.profileText = profileText;
+        this.bookImgPage = img;
         this.bookName = bookName;
         this.bookCreator = bookCreator;
         this.likeCnt = likeCnt;
         this.commentCnt = commentCnt;
-    }
+    }*/
 
 }

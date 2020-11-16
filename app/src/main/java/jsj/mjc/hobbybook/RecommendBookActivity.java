@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,6 +56,8 @@ public class RecommendBookActivity extends AppCompatActivity {
 
     float bookRating;
     int selectGenre;
+    Integer[] selectGenreArray = new Integer[24];
+    String[] selectGenreBoolArray = new String[24];
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -63,6 +66,11 @@ public class RecommendBookActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_recommend);
+
+        for(int i=0; i<24; i++) {
+            selectGenreArray[i] = 0;
+            selectGenreBoolArray[i] = "false";
+        }
 
         //툴바 뒤로가기
         ImageButton bookRc_backBtn = findViewById(R.id.bookRc_backBtn);
@@ -93,6 +101,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()) {
                         HashMap map = (HashMap) document.getData();
+                        Log.d("TAG", "data: " + map);
                         for(int i=0; i<map.size()-1; i++) {
                             String selectGenreNum = Integer.toString(i+1);
                             String selectGenreBool = map.get(selectGenreNum).toString();
@@ -113,7 +122,6 @@ public class RecommendBookActivity extends AppCompatActivity {
                                     }
                                     case "4": {
                                         selectGenre = 38414;
-                                        apiConnect();
                                         break;
                                     }
                                     case "5": {
@@ -207,7 +215,6 @@ public class RecommendBookActivity extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
-                //으앙
             }
         });
         /*//임시 데이터 삽입

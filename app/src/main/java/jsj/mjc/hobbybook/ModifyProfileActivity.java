@@ -1,6 +1,8 @@
 package jsj.mjc.hobbybook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,15 +18,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,19 +40,24 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ModifyProfileActivity extends AppCompatActivity {
     Spinner modify_email_spinner;
-    String loginId = "test";
+    String loginId;
     private static final int PICK_FROM_ALBUM=1;
     CircleImageView modify_profile_Img;
     EditText modify_id_edt, modify_pw_edt, modify_pwCk_edt, modify_email_id_edt;
     TextView modify_del_tv, modify_pwReCk_txt;
+    Button add_profile_Img;
     boolean pw_chk = false;
+    StorageReference storageRef;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference docRef = db.collection("member").document(loginId);
+    DocumentReference docRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myprofile_modify);
+
+        loginId = getIntent().getStringExtra("loginId");
+        docRef = db.collection("member").document(loginId);
 
         //툴바 설정
         Toolbar profile_modify_toolbar = (Toolbar) findViewById(R.id.profile_modify_toolbar);
@@ -54,13 +66,11 @@ public class ModifyProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_24dp);
 
-        modify_profile_Img = findViewById(R.id.modify_profile_Img);
         modify_id_edt = findViewById(R.id.modify_id_edt);
         modify_pw_edt = findViewById(R.id.modify_pw_edt);
         modify_pwCk_edt = findViewById(R.id.modify_pwCk_edt);
         modify_pwReCk_txt = findViewById(R.id.modify_pwReCk_txt);
         modify_email_id_edt = findViewById(R.id.modify_email_id_edt);
-        modify_del_tv = findViewById(R.id.modify_del_tv);
 
         //이메일 Spinner 설정
         modify_email_spinner = findViewById(R.id.modify_email_spinner); //이메일 spinner
@@ -70,12 +80,31 @@ public class ModifyProfileActivity extends AppCompatActivity {
         modify_email_spinner.setAdapter(email_spinner_adapter);
 
         //갤러리 사진 받기
+        storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".png");
+        modify_profile_Img = findViewById(R.id.modify_profile_Img);
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(ModifyProfileActivity.this).load(uri).into(modify_profile_Img);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+            }
+        });
         modify_profile_Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Intent.ACTION_PICK);
-                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent,PICK_FROM_ALBUM);
+                changeImg();
+            }
+        });
+        add_profile_Img = findViewById(R.id.add_profile_Img);
+        add_profile_Img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeImg();
             }
         });
 
@@ -98,6 +127,33 @@ public class ModifyProfileActivity extends AppCompatActivity {
                         modify_email_spinner.setSelection(email_b_num);
                     }
                 }
+            }
+        });
+
+        modify_del_tv = findViewById(R.id.modify_del_tv);
+        modify_del_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModifyProfileActivity.this);
+                builder.setTitle("회원 탈퇴").setMessage("정말로 탈퇴하시겠습니까? 탈퇴할 경우 데이터를 복구할 수 없습니다.").setCancelable(true);
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setPositiveButton("탈퇴", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(ModifyProfileActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        MainActivity.mainActivity.finish();
+                        finish();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
@@ -149,5 +205,11 @@ public class ModifyProfileActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void changeImg () {
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent,PICK_FROM_ALBUM);
     }
 }
