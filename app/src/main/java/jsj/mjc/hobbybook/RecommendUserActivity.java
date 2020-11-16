@@ -32,13 +32,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.StructuredQuery;
 
 public class RecommendUserActivity extends AppCompatActivity {
     ArrayList<UserlistItem> userlist;
     UserListAdapter userListAdapter;
-    int i;
+    int following;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,9 +86,21 @@ public class RecommendUserActivity extends AppCompatActivity {
         });
 
 
-
-        firebaseFirestore.collection("category").document("1").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("category").whereEqualTo("1",false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                String str = null;
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                         str =
+                    }
+                }
+                Log.d("태그",str);
+            }
+        });
+
+
+            /*@Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
@@ -204,7 +217,7 @@ public class RecommendUserActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
 
 
         //현재 로그인한 아이디와 1번 필드가 같은 document 전체를 찾음
