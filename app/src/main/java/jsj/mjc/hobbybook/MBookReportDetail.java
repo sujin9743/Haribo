@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 //조민주
 
@@ -19,6 +21,7 @@ public class MBookReportDetail extends AppCompatActivity {
     ViewPager bookImgPage;
     LinearLayout forBookInfo,forReview,porfileLayout;
 
+    FirebaseFirestore db;
     int i =0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,9 @@ public class MBookReportDetail extends AppCompatActivity {
         forBookInfo = findViewById(R.id.forBookInfo);
         forReview = findViewById(R.id.forReview);
 
+
+
+        db = FirebaseFirestore.getInstance();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
