@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -16,7 +17,7 @@ public class DebateAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_debate_add);
 
         ImageButton dAdd_back_btn = findViewById(R.id.dAdd_back_btn);
-        ImageButton dAdd_add_btn = findViewById(R.id.dAdd_add_btn);
+        TextView dAdd_add_btn = findViewById(R.id.dAdd_add_btn);
         final EditText dAdd_title_et = findViewById(R.id.dAdd_title_et);
         final EditText dAtt_text_et = findViewById(R.id.dAdd_text_et);
 
