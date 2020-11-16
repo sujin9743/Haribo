@@ -46,13 +46,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendBookActivity extends AppCompatActivity {
     ArrayList<RecommendBookItem> booklist = new ArrayList<>();
+    RecommendBookAdapter recommendBookAdapter;
     RecyclerView bookRc_recycler;
 
     //API연동
     final String TAG = "RecommendBookActivity";
     public String dataKey = "ttbw_wowoo1406002";
     private String requestUrl;
-    RecommendBookItem bookItem = null;
+    RecommendBookItem bookItem;
 
     float bookRating;
     int selectGenre;
@@ -90,10 +91,12 @@ public class RecommendBookActivity extends AppCompatActivity {
         //recyclerView 구분선 추가
         bookRc_recycler.addItemDecoration(new DividerItemDecoration(bookRc_recycler.getContext(), 1));
 
+        recommendBookAdapter = new RecommendBookAdapter(booklist);
+        bookRc_recycler.setAdapter(recommendBookAdapter);
+
         //firebase
         final FirebaseFirestore rcBook_DB = FirebaseFirestore.getInstance();
 
-        //test로만 작업(사용자 id 저장 필요)
         rcBook_DB.collection("category").document("test").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -206,7 +209,8 @@ public class RecommendBookActivity extends AppCompatActivity {
                                     }
                                 }
                                 Log.d("TAG", "data: " + selectGenre);
-                                apiConnect();
+                                RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
+                                recommendBookAsyncTask.execute();
                             }
                         }
                     } else {
@@ -308,11 +312,12 @@ public class RecommendBookActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            RecommendBookAdapter bookListAdapter = new RecommendBookAdapter(booklist);
-            bookRc_recycler.setAdapter(bookListAdapter);
+            recommendBookAdapter.notifyDataSetChanged();
+            bookItem = new RecommendBookItem();
+
             Log.d("TAG", "genre: " + selectGenre);
 
-            bookListAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
+            recommendBookAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
                 @Override
                 public void onItemClick(View v, int position) { //책 누르면 도서 상세정보 페이지로 이동
                     String title, image;
@@ -326,10 +331,5 @@ public class RecommendBookActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    public void apiConnect() {
-        RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
-        recommendBookAsyncTask.execute();
     }
 }

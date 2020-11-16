@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:id="@+id/profileLayout"
-        android:layout_marginLeft="18dp"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -14,8 +14,8 @@
         app:layout_constraintRight_toRightOf="parent">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImg"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@mipmap/ic_launcher"
             android:layout_gravity="center">
         </de.hdodenhof.circleimageview.CircleImageView>
@@ -25,7 +25,8 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:text="Dorothy"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_margin="10dp"/>
     </LinearLayout>
     <LinearLayout
@@ -40,7 +41,7 @@
             android:layout_width="380dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:background="@color/testColor">
+            android:background="@color/white">
         </ImageView>
 
 
@@ -102,18 +103,11 @@
         <TextView
             android:id="@+id/bookName"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="도서제목 |"
+            android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="3dp"/>
-        <TextView
-            android:id="@+id/bookCreator"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text=" 도서제목"
-            android:textSize="20sp"
-            android:layout_marginTop="3dp"/>
+            android:textStyle="bold"
+            android:textColor="@color/darkGreen"
+            android:layout_margin="20dp"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
