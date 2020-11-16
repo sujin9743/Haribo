@@ -46,13 +46,12 @@ public class MBookSearch extends AppCompatActivity {
     public String dataKey = "ttbw_wowoo1406002";
     private String requestUrl;
     RecommendBookItem bookItem = null;
-    String isbn,bTitle;
+    String isbn, title, author;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_search);
-
 
         ImageView backBtn;
         TextView okBtn;
@@ -118,9 +117,7 @@ public class MBookSearch extends AppCompatActivity {
                             }
                             else if(parser.getName().equals("title")) {
                                 parser.next();
-                                if(bookItem!=null) {
-                                    bookItem.setBookTitle(parser.getText());
-                                }
+                                if(bookItem!=null) bookItem.setBookTitle(parser.getText());
                             }
                             else if(parser.getName().equals("author")) {
                                 parser.next();
@@ -138,7 +135,7 @@ public class MBookSearch extends AppCompatActivity {
                             }
                             else if(parser.getName().equals("isbn")) {
                                 parser.next();
-                                if(bookItem!=null) isbn = parser.getText();
+                                if(bookItem!=null) bookItem.setBookIsbn(parser.getText());
                             }
                             break;
                         case XmlPullParser.TEXT:
@@ -175,12 +172,16 @@ public class MBookSearch extends AppCompatActivity {
                 public void onItemClick(View v, int position) { //책 누르면 도서 표지 저장
                     String image;
                     image = booklist.get(position).getBookImgUrl();
+                    //도서제목 저장
+                    title = booklist.get(position).getBookTitle();
+                    author = booklist.get(position).getBookWriter();
+                    isbn = booklist.get(position).getBookIsbn();
 
                     Intent intentB = new Intent();
                     intentB.putExtra("image", image);
                     intentB.putExtra("isbn", isbn);
-                    //cho 도서명 보내기
-                    intentB.putExtra("br_title",bTitle);
+                    intentB.putExtra("title", title);
+                    intentB.putExtra("author", author);
                     setResult(RESULT_OK, intentB);
                     finish();
                 }
