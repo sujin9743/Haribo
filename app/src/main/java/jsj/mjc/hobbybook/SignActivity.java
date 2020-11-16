@@ -1,17 +1,20 @@
 package jsj.mjc.hobbybook;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.CheckBox;
-        import android.widget.EditText;
-        import android.widget.ImageButton;
-        import android.widget.Spinner;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.lang.reflect.Array;
@@ -19,18 +22,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-        import java.lang.reflect.Array;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-        import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AlertDialog;
-        import androidx.appcompat.widget.Toolbar; //Toolbar -> androidx 사용하는 경우
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar; //Toolbar -> androidx 사용하는 경우
+import androidx.appcompat.app.AppCompatActivity;
 
-        import androidx.annotation.Nullable;
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,12 +46,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-        import com.google.android.gms.tasks.OnFailureListener;
-        import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.firestore.DocumentReference;
-        import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignActivity extends AppCompatActivity {
     Spinner pw_spinner, email_spinner;
@@ -58,6 +61,7 @@ public class SignActivity extends AppCompatActivity {
     CheckBox clause_Ck, info_Ck;
     TextView pw_ReCk_Txt, id_Ck_Txt;
     boolean id_chk = false, pw_chk = false, email_chk = false;
+    LayoutInflater layoutInflater;
     //firebase firestore 선언(지은)
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -182,6 +186,7 @@ public class SignActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
                     intent.putExtra("changeGen",0);
+                    intent.putExtra("id_Edt", id_Edt.getText().toString());
                     startActivity(intent);
                     finish();
                 }
