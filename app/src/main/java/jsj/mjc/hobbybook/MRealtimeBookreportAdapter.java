@@ -97,7 +97,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     }
 
     MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
-        this.mRealtime = list;
+        mRealtime = list;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     @Override
     public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
         //holder.profileImg.set..(item.getProfileImg());
-        holder.profileText.setText(mRealtime.get(position).getProfileText());
+        //holder.profileText.setText(mRealtime.get(position).getProfileText());
         holder.bookName.setText(mRealtime.get(position).getBookName());
         holder.bookCreator.setText(mRealtime.get(position).getBookCreator());
         holder.likeCnt.setText(mRealtime.get(position).getLikeCnt());
