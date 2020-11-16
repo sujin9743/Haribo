@@ -58,19 +58,21 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 //data-set가져오기
                    String br_img, book_title, book_author;
-                   DocumentSnapshot doc =  task.getResult().getDocuments().get(task.getResult().size() - 1);
-                   if(task.getResult().size() > 0) {
-                       Log.d("TAG", "i: " + doc);
-                       Log.d("TAG", "data: " + doc.getData());
-                       //Log.d("TAG", "data2: "+doc.getData().get("br_img").toString());
-                       Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
-                       Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
-                       Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
-                       item.setBookImgPage(doc.getData().get("br_img").toString());
-                       item.setBookName(doc.getData().get("book_title").toString());
-                       item.setBookCreator(doc.getData().get("book_author").toString());
-                   }
-                list.add(item);
+                   if(task.isSuccessful())
+                    {
+                            DocumentSnapshot doc = task.getResult().getDocuments().get(0);
+                            Log.d("TAG", "data: " +  doc);
+                            /*Log.d("TAG", "i: " + doc);
+                            Log.d("TAG", "data: " + doc.getData());
+                            //Log.d("TAG", "data2: "+doc.getData().get("br_img").toString());
+                            Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
+                            Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
+                            Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
+                            item.setBookImgPage(doc.getData().get("br_img").toString());
+                            item.setBookName(doc.getData().get("book_title").toString());
+                            item.setBookCreator(doc.getData().get("book_author").toString());*/
+                    }
+                /*list.add(item);
                 MRealtimeBookreportAdapter adapter = new MRealtimeBookreportAdapter(list);
                 recyclerView.setAdapter(adapter);
                 adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
@@ -79,7 +81,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                         startActivity(i);
                     }
-                });
+                });*/
             }
         });
 
