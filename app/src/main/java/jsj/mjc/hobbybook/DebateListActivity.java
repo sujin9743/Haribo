@@ -102,7 +102,6 @@ public class DebateListActivity extends AppCompatActivity {
                          String date = dateFormatter.format(doc.getDate("inputtime"));
                          Debate data = new Debate(doc.getId(), doc.getLong("d_num").intValue(), doc.getString("d_title"), doc.getString("d_content"),
                                  date, doc.getString("mem_id"));
-                         Log.d("lll", doc.getId());
                         debateArrayList.add(data);
                         debateAdapter.notifyDataSetChanged();
                     }

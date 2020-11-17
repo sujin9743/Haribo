@@ -17,6 +17,8 @@ public class DebateAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debate_add);
 
+        loginId = getIntent().getStringExtra("loginId");
+
         ImageButton dAdd_back_btn = findViewById(R.id.dAdd_back_btn);
         TextView dAdd_add_btn = findViewById(R.id.dAdd_add_btn);
         final EditText dAdd_title_et = findViewById(R.id.dAdd_title_et);
