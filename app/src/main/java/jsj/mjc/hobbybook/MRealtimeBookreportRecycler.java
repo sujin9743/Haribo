@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.LongDef;
@@ -78,6 +79,14 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setProfileText(doc.getData().get("mem_id").toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
+                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                        storageRef.child("profile_img/test.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Log.d("TAG", "이미지 : " + uri);
+                                item.setProfileImg(uri);
+                            }
+                        });
                         list.add(item);
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override

@@ -113,6 +113,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     @Override
     public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
         Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getProfileImg()).into(holder.profileImg);
+        //holder.profileImg.setImageURI(mRealtime.get(position).getProfileImg());
         holder.profileText.setText(mRealtime.get(position).getProfileText());
         holder.bookName.setText(mRealtime.get(position).getBrTitle());
         //holder.bookCreator.setText(mRealtime.get(position).getBookCreator());
@@ -128,8 +129,5 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     public int getItemCount() {
         return mRealtime.size();
     }
-
-
-
 
 }
