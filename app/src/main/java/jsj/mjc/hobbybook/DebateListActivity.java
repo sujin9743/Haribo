@@ -59,6 +59,9 @@ public class DebateListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(DebateListActivity.this, DebateDetailActivity.class);
+                intent.putExtra("loginId", loginId);
+                intent.putExtra("docId", debateArrayList.get(position).getDebateDocId());
+                intent.putExtra("debateNum", debateArrayList.get(position).getDebateNum());
                 startActivity(intent);
             }
         });
@@ -86,6 +89,7 @@ public class DebateListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DebateListActivity.this, DebateAddActivity.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });
@@ -96,9 +100,9 @@ public class DebateListActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                          String date = dateFormatter.format(doc.getDate("inputtime"));
-                         Debate data = new Debate(doc.getId(), doc.getString("d_title"), doc.getString("d_content"),
-                                "2020.06.11 14:16", doc.getString("mem_id"));
-
+                         Debate data = new Debate(doc.getId(), doc.getLong("d_num").intValue(), doc.getString("d_title"), doc.getString("d_content"),
+                                 date, doc.getString("mem_id"));
+                         Log.d("lll", doc.getId());
                         debateArrayList.add(data);
                         debateAdapter.notifyDataSetChanged();
                     }

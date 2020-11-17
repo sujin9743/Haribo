@@ -222,7 +222,7 @@ public class MyFeedFragment extends Fragment {
                 } else {
                     Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
                 }
-                myFeed_following_count_txt.setText(""+following);
+                myFeed_following_count_txt.setText(String.valueOf(following));
             }
         });
         //팔로워 로드
@@ -236,7 +236,7 @@ public class MyFeedFragment extends Fragment {
                 } else {
                     Log.d("lll", "팔로워 로드 오류 : ", task.getException());
                 }
-                myFeed_follower_count_txt.setText(""+follower);
+                myFeed_follower_count_txt.setText(String.valueOf(follower));
             }
         });
         //독서 기록, 독후감 로드
@@ -254,7 +254,7 @@ public class MyFeedFragment extends Fragment {
                     Log.d("lll", "독후감 오류 : ", task.getException());
                 }
                 mF_feedReadBookAdapter.notifyDataSetChanged();
-                myFeed_book_count_txt.setText(""+read);
+                myFeed_book_count_txt.setText(String.valueOf(read));
             }
         });
     }

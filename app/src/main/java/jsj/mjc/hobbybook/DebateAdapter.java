@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -87,9 +90,20 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
                 }
             }
         });
-        //viewHolder.debateDateTv.setText(strDate);
-
-        //viewHolder.debateCommentTv.setText(String.valueOf(debateList.get(position).getDebateComment()));
+        db.collection("debate_com").whereEqualTo("d_num", debateList.get(position).getDebateNum()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                int comment = 0;
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        comment++;
+                    }
+                } else {
+                    Log.d("lll", "댓글 수 로드 오류 : ", task.getException());
+                }
+                viewHolder.debateCommentTv.setText(String.valueOf(comment));
+            }
+        });
     }
 
     public int getItemCount() {
