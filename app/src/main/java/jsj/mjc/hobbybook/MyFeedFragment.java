@@ -178,7 +178,7 @@ public class MyFeedFragment extends Fragment {
         follower = 0;
         read = 0;
         //프로필 사진 로드
-        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".png");
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".jpg");
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
