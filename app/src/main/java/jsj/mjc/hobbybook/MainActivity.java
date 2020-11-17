@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity mainActivity;
+    public static String loginId = "test";
     HomeFragment homeFragment = new HomeFragment();
     MessageFragment messageFragment = new MessageFragment();
     RankingFragment rankingFragment = new RankingFragment();

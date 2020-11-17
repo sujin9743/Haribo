@@ -54,7 +54,7 @@ public class MyFeedFragment extends Fragment {
     TextView alarm_setting, block_setting, genre_setting, logout, myFeed_book_count_txt, myFeed_follower_count_txt, myFeed_following_count_txt, myFeed_user_id;
     Button myFeed_profile_btn;
     CircleImageView myFeed_profileImg;
-    String loginId = "test";
+    String loginId;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
     int following, follower, read;
@@ -63,6 +63,8 @@ public class MyFeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.myfeed, container, false);
+
+        loginId = MainActivity.loginId;
 
         myFeed_book_count_txt = view.findViewById(R.id.myFeed_book_count_txt);
         myFeed_user_id = view.findViewById(R.id.myFeed_user_id);
@@ -86,6 +88,9 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowListActivity.class);
+                intent.putExtra("seetab", 0);
+                intent.putExtra("loginId", loginId);
+                intent.putExtra("userId", loginId);
                 startActivity(intent);
             }
         });
@@ -94,6 +99,9 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowListActivity.class);
+                intent.putExtra("seetab", 1);
+                intent.putExtra("loginId", loginId);
+                intent.putExtra("userId", loginId);
                 startActivity(intent);
             }
         });
@@ -196,17 +204,17 @@ public class MyFeedFragment extends Fragment {
         });
         //팔로잉 로드
         db.collection("follow").whereEqualTo("follower", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                following++;
-                            }
-                        } else {
-                            Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
-                        }
-                        myFeed_following_count_txt.setText(""+following);
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        following++;
                     }
+                } else {
+                    Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                }
+                myFeed_following_count_txt.setText(""+following);
+            }
         });
         //팔로워 로드
         db.collection("follow").whereEqualTo("followee", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -230,7 +238,6 @@ public class MyFeedFragment extends Fragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
-                        Log.d("lll", "왜!!!");
                         mF_readBookList.add(data);
                         //RecyclerView 항목 클릭 구현
                         mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
