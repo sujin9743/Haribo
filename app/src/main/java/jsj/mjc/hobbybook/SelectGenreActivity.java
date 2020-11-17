@@ -253,8 +253,12 @@ public class SelectGenreActivity extends AppCompatActivity {
     public void setBtnColorChange(View v, int i) {
 
         Intent intent = getIntent();
+        final Intent intent2 = new Intent(getApplicationContext(), RecommendUserActivity.class);
         final String id_Edt = intent.getExtras().getString("id_Edt");
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+
+
 
 
         if (select_state[i] == 0) {
@@ -276,6 +280,8 @@ public class SelectGenreActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     firebaseFirestore.collection("category").document(id_Edt).update(String.valueOf(id_num+1), false);
+                    intent2.putExtra("id_num", String.valueOf(id_num+1));
+                    startActivity(intent2);
                 }
             });
         }
