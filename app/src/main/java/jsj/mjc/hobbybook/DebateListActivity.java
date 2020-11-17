@@ -63,6 +63,7 @@ public class DebateListActivity extends AppCompatActivity {
                 intent.putExtra("loginId", loginId);
                 intent.putExtra("docId", debateArrayList.get(position).getDebateDocId());
                 intent.putExtra("debateNum", debateArrayList.get(position).getDebateNum());
+                intent.putExtra("debateWriter", debateArrayList.get(position).getDebateWriter());
                 startActivity(intent);
             }
         });

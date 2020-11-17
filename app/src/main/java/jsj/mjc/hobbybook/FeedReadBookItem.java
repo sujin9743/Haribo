@@ -2,10 +2,10 @@ package jsj.mjc.hobbybook;
 
 public class FeedReadBookItem {
     private String bookCoverImgUrl;
-    private int bookReNum;
+    private String bookReId;
 
-    public FeedReadBookItem(int bookReNum, String bookCoverImgUrl) {
-        this.bookReNum = bookReNum;
+    public FeedReadBookItem(String bookReId, String bookCoverImgUrl) {
+        this.bookReId = bookReId;
         this.bookCoverImgUrl = bookCoverImgUrl;
     }
 
@@ -13,7 +13,7 @@ public class FeedReadBookItem {
         return bookCoverImgUrl;
     }
 
-    public int getbookReNum() {
-        return bookReNum;
+    public String getbookReNum() {
+        return bookReId;
     }
 }

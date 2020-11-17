@@ -246,7 +246,7 @@ public class MyFeedFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
+                        FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString("br_img"));
                         mF_readBookList.add(data);
                         read++;
                     }
