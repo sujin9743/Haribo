@@ -4,123 +4,20 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/profileImg"
-                    android:layout_width="45sp"
-                    android:layout_height="45sp"
-                    android:layout_margin="15sp"
-                    android:src="@drawable/ic_outline_person_outline_24"
-                    android:tint="#8E8E8E"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-                <TextView
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="15sp"
-                    android:textColor="@color/darkGray"
-                    app:layout_constraintLeft_toRightOf="@id/profileImg"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="임시 알리미 임시 알리미 임시글글글 텍스트텍스트 "/>
-                <Button
-                    android:text="팔로우"
-                    android:textColor="@color/white"
-                    android:background="@drawable/coner_box"
-                    android:layout_width="75dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="10dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/noticeTxt"
-                        android:layout_width="370dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="17sp"
-                        android:layout_margin="8dp"
-                        android:textColor="@color/darkGray"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="임시 알리미 임시 알리미 임시글글글 텍스트텍스트뫄뫄모마뫄뫄뫄뫄뫄뫄뫄뫄뫄뫄뫄 "/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1시간 전"
-                        android:layout_marginRight="80dp"
-                        android:layout_marginBottom="10dp"
-                        app:layout_constraintLeft_toRightOf="@id/noticeTxt"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/notice">
-                    <TextView
-                        android:id="@+id/noticeTxt2"
-                        android:layout_width="370dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="17sp"
-                        android:layout_margin="8dp"
-                        android:textColor="@color/darkGray"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="임시 알리미 임시 알리미 임시글글글 텍스트텍스트뫄뫄모마뫄뫄뫄뫄뫄뫄뫄뫄뫄뫄뫄 "/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1시간 전"
-                        android:layout_marginRight="80dp"
-                        android:layout_marginBottom="10dp"
-                        app:layout_constraintLeft_toRightOf="@id/noticeTxt2"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </LinearLayout>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="업데이트 예정입니다."/>
 
 
 
-
-
-        </LinearLayout>
-    </ScrollView>
+   </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
