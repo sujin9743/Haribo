@@ -76,6 +76,15 @@ public class MyFeedFragment extends Fragment {
         mF_readBookList = new ArrayList<>();
         mF_feedReadBookAdapter = new FeedReadBookAdapter(mF_readBookList);
         RecyclerView myFeed_bookCover_recycler = view.findViewById(R.id.myFeed_bookCover_recycler);
+        //RecyclerView 항목 클릭 구현
+        mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getContext(), MBookReportDetail.class);
+                intent.putExtra("bookre_num", mF_readBookList.get(position).getbookReNum());
+                startActivity(intent);
+            }
+        });
 
         //context와 spanCount(한 줄을 몇 개 칸으로 나눌지)
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -239,15 +248,6 @@ public class MyFeedFragment extends Fragment {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
                         mF_readBookList.add(data);
-                        //RecyclerView 항목 클릭 구현
-                        mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
-                            @Override
-                            public void onItemClick(View v, int position) {
-                                Intent intent = new Intent(getContext(), MBookReportDetail.class);
-                                intent.putExtra("bookre_num", mF_readBookList.get(position).getbookReNum());
-                                startActivity(intent);
-                            }
-                        });
                         read++;
                     }
                 } else {

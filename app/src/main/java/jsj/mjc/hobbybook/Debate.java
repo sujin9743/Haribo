@@ -7,7 +7,6 @@ public class Debate {
     String debateDate;
     String debateWriter;
     int debateComment;
-    String debateImageUrl;
 
     public String getDebateNum() {
         return debateNum;
@@ -57,21 +56,11 @@ public class Debate {
         this.debateComment = debateComment;
     }
 
-    public String getDebateImageUrl() {
-        return debateImageUrl;
-    }
-
-    public void setDebateImageUrl(String debateImageUrl) {
-        this.debateImageUrl = debateImageUrl;
-    }
-
-    Debate(String debateNum, String debateTitle, String debateText, String debateDate, String debateWriter, int debateComment, String debateImageUrl) {
+    Debate(String debateNum, String debateTitle, String debateText, String debateDate, String debateWriter) {
         this.debateNum = debateNum;
         this.debateTitle = debateTitle;
         this.debateText = debateText;
         this.debateDate = debateDate;
         this.debateWriter = debateWriter;
-        this.debateComment = debateComment;
-        this.debateImageUrl = debateImageUrl;
     }
 }

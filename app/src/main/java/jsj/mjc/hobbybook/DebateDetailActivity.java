@@ -69,11 +69,8 @@ public class DebateDetailActivity extends AppCompatActivity {
 
         ImageView dDetail_iv = findViewById(R.id.dDetail_iv);
 
-        //이미지가 없는 토론글의 경우 ImageView를 보이지 않게 함
-        String str = ((DebateListActivity) DebateListActivity.context_dList).imgNum;
-
-        if (str.equals("1"))
-            dDetail_iv.setVisibility(View.GONE);
+        //if (str.equals("1"))
+            //dDetail_iv.setVisibility(View.GONE);
 
     }
 

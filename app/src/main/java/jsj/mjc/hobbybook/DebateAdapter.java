@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateViewHolder> {
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ArrayList<Debate> debateList;
     public interface OnItemClickListenr {
         void onItemClick(View v, int position);
     }
@@ -22,14 +30,12 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
         this.debateListener = listener;
     }
 
-    private ArrayList<Debate> debateList;
 
     public class DebateViewHolder extends RecyclerView.ViewHolder {
         protected TextView debateTitleTv;
         protected TextView debateTextTv;
         protected TextView debateDateTv;
         protected TextView debateCommentTv;
-        protected ImageView debateIv;
 
         public DebateViewHolder(View view) {
             super(view);
@@ -37,7 +43,6 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
             this.debateTextTv = view.findViewById(R.id.debate_text_tv);
             this.debateDateTv = view.findViewById(R.id.debate_date_tv);
             this.debateCommentTv = view.findViewById(R.id.debate_comment_tv);
-            this.debateIv = view.findViewById(R.id.debate_iv);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,20 +71,25 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DebateViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final DebateViewHolder viewHolder, final int position) {
         viewHolder.debateTitleTv.setText(debateList.get(position).getDebateTitle());
         viewHolder.debateTextTv.setText(debateList.get(position).getDebateText());
+        db.collection("member").document(debateList.get(position).getDebateWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        String strDate = debateList.get(position).getDebateDate() + "  |  " + doc.getString("nickname");
+                        viewHolder.debateDateTv.setText(strDate);
+                    }
+                }
+            }
+        });
+        //viewHolder.debateDateTv.setText(strDate);
 
-        String strDate = debateList.get(position).getDebateDate() + "  |  " + debateList.get(position).getDebateWriter();
-        viewHolder.debateDateTv.setText(strDate);
-
-        viewHolder.debateCommentTv.setText(String.valueOf(debateList.get(position).getDebateComment()));
-
-        //이미지가 없는 토론글은 이미지 미리보기 ImageView보이지 않음
-        if (debateList.get(position).getDebateImageUrl().equals("1"))
-            viewHolder.debateIv.setVisibility(View.GONE);
-        else
-            viewHolder.debateIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
+        //viewHolder.debateCommentTv.setText(String.valueOf(debateList.get(position).getDebateComment()));
     }
 
     public int getItemCount() {
