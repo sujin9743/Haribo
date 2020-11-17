@@ -91,8 +91,6 @@ public class RecommendUserActivity extends AppCompatActivity {
                     }
                 }
 
-                //todo. value값 id_det 받아와야함
-
                 for(data_size=1;data_size<=size;) {
                     Log.d("뭐", String.valueOf(data_size));
                     firebaseFirestore.collection("category").whereEqualTo(String.valueOf(data_size), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
