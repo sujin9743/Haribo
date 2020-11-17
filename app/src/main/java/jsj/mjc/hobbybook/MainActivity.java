@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MRealtimeBookreportRecycler.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MBookWriteMain.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RecommendUserActivity.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RecommendBookActivity.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), DebateListActivity.class);
+                intent.putExtra("loginId", loginId);
                 startActivity(intent);
             }
         });

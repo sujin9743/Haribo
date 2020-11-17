@@ -1,19 +1,26 @@
 package jsj.mjc.hobbybook;
 
 public class Debate {
-    String debateNum;
+    String debateDocId;
+    int debateNum;
     String debateTitle;
     String debateText;
     String debateDate;
     String debateWriter;
-    int debateComment;
-    String debateImageUrl;
 
-    public String getDebateNum() {
+    public String getDebateDocId() {
+        return debateDocId;
+    }
+
+    public void setDebateDocId(String debateNum) {
+        this.debateDocId = debateDocId;
+    }
+
+    public int getDebateNum() {
         return debateNum;
     }
 
-    public void setDebateNum(String debateNum) {
+    public void setDebateNum(int debateNum) {
         this.debateNum = debateNum;
     }
 
@@ -49,29 +56,12 @@ public class Debate {
         this.debateWriter = debateWriter;
     }
 
-    public int getDebateComment() {
-        return debateComment;
-    }
-
-    public void setDebateComment(int debateComment) {
-        this.debateComment = debateComment;
-    }
-
-    public String getDebateImageUrl() {
-        return debateImageUrl;
-    }
-
-    public void setDebateImageUrl(String debateImageUrl) {
-        this.debateImageUrl = debateImageUrl;
-    }
-
-    Debate(String debateNum, String debateTitle, String debateText, String debateDate, String debateWriter, int debateComment, String debateImageUrl) {
+    Debate(String debateDocId, int debateNum, String debateTitle, String debateText, String debateDate, String debateWriter) {
+        this.debateDocId = debateDocId;
         this.debateNum = debateNum;
         this.debateTitle = debateTitle;
         this.debateText = debateText;
         this.debateDate = debateDate;
         this.debateWriter = debateWriter;
-        this.debateComment = debateComment;
-        this.debateImageUrl = debateImageUrl;
     }
 }
