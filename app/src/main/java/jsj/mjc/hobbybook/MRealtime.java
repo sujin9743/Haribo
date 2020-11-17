@@ -2,6 +2,7 @@ package jsj.mjc.hobbybook;
 
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,12 +12,12 @@ import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MRealtime {
-    private Drawable profileImg;    //circleimg
-    private String profileText, bookName, bookCreator,likeCnt, commentCnt;
+    private String profileImg;    //circleimg
+    private String profileText, brTitle, bookName, bookCreator,likeCnt, commentCnt;
     private String bookImgPage;       //viewpager임
     private Drawable heart;             //imageview
 
-    public void setProfileImg(Drawable pImg){
+    public void setProfileImg(String pImg){
         profileImg = pImg;
     }
     public void setProfileText(String pText){
@@ -28,6 +29,7 @@ public class MRealtime {
     public void setBookCreator(String bCreator){
         bookCreator = bCreator;
     }
+    public void setBrTitle(String brTitle) {this.brTitle = brTitle;}
     public void setLikeCnt(String lCnt){
         likeCnt = lCnt;
     }
@@ -41,7 +43,7 @@ public class MRealtime {
         heart = h;
     }
 
-    public Drawable getProfileImg(){
+    public String getProfileImg(){
         return profileImg;
     }
     public String getProfileText(){
@@ -53,6 +55,7 @@ public class MRealtime {
     public String getBookCreator(){
         return bookCreator;
     }
+    public String getBrTitle() {return brTitle;}
     public String getLikeCnt(){
         return likeCnt;
     }

@@ -186,7 +186,7 @@ public class MBookWriteMain extends AppCompatActivity {
                 imgSearchBookCover.setImageResource(0);
                 bookCoverImg = null;
                 imgDeleteBtn.setVisibility(View.INVISIBLE);
-
+                bookName.setText(null);
             }
         });
     }

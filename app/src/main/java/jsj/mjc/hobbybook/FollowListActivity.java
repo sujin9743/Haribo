@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
@@ -16,11 +17,17 @@ public class FollowListActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FollowerFragment followerFragment = new FollowerFragment();
     FollowingFragment followingFragment = new FollowingFragment();
+    String loginId, userId;
+    int seetab;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.follow_list);
+
+        loginId = getIntent().getStringExtra("loginId");
+        userId = getIntent().getStringExtra("userId");
+        seetab = getIntent().getIntExtra("seetab", 0);
 
         //툴바 설정
         Toolbar profile_modify_toolbar = (Toolbar) findViewById(R.id.followList_toolbar);
@@ -32,7 +39,6 @@ public class FollowListActivity extends AppCompatActivity {
 
         //첫 화면
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.follow_frameLayout, followerFragment).commit();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.follow_tab);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -52,6 +58,9 @@ public class FollowListActivity extends AppCompatActivity {
 
             }
         });
+        TabLayout.Tab tab = tabLayout.getTabAt(seetab);
+        tab.select();
+        viewChange(seetab);
     }
 
     @Override
