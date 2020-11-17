@@ -40,15 +40,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/debate_text_tv" />
 
-    <ImageView
-        android:id="@+id/debate_iv"
-        android:layout_width="60sp"
-        android:layout_height="60sp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/debate_comment_tv"
         android:layout_width="wrap_content"
@@ -57,5 +48,5 @@
         android:padding="5sp"
         android:textColor="#59a655"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/debate_iv" />
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
