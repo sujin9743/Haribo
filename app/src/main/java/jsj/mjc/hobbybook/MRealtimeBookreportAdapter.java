@@ -1,7 +1,9 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,6 @@ import static jsj.mjc.hobbybook.R.drawable.heart_line;
 
 public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.ViewHolder>{
     //리스트 하나 클릭시 이동
-
 
     public interface OnItemClickListenr {
         void onItemClick(View v, int position);
@@ -97,6 +98,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
 
     MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
         this.mRealtime = list;
+
     }
 
     @Override
@@ -113,6 +115,8 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     @Override
     public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
         Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getProfileImg()).into(holder.profileImg);
+        Log.d("TAG", "여긴Adapter" + mRealtime.get(position).getProfileImg());
+        //holder.profileImg.setImageURI(mRealtime.get(position).getProfileImg());
         holder.profileText.setText(mRealtime.get(position).getProfileText());
         holder.bookName.setText(mRealtime.get(position).getBrTitle());
         //holder.bookCreator.setText(mRealtime.get(position).getBookCreator());
@@ -128,8 +132,5 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     public int getItemCount() {
         return mRealtime.size();
     }
-
-
-
 
 }

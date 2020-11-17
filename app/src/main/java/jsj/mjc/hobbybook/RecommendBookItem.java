@@ -1,5 +1,7 @@
 package jsj.mjc.hobbybook;
 
+import android.util.Log;
+
 public class RecommendBookItem {
 
     private String bookImgUrl;
@@ -60,9 +62,7 @@ public class RecommendBookItem {
         this.bookRateTxt = bookRateTxt;
     }
 
-    public String getBookRateTxt() {
-        return bookRateTxt;
-    }
+    public String getBookRateTxt() { return bookRateTxt; }
 
     public String getBookIsbn() {
         return bookIsbn;

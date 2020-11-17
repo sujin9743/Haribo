@@ -95,7 +95,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
         //viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
-        viewHolder.rankingWriterTv.setText("책 제목" + rankingList.get(position).getRankingWriter());
+        viewHolder.rankingWriterTv.setText(rankingList.get(position).getRankingWriter());
         //이미지 로딩 라이브러리 Glide 사용
         Glide.with(viewHolder.itemView.getContext()).load(rankingList.get(position).getRankingImageUrl()).into(viewHolder.rankingIv);
     }
