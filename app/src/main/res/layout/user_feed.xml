@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="2"
+        android:text="0"
         android:textSize="25sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/userFeed_profileImg"
@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="10"
+        android:text="0"
         android:textSize="25sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/userFeed_profileImg"
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="20"
+        android:text="0"
         android:textSize="25sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/userFeed_profileImg"
@@ -152,12 +152,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line"
-        app:layout_constraintBottom_toTopOf="@id/userFeed_bnv"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/userFeed_bnv"
-        style="@style/Bnv_Style"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
