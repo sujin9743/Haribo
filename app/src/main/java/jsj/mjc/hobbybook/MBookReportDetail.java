@@ -29,7 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MBookReportDetail extends AppCompatActivity {
     ImageView backBtn,heartIcon;
     TextView hashTag1,hashTag2,hashTag3,hashTag4,reportTitle;
-    TextView profileText,report_bookName, report_bookMaker;
+    TextView profileText,report_bookName, report_bookMaker, heartCnt;
     TextView report_content;
     ImageView bookImgPage;
     LinearLayout forBookInfo,forReview,porfileLayout;
@@ -53,6 +53,8 @@ public class MBookReportDetail extends AppCompatActivity {
         forBookInfo = findViewById(R.id.forBookInfo);
         forReview = findViewById(R.id.forReview);
 
+        heartCnt = findViewById(R.id.heartCnt);
+
         profileImg = findViewById(R.id.profileImg);
         profileText = findViewById(R.id.profileText);
         report_bookMaker = findViewById(R.id.report_bookMaker);
@@ -68,7 +70,6 @@ public class MBookReportDetail extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", document.getId() + " => " + document.getData());
 
                         profileText.setText(document.get("mem_id").toString());
 
@@ -95,6 +96,7 @@ public class MBookReportDetail extends AppCompatActivity {
                         bookImg = document.get("br_img").toString();
                         Glide.with(getApplicationContext()).load(bookImg).into(bookImgPage);
 
+                        heartCnt.setText(document.get("book_like").toString());
                     }
                 } else {
                     Log.d("TAG", "Error getting documents: ", task.getException());
@@ -146,17 +148,26 @@ public class MBookReportDetail extends AppCompatActivity {
 
 
 
+
+
     heartIcon.setImageResource(R.drawable.heart_line);
     heartIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                   //0이면 빈하트
+                int heart_cnt;
+                heart_cnt = Integer.parseInt(heartCnt.getText().toString());
                 if (i==0){
                     heartIcon.setImageResource(R.drawable.heart_full);
                     i=1;
+                    heart_cnt++;
+
+                    heartCnt.setText(Integer.toString(heart_cnt));
                 }else{
                     heartIcon.setImageResource(R.drawable.heart_line);
                     i=0;
+                    heart_cnt--;
+                    heartCnt.setText(Integer.toString(heart_cnt));
                 }
             }
         });

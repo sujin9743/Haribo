@@ -121,8 +121,7 @@
                     android:layout_height="20dp"
                     android:layout_marginLeft="7dp"
                     android:textColor="@color/darkGreen"
-                    android:textSize="17sp"
-                    android:visibility="invisible" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/hashTag4"
@@ -130,8 +129,7 @@
                     android:layout_height="20dp"
                     android:layout_marginLeft="7dp"
                     android:textColor="@color/darkGreen"
-                    android:textSize="17sp"
-                    android:visibility="invisible" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -139,6 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="17dp">
                 <TextView
                     android:id="@+id/reportTitle"
@@ -182,6 +181,8 @@
             android:layout_marginLeft="17dp"
             android:layout_marginTop="3dp"/>
         <TextView
+            android:id="@+id/heartCnt"
+            android:text="28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"

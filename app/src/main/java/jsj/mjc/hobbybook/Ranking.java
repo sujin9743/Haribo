@@ -5,6 +5,7 @@ public class Ranking {
     private String rankingImageUrl;
     private String rankingTitle;
     private String rankingWriter;
+    private String rankingAuthor;
 
     public String getRankingNum() {
         return rankingNum;
@@ -37,6 +38,7 @@ public class Ranking {
     public void setRankingWriter(String rankingWriter) {
         this.rankingWriter = rankingWriter;
     }
+
 
     //public Ranking(String rankingNum, String rankingImageUrl, String rankingTitle, String rankingWriter) {
     //    this.rankingNum = rankingNum;

@@ -228,12 +228,16 @@ public class HomeFragment extends Fragment {
             gRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
                 @Override
                 public void onItemClick(View v, int position) { //책 누르면 도서 상세페이지로 이동
-                    String title, image;
+                    String title, image,author;
                     title = gRankingArrayList.get(position).getRankingTitle();
                     image = gRankingArrayList.get(position).getRankingImageUrl();
+                    //cho
+                    author = gRankingArrayList.get(position).getRankingWriter();
+
                     Intent intent = new Intent(mContext, MBookInfoDetail.class);
                     intent.putExtra("title", title);
                     intent.putExtra("image", image);
+                    intent.putExtra("author", author);
                     startActivity(intent);
                 }
             });
