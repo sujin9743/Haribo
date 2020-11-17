@@ -35,6 +35,8 @@ public class MessageFragment extends Fragment {
     private MessageAdapter messageAdapter;
     Context mContext;
 
+    String doc;
+    String send,receive;
     FirebaseFirestore db;
     @Nullable
     @Override
@@ -82,6 +84,8 @@ public class MessageFragment extends Fragment {
                                             messageArrayList.add(data);
                                             messageAdapter.notifyDataSetChanged();
 
+
+
                                         }
                                     } else {
                                         Log.d("TAG", "Error getting documents: ", task.getException());
@@ -106,6 +110,7 @@ public class MessageFragment extends Fragment {
                                                     ,document.get("msg_content").toString());
                                             messageArrayList.add(data);
                                             messageAdapter.notifyDataSetChanged();
+
 
                                         }
                                     } else {
@@ -136,6 +141,7 @@ public class MessageFragment extends Fragment {
                                                         ,document.get("msg_content").toString());
                                                 messageArrayList.add(data);
                                                 messageAdapter.notifyDataSetChanged();
+
 
                                         }
                                     } else {
@@ -205,6 +211,8 @@ public class MessageFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(mContext, MessageViewActivity.class);
+                doc = messageArrayList.get(position).getmDate();
+                intent.putExtra("send",doc);
                 startActivity(intent);
             }
         });

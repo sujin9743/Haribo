@@ -79,10 +79,18 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         list.add(item);
+
+                        //cho MBookReportDetail 로 아이디 넘겨주기
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override
                             public void onItemClick(View v, int position) {
+                                String mem_id, br_title;
+                                mem_id = list.get(position).getProfileText();
+                                br_title = list.get(position).getBrTitle();
+
                                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                                i.putExtra("mem_id",mem_id);
+                                i.putExtra("br_title",br_title);
                                 startActivity(i);
                             }
                         });
