@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +45,8 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
     MRealtimeBookreportAdapter adapter;
     ArrayList<MRealtime> list = new ArrayList<>();
     MRealtime item;
-
+    FirebaseFirestore rtBook_DB;
+    final String user_id = "test";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         //firebase
-        final FirebaseFirestore rtBook_DB = FirebaseFirestore.getInstance();
+        rtBook_DB = FirebaseFirestore.getInstance();
 
         rtBook_DB.collection("bookre").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -76,17 +79,10 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
                         Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
                         Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
+                        String id = doc.getData().get("mem_id").toString();
                         item.setProfileText(doc.getData().get("mem_id").toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
-                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                        storageRef.child("profile_img/test.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                Log.d("TAG", "이미지 : " + uri);
-                                item.setProfileImg(uri);
-                            }
-                        });
                         list.add(item);
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override

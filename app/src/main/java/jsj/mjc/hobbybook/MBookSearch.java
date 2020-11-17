@@ -91,7 +91,7 @@ public class MBookSearch extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=" +dataKey+
-                    "&Query=" + bookTitle + "&QueryType=Title&start=1&SearchTarget=Book&output=xml&Version=20131101";
+                    "&Query=" + bookTitle + "&QueryType=Title&Cover=Big&start=1&SearchTarget=Book&output=xml&Version=20131101";
 
             try {
                 URL url = new URL(requestUrl);

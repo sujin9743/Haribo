@@ -39,8 +39,9 @@
         <ImageView
             android:id="@+id/bookImgPage"
             android:layout_width="380dp"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
             android:background="@color/white">
         </ImageView>
 
