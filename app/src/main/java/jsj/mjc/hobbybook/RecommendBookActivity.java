@@ -56,22 +56,16 @@ public class RecommendBookActivity extends AppCompatActivity {
     RecommendBookItem bookItem;
 
     float bookRating;
-    int selectGenre;
-    Integer[] selectGenreArray = new Integer[24];
-    String[] selectGenreBoolArray = new String[24];
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    ArrayList<Integer> genre_array = new ArrayList<>();
+    RecommendBookAsyncTask recommendBookAsyncTask;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_recommend);
-
-        for(int i=0; i<24; i++) {
-            selectGenreArray[i] = 0;
-            selectGenreBoolArray[i] = "false";
-        }
 
         //툴바 뒤로가기
         ImageButton bookRc_backBtn = findViewById(R.id.bookRc_backBtn);
@@ -112,106 +106,110 @@ public class RecommendBookActivity extends AppCompatActivity {
                                 switch (selectGenreNum) {
                                     //장르 여러 개 선택했을 때 구현해야 함
                                     case "1": {
-                                        selectGenre = 1230;
+                                        genre_array.add(1230);
                                         break;
                                     }
                                     case "2": {
-                                        selectGenre = 55890;
+                                        genre_array.add(55890);
                                         break;
                                     }
                                     case "3": {
-                                        selectGenre = 170;
+                                        genre_array.add(170);
                                         break;
                                     }
                                     case "4": {
-                                        selectGenre = 38414;
+                                        genre_array.add(38414);
                                         break;
                                     }
                                     case "5": {
-                                        selectGenre = 39398;
+                                        genre_array.add(39398);
                                         break;
                                     }
                                     case "6": {
-                                        selectGenre = 987;
+                                        genre_array.add(987);
                                         break;
                                     }
                                     case "7": {
-                                        selectGenre = 8257;
+                                        genre_array.add(8257);
                                         break;
                                     }
                                     case "8": {
-                                        selectGenre = 2551;
+                                        genre_array.add(2551);
                                         break;
                                     }
                                     case "9": {
-                                        selectGenre = 8259;
+                                        genre_array.add(8259);
                                         break;
                                     }
                                     case "10": {
-                                        selectGenre = 1;
+                                        genre_array.add(1);
                                         break;
                                     }
                                     case "11": {
-                                        selectGenre = 1383;
+                                        genre_array.add(1383);
                                         break;
                                     }
                                     case "12": {
-                                        selectGenre = 1108;
+                                        genre_array.add(1108);
                                         break;
                                     }
                                     case "13": {
-                                        selectGenre = 55889;
+                                        genre_array.add(55889);
                                         break;
                                     }
                                     case "14": {
-                                        selectGenre = 1196;
+                                        genre_array.add(1196);
                                         break;
                                     }
                                     case "15": {
-                                        selectGenre = 74;
+                                        genre_array.add(74);
                                         break;
                                     }
                                     case "16": {
-                                        selectGenre = 517;
+                                        genre_array.add(517);
                                         break;
                                     }
                                     case "17": {
-                                        selectGenre = 1322;
+                                        genre_array.add(1322);
                                         break;
                                     }
                                     case "18": {
-                                        selectGenre = 13789;
+                                        genre_array.add(13789);
                                         break;
                                     }
                                     case "19": {
-                                        selectGenre = 656;
+                                        genre_array.add(656);
                                         break;
                                     }
                                     case "20": {
-                                        selectGenre = 336;
+                                        genre_array.add(336);
                                         break;
                                     }
                                     case "21": {
-                                        selectGenre = 112011;
+                                        genre_array.add(112011);
                                         break;
                                     }
                                     case "22": {
-                                        selectGenre = 28402;
+                                        genre_array.add(28402);
                                         break;
                                     }
                                     case "23": {
-                                        selectGenre = 17195;
+                                        genre_array.add(17195);
                                         break;
                                     }
                                     case "24": {
-                                        selectGenre = 38410;
+                                        genre_array.add(38410);
                                         break;
                                     }
                                 }
-                                Log.d("TAG", "data: " + selectGenre);
-                                RecommendBookAsyncTask recommendBookAsyncTask = new RecommendBookAsyncTask();
-                                recommendBookAsyncTask.execute();
                             }
+                        }
+                        for(int i=0; i<genre_array.size(); i++) {
+                        Log.d("TAG", "data: " + genre_array.get(i));
+                        }
+                        for(int i=0; i<genre_array.size(); i++) {
+                            recommendBookAsyncTask = new RecommendBookAsyncTask();
+                            recommendBookAsyncTask.execute(genre_array.get(i));
                         }
                     } else {
                         Log.d("TAG", "No such document");
@@ -221,6 +219,8 @@ public class RecommendBookActivity extends AppCompatActivity {
                 }
             }
         });
+
+
         /*//임시 데이터 삽입
         for(int i=0; i<10; i++) {
             RecommendBookItem data = new RecommendBookItem("책 제목"+i, "지은이"+i, "출판사"+i, (float)4.5, "(4.5)");
@@ -238,12 +238,12 @@ public class RecommendBookActivity extends AppCompatActivity {
     }
 
     //알라딘 API에서 데이터 불러오기
-    public class RecommendBookAsyncTask extends AsyncTask<String, String, String> {
+    public class RecommendBookAsyncTask extends AsyncTask<Integer, Integer, Integer> {
         @Override
-        protected String doInBackground(String... strings) {
+        protected Integer doInBackground(Integer... values) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + dataKey +
-                    "&QueryType=ItemEditorChoice&CategoryId=" + selectGenre + "&MaxResults=5&start=1&SearchTarget=Book&output=xml&Version=20131101";;
+                    "&QueryType=ItemEditorChoice&CategoryId=" + values[0].intValue() + "&MaxResults=5&start=1&SearchTarget=Book&output=xml&Version=20131101";;
 
             try {
                 URL url = new URL(requestUrl);
@@ -291,6 +291,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                         case XmlPullParser.END_TAG:
                             if(parser.getName().equals("item") && bookItem != null) {
                                 booklist.add(bookItem);
+                                bookItem = new RecommendBookItem();
                             }
                             break;
                         case XmlPullParser.END_DOCUMENT:
@@ -309,13 +310,11 @@ public class RecommendBookActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(Integer s) {
             super.onPostExecute(s);
 
             recommendBookAdapter.notifyDataSetChanged();
             bookItem = new RecommendBookItem();
-
-            Log.d("TAG", "genre: " + selectGenre);
 
             recommendBookAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
                 @Override
@@ -332,4 +331,6 @@ public class RecommendBookActivity extends AppCompatActivity {
             });
         }
     }
+
+
 }
