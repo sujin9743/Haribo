@@ -1,7 +1,5 @@
 package jsj.mjc.hobbybook;
 
-import android.graphics.drawable.Drawable;
-
 public class UserlistItem {
     //private String profile_Img_Url;
     private String id;

@@ -34,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
@@ -42,9 +43,11 @@ import com.google.firestore.v1.StructuredQuery;
 public class RecommendUserActivity extends AppCompatActivity {
     ArrayList<UserlistItem> userlist;
     UserListAdapter userListAdapter;
-    int following=0, size, data_size;
-    String[] arr;
-    UserlistItem data;
+    UserlistItem[] data;
+    String[] list,arrlist,mam;
+    ArrayList<String> newData;
+    ArrayList<String> noRearrayList;
+    ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class RecommendUserActivity extends AppCompatActivity {
         userlist = new ArrayList<>();
         userListAdapter = new UserListAdapter(userlist);
 
-        RecyclerView userRc_recycler = findViewById(R.id.userRc_recycler);
+        final RecyclerView userRc_recycler = findViewById(R.id.userRc_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         userRc_recycler.setLayoutManager(linearLayoutManager);
 
@@ -73,158 +76,88 @@ public class RecommendUserActivity extends AppCompatActivity {
 
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+        CollectionReference cateRef = firebaseFirestore.collection("category");
+        Query query = cateRef.whereEqualTo("1", true);
 
+        final ArrayList<String> mem_ca = new ArrayList<>();
+
+
+        //로그인한 계정의 필드값이 true인 항목을 가져옴
         firebaseFirestore.collection("category").whereEqualTo("mem_id", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        size = document.getData().size()-1;
-                        arr=new String[size];
+                        //Log.d("rjc", document.getId() + "=>" + document.getData().values());
 
-                        for(data_size=1;data_size<=size;data_size++){
-                            if(Boolean.valueOf(document.get(String.valueOf(data_size)).toString())==true) {
-                                arr[data_size]=document.get(String.valueOf(data_size)).toString();
+                        for (int i = 1; i <= document.getData().size() - 1; i++)
+                            if (document.get("" + i).equals(true)) {
+                                mem_ca.add("" + i);
                             }
-                            //Log.d("숫자2",data_size+":"+document.get(String.valueOf(data_size)).toString());
-                        }
+                        Log.d("rjc", String.valueOf(mem_ca));
                     }
-                }
-
-                for(data_size=1;data_size<=size;) {
-                    Log.d("뭐", String.valueOf(data_size));
-                    firebaseFirestore.collection("category").whereEqualTo(String.valueOf(data_size), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            Log.d("숫자", String.valueOf(data_size));
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                    HashMap map = (HashMap) document.getData(); //필드를 저장함
-                                    //Log.d("데이터", String.valueOf(map.values())); //데이터 비교할때 유용
-                                    for (int i = 0; i < map.size() - 1; i++) {
-                                        String selectGenreNum = Integer.toString(i + 1);
-                                        String selectGenreBool = map.get(selectGenreNum).toString();
-                                        String strselectGenreNum = null;
-                                        if (selectGenreBool == "true") {
-                                            switch (selectGenreNum) {
-                                                //장르 여러 개 선택했을 때 구현해야 함
-                                                case "1": {
-                                                    strselectGenreNum = "1";
-                                                    break;
-                                                }
-                                                case "2": {
-                                                    strselectGenreNum = "2";
-                                                    break;
-                                                }
-                                                case "3": {
-                                                    strselectGenreNum = "3";
-                                                    break;
-                                                }
-                                                case "4": {
-                                                    strselectGenreNum = "4";
-                                                    break;
-                                                }
-                                                case "5": {
-                                                    strselectGenreNum = "5";
-                                                    break;
-                                                }
-                                                case "6": {
-                                                    strselectGenreNum = "6";
-                                                    break;
-                                                }
-                                                case "7": {
-                                                    strselectGenreNum = "7";
-                                                    break;
-                                                }
-                                                case "8": {
-                                                    strselectGenreNum = "8";
-                                                    break;
-                                                }
-                                                case "9": {
-                                                    strselectGenreNum = "9";
-                                                    break;
-                                                }
-                                                case "10": {
-                                                    strselectGenreNum = "10";
-                                                    break;
-                                                }
-                                                case "11": {
-                                                    strselectGenreNum = "11";
-                                                    break;
-                                                }
-                                                case "12": {
-                                                    strselectGenreNum = "12";
-                                                    break;
-                                                }
-                                                case "13": {
-                                                    strselectGenreNum = "13";
-                                                    break;
-                                                }
-                                                case "14": {
-                                                    strselectGenreNum = "14";
-                                                    break;
-                                                }
-                                                case "15": {
-                                                    strselectGenreNum = "15";
-                                                    break;
-                                                }
-                                                case "16": {
-                                                    strselectGenreNum = "16";
-                                                    break;
-                                                }
-                                                case "17": {
-                                                    strselectGenreNum = "17";
-                                                    break;
-                                                }
-                                                case "18": {
-                                                    strselectGenreNum = "18";
-                                                    break;
-                                                }
-                                                case "19": {
-                                                    strselectGenreNum = "19";
-                                                    break;
-                                                }
-                                                case "20": {
-                                                    strselectGenreNum = "20";
-                                                    break;
-                                                }
-                                                case "21": {
-                                                    strselectGenreNum = "21";
-                                                    break;
-                                                }
-                                                case "22": {
-                                                    strselectGenreNum = "22";
-                                                    break;
-                                                }
-                                                case "23": {
-                                                    strselectGenreNum = "23";
-                                                    break;
-                                                }
-                                                case "24": {
-                                                    strselectGenreNum = "24";
-                                                    break;
-                                                }
-                                            }
-                                            Log.d("태그", "data: " + strselectGenreNum);
-                                            for(int j=1;j<=size;j++){
-                                                if(arr[j].equals(String.valueOf(strselectGenreNum))){
-                                                    data = new UserlistItem(document.getId(), "팔로우");
-                                                }
-                                            }
-                                        }
-                                    }
-                                    userlist.add(data);
-                                    userListAdapter.notifyDataSetChanged();
-                                }
-                            }
-                        }
-                    });
                 }
             }
         });
 
-        userRc_recycler.setAdapter(userListAdapter);
+        arrayList = new ArrayList<>();
+        noRearrayList = new ArrayList<>();
+        newData = new ArrayList<>();
+
+
+        //필드값이 true인 문서 전체
+        firebaseFirestore.collection("category").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (int i = 1; i <= document.getData().size() - 1; i++)
+                            if (document.get("" + i).equals(true))
+                                arrayList.add(document.getId());
+                    }
+                    //Log.d("rjc", String.valueOf(arrayList));
+
+                    for (String item : arrayList) {
+                        if (!noRearrayList.contains((CharSequence) item))
+                            noRearrayList.add(item);
+                    }
+                    Log.d("rjc", String.valueOf(noRearrayList));
+                }
+                //Log.d("rjc >>>", String.valueOf(arrayList));
+
+                arrlist = new String[noRearrayList.size()];
+                for (int i = 0; i < noRearrayList.size(); i++) {
+                    arrlist[i] = noRearrayList.get(i);
+                }
+
+                mam = new String[mem_ca.size()];
+                for (int i = 0; i < mem_ca.size(); i++) {
+                    mam[i] = mem_ca.get(i);
+                }
+
+
+                /*for (String item : mem_ca)
+                    if (noRearrayList.contains(item))
+                        newData.add(item);*/
+
+                /*list = new String[newData.size()];
+                for (int i = 0; i < newData.size(); i++) {
+                    list[i] = newData.get(i);
+                }*/
+
+                for(int i=0;i<arrlist.length;i++){
+                    if(arrlist[i].equals(mem_ca))
+                        Log.d("mem_ca", ""+(arrlist[i]));
+                }
+                /*for (int i = 0; i < newData.size(); i++) {
+                    //data[i] = new UserlistItem("" + list[i], "팔로우");
+                    //userlist.add(data[i]);
+                }*/
+                //userListAdapter.notifyDataSetChanged();
+                //userRc_recycler.setAdapter(userListAdapter);
+            }
+        });
 
         //RecyclerView 항목 클릭 구현
         userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
