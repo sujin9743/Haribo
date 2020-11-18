@@ -44,23 +44,15 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            profileImg = itemView.findViewById(R.id.profileImg);
-            profileText =itemView.findViewById(R.id.profileText);
-            date =itemView.findViewById(R.id.date);
-            reviewText = itemView.findViewById(R.id.reviewText);
-            delete = itemView.findViewById(R.id.delete);
-
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: 2020-11-18 db 삭제
-                }
-            });
+            this.profileImg = itemView.findViewById(R.id.profileImg);
+            this.profileText =itemView.findViewById(R.id.profileText);
+            this.date =itemView.findViewById(R.id.date);
+            this.reviewText = itemView.findViewById(R.id.reviewText);
 
         }
     }
 
-    MBookCommentAdapter(ArrayList<MBookCom> list){mlist = list;}
+    MBookCommentAdapter(ArrayList<MBookCom> list){this.mlist = list;}
 
     public MBookCommentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext() ;
@@ -102,6 +94,7 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
                 Log.d("e", "프로필 사진 로드 실패 : " + exception);
             }
         });
+
         holder.date.setText(item.getDate());
         holder.reviewText.setText(item.getReviewText());
 

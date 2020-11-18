@@ -13,18 +13,10 @@ public class MBookComment extends AppCompatActivity {
 
     ImageView backBtn;
 
-    CircleImageView profileImg;
-    TextView profileText;
-    TextView date, reviewText, delete;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_book_comment);
 
-        profileImg = findViewById(R.id.profileImg);
-        profileText =findViewById(R.id.profileText);
-        date =findViewById(R.id.date);
-        reviewText = findViewById(R.id.reviewText);
-        delete = findViewById(R.id.delete);
 
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
