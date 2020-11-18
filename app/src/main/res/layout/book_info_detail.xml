@@ -127,7 +127,7 @@
                     android:id="@+id/reviewLayout"
                     android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="300dp"
                     android:background="@color/beige">
 
                 </androidx.recyclerview.widget.RecyclerView>

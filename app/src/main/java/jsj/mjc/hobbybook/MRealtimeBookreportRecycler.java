@@ -83,7 +83,6 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         list.add(item);
 
-                        //cho MBookReportDetail 로 아이디 넘겨주기
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override
                             public void onItemClick(View v, int position) {
