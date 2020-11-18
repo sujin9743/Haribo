@@ -28,6 +28,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,11 +38,18 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MBookInfoDetail extends AppCompatActivity {
+
+    RecyclerView recyclerView;
+    MBookCommentAdapter adapter;
+    ArrayList<MBookCom> list = new ArrayList<>();
+    MBookCom item;
+
 
     ImageView backBtn, bookImage;
     LinearLayout letsGoReport;
@@ -66,6 +76,18 @@ public class MBookInfoDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
+
+        //댓글 리사이클러뷰
+        recyclerView = findViewById(R.id.reviewLayout);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
+
+        item = new MBookCom();
+        adapter = new MBookCommentAdapter(list);
+        recyclerView.setAdapter(adapter);
+
+
 
         bookImage = findViewById(R.id.bookImage);
         bookName = findViewById(R.id.bookName);
@@ -191,12 +213,6 @@ public class MBookInfoDetail extends AppCompatActivity {
                 stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                      /*
-                        //별개수에 따른 별 한칸당 평균
-                        float st = 10.0f/ratingBar.getNumStars();
-                        //String 객체를 이용해서 구한 평균값을 소수점 한자리로 표현..
-                        str = String.format("%.1f",(st * rating) );
-                       */
                       saveDStars = Math.round(rating);
                     }
                 });
