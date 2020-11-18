@@ -114,6 +114,7 @@
                            android:textSize="15dp"/>
 
                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reviewLayout"
                     android:backgroundTint="@color/white"

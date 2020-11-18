@@ -80,8 +80,11 @@ public class MyFeedFragment extends Fragment {
         mF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
             @Override
             public void onItemClick(View v, int position) {
+
+                String a =mF_readBookList.get(position).getbookReNum();
                 Intent intent = new Intent(getContext(), MBookReportDetail.class);
                 intent.putExtra("bookre_num", mF_readBookList.get(position).getbookReNum());
+                intent.putExtra("imMyFeed","1");
                 startActivity(intent);
             }
         });

@@ -49,6 +49,8 @@ public class RecommendBookActivity extends AppCompatActivity {
     RecommendBookAdapter recommendBookAdapter;
     RecyclerView bookRc_recycler;
 
+    String loginId;
+
     //API연동
     final String TAG = "RecommendBookActivity";
     public String dataKey = "ttbw_wowoo1406002";
@@ -61,6 +63,8 @@ public class RecommendBookActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     ArrayList<Integer> genre_array = new ArrayList<>();
     RecommendBookAsyncTask recommendBookAsyncTask;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +79,8 @@ public class RecommendBookActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        loginId = MainActivity.loginId;
 
         //RecyclerView
         bookRc_recycler = findViewById(R.id.bookRc_recycler);
@@ -91,7 +97,7 @@ public class RecommendBookActivity extends AppCompatActivity {
         //firebase
         final FirebaseFirestore rcBook_DB = FirebaseFirestore.getInstance();
 
-        rcBook_DB.collection("category").document("test").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        rcBook_DB.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()) {

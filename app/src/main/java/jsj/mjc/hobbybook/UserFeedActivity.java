@@ -246,6 +246,7 @@ public class UserFeedActivity extends AppCompatActivity {
                                 public void onItemClick(View v, int position) {
                                     Intent intent = new Intent(UserFeedActivity.this, MBookReportDetail.class);
                                     intent.putExtra("bookre_num", uF_readBookList.get(position).getbookReNum());
+                                    intent.putExtra("imMyFeed","1");
                                     startActivity(intent);
                                 }
                             });

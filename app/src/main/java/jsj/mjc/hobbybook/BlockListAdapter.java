@@ -52,7 +52,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.Bloc
     @Override
     public void onBindViewHolder(@NonNull BlockListViewHolder viewHolder, int position) {
         viewHolder.blockUser_profileImg.setImageResource(R.drawable.ic_baseline_android_24);
-        viewHolder.blockUser_id.setText(userlist.get(position).getId());
+        viewHolder.blockUser_id.setText((CharSequence) userlist.get(position).getId());
         viewHolder.blockUser_btn.setText(userlist.get(position).getBtnTxt());
     }
 
