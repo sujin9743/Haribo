@@ -181,6 +181,7 @@ public class MBookReportDetail extends AppCompatActivity {
              i.putExtra("image",bookImg);
              i.putExtra("author",bMaker);
              i.putExtra("description", bookInfo);
+             i.putExtra("isbn", isbn);
              startActivity(i);
          }
      });

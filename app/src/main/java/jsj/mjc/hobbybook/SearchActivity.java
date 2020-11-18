@@ -34,7 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     private String requestUrl;
     SearchedBook searchedBook = null;
     String keyword;
-    String title, image, author, description;
+    String title, image, author, description, isbn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,6 +129,10 @@ public class SearchActivity extends AppCompatActivity {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookDesc(parser.getText());
                             }
+                            else if(parser.getName().equals("isbn")) {
+                                parser.next();
+                                if(searchedBook!=null) searchedBook.setBookIsbn(parser.getText());
+                            }
                             break;
                         case XmlPullParser.TEXT:
                             break;
@@ -169,11 +173,13 @@ public class SearchActivity extends AppCompatActivity {
                     title = bookArrayList.get(position).getBookTitle();
                     author = bookArrayList.get(position).getBookWriter();
                     description = bookArrayList.get(position).getBookDesc();
+                    isbn = bookArrayList.get(position).getBookIsbn();
 
                     intent.putExtra("image", image);
                     intent.putExtra("title", title);
                     intent.putExtra("author", author);
                     intent.putExtra("description", description);
+                    intent.putExtra("isbn", isbn);
 
                     startActivity(intent);
                 }

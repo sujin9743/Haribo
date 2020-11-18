@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,12 +58,13 @@ public class MBookInfoDetail extends AppCompatActivity {
     String isbn ="9788954641630";
     Boolean deleted = true; //todo deleted, rv_num 수정 필요
     int rv_num = 0;
-
+    int starsSum=0;
     int saveDStars;
 
-    int starsAvg;
+    Float starsAvg;
     int docSize;
-    int []rStars = new int[docSize];
+    ArrayList starArray = new ArrayList();
+    ArrayList rStarsArray = new ArrayList();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
@@ -77,6 +79,8 @@ public class MBookInfoDetail extends AppCompatActivity {
         getBookTitle = getIntent().getStringExtra("title");
         getBookAuthor = getIntent().getStringExtra("author");
         getBookDesc = getIntent().getStringExtra("description");
+        isbn = getIntent().getStringExtra("isbn");
+
 
         Glide.with(getApplicationContext()).load(getBookImage).into(bookImage);
         bookName.setText(getBookTitle);
@@ -112,30 +116,39 @@ public class MBookInfoDetail extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("TAG", document.getId() + " => " + document.getData());
-                        for(int i = 0; i < task.getResult().size(); i++){ //쿼리실행으로 가져온 문서수만큼만 돌아라
+                        docSize = task.getResult().size();
+                        starArray.add(document.getData().get("stars").toString());
+                        //for(int i = 0; i < task.getResult().size(); i++){ //쿼리실행으로 가져온 문서수만큼만 돌아라
 
-                            Log.d(docSize+"","그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래");
-                            String []rStars_txt = new String[task.getResult().size()];
-                            rStars_txt[i] = document.get("stars").toString();
-                            rStars[i] = Integer.parseInt(rStars_txt[i]);
+                            //Log.d(task.getResult().size()+"","그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래");
+                            //String []rStars_txt = new String[task.getResult().size()];
+                            //rStars_txt[i] = document.get("stars").toString();
+                            //rStars[i] = Integer.parseInt(rStars_txt[i]);
 
-                            docSize =task.getResult().size();
-                        }
-
+                            //docSize =task.getResult().size();
+                        //}
                     }
+                    //평점 출력
+                    for(int i=0; i<starArray.size(); i++) {
+                        rStarsArray.add(starArray.get(i));
+                    }
+                    for(int i=0; i<starArray.size(); i++) {
+                        starsSum += Integer.parseInt((String) rStarsArray.get(i));
+                        starsAvg = (float)starsSum/docSize;
+                    }
+                    stars_show.setRating(starsAvg);
                 } else {
                     Log.d("TAG", "Error getting documents: ", task.getException());
                 }
             }
         });
 
-        for(int i = 0; i<docSize;i++){
-            int starsSum=0;
-            starsSum += rStars[i];
-            starsAvg = Math.round(starsSum/docSize);
+        //for(int i = 0; i<docSize;i++){
+        //    int starsSum=0;
+        //    starsSum += rStars[i];
+        //    starsAvg = Math.round(starsSum/docSize);
 
-        }
+        //}
 
         reviewBtn = findViewById(R.id.reviewBtn);
         reviewBtn.setOnClickListener(new View.OnClickListener() {
