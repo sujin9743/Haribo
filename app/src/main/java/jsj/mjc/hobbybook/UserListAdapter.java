@@ -1,6 +1,8 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,23 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
-
     private ArrayList<User> userlist;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();;
 
     public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
         void onItemClick(View v, int position);
@@ -33,7 +47,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
        CircleImageView user_profileImg;
        TextView user_id;
        //Button user_btn;
-       int i=0;
+       //int i=0;
 
 
        public UserListViewHolder(@NonNull View itemView) {
@@ -90,9 +104,32 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     //position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     @Override
-    public void onBindViewHolder(@NonNull UserListViewHolder viewHolder, int position) {
-        viewHolder.user_profileImg.setImageResource(R.drawable.ic_baseline_android_24);
-        viewHolder.user_id.setText(userlist.get(position).getUserId());
+    public void onBindViewHolder(@NonNull final UserListViewHolder viewHolder, int position) {
+        //프로필 사진 로드
+        StorageReference imgRef = storageRef.child("profile_img/" + userlist.get(position).getUserId() +".jpg");
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(viewHolder.user_profileImg.getContext()).load(uri).into(viewHolder.user_profileImg);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+            }
+        });
+        //닉네임 로드
+        db.collection("member").document(userlist.get(position).getUserId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        viewHolder.user_id.setText(doc.getString("nickname"));
+                    }
+                }
+            }
+        });
     }
 
     @Override

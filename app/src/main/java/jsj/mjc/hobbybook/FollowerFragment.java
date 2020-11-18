@@ -28,7 +28,6 @@ public class FollowerFragment extends Fragment {
     UserListAdapter userListAdapter;
     String loginId, userId;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    StorageReference storageRef;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +44,17 @@ public class FollowerFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         follower_recycler.setLayoutManager(linearLayoutManager);
 
+        //RecyclerView 항목 클릭 구현
+        userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getContext(), UserFeedActivity.class);
+                intent.putExtra("loginId", loginId);
+                intent.putExtra("userId", userlist.get(position).getUserId());
+                startActivity(intent);
+            }
+        });
+
         //recyclerView 구분선 추가
         follower_recycler.addItemDecoration(new DividerItemDecoration(follower_recycler.getContext(), 1));
         follower_recycler.setAdapter(userListAdapter);
@@ -55,19 +65,8 @@ public class FollowerFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //TODO 사용자 추천과 겹치니 나중에
-                        //UserlistItem data = new UserlistItem(document.getString("follower"));
-                        //userlist.add(data);
-                        //RecyclerView 항목 클릭 구현
-                        userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
-                            @Override
-                            public void onItemClick(View v, int position) {
-                                Intent intent = new Intent(getContext(), UserFeedActivity.class);
-                                intent.putExtra("loginId", loginId);
-                                intent.putExtra("userId", loginId);
-                                startActivity(intent);
-                            }
-                        });
+                        User data = new User(document.getString("follower"));
+                        userlist.add(data);
                     }
                     userListAdapter.notifyDataSetChanged();
                 } else {
