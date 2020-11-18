@@ -155,7 +155,6 @@ public class MessageFragment extends Fragment {
                     /*
                     messageArrayList.clear();
                     for (int i = 0; i < 20; i++) {
-                        //Todo DB 연동 후 수정 예정(chang)
                         s = "보낸사람";
                         r = " > 나";
 

@@ -96,7 +96,8 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
                 int comment = 0;
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        comment++;
+                        if (!document.getBoolean("deleted"))
+                            comment++;
                     }
                 } else {
                     Log.d("lll", "댓글 수 로드 오류 : ", task.getException());

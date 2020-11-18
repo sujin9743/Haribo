@@ -72,7 +72,6 @@ public class FollowListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //todo . 팔로워 선택 시 탭에서 팔로워 목록이 시작화면으로, 팔로잉 선택 시 탭에서 팔로잉 목록이 시작화면으로
     //탭 Fragment 전환
     protected void viewChange(int index) {
         //Fragment 변경 사항을 commit()할 때 마다 새로운 FragmentTransaction만들어야 함

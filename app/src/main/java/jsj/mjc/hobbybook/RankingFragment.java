@@ -62,7 +62,6 @@ public class RankingFragment extends Fragment {
         BestsellerAsyncTask bestsellerAsyncTask = new BestsellerAsyncTask();
         bestsellerAsyncTask.execute();
 
-        //TODO 추후에 어디 더보기인지에 따라 알라딘 API, 평점 및 리뷰에서 가져온 데이터 삽입
         //for (count = 1; count <= max; count++) {
         //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
         //    rankingArrayList.add(data);

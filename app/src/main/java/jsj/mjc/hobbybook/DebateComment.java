@@ -1,11 +1,21 @@
 package jsj.mjc.hobbybook;
 
 public class DebateComment {
+    String docId;
     int dcNum;
     int rcNum;
+    int dcBundle;
     String dcText;
     String dcWriter;
     String dcDate;
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
 
     public int getDcNum() {
         return dcNum;
@@ -21,6 +31,14 @@ public class DebateComment {
 
     public void setRcNum(int rcNum) {
         this.rcNum = rcNum;
+    }
+
+    public int getDcBundle() {
+        return dcBundle;
+    }
+
+    public void setDcBundle(int dcBundle) {
+        this.dcBundle = dcBundle;
     }
 
     public String getDcText() {
@@ -47,9 +65,11 @@ public class DebateComment {
         this.dcDate = dcDate;
     }
 
-    DebateComment(int dcNum, int rcNum, String dcText, String dcWriter, String dcDate) {
+    DebateComment(String docId, int dcNum, int rcNum, int dcBundle, String dcText, String dcWriter, String dcDate) {
+        this.docId = docId;
         this.dcNum = dcNum;
         this.rcNum = rcNum;
+        this.dcBundle = dcBundle;
         this.dcText = dcText;
         this.dcWriter = dcWriter;
         this.dcDate = dcDate;

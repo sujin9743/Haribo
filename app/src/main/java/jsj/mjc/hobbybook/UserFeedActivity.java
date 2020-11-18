@@ -57,7 +57,8 @@ public class UserFeedActivity extends AppCompatActivity {
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        //TODO putExtra getStringExtra 사용해서 어느 계정으로 어느 회원 보고 있는지 처리
+        loginId = getIntent().getStringExtra("loginId");
+        userId = getIntent().getStringExtra("userId");
 
         book_count_txt = findViewById(R.id.book_count_txt);
         user_id = findViewById(R.id.user_id);
@@ -130,6 +131,7 @@ public class UserFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MessageSendActivity.class);
+                intent.putExtra("userID", userId);
                 startActivity(intent);
             }
         });

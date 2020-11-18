@@ -128,12 +128,14 @@
             app:civ_border_color="@color/black"/>
 
         <EditText
+            android:id="@+id/dDetail_comment_edt"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/edit_box_line" />
 
         <ImageButton
+            android:id="@+id/dDetail_comment_btn"
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_gravity="center_vertical"
