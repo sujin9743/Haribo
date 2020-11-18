@@ -30,6 +30,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -41,10 +44,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class DebateDetailActivity extends AppCompatActivity {
     private ArrayList<DebateComment> debateCommentArrayList;
     private DebateCommentAdapter debateCommentAdapter;
-    CircleImageView dDetail_writerIv;
+    CircleImageView dDetail_writerIv, dDetail_myIv;
     TextView dDetail_writerTv, dDetail_title_tv, dDetail_text_tv, dDetail_date_tv, dDetail_comNum_tv;
     String loginId, writerId, docId;
-    int dNum;
+    int dNum, comNum;
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
@@ -70,17 +73,14 @@ public class DebateDetailActivity extends AppCompatActivity {
 
         LinearLayout writer = findViewById(R.id.dDetail_writer);
 
-        dDetail_writerIv = findViewById(R.id.dDetail_writerIv);
-        dDetail_writerTv = findViewById(R.id.dDetail_writerTv);
         dDetail_title_tv = findViewById(R.id.dDetail_title_tv);
-        dDetail_text_tv = findViewById(R.id.dDetail_text_tv);
-        dDetail_date_tv = findViewById(R.id.dDetail_date_tv);
-        dDetail_comNum_tv = findViewById(R.id.dDetail_comNum_tv);
 
         if (dNum == -1) {
             dDetail_title_tv.setText("오류가 발생했습니다.");
         } else {
             //토론글 작성자 프로필 사진, 닉네임 클릭 시 해당 사용자의 피드로 이동
+            dDetail_writerIv = findViewById(R.id.dDetail_writerIv);
+            dDetail_writerTv = findViewById(R.id.dDetail_writerTv);
             writer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -116,6 +116,9 @@ public class DebateDetailActivity extends AppCompatActivity {
                     }
                 }
             });
+            dDetail_text_tv = findViewById(R.id.dDetail_text_tv);
+            dDetail_date_tv = findViewById(R.id.dDetail_date_tv);
+            dDetail_comNum_tv = findViewById(R.id.dDetail_comNum_tv);
             //토론글 정보
             db.collection("debate").document(docId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -137,29 +140,55 @@ public class DebateDetailActivity extends AppCompatActivity {
                     Log.d("lll", "게시물 로드 실패 : " + e);
                 }
             });
+
+
+            //본인 프로필 사진
+            dDetail_myIv = findViewById(R.id.dDetail_myIv);
+            imgRef = storageRef.child("profile_img/" + loginId +".jpg");
+            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(DebateDetailActivity.this).load(uri).into(dDetail_myIv);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d("lll", "프로필 사진 로드 실패 : " + exception);
+                }
+            });
+
+            //토론글에 달린 댓글 목록 구현
+            RecyclerView recyclerView = findViewById(R.id.dDetail_comment_RV);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(linearLayoutManager);
+
+            debateCommentArrayList = new ArrayList<>();
+            debateCommentAdapter = new DebateCommentAdapter(debateCommentArrayList);
+            recyclerView.setAdapter(debateCommentAdapter);
+
+            DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
+            recyclerView.addItemDecoration(gDividerItemDecoration);
+
+            db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("dc_bundle").orderBy("dc_num").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            String dateStr = dateFormatter.format(timestamp.toDate());
+                            DebateComment data = new DebateComment(doc.getLong("dc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getString("dc_content"),
+                                    doc.getString("mem_id"), dateStr);
+                            debateCommentArrayList.add(data);
+                            comNum++;
+                        }
+                    } else {
+                        Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                    }
+                    dDetail_comNum_tv.setText(String.valueOf(comNum));
+                    debateCommentAdapter.notifyDataSetChanged();
+                }
+            });
         }
-
-
-
-        //토론글에 달린 댓글 목록 구현
-        RecyclerView recyclerView = findViewById(R.id.dDetail_comment_RV);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        debateCommentArrayList = new ArrayList<>();
-        debateCommentAdapter = new DebateCommentAdapter(debateCommentArrayList);
-        recyclerView.setAdapter(debateCommentAdapter);
-
-        DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(gDividerItemDecoration);
-
-        for (int i = 0; i < 20; i++) {
-            int j = (int) (Math.random() * 3);
-            DebateComment data = new DebateComment("" + i, "" + j, "댓글 예시 댓글 예시 예쁘게 보이도록 조금만 길게 써보자 으랏차 으랏차 우리는 모두 친구",
-                    "댓글 작성자" + i, "2020.06.12. 12:34");
-            debateCommentArrayList.add(data);
-        }
-        debateCommentAdapter.notifyDataSetChanged();
 
         //ImageView dDetail_iv = findViewById(R.id.dDetail_iv);
 
