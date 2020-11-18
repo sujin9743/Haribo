@@ -49,7 +49,7 @@ public class MBookWriteMain extends AppCompatActivity {
     int hash_request_Code = 2;
     final static int CODE=1;    //해시태그 intent 구분
 
-    String bookCoverImg; //sj
+    String bookCoverImg, author;
     String hash1, hash2, hash3, hash4;
     String isbn;
     String bTitle;
@@ -101,6 +101,7 @@ public class MBookWriteMain extends AppCompatActivity {
                 saveReport.put("br_img", bookCoverImg);
                 saveReport.put("br_title",reportName.getText().toString());
                 saveReport.put("book_title", bTitle);
+                saveReport.put("book_author", author);
                 saveReport.put("has1", hash1);
                 saveReport.put("has2", hash2);
                 saveReport.put("has3", hash3);
@@ -111,8 +112,7 @@ public class MBookWriteMain extends AppCompatActivity {
 
 
                 //입력한 모든 데이터 서버에 저장
-                String newCount = String.format("%03d", count + 1); //bookre에 문서명 카운팅
-                db.collection("bookre").document("독후감" + newCount).set(saveReport).addOnFailureListener(new OnFailureListener() {
+                db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
@@ -195,6 +195,7 @@ public class MBookWriteMain extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK) {
             bookCoverImg = data.getStringExtra("image");
             isbn = data.getStringExtra("isbn");
+            author = data.getStringExtra("author");
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
             //cho 도서명

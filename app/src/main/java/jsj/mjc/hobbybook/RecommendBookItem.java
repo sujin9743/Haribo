@@ -8,14 +8,6 @@ public class RecommendBookItem {
     private String bookTitle, bookWriter, bookPublisher, bookRateTxt, bookIsbn;
     float bookRate;
 
-    /*public RecommendBookItem(String bookTitle, String bookWriter, String bookPublisher, float bookRate, String bookRateTxt) {
-        this.bookTitle = bookTitle;
-        this.bookWriter = bookWriter;
-        this.bookPublisher = bookPublisher;
-        this.bookRate = bookRate;
-        this.bookRateTxt = bookRateTxt;
-    }*/
-
     public void setBookImgUrl(String bookImgUrl) {
         this.bookImgUrl = bookImgUrl;
     }

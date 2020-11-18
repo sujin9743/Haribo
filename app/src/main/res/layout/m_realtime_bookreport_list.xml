@@ -41,7 +41,7 @@
             android:layout_width="380dp"
             android:layout_height="400dp"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:background="@color/white">
         </ImageView>
 

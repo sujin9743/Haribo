@@ -2,6 +2,7 @@ package jsj.mjc.hobbybook;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +22,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,6 +57,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     String str, isbn;
     Boolean deleted;
     int rv_num;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
@@ -67,7 +78,7 @@ public class MBookInfoDetail extends AppCompatActivity {
 
         editor.setText(getBookAuthor);
 
-        //bookInfo 수진짱 책소개(정보) api 연결해쥬뗌므~~~
+        //bookInfo 책소개(정보) api 연결
 
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -161,4 +172,5 @@ public class MBookInfoDetail extends AppCompatActivity {
         });
 
     }
+
 }
