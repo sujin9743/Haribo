@@ -67,7 +67,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     ArrayList rStarsArray = new ArrayList();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_info_detail);
+        setContentView(R.layout.book_detail_info);
 
         bookImage = findViewById(R.id.bookImage);
         bookName = findViewById(R.id.bookName);
@@ -111,7 +111,7 @@ public class MBookInfoDetail extends AppCompatActivity {
         //별 점수 db에서 받아와서 값 넣어주기
         stars_show = findViewById(R.id.star);
         db = FirebaseFirestore.getInstance();
-        db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("review").whereEqualTo("book_isbn","9788954641630").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
