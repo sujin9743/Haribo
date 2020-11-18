@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10sp">
+    android:padding="10sp"
+    android:id="@+id/dc_layout">
 
     <ImageView
         android:id="@+id/dReply_iv"
@@ -40,7 +41,7 @@
         android:id="@+id/dComment_more_btn"
         android:layout_width="31dp"
         android:layout_height="22dp"
-        android:background="#ffffff"
+        android:background="@null"
         android:padding="5sp"
         android:src="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintRight_toRightOf="parent"

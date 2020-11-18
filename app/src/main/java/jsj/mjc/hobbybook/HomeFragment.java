@@ -74,8 +74,7 @@ public class HomeFragment extends Fragment {
 
         DividerItemDecoration hbbDividerItemDecoration = new DividerItemDecoration(mContext, hbbLinearLayoutManager.getOrientation());
         gRecyclerView.addItemDecoration(hbbDividerItemDecoration);
-        //TODO 추후에 알라딘 API, 평점 및 리뷰에서 가져온 데이터 삽입
-        //for (count = 1; count <= max; count++) { //TODO Spinner 값에 따른 데이터 변경 처리
+        //for (count = 1; count <= max; count++) {
         //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
         //    gRankingArrayList.add(data);
         //}
@@ -139,7 +138,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //TODO RecyclerView 터치 시 도서 상세 페이지로 이동
         return view;
     }
 

@@ -13,22 +13,22 @@ public class MBookCom {
 
     public void setProfileImg(String pImg){profileImg = pImg;}
     public String getProfileImg() {
-        return this.profileImg;
+        return profileImg;
     }
     public void setProfileText(String pText){profileText = pText;}
     public String getProfileText(){
-        return this.profileText;
+        return profileText;
     }
     public void setDate(String d){date = d;}
     public String getDate() {
-        return this.date;
+        return date;
     }
     public void setReviewText(String rText){reviewText = rText;}
     public String getReviewText() {
-        return this.reviewText;
+        return reviewText;
     }
     public void setDelete(String del){delete = del;}
     public String getDelete() {
-        return this.delete;
+        return delete;
     }
 }

@@ -88,7 +88,6 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                                 description = list.get(position).getBookInfo();
 
                                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
-                                i.putExtra("imMyFeed","2");
                                 i.putExtra("mem_id",mem_id);
                                 i.putExtra("br_title",br_title);
                                 i.putExtra("description", description);

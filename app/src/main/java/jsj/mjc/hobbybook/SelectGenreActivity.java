@@ -43,20 +43,28 @@ public class SelectGenreActivity extends AppCompatActivity {
     ImageButton genre_backBtn;
     DocumentSnapshot doc;
     int id_num = 0;
+    String loginId;
+    Integer[] Rid_button = {R.id.g0, R.id.g1, R.id.g2, R.id.g3, R.id.g4,
+            R.id.g5, R.id.g6, R.id.g7, R.id.g8, R.id.g9, R.id.g10, R.id.g11, R.id.g12, R.id.g13, R.id.g14
+            , R.id.g15, R.id.g16, R.id.g17, R.id.g18, R.id.g19, R.id.g20, R.id.g21, R.id.g22, R.id.g23, R.id.g24
+            , R.id.g25, R.id.g26, R.id.g27, R.id.g28, R.id.g29};
+
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_genre);
 
+        loginId = MainActivity.loginId;
+
         Intent intent = getIntent(); //cho
         final int changeGen = intent.getExtras().getInt("changeGen");
 
-
         //선택된 장르 버튼 색상 변경
         int i;
-        for (i = 0; i < genreBtn.length; i++) {
-            genreBtn[i] = findViewById(R.id.g0 + i);
+        for (i = 0; i < Rid_button.length; i++) {
+            genreBtn[i] = findViewById(Rid_button[i]);
             select_state[i] = 0;
         }
 
@@ -218,6 +226,29 @@ public class SelectGenreActivity extends AppCompatActivity {
                 }
             });
         }
+        
+        //기존에 선택했던 장르 띄워주기
+        if (changeGen == 1) {
+            db.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if(doc.exists()) {
+                            Log.d("TAG", "data!!!!!!!!!!!!!!!!!" + doc.getData());
+                            for(int i=0; i<doc.getData().size()-1; i++) {
+                                String index = Integer.toString(i+1);
+                                if(doc.getData().get(index).toString() == "true") {
+                                    //Log.d("TAG", "@@@index@@@@" + index + "data" +  doc.getData().get(index).toString());
+                                    genreBtn[i].setBackgroundResource(R.drawable.genre_select_btn_box);
+                                    //Log.d("TAG", "버튼색바꾼다" + i);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
         //툴바 뒤로가기
         genre_backBtn = findViewById(R.id.genre_backBtn);
@@ -236,7 +267,6 @@ public class SelectGenreActivity extends AppCompatActivity {
 
             //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지
             public void onClick(View v) {
-
                 //CHO
                 if (changeGen == 1) {
                     Toast.makeText(getApplicationContext(), "선호장르 변경 완료", Toast.LENGTH_SHORT).show();

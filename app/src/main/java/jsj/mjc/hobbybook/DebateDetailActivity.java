@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,24 +39,35 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DebateDetailActivity extends AppCompatActivity {
     private ArrayList<DebateComment> debateCommentArrayList;
-    private DebateCommentAdapter debateCommentAdapter;
+    public DebateCommentAdapter debateCommentAdapter;
     CircleImageView dDetail_writerIv, dDetail_myIv;
     TextView dDetail_writerTv, dDetail_title_tv, dDetail_text_tv, dDetail_date_tv, dDetail_comNum_tv;
-    String loginId, writerId, docId;
-    int dNum, comNum;
+    EditText dDetail_comment_edt;
+    ImageButton dDetail_comment_btn;
+    String writerId, docId;
+    public String loginId;
+    int dcNum = 1, dNum, comNum;
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
+    public static DebateDetailActivity debateDetailActivity;
+    public int dc_bundle = 0, recieve_com = 0;
+    Map<String, Object> comment = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debate_detail);
+
+        debateDetailActivity = this;
 
         loginId = getIntent().getStringExtra("loginId");
         docId = getIntent().getStringExtra("docId");
@@ -71,14 +83,13 @@ public class DebateDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
 
-        LinearLayout writer = findViewById(R.id.dDetail_writer);
-
         dDetail_title_tv = findViewById(R.id.dDetail_title_tv);
 
         if (dNum == -1) {
             dDetail_title_tv.setText("오류가 발생했습니다.");
         } else {
             //토론글 작성자 프로필 사진, 닉네임 클릭 시 해당 사용자의 피드로 이동
+            LinearLayout writer = findViewById(R.id.dDetail_writer);
             dDetail_writerIv = findViewById(R.id.dDetail_writerIv);
             dDetail_writerTv = findViewById(R.id.dDetail_writerTv);
             writer.setOnClickListener(new View.OnClickListener() {
@@ -169,32 +180,53 @@ public class DebateDetailActivity extends AppCompatActivity {
             DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
             recyclerView.addItemDecoration(gDividerItemDecoration);
 
-            db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("dc_bundle").orderBy("dc_num").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            setCommentList();
+
+            //댓글 작성
+            dDetail_comment_edt = findViewById(R.id.dDetail_comment_edt);
+            dDetail_comment_btn = findViewById(R.id.dDetail_comment_btn);
+            dDetail_comment_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot doc : task.getResult()) {
-                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
-                            String dateStr = dateFormatter.format(timestamp.toDate());
-                            DebateComment data = new DebateComment(doc.getLong("dc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getString("dc_content"),
-                                    doc.getString("mem_id"), dateStr);
-                            debateCommentArrayList.add(data);
-                            comNum++;
-                        }
-                    } else {
-                        Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                public void onClick(View view) {
+                    String comCon = dDetail_comment_edt.getText().toString();
+                    if(!comCon.equals("")) {
+                        comment.put("d_num", dNum);
+                        comment.put("dc_num", dcNum);
+                        comment.put("dc_bundle", dcNum);
+                        comment.put("dc_content", comCon);
+                        comment.put("deleted", false);
+                        comment.put("inputtime", new Date());
+                        comment.put("mem_id", loginId);
+                        comment.put("receive_com", recieve_com);
+                        db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("inputtime", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                        dcNum = doc.getLong("dc_num").intValue() + 1;
+                                        comment.put("dc_num", dcNum);
+                                        if(dc_bundle == 0)
+                                            comment.put("dc_bundle", dcNum);
+                                    }
+                                } else {
+                                    Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                                }
+                                db.collection("debate_com").add(comment).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("e", "user 데이터 등록 실패 : ", e);
+                                    }
+                                });
+                                debateCommentAdapter.selected = -1;
+                                recieve_com = 0;
+                                setCommentList();
+                            }
+                        });
+                        dDetail_comment_edt.setText("");
                     }
-                    dDetail_comNum_tv.setText(String.valueOf(comNum));
-                    debateCommentAdapter.notifyDataSetChanged();
                 }
             });
         }
-
-        //ImageView dDetail_iv = findViewById(R.id.dDetail_iv);
-
-        //if (str.equals("1"))
-            //dDetail_iv.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -220,5 +252,34 @@ public class DebateDetailActivity extends AppCompatActivity {
                 mCutOffDialog.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setCommentList() {
+        debateCommentArrayList.clear();
+        db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("dc_bundle").orderBy("dc_num").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        if (doc.getBoolean("deleted")) {
+                            DebateComment data = new DebateComment("", doc.getLong("receive_com").intValue(), 0, 0,"삭제된 댓글입니다.",
+                                    "알 수 없음", "");
+                            debateCommentArrayList.add(data);
+                        } else {
+                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            String dateStr = dateFormatter.format(timestamp.toDate());
+                            DebateComment data = new DebateComment(doc.getId(), doc.getLong("dc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getLong("dc_bundle").intValue(), doc.getString("dc_content"),
+                                    doc.getString("mem_id"), dateStr);
+                            debateCommentArrayList.add(data);
+                            comNum++;
+                        }
+                    }
+                } else {
+                    Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                }
+                dDetail_comNum_tv.setText(String.valueOf(comNum));
+                debateCommentAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

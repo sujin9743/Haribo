@@ -26,7 +26,7 @@
         app:layout_constraintLeft_toRightOf="@id/user_profileImg"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
+    <!-- <Button
         android:id="@+id/user_btn"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -36,5 +36,5 @@
         android:textSize="15sp"
         android:background="@drawable/round_btn_darkgreen"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"/> -->
 </androidx.constraintlayout.widget.ConstraintLayout>

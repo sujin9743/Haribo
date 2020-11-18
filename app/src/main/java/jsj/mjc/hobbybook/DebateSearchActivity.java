@@ -40,6 +40,7 @@ public class DebateSearchActivity extends AppCompatActivity {
         ImageButton dSearchAdd_btn = findViewById(R.id.debateS_write_btn);
 
         final EditText dKeyword_et = findViewById(R.id.debateSearch_keyword_et);
+        dKeyword_et.setText("업데이트 예정");
 
         dSearchBack_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,15 +54,7 @@ public class DebateSearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String keyword = dKeyword_et.getText().toString();
                 if (keyword.getBytes().length <= 0) {
-                    Toast.makeText(DebateSearchActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    for (int i = 0; i < 20; i++) {
-                        int j = (int) (Math.random() * 3);
-                        //Debate data = new Debate("", "토론글 제목" + i, "토론글의 내용을 한 줄로 보는 거 어떻게 생각해? 완전 좋지 않니",
-                                //"2020.06.11 14:16", "작성자" + i, 20, String.valueOf(j));
-                        //debateArrayList.add(data);
-                    }
-                    debateAdapter.notifyDataSetChanged();
+
                 }
             }
         });
