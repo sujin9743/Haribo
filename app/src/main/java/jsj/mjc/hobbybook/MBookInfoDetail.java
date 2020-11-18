@@ -88,6 +88,7 @@ public class MBookInfoDetail extends AppCompatActivity {
         adapter = new MBookCommentAdapter(list);
         recyclerView.setAdapter(adapter);
 
+        db = FirebaseFirestore.getInstance();
         db.collection("review").whereEqualTo("book_isbn",isbn).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

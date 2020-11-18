@@ -87,6 +87,8 @@ public class MBookReportDetail extends AppCompatActivity {
         imSort = Integer.parseInt(imSortText);
         bookre_num = intent.getStringExtra("bookre_num");
         br_title = intent.getStringExtra("br_title");
+        bookInfo = intent.getStringExtra("description");
+        Log.d(br_title, "onCreate:ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ ");
 
 
         if(imSort == 1){
@@ -277,6 +279,7 @@ public class MBookReportDetail extends AppCompatActivity {
                 save.put("has4",h4);
                 save.put("mem_id",profileText.getText().toString());
                 save.put("open",open);
+                save.put("book_description", bookInfo);
 
                 db.collection("bookre").document(doc).set(save).addOnFailureListener(new OnFailureListener() {
                     @Override

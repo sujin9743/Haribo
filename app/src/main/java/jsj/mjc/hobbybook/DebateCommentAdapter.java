@@ -1,6 +1,9 @@
 package jsj.mjc.hobbybook;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +14,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdapter.DebateCommentViewHolder> {
     private ArrayList<DebateComment> debateCommentList;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     public class DebateCommentViewHolder extends RecyclerView.ViewHolder {
         protected TextView dcWriterTv;
         protected TextView dcDateTv;
         protected TextView dcTextTv;
-        protected ImageView dcWriterIv;
+        protected CircleImageView dcWriterIv;
         protected ImageView reCommentIv;
         protected ImageButton dCommentMoreBtn;  //조민주
 
@@ -29,7 +46,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
             this.dcWriterTv = view.findViewById(R.id.dComment_writer_tv);
             this.dcDateTv = view.findViewById(R.id.dComment_date_tv);
             this.dcTextTv = view.findViewById(R.id.dComment_text_tv);
-            this.dcWriterIv = view.findViewById(R.id.debate_comment_tv);
+            this.dcWriterIv = view.findViewById(R.id.dComment_iv);
             this.reCommentIv = view.findViewById(R.id.dReply_iv);
             this.dCommentMoreBtn = view.findViewById(R.id.dComment_more_btn);
 
@@ -55,15 +72,36 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DebateCommentViewHolder viewHolder, int position) {
-        viewHolder.dcWriterTv.setText(debateCommentList.get(position).getDcWriter());
+    public void onBindViewHolder(@NonNull final DebateCommentViewHolder viewHolder, final int position) {
+        StorageReference imgRef = storageRef.child("profile_img/" + debateCommentList.get(position).getDcWriter() +".jpg");
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(viewHolder.dcWriterIv.getContext()).load(uri).into(viewHolder.dcWriterIv);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+            }
+        });
+        db.collection("member").document(debateCommentList.get(position).getDcWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        viewHolder.dcWriterTv.setText(doc.getString("nickname"));
+                    }
+                }
+            }
+        });
         viewHolder.dcDateTv.setText(debateCommentList.get(position).getDcDate());
         viewHolder.dcTextTv.setText(debateCommentList.get(position).getDcText());
-        //추후 Glide 통해 이미지 변경
 
-        if (!debateCommentList.get(position).getDcNum().equals("0"))
-            if (!debateCommentList.get(position).getRcNum().equals("1"))
-                viewHolder.reCommentIv.setVisibility(View.VISIBLE);
+        if (debateCommentList.get(position).getRcNum() != 0)
+            viewHolder.reCommentIv.setVisibility(View.VISIBLE);
     }
 
     public int getItemCount() {

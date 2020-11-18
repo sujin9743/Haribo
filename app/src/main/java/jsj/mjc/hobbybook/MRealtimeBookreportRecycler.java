@@ -54,7 +54,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.mRecycler);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //recyclerView 구분선 추가
@@ -73,27 +73,25 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (int i = 0; i < task.getResult().size(); i++) {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(i);
-                        /*Log.d("TAG", "data: " + doc);
-                        Log.d("TAG", "data: " + doc.getData());
-                        Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
-                        Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
-                        Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());*/
                         item.setProfileText(doc.getData().get("mem_id").toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
+                        item.setBookInfo(doc.getData().get("book_description").toString());
                         list.add(item);
 
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override
                             public void onItemClick(View v, int position) {
-                                String mem_id, br_title;
+                                String mem_id, br_title, description;
                                 mem_id = list.get(position).getProfileText();
                                 br_title = list.get(position).getBrTitle();
+                                description = list.get(position).getBookInfo();
 
                                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                                 i.putExtra("imMyFeed","2");
                                 i.putExtra("mem_id",mem_id);
                                 i.putExtra("br_title",br_title);
+                                i.putExtra("description", description);
                                 startActivity(i);
                             }
                         });
