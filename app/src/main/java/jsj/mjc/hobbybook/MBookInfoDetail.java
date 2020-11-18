@@ -77,7 +77,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     ArrayList rStarsArray = new ArrayList();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_detail_info);
+        setContentView(R.layout.book_info_detail);
 
         //댓글 리사이클러뷰
         recyclerView = findViewById(R.id.reviewLayout);
