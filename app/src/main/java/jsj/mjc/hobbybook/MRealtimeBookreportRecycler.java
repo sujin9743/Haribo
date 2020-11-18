@@ -46,7 +46,6 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
     ArrayList<MRealtime> list = new ArrayList<>();
     MRealtime item;
     FirebaseFirestore rtBook_DB;
-    final String user_id = "test";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +73,11 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (int i = 0; i < task.getResult().size(); i++) {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(i);
-                        Log.d("TAG", "data: " + doc);
+                        /*Log.d("TAG", "data: " + doc);
                         Log.d("TAG", "data: " + doc.getData());
                         Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
                         Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
-                        Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
-                        String id = doc.getData().get("mem_id").toString();
+                        Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());*/
                         item.setProfileText(doc.getData().get("mem_id").toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());

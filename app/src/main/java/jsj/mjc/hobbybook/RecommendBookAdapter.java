@@ -82,7 +82,6 @@ public class RecommendBookAdapter extends RecyclerView.Adapter<RecommendBookAdap
     public void onBindViewHolder(@NonNull RecommendBookViewHolder viewHolder, int position) {
             //이미지 로딩 라이브러리 Glide 사용
             Glide.with(viewHolder.itemView.getContext()).load(booklist.get(position).getBookImgUrl()).into(viewHolder.bookImg);
-            //viewHolder.bookImg.setImageResource(R.drawable.ic_baseline_android_24);
             viewHolder.bookTitle.setText(booklist.get(position).getBookTitle());
             viewHolder.bookWriter.setText(booklist.get(position).getBookWriter());
             viewHolder.bookPublisher.setText(booklist.get(position).getBookPublisher());

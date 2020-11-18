@@ -13,11 +13,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Dictionary;
 
@@ -28,6 +39,10 @@ import static jsj.mjc.hobbybook.R.drawable.heart_line;
 
 public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBookreportAdapter.ViewHolder>{
     //리스트 하나 클릭시 이동
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    String member_id, loginId;
 
     public interface OnItemClickListenr {
         void onItemClick(View v, int position);
@@ -98,7 +113,6 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
 
     MRealtimeBookreportAdapter(ArrayList<MRealtime> list){
         this.mRealtime = list;
-
     }
 
     @Override
@@ -113,16 +127,36 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MRealtimeBookreportAdapter.ViewHolder holder, int position) {
-        Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getProfileImg()).into(holder.profileImg);
-        Log.d("TAG", "여긴Adapter" + mRealtime.get(position).getProfileImg());
-        //holder.profileImg.setImageURI(mRealtime.get(position).getProfileImg());
-        holder.profileText.setText(mRealtime.get(position).getProfileText());
+    public void onBindViewHolder(@NonNull final MRealtimeBookreportAdapter.ViewHolder holder, final int position) {
+        member_id = mRealtime.get(position).getProfileText();
+        //독후감 쓴 사용자의 닉네임 출력
+        db.collection("member").document(member_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc.exists()) {
+                        holder.profileText.setText(doc.getString("nickname"));
+                    }
+                }
+            }
+        });
+        //프로필 사진 출력
+        StorageReference imgRef = storageRef.child("profile_img/" + member_id + ".jpg");
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(holder.itemView.getContext()).load(uri).into(holder.profileImg);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+            }
+        });
         holder.bookName.setText(mRealtime.get(position).getBrTitle());
-        //holder.bookCreator.setText(mRealtime.get(position).getBookCreator());
         holder.likeCnt.setText(mRealtime.get(position).getLikeCnt());
         holder.commentCnt.setText(mRealtime.get(position).getCommentCnt());
-        //holder.bookImgPage.setImageURI(item.getBookImgPage());
         Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getBookImgPage()).into(holder.bookImgPage);
         //holder.heart.setHeart(item.getHeart());
 

@@ -15,12 +15,10 @@ import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MRealtime {
-    private String profileImg;    //circleimg
     private String profileText, brTitle, bookName, bookCreator,likeCnt, commentCnt;
     private String bookImgPage;       //viewpager임
     private Drawable heart;             //imageview
 
-    public void setProfileImg(String pImg){ profileImg = pImg; }
     public void setProfileText(String pText){
         profileText = pText;
     }
@@ -44,7 +42,6 @@ public class MRealtime {
         heart = h;
     }
 
-    public String getProfileImg(){ return profileImg; }
     public String getProfileText(){
         return profileText;
     }
@@ -67,14 +64,4 @@ public class MRealtime {
     public Drawable getHeart(){
         return heart;
     }
-
-    /*MRealtime(String profileText, String img, String bookName, String bookCreator, String likeCnt, String commentCnt){
-        this.profileText = profileText;
-        this.bookImgPage = img;
-        this.bookName = bookName;
-        this.bookCreator = bookCreator;
-        this.likeCnt = likeCnt;
-        this.commentCnt = commentCnt;
-    }*/
-
 }
