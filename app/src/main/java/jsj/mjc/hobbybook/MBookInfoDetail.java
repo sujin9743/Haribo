@@ -46,7 +46,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     TextView reviewBtn, bookName;
 
     TextView editor, bookInfo;
-    String getBookImage, getBookTitle,getBookAuthor;
+    String getBookImage, getBookTitle,getBookAuthor, getBookDesc;
     Dialog reviewDialog;
 
     FirebaseFirestore db;
@@ -71,12 +71,12 @@ public class MBookInfoDetail extends AppCompatActivity {
         getBookImage = getIntent().getStringExtra("image");
         getBookTitle = getIntent().getStringExtra("title");
         getBookAuthor = getIntent().getStringExtra("author");
-
+        getBookDesc = getIntent().getStringExtra("description");
 
         Glide.with(getApplicationContext()).load(getBookImage).into(bookImage);
         bookName.setText(getBookTitle);
-
         editor.setText(getBookAuthor);
+        bookInfo.setText(getBookDesc);
 
         //bookInfo 책소개(정보) api 연결
 

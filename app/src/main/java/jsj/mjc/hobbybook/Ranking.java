@@ -6,6 +6,7 @@ public class Ranking {
     private String rankingTitle;
     private String rankingWriter;
     private String rankingAuthor;
+    private String bookDesc;
 
     public String getRankingNum() {
         return rankingNum;
@@ -39,11 +40,7 @@ public class Ranking {
         this.rankingWriter = rankingWriter;
     }
 
+    public void setBookDesc (String bookDesc) { this.bookDesc = bookDesc; }
 
-    //public Ranking(String rankingNum, String rankingImageUrl, String rankingTitle, String rankingWriter) {
-    //    this.rankingNum = rankingNum;
-    //    this.rankingImageUrl = rankingImageUrl;
-    //    this.rankingTitle = rankingTitle;
-    //    this.rankingWriter = rankingWriter;
-    //}
+    public String getBookDesc() { return bookDesc; }
 }

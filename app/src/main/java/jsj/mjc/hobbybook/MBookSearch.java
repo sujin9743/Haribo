@@ -47,7 +47,7 @@ public class MBookSearch extends AppCompatActivity {
     public String dataKey = "ttbw_wowoo1406002";
     private String requestUrl;
     RecommendBookItem bookItem = null;
-    String isbn, title, author;
+    String isbn, title, author, description;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,6 +144,10 @@ public class MBookSearch extends AppCompatActivity {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookIsbn(parser.getText());
                             }
+                            else if(parser.getName().equals("description")) {
+                                parser.next();
+                                if(bookItem!=null) bookItem.setBookDesc(parser.getText());
+                            }
                             break;
                         case XmlPullParser.TEXT:
                             break;
@@ -183,12 +187,14 @@ public class MBookSearch extends AppCompatActivity {
                     title = booklist.get(position).getBookTitle();
                     author = booklist.get(position).getBookWriter();
                     isbn = booklist.get(position).getBookIsbn();
+                    description = booklist.get(position).getBookDesc();
 
                     Intent intentB = new Intent();
                     intentB.putExtra("image", image);
                     intentB.putExtra("isbn", isbn);
                     intentB.putExtra("title", title);
                     intentB.putExtra("author", author);
+                    intentB.putExtra("description", description);
                     setResult(RESULT_OK, intentB);
                     finish();
                 }

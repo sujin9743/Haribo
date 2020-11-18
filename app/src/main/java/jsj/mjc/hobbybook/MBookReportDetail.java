@@ -46,8 +46,8 @@ public class MBookReportDetail extends AppCompatActivity {
     String content, bMaker, bName;
     String h1,h2,h3,h4;
     String bookImg, isbn;
-    Date date;
-    String br_num;
+    String date;
+    String br_num, bookInfo;
     Boolean open;
 
     int i =0;
@@ -109,6 +109,7 @@ public class MBookReportDetail extends AppCompatActivity {
                         content = document.getString("br_content");
                         bMaker = document.getString("book_author");
                         bName = document.getString("book_title");
+                        bookInfo = document.getString("book_description");
                         report_content.setText(content);
                         report_bookMaker.setText(bMaker);
                         report_bookName.setText(bName);
@@ -121,9 +122,9 @@ public class MBookReportDetail extends AppCompatActivity {
 
                         heartCnt.setText(document.get("book_like").toString());
 
-                        date = document.getDate("date");
+                        date = document.getString("date");
                         isbn = document.getString("bookisbn");
-                        br_num = document.get("br_num").toString();
+                        //br_num = document.get("br_num").toString();
                         open = document.getBoolean("open");
                     }
                 } else {
@@ -179,14 +180,10 @@ public class MBookReportDetail extends AppCompatActivity {
              i.putExtra("title",bName);
              i.putExtra("image",bookImg);
              i.putExtra("author",bMaker);
+             i.putExtra("description", bookInfo);
              startActivity(i);
          }
      });
-
-
-
-
-
 
     final Map<String, Object> save = new HashMap<>();
 
@@ -214,7 +211,7 @@ public class MBookReportDetail extends AppCompatActivity {
                 save.put("bookisbn",isbn);
                 save.put("br_content",content);
                 save.put("br_img",bookImg);
-                save.put("br_num",br_num);
+                //save.put("br_num",br_num);
                 save.put("br_title",reportTitle.getText().toString());
                 save.put("date",date);
                 save.put("has1",h1);
@@ -223,9 +220,6 @@ public class MBookReportDetail extends AppCompatActivity {
                 save.put("has4",h4);
                 save.put("mem_id",profileText.getText().toString());
                 save.put("open",open);
-
-
-
 
                 db.collection("bookre").document(doc).set(save).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -237,7 +231,7 @@ public class MBookReportDetail extends AppCompatActivity {
         });
 
 
-        //리뷰 페이지으로 이동
+    //리뷰 페이지으로 이동
      forReview = findViewById(R.id.forReview);
      forReview.setOnClickListener(new View.OnClickListener() {
          @Override

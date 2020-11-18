@@ -5,7 +5,7 @@ import android.util.Log;
 public class RecommendBookItem {
 
     private String bookImgUrl;
-    private String bookTitle, bookWriter, bookPublisher, bookRateTxt, bookIsbn;
+    private String bookTitle, bookWriter, bookPublisher, bookRateTxt, bookIsbn, bookDesc;
     float bookRate;
 
     public void setBookImgUrl(String bookImgUrl) {
@@ -59,4 +59,8 @@ public class RecommendBookItem {
     public String getBookIsbn() {
         return bookIsbn;
     }
+
+    public String getBookDesc() { return bookDesc; }
+
+    public void setBookDesc(String bookDesc) { this.bookDesc = bookDesc; }
 }

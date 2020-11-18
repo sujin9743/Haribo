@@ -51,9 +51,10 @@ public class MBookWriteMain extends AppCompatActivity {
 
     String bookCoverImg, author;
     String hash1, hash2, hash3, hash4;
-    String isbn;
+    String isbn, description;
     String bTitle;
     String loginId;
+    int bookLike = 0;
    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +110,8 @@ public class MBookWriteMain extends AppCompatActivity {
                 saveReport.put("date", formatDate);
                 saveReport.put("mem_id", loginId);
                 saveReport.put("open", true);
+                saveReport.put("book_description", description);
+                saveReport.put("book_like", bookLike);
 
 
                 //입력한 모든 데이터 서버에 저장
@@ -196,6 +199,7 @@ public class MBookWriteMain extends AppCompatActivity {
             bookCoverImg = data.getStringExtra("image");
             isbn = data.getStringExtra("isbn");
             author = data.getStringExtra("author");
+            description = data.getStringExtra("description");
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
             //cho 도서명

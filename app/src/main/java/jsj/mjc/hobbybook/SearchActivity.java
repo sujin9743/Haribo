@@ -34,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     private String requestUrl;
     SearchedBook searchedBook = null;
     String keyword;
+    String title, image, author, description;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,6 +125,10 @@ public class SearchActivity extends AppCompatActivity {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookWriter(parser.getText());
                             }
+                            else if(parser.getName().equals("description")) {
+                                parser.next();
+                                if(searchedBook!=null) searchedBook.setBookDesc(parser.getText());
+                            }
                             break;
                         case XmlPullParser.TEXT:
                             break;
@@ -159,6 +164,17 @@ public class SearchActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(View v, int position) { //책 누르면 도서 표지 저장
                     Intent intent = new Intent(SearchActivity.this, MBookInfoDetail.class);
+
+                    image = bookArrayList.get(position).getBookImageUrl();
+                    title = bookArrayList.get(position).getBookTitle();
+                    author = bookArrayList.get(position).getBookWriter();
+                    description = bookArrayList.get(position).getBookDesc();
+
+                    intent.putExtra("image", image);
+                    intent.putExtra("title", title);
+                    intent.putExtra("author", author);
+                    intent.putExtra("description", description);
+
                     startActivity(intent);
                 }
             });
