@@ -2,13 +2,15 @@ package jsj.mjc.hobbybook;
 
 public class MBookCom {
 
+
     String profileImg, profileText, date, reviewText, delete;
 
-    public MBookCom(String inputtime, String mem_id, String rv_content) {
+    public MBookCom(String mem_id, String date, String rv_content) {
         this.profileText = mem_id;
-        this.date = inputtime;
+        this.date = date;
         this.reviewText = rv_content;
     }
+
 
     public void setProfileImg(String pImg){profileImg = pImg;}
     public String getProfileImg() {

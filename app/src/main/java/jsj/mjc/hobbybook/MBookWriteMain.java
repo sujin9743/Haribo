@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class MBookWriteMain extends AppCompatActivity {
     ImageView backBtn, bookSearchIcon, addImgIcon, hashTagIcon, keyIcon, imgSearchBookCover;//sj
     TextView shareBtn;
@@ -55,7 +56,7 @@ public class MBookWriteMain extends AppCompatActivity {
     String bTitle;
     String loginId;
     int bookLike = 0;
-   @Override
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_report_write_main);
@@ -90,11 +91,8 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //저장 시간 구함
                 long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
-                String formatDate = sdfNow.format(date);
+                Date formatDate = new Date(now);
 
                 saveReport.put("bookisbn",isbn);
                 saveReport.put("br_content",contents.getText().toString());
@@ -151,16 +149,16 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //i변수로 공개윰 판별(1:공개, 0:비공개)
-              if(i==1){
-                  saveReport.put("br_open","true"); //서버 공개 저장
-                  keyIcon.setImageResource(R.drawable.ic_lock_24dp);
-                  i=0;
-              }else if(i==0){
-                  saveReport.put("br_open","false");
-                  keyIcon.setImageResource(R.drawable.ic_lock_open_24dp);
-                  i=1;
+                if(i==1){
+                    saveReport.put("br_open","true"); //서버 공개 저장
+                    keyIcon.setImageResource(R.drawable.ic_lock_24dp);
+                    i=0;
+                }else if(i==0){
+                    saveReport.put("br_open","false");
+                    keyIcon.setImageResource(R.drawable.ic_lock_open_24dp);
+                    i=1;
 
-              }
+                }
             }
         });
 

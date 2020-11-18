@@ -25,10 +25,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 public class MessageViewActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String send,receive;
     TextView mView_sender,mView_receiver,mView_sendDate,mView_text;
+
+    String receiver,sender;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_view);
@@ -47,10 +50,10 @@ public class MessageViewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         send = intent.getStringExtra("send");
-        Log.d(send,"ㅇㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
 
         //db를 시작해볼까나
         db = FirebaseFirestore.getInstance();
+
 
         db.collection("message").whereEqualTo("inputtime",send).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -58,10 +61,15 @@ public class MessageViewActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TAG", document.getId() + " => " + document.getData());
+
                         mView_sender.setText(document.get("send_mem").toString() + " > ");
                         mView_receiver.setText(document.get("receive_mem").toString());
                         mView_sendDate.setText(document.get("inputtime").toString());
                         mView_text.setText(document.get("msg_content").toString());
+
+
+                        receiver = document.get("receive_mem").toString();
+                        sender = document.get("send_mem").toString();
 
                     }
                 } else {
@@ -69,7 +77,6 @@ public class MessageViewActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
     }

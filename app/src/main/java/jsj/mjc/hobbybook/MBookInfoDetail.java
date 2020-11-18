@@ -2,7 +2,6 @@ package jsj.mjc.hobbybook;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,15 +16,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,25 +29,23 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class MBookInfoDetail extends AppCompatActivity {
 
     RecyclerView recyclerView;
     MBookCommentAdapter adapter;
-    ArrayList<MBookCom> list = new ArrayList<>();
-    MBookCom item;
+    ArrayList<MBookCom> list = new ArrayList<MBookCom>();
 
 
+    final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     ImageView backBtn, bookImage;
     LinearLayout letsGoReport;
     TextView reviewBtn, bookName;
@@ -77,50 +71,70 @@ public class MBookInfoDetail extends AppCompatActivity {
     ArrayList rStarsArray = new ArrayList();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_detail_info);
+        setContentView(R.layout.book_info_detail);
+
 
         //댓글 리사이클러뷰
         recyclerView = findViewById(R.id.reviewLayout);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
-
-
         adapter = new MBookCommentAdapter(list);
         recyclerView.setAdapter(adapter);
 
+
+
         db = FirebaseFirestore.getInstance();
+        db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", doc.getId() + " => " + doc.getData());
+
+                        Timestamp ts = (Timestamp) doc.getData().get("inputtime");
+                        String date = dateFormatter.format(ts.toDate());
+
+                        MBookCom data = new MBookCom(doc.get("mem_id").toString()
+                        ,date, doc.get("rv_content").toString());
+                       /*
+                        item.setProfileText(doc.getData().get("mem_id").toString());
+                        item.setDate(date);
+                        item.setReviewText(doc.getData().get("rv_content").toString());
+
+                        */
+                        list.add(data);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                }
+
+            }
+        });
+
+/*
         db.collection("review").whereEqualTo("book_isbn",isbn).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("TAG", document.getId() + " => " + document.getData());
-                                    MBookCom data = new MBookCom(document.get("inputtime").toString(),
-                                            document.get("mem_id").toString(),
-                                            document.get("rv_content").toString());
-
-                                    list.add(data);
-                                    adapter.notifyDataSetChanged();
-/*
-                                    adapter.setOnItemClickListener(new MBookCommentAdapter.OnItemClickListenr() {
-                                        @Override
-                                        public void onItemClick(View v, int position) {
-
-                                        }
-                                    });
-
- */
-
-
-
+                                Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", document.getId() + " => " + document.getData());
+                                item.setProfileText(document.getData().get("mem_id").toString());
+                                item.setDate(document.getData().get("inputtime").toString());
+                                item.setReviewText(document.getData().get("rv_content").toString());
+                                list.add(item);
+                                adapter.notifyDataSetChanged();
                             }
-                        }else {
+                        } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+ */
+
 
         bookImage = findViewById(R.id.bookImage);
         bookName = findViewById(R.id.bookName);
@@ -163,8 +177,8 @@ public class MBookInfoDetail extends AppCompatActivity {
 
         //별 점수 db에서 받아와서 값 넣어주기
         stars_show = findViewById(R.id.star);
-        db = FirebaseFirestore.getInstance();
-        db.collection("review").whereEqualTo("book_isbn","9788954641630").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -216,10 +230,8 @@ public class MBookInfoDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        long now = System.currentTimeMillis();
-                        Date date = new Date(now);
-                        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
-                        String formatDate = sdfNow.format(date);
+                        long now = System.currentTimeMillis();;
+                        Date formatDate = new Date(now);
 
 //todo 투진...isbn...넣어즁나ㅣ우ㅡ미
 

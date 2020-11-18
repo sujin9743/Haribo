@@ -132,8 +132,6 @@ public class MessageFragment extends Fragment {
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
                                         for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", document.getId() + " => " + document.getData());
-
                                                 Message data = new Message(document.get("msg_num").toString()
                                                         , document.get("send_mem").toString()+" > "
                                                         , document.get("receive_mem").toString()
