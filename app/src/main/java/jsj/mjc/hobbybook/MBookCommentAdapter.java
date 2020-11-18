@@ -32,18 +32,7 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     String id;
 
-/*
-    public interface OnItemClickListenr {
-        void onItemClick(View v, int position);
-    }
-
-    private OnItemClickListenr mlistener = null;
-
-    public void setOnItemClickListener(OnItemClickListenr listener){this.mlistener = listener;}
-
-
- */
-    private ArrayList<MBookCom> mlist;
+    private ArrayList<MBookCom> mlist = null;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,16 +54,22 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
 
     MBookCommentAdapter(ArrayList<MBookCom> list){this.mlist = list;}
 
-    public MBookCommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_info_detail,parent,false);
-       ViewHolder viewHolder = new ViewHolder(view);
-       return viewHolder;
+    public MBookCommentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext() ;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
+
+        View view = inflater.inflate(R.layout.m_book_comment_item, parent, false) ;
+        MBookCommentAdapter.ViewHolder vh = new MBookCommentAdapter.ViewHolder(view) ;
+
+        return vh ;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MBookCommentAdapter.ViewHolder holder, int position) {
 
-        id = mlist.get(position).getProfileText();
+        MBookCom item = mlist.get(position);
+
+        id = item.getProfileText();
         db.collection("member").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -99,8 +94,9 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
                 Log.d("e", "프로필 사진 로드 실패 : " + exception);
             }
         });
-        holder.date.setText(mlist.get(position).getDate());
-        holder.reviewText.setText(mlist.get(position).getReviewText());
+
+        holder.date.setText(item.getDate());
+        holder.reviewText.setText(item.getReviewText());
 
 
 

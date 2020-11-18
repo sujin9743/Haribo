@@ -2,7 +2,6 @@ package jsj.mjc.hobbybook;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,15 +16,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,12 +36,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class MBookInfoDetail extends AppCompatActivity {
 
     RecyclerView recyclerView;
     MBookCommentAdapter adapter;
     ArrayList<MBookCom> list = new ArrayList<MBookCom>();
-    MBookCom item;
 
 
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
@@ -57,7 +54,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     String getBookImage, getBookTitle,getBookAuthor, getBookDesc;
     Dialog reviewDialog;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    FirebaseFirestore db;
     private ImageView back;
     TextView upload;
     RatingBar stars,stars_show;
@@ -85,6 +82,38 @@ public class MBookInfoDetail extends AppCompatActivity {
         adapter = new MBookCommentAdapter(list);
         recyclerView.setAdapter(adapter);
 
+
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", doc.getId() + " => " + doc.getData());
+
+                        Timestamp ts = (Timestamp) doc.getData().get("inputtime");
+                        String date = dateFormatter.format(ts.toDate());
+
+                        MBookCom data = new MBookCom(doc.get("mem_id").toString()
+                        ,date, doc.get("rv_content").toString());
+                       /*
+                        item.setProfileText(doc.getData().get("mem_id").toString());
+                        item.setDate(date);
+                        item.setReviewText(doc.getData().get("rv_content").toString());
+
+                        */
+                        list.add(data);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                }
+
+            }
+        });
+
+/*
         db.collection("review").whereEqualTo("book_isbn",isbn).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -92,20 +121,19 @@ public class MBookInfoDetail extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", document.getId() + " => " + document.getData());
-
-                                MBookCom data = new MBookCom(document.get("mem_id").toString()
-                                        , document.get("inputtime").toString()
-                                        , document.get("rv_content").toString());
-                                list.add(data);
+                                item.setProfileText(document.getData().get("mem_id").toString());
+                                item.setDate(document.getData().get("inputtime").toString());
+                                item.setReviewText(document.getData().get("rv_content").toString());
+                                list.add(item);
                                 adapter.notifyDataSetChanged();
-
-
                             }
-                        }else {
+                        } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+ */
 
 
         bookImage = findViewById(R.id.bookImage);
