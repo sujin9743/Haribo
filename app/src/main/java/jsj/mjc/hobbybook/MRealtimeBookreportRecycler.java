@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.LongDef;
@@ -31,6 +33,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +45,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
     MRealtimeBookreportAdapter adapter;
     ArrayList<MRealtime> list = new ArrayList<>();
     MRealtime item;
-
+    FirebaseFirestore rtBook_DB;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +54,18 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.mRecycler);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //recyclerView 구분선 추가
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
+
 
         item = new MRealtime();
         adapter = new MRealtimeBookreportAdapter(list);
         recyclerView.setAdapter(adapter);
 
         //firebase
-        final FirebaseFirestore rtBook_DB = FirebaseFirestore.getInstance();
+        rtBook_DB = FirebaseFirestore.getInstance();
 
         rtBook_DB.collection("bookre").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -70,19 +73,24 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (int i = 0; i < task.getResult().size(); i++) {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(i);
-                        Log.d("TAG", "data: " + doc);
-                        Log.d("TAG", "data: " + doc.getData());
-                        Log.d("TAG", "data2: " + doc.getData().get("br_img").toString());
-                        Log.d("TAG", "data2: " + doc.getData().get("book_title").toString());
-                        Log.d("TAG", "data2: " + doc.getData().get("book_author").toString());
                         item.setProfileText(doc.getData().get("mem_id").toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
+                        item.setBookInfo(doc.getData().get("book_description").toString());
                         list.add(item);
+
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override
                             public void onItemClick(View v, int position) {
+                                String mem_id, br_title, description;
+                                mem_id = list.get(position).getProfileText();
+                                br_title = list.get(position).getBrTitle();
+                                description = list.get(position).getBookInfo();
+
                                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                                i.putExtra("mem_id",mem_id);
+                                i.putExtra("br_title",br_title);
+                                i.putExtra("description", description);
                                 startActivity(i);
                             }
                         });

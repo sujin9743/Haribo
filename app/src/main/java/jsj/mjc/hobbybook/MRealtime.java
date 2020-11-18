@@ -3,23 +3,22 @@ package jsj.mjc.hobbybook;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.net.URI;
 
 import androidx.viewpager.widget.ViewPager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MRealtime {
-    private String profileImg;    //circleimg
-    private String profileText, brTitle, bookName, bookCreator,likeCnt, commentCnt;
+    private String profileText, brTitle, bookName, bookCreator,likeCnt, commentCnt, bookInfo;
     private String bookImgPage;       //viewpager임
     private Drawable heart;             //imageview
 
-    public void setProfileImg(String pImg){
-        profileImg = pImg;
-    }
     public void setProfileText(String pText){
         profileText = pText;
     }
@@ -42,10 +41,8 @@ public class MRealtime {
     public void setHeart(Drawable h){
         heart = h;
     }
+    public void setBookInfo(String bookInfo) {this.bookInfo = bookInfo;}
 
-    public String getProfileImg(){
-        return profileImg;
-    }
     public String getProfileText(){
         return profileText;
     }
@@ -68,14 +65,5 @@ public class MRealtime {
     public Drawable getHeart(){
         return heart;
     }
-
-    /*MRealtime(String profileText, String img, String bookName, String bookCreator, String likeCnt, String commentCnt){
-        this.profileText = profileText;
-        this.bookImgPage = img;
-        this.bookName = bookName;
-        this.bookCreator = bookCreator;
-        this.likeCnt = likeCnt;
-        this.commentCnt = commentCnt;
-    }*/
-
+    public String getBookInfo() {return bookInfo;}
 }

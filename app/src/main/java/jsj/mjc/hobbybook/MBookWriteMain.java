@@ -43,18 +43,24 @@ public class MBookWriteMain extends AppCompatActivity {
     private FirebaseFirestore db;
 
     int i = 1;
+    int count = 0; //firebase 문서명 카운트
 
     int img_request_Code = 1;
     int hash_request_Code = 2;
     final static int CODE=1;    //해시태그 intent 구분
 
-    String bookCoverImg; //sj
+    String bookCoverImg, author;
     String hash1, hash2, hash3, hash4;
-    String isbn;
+    String isbn, description;
+    String bTitle;
+    String loginId;
+    int bookLike = 0;
    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_report_write_main);
+
+        loginId = MainActivity.loginId;
 
         imgSearchBookCover = findViewById(R.id.imgSearchBookCover);
         imgDeleteBtn = findViewById(R.id.imgDeleteBtn);
@@ -62,7 +68,6 @@ public class MBookWriteMain extends AppCompatActivity {
         //파이어베이스
         db = FirebaseFirestore.getInstance();
         final Map<String, Object> saveReport = new HashMap<>();
-
 
 
         bookName = findViewById(R.id.bookName);
@@ -73,14 +78,12 @@ public class MBookWriteMain extends AppCompatActivity {
         hashtag4 = findViewById(R.id.hashTag4);
         contents = findViewById(R.id.contents);
 
-
         backBtn = findViewById(R.id.backBtn);
         bookSearchIcon = findViewById(R.id.bookSearchIcon);
         addImgIcon = findViewById(R.id.addImgIcon);
         hashTagIcon =findViewById(R.id.hashTagIcon);
         keyIcon = findViewById(R.id.keyIcon);
         shareBtn = findViewById(R.id.shareBtn);
-
 
 
         shareBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,17 +101,21 @@ public class MBookWriteMain extends AppCompatActivity {
                 //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
                 saveReport.put("br_img", bookCoverImg);
                 saveReport.put("br_title",reportName.getText().toString());
+                saveReport.put("book_title", bTitle);
+                saveReport.put("book_author", author);
                 saveReport.put("has1", hash1);
                 saveReport.put("has2", hash2);
                 saveReport.put("has3", hash3);
                 saveReport.put("has4", hash4);
                 saveReport.put("date", formatDate);
-
-
+                saveReport.put("mem_id", loginId);
+                saveReport.put("open", true);
+                saveReport.put("book_description", description);
+                saveReport.put("book_like", bookLike);
 
 
                 //입력한 모든 데이터 서버에 저장
-                db.collection("bookre").document("test").set(saveReport).addOnFailureListener(new OnFailureListener() {
+                db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
@@ -140,10 +147,6 @@ public class MBookWriteMain extends AppCompatActivity {
             }
         });
 
-
-
-
-
         keyIcon.setOnClickListener(new View.OnClickListener() { //독후감 게시물 공개유무
             @Override
             public void onClick(View view) {
@@ -161,15 +164,12 @@ public class MBookWriteMain extends AppCompatActivity {
             }
         });
 
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
-
 
         hashTagIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +179,7 @@ public class MBookWriteMain extends AppCompatActivity {
             }
         });
 
-        //sj
+        //책표지 이미지 삭제 버튼(이미지, 도서명 삭제)
         imgDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,10 +198,12 @@ public class MBookWriteMain extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK) {
             bookCoverImg = data.getStringExtra("image");
             isbn = data.getStringExtra("isbn");
+            author = data.getStringExtra("author");
+            description = data.getStringExtra("description");
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
             //cho 도서명
-            String bTitle = data.getStringExtra("title");
+            bTitle = data.getStringExtra("title");
             bookName.setText(bTitle);
         }
 

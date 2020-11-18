@@ -153,6 +153,7 @@ public class MyFeedFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SelectGenreActivity.class);
                 intent.putExtra("changeGen", 1);    //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지 구분하려고
+                intent.putExtra("id_Edt", loginId);
                 startActivity(intent);
 
             }
@@ -246,7 +247,7 @@ public class MyFeedFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
+                        FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString("br_img"));
                         mF_readBookList.add(data);
                         read++;
                     }

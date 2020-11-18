@@ -1,18 +1,12 @@
 package jsj.mjc.hobbybook;
 
+import android.util.Log;
+
 public class RecommendBookItem {
 
     private String bookImgUrl;
-    private String bookTitle, bookWriter, bookPublisher, bookRateTxt, bookIsbn;
+    private String bookTitle, bookWriter, bookPublisher, bookRateTxt, bookIsbn, bookDesc;
     float bookRate;
-
-    /*public RecommendBookItem(String bookTitle, String bookWriter, String bookPublisher, float bookRate, String bookRateTxt) {
-        this.bookTitle = bookTitle;
-        this.bookWriter = bookWriter;
-        this.bookPublisher = bookPublisher;
-        this.bookRate = bookRate;
-        this.bookRateTxt = bookRateTxt;
-    }*/
 
     public void setBookImgUrl(String bookImgUrl) {
         this.bookImgUrl = bookImgUrl;
@@ -60,11 +54,13 @@ public class RecommendBookItem {
         this.bookRateTxt = bookRateTxt;
     }
 
-    public String getBookRateTxt() {
-        return bookRateTxt;
-    }
+    public String getBookRateTxt() { return bookRateTxt; }
 
     public String getBookIsbn() {
         return bookIsbn;
     }
+
+    public String getBookDesc() { return bookDesc; }
+
+    public void setBookDesc(String bookDesc) { this.bookDesc = bookDesc; }
 }

@@ -236,7 +236,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         if (doc.getBoolean("open")) {
-                            FeedReadBookItem data = new FeedReadBookItem(doc.getLong("br_num").intValue(), doc.getString("br_img"));
+                            FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString("br_img"));
                             uF_readBookList.add(data);
                             //RecyclerView 항목 클릭 구현
                             uF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {

@@ -4,6 +4,8 @@ public class SearchedBook {
     private String bookImageUrl;
     private String bookTitle;
     private String bookWriter;
+    private String bookDesc;
+    private String bookIsbn;
 
     public String getBookImageUrl() {
         return bookImageUrl;
@@ -25,13 +27,17 @@ public class SearchedBook {
         return bookWriter;
     }
 
-    public void setBookWriter(String bookWriter) {
-        this.bookWriter = bookWriter;
+    public void setBookWriter(String bookWriter) { this.bookWriter = bookWriter; }
+
+    public String getBookDesc() {
+        return bookDesc;
     }
 
-    public SearchedBook(String bookImageUrl, String bookTitle, String bookWriter) {
-        this.bookImageUrl = bookImageUrl;
-        this.bookTitle = bookTitle;
-        this.bookWriter = bookWriter;
+    public void setBookDesc(String bookDesc) { this.bookDesc = bookDesc; }
+
+    public String getBookIsbn() {
+        return bookIsbn;
     }
+
+    public void setBookIsbn(String bookIsbn) { this.bookIsbn = bookIsbn; }
 }

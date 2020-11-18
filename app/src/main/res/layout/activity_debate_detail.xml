@@ -30,13 +30,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/dDetail_writerIv"
                     android:layout_width="40sp"
                     android:layout_height="40sp"
                     android:layout_margin="10sp"
                     android:src="@drawable/ic_outline_person_outline_24"
-                    android:tint="#8E8E8E" />
+                    android:tint="#8E8E8E"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/black"/>
 
                 <TextView
                     android:id="@+id/dDetail_writerTv"
@@ -44,26 +46,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10sp"
-                    android:text="하리보"
                     android:textColor="#000000"
                     android:textSize="15sp" />
             </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/dDetail_iv"
-                android:layout_width="match_parent"
-                android:layout_height="250sp"
-                android:layout_margin="10sp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/testimg" />
 
             <TextView
                 android:id="@+id/dDetail_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
-                android:text="토론글제목제목"
                 android:textColor="#000000"
                 android:textSize="23sp" />
 
@@ -71,8 +62,8 @@
                 android:id="@+id/dDetail_text_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:text="형 나 경찰이야 지금 내가 미친 짓 하고 있는 거 알아요 형이 나 지금 죽일 수도 있는 거 알아요 근데 나 형 더 이상 속이면 안 될 거 같아요 진짜 미안해요 형 확인 절차? 환인 절차!!!! 멀쩡한 사람을 빵에 가둔 것도 모자라서 이제는 사람을 불에 태워 죽이겠다는 거구나. 아우 예 알겠습니다 내가 앞으로는 절대 나 믿으라고 강요 안 할게요, 아유, 진짜, 아유 근데 나는 형 믿어요 아유 여기 참 후지다 야 형 출세 많이 했다"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
@@ -86,7 +77,6 @@
                     android:id="@+id/dDetail_date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2020.06.10. 12:16"
                     android:textColor="#275925" />
 
                 <View
@@ -102,7 +92,6 @@
                     android:drawableStart="@drawable/ic_outline_chat_bubble_outline_24"
                     android:drawableTint="#275925"
                     android:padding="5sp"
-                    android:text="12"
                     android:textColor="#275925" />
             </LinearLayout>
 
@@ -128,13 +117,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/dDetail_myIv"
             android:layout_width="40sp"
             android:layout_height="40sp"
             android:layout_margin="10sp"
             android:src="@drawable/ic_outline_person_outline_24"
-            android:tint="#8E8E8E" />
+            android:tint="#8E8E8E"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/black"/>
 
         <EditText
             android:layout_width="300sp"

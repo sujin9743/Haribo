@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,6 +114,14 @@ public class RankingFragment extends Fragment {
                                 parser.next();
                                 if(item!=null) item.setRankingImageUrl(parser.getText());
                             }
+                            else if(parser.getName().equals("description")) {
+                                parser.next();
+                                if(item!=null) item.setBookDesc(parser.getText());
+                            }
+                            else if(parser.getName().equals("isbn")) {
+                                parser.next();
+                                if(item!=null) item.setBookIsbn(parser.getText());
+                            }
                             break;
                         case XmlPullParser.TEXT:
                             break;
@@ -140,7 +149,7 @@ public class RankingFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            RankingAdapter rankingAdapter = new RankingAdapter(mContext, rankingArrayList);
+            final RankingAdapter rankingAdapter = new RankingAdapter(mContext, rankingArrayList);
             if(rankingArrayList.size() > 20) {
                 rankingAdapter.removeRFItem(0);
             }
@@ -149,13 +158,19 @@ public class RankingFragment extends Fragment {
             rankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
                 @Override
                 public void onItemClick(View v, int position) { //책 누르면 도서 상세정보 페이지로 이동
-                    String title, image;
+                    String title, image, description, author, isbn;
                     title = rankingArrayList.get(position).getRankingTitle();
                     image = rankingArrayList.get(position).getRankingImageUrl();
+                    author = rankingArrayList.get(position).getRankingWriter();
+                    description = rankingArrayList.get(position).getBookDesc();
+                    isbn = rankingArrayList.get(position).getBookIsbn();
 
                     Intent intent = new Intent(mContext, MBookInfoDetail.class);
                     intent.putExtra("title", title);
                     intent.putExtra("image", image);
+                    intent.putExtra("author", author);
+                    intent.putExtra("description", description);
+                    intent.putExtra("isbn", isbn);
                     startActivity(intent);
                 }
             });

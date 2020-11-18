@@ -31,6 +31,15 @@
     <string-array name="question">
         <item>기억에 남는 추억의 장소는?</item>
         <item>가장 친한 친구 이름은?</item>
+        <item>자신의 인생 좌우명은?</item>
+        <item>자신의 보물 제1호는?</item>
+        <item>추억하고 싶은 날짜가 있다면?</item>
+        <item>가장 기억에 남는 선생님 성함은?</item>
+        <item>인상 깊게 읽은 책 이름은?</item>
+        <item>다시 태어나면 되고 싶은 것은?</item>
+        <item>어릴적 별명은?</item>
+        <item>내가 좋아하는 캐릭터는?</item>
+        <item>타인이 모르는 자신만의 신체비밀이 있다면?</item>
     </string-array>
 
     <string-array name="email">

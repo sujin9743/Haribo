@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.internal.Version;
 
@@ -40,13 +41,13 @@ public class MBookSearch extends AppCompatActivity {
 
     Button btnBookSearch;
     EditText edtBookSearch;
-    String bookTitle;
+    String keyword;
 
     float bookRating;
     public String dataKey = "ttbw_wowoo1406002";
     private String requestUrl;
     RecommendBookItem bookItem = null;
-    String isbn, title, author;
+    String isbn, title, author, description;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,9 +79,15 @@ public class MBookSearch extends AppCompatActivity {
         btnBookSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookTitle = edtBookSearch.getText().toString();
-                BookSearchAsyncTask bookSearchAsyncTask = new BookSearchAsyncTask();
-                bookSearchAsyncTask.execute();
+                keyword = edtBookSearch.getText().toString();
+                if (keyword.getBytes().length <= 0) {
+                    Toast.makeText(MBookSearch.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    booklist.clear();
+                    BookSearchAsyncTask bookSearchAsyncTask = new BookSearchAsyncTask();
+                    bookSearchAsyncTask.execute();
+                }
             }
         });
     }
@@ -91,7 +98,7 @@ public class MBookSearch extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=" +dataKey+
-                    "&Query=" + bookTitle + "&QueryType=Title&start=1&SearchTarget=Book&output=xml&Version=20131101";
+                    "&Query=" + keyword + "&Cover=Big&start=1&SearchTarget=Book&output=xml&Version=20131101";
 
             try {
                 URL url = new URL(requestUrl);
@@ -137,6 +144,10 @@ public class MBookSearch extends AppCompatActivity {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookIsbn(parser.getText());
                             }
+                            else if(parser.getName().equals("description")) {
+                                parser.next();
+                                if(bookItem!=null) bookItem.setBookDesc(parser.getText());
+                            }
                             break;
                         case XmlPullParser.TEXT:
                             break;
@@ -176,12 +187,14 @@ public class MBookSearch extends AppCompatActivity {
                     title = booklist.get(position).getBookTitle();
                     author = booklist.get(position).getBookWriter();
                     isbn = booklist.get(position).getBookIsbn();
+                    description = booklist.get(position).getBookDesc();
 
                     Intent intentB = new Intent();
                     intentB.putExtra("image", image);
                     intentB.putExtra("isbn", isbn);
                     intentB.putExtra("title", title);
                     intentB.putExtra("author", author);
+                    intentB.putExtra("description", description);
                     setResult(RESULT_OK, intentB);
                     finish();
                 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,7 +36,7 @@ public class DebateListActivity extends AppCompatActivity {
     private DebateAdapter debateAdapter;
     String loginId;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
+    final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +63,26 @@ public class DebateListActivity extends AppCompatActivity {
                 intent.putExtra("loginId", loginId);
                 intent.putExtra("docId", debateArrayList.get(position).getDebateDocId());
                 intent.putExtra("debateNum", debateArrayList.get(position).getDebateNum());
+                intent.putExtra("debateWriter", debateArrayList.get(position).getDebateWriter());
                 startActivity(intent);
+            }
+        });
+
+        db.collection("debate").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                        String dateStr = dateFormatter.format(timestamp.toDate());
+                        Debate data = new Debate(doc.getId(), doc.getLong("d_num").intValue(), doc.getString("d_title"), doc.getString("d_content"),
+                                dateStr, doc.getString("mem_id"));
+                        debateArrayList.add(data);
+                    }
+                } else {
+                    Log.d("lll", "토론글 로드 오류 : ", task.getException());
+                }
+                debateAdapter.notifyDataSetChanged();
             }
         });
 
@@ -91,24 +111,6 @@ public class DebateListActivity extends AppCompatActivity {
                 Intent intent = new Intent(DebateListActivity.this, DebateAddActivity.class);
                 intent.putExtra("loginId", loginId);
                 startActivity(intent);
-            }
-        });
-
-        db.collection("debate").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                         String date = dateFormatter.format(doc.getDate("inputtime"));
-                         Debate data = new Debate(doc.getId(), doc.getLong("d_num").intValue(), doc.getString("d_title"), doc.getString("d_content"),
-                                 date, doc.getString("mem_id"));
-                         Log.d("lll", doc.getId());
-                        debateArrayList.add(data);
-                        debateAdapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Log.d("lll", "독후감 오류 : ", task.getException());
-                }
             }
         });
     }

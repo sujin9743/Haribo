@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:id="@+id/allLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/toolLayout"
             android:layout_width="match_parent"
@@ -30,7 +27,7 @@
             app:layout_constraintRight_toRightOf="parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
                 android:orientation="vertical">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -42,7 +39,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/bookImage"
@@ -52,6 +50,7 @@
                     android:id="@+id/bookName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
@@ -59,7 +58,7 @@
                     android:textStyle="bold"
                     android:text=""
                     android:hint="임시 도서명"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
                     android:textColor="@color/darkGreen" />
 
             </LinearLayout>
@@ -72,8 +71,7 @@
                         android:layout_marginLeft="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/justLayout"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toBottomOf="@id/justLayout" />
 
                     <TextView
                             android:id="@+id/reviewBtn"
@@ -90,23 +88,20 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@color/beige">
-                   <LinearLayout
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginLeft="10dp"
-                       android:layout_marginRight="10dp"
-                       android:orientation="vertical">
+                   android:background="@color/beige"
+                   android:layout_marginTop="10dp"
+                   android:orientation="vertical">
                        <TextView
                            android:id="@+id/editor"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:textSize="12dp"
-                           android:layout_marginTop="5dp"
-                           android:textColor="@color/darkGray"/>
+                           android:textSize="15sp"
+                           android:textColor="@color/darkGray"
+                           android:layout_margin="5dp"/>
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
                            android:text="책소개"
                            android:textColor="@color/black"
                            android:textSize="18dp"/>
@@ -114,15 +109,16 @@
                            android:id="@+id/bookInfo"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:textColor="@color/darkGray"
                            android:textSize="15dp"/>
 
-                   </LinearLayout>
                </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reviewLayout"
                     android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="300dp"
                     android:background="@color/beige">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -154,7 +150,6 @@
                 android:layout_marginLeft="270dp"/>
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/userRc_bnv"
         style="@style/Bnv_Style"
