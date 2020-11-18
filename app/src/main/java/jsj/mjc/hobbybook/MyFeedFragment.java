@@ -153,6 +153,7 @@ public class MyFeedFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SelectGenreActivity.class);
                 intent.putExtra("changeGen", 1);    //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지 구분하려고
+                intent.putExtra("id_Edt", loginId);
                 startActivity(intent);
 
             }

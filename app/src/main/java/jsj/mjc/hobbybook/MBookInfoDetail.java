@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,6 +29,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +46,12 @@ import java.util.Map;
 
 public class MBookInfoDetail extends AppCompatActivity {
 
+    RecyclerView recyclerView;
+    MBookCommentAdapter adapter;
+    ArrayList<MBookCom> list = new ArrayList<>();
+    MBookCom item;
+
+
     ImageView backBtn, bookImage;
     LinearLayout letsGoReport;
     TextView reviewBtn, bookName;
@@ -55,19 +65,62 @@ public class MBookInfoDetail extends AppCompatActivity {
     TextView upload;
     RatingBar stars,stars_show;
     EditText edt;
-    String isbn ="9788954641630";
+    String isbn;
     Boolean deleted = true; //todo deleted, rv_num 수정 필요
     int rv_num = 0;
     int starsSum=0;
     int saveDStars;
 
-    Float starsAvg;
+    int starsAvg;
     int docSize;
     ArrayList starArray = new ArrayList();
     ArrayList rStarsArray = new ArrayList();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_detail_info);
+
+        //댓글 리사이클러뷰
+        recyclerView = findViewById(R.id.reviewLayout);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
+
+
+        adapter = new MBookCommentAdapter(list);
+        recyclerView.setAdapter(adapter);
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("review").whereEqualTo("book_isbn",isbn).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("TAG", document.getId() + " => " + document.getData());
+                                    MBookCom data = new MBookCom(document.get("inputtime").toString(),
+                                            document.get("mem_id").toString(),
+                                            document.get("rv_content").toString());
+
+                                    list.add(data);
+                                    adapter.notifyDataSetChanged();
+/*
+                                    adapter.setOnItemClickListener(new MBookCommentAdapter.OnItemClickListenr() {
+                                        @Override
+                                        public void onItemClick(View v, int position) {
+
+                                        }
+                                    });
+
+ */
+
+
+
+                            }
+                        }else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
         bookImage = findViewById(R.id.bookImage);
         bookName = findViewById(R.id.bookName);
@@ -116,17 +169,11 @@ public class MBookInfoDetail extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
+
+
                         docSize = task.getResult().size();
                         starArray.add(document.getData().get("stars").toString());
-                        //for(int i = 0; i < task.getResult().size(); i++){ //쿼리실행으로 가져온 문서수만큼만 돌아라
 
-                            //Log.d(task.getResult().size()+"","그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래");
-                            //String []rStars_txt = new String[task.getResult().size()];
-                            //rStars_txt[i] = document.get("stars").toString();
-                            //rStars[i] = Integer.parseInt(rStars_txt[i]);
-
-                            //docSize =task.getResult().size();
-                        //}
                     }
                     //평점 출력
                     for(int i=0; i<starArray.size(); i++) {
@@ -134,7 +181,7 @@ public class MBookInfoDetail extends AppCompatActivity {
                     }
                     for(int i=0; i<starArray.size(); i++) {
                         starsSum += Integer.parseInt((String) rStarsArray.get(i));
-                        starsAvg = (float)starsSum/docSize;
+                        starsAvg = Math.round(starsSum/docSize);
                     }
                     stars_show.setRating(starsAvg);
                 } else {
@@ -204,12 +251,6 @@ public class MBookInfoDetail extends AppCompatActivity {
                 stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                      /*
-                        //별개수에 따른 별 한칸당 평균
-                        float st = 10.0f/ratingBar.getNumStars();
-                        //String 객체를 이용해서 구한 평균값을 소수점 한자리로 표현..
-                        str = String.format("%.1f",(st * rating) );
-                       */
                       saveDStars = Math.round(rating);
                     }
                 });

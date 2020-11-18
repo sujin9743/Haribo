@@ -58,7 +58,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //recyclerView 구분선 추가
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
+
 
         item = new MRealtime();
         adapter = new MRealtimeBookreportAdapter(list);
@@ -79,7 +79,6 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setBookInfo(doc.getData().get("book_description").toString());
                         list.add(item);
 
-                        //cho MBookReportDetail 로 아이디 넘겨주기
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override
                             public void onItemClick(View v, int position) {
