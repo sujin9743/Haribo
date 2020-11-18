@@ -80,6 +80,7 @@ public class MBookReportDetail extends AppCompatActivity {
         Intent intent = getIntent();
         mem_id = intent.getStringExtra("mem_id");
         br_title = intent.getStringExtra("br_title");
+        bookInfo = intent.getStringExtra("description");
         Log.d(br_title, "onCreate:ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ ");
 
 
@@ -109,7 +110,6 @@ public class MBookReportDetail extends AppCompatActivity {
                         content = document.getString("br_content");
                         bMaker = document.getString("book_author");
                         bName = document.getString("book_title");
-                        bookInfo = document.getString("book_description");
                         report_content.setText(content);
                         report_bookMaker.setText(bMaker);
                         report_bookName.setText(bName);
@@ -221,6 +221,7 @@ public class MBookReportDetail extends AppCompatActivity {
                 save.put("has4",h4);
                 save.put("mem_id",profileText.getText().toString());
                 save.put("open",open);
+                save.put("book_description", bookInfo);
 
                 db.collection("bookre").document(doc).set(save).addOnFailureListener(new OnFailureListener() {
                     @Override

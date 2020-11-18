@@ -29,12 +29,7 @@
             android:layout_marginTop="5dp"
             android:text="Dorothy"
             android:textSize="20sp" />
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_baseline_more_vert_gray"
-            android:layout_marginLeft="220dp"
-            android:layout_marginTop="7dp"/>
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/dateLayout"
@@ -45,17 +40,14 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="15dp">
         <TextView
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2020.05.05"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14:03"
-            android:layout_marginLeft="5dp"/>
+
     </LinearLayout>
     <TextView
-        android:id="@+id/reviewTxt"
+        android:id="@+id/reviewText"
         android:layout_width="380dp"
         android:layout_height="100dp"
         android:textSize="15dp"
@@ -71,12 +63,13 @@ Cause I know you I know you 내 눈을 자꾸 피해봐 네 맘을 자꾸 숨겨
         app:layout_constraintRight_toRightOf="parent"
         />
     <TextView
+        android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="삭제"
         android:textSize="15dp"
         android:textColor="#ff0000"
-        app:layout_constraintTop_toBottomOf="@id/reviewTxt"
+        app:layout_constraintTop_toBottomOf="@id/reviewText"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="20dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
