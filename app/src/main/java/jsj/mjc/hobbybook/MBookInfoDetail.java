@@ -235,10 +235,8 @@ public class MBookInfoDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        long now = System.currentTimeMillis();
-                        Date date = new Date(now);
-                        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
-                        String formatDate = sdfNow.format(date);
+                        long now = System.currentTimeMillis();;
+                        Date formatDate = new Date(now);
 
 //todo 투진...isbn...넣어즁나ㅣ우ㅡ미
 

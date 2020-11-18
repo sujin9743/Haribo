@@ -90,11 +90,8 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //저장 시간 구함
                 long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
-                String formatDate = sdfNow.format(date);
+                Date formatDate = new Date(now);
 
                 saveReport.put("bookisbn",isbn);
                 saveReport.put("br_content",contents.getText().toString());
