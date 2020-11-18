@@ -42,14 +42,16 @@ import com.google.firestore.v1.StructuredQuery;
 public class RecommendUserActivity extends AppCompatActivity {
     ArrayList<User> userlist;
     UserListAdapter userListAdapter;
-    UserlistItem[] data;
     String loginId;
     ArrayList<Integer> loginGen;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    RecyclerView userRc_recycler;
+    /*UserlistItem[] data;
     String[] list,arrlist,mam;
     ArrayList<String> newData;
     ArrayList<String> noRearrayList;
     ArrayList<String> arrayList;
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    RecyclerView userRc_recycler;*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,12 +73,9 @@ public class RecommendUserActivity extends AppCompatActivity {
         userlist = new ArrayList<>();
         userListAdapter = new UserListAdapter(userlist);
 
-        final RecyclerView userRc_recycler = findViewById(R.id.userRc_recycler);
+        userRc_recycler = findViewById(R.id.userRc_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         userRc_recycler.setLayoutManager(linearLayoutManager);
-
-        //recyclerView 구분선 추가
-        userRc_recycler.addItemDecoration(new DividerItemDecoration(userRc_recycler.getContext(), 1));
 
         //RecyclerView 항목 클릭 구현
         userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
@@ -89,17 +88,73 @@ public class RecommendUserActivity extends AppCompatActivity {
             }
         });
 
+        //recyclerView 구분선 추가
+        userRc_recycler.addItemDecoration(new DividerItemDecoration(userRc_recycler.getContext(), 1));
+        userRc_recycler.setAdapter(userListAdapter);
+
         loginGen = new ArrayList<>();
 
         db.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                QueryDocumentSnapshot doc = (QueryDocumentSnapshot) task.getResult();
-                for (int i = 1; i <= 24; i++) {
-                    if (doc.getBoolean(String.valueOf(i)))
-                        loginGen.add(i);
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    for (int i = 1; i <= 24; i++) {
+                        if (doc.getBoolean(String.valueOf(i)))
+                            loginGen.add(i);
+                    }
+                    if (loginGen.size() == 0) {
+                        db.collection("member").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    int cnt = 0;
+                                    for (DocumentSnapshot doc : task.getResult()) {
+                                        if (!loginId.equals(doc.getId())) {
+                                            User data = new User(doc.getString("id"));
+                                            userlist.add(data);
+                                        }
+                                        if (cnt >= 20)
+                                            break;
+                                    }
+                                }else {
+                                    Log.d("lll", "회원 정보 로드 오류 : ", task.getException());
+                                }
+                                userListAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    } else {
+                        db.collection("category").whereEqualTo(String.valueOf(loginGen.get(0)), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    int cnt = 0;
+                                    for (DocumentSnapshot doc : task.getResult()) {
+                                        if (!loginId.equals(doc.getId())) {
+                                            Boolean sameLike = true;
+                                            for (int i : loginGen) {
+                                                if (!doc.getBoolean(String.valueOf(i)))
+                                                    sameLike = false;
+                                            }
+                                            if (sameLike) {
+                                                User data = new User(doc.getString("mem_id"));
+                                                userlist.add(data);
+                                                cnt++;
+                                            }
+                                        }
+                                        if (cnt >= 20)
+                                            break;
+                                    }
+                                }else {
+                                    Log.d("lll", "회원 정보 로드 오류 : ", task.getException());
+                                }
+                                userListAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                } else {
+                    Log.d("lll", "회원 정보 로드 오류 : ", task.getException());
                 }
-                //db.collection("category").whereEqualTo(String.valueOf(loginGen.get(0)), true).get()
             }
         });
 
