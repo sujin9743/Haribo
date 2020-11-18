@@ -7,6 +7,7 @@ public class Ranking {
     private String rankingWriter;
     private String rankingAuthor;
     private String bookDesc;
+    private String bookIsbn;
 
     public String getRankingNum() {
         return rankingNum;
@@ -43,4 +44,8 @@ public class Ranking {
     public void setBookDesc (String bookDesc) { this.bookDesc = bookDesc; }
 
     public String getBookDesc() { return bookDesc; }
+
+    public void setBookIsbn(String bookIsbn) { this.bookIsbn = bookIsbn; }
+
+    public String getBookIsbn() { return bookIsbn; }
 }

@@ -5,6 +5,7 @@ public class SearchedBook {
     private String bookTitle;
     private String bookWriter;
     private String bookDesc;
+    private String bookIsbn;
 
     public String getBookImageUrl() {
         return bookImageUrl;
@@ -34,4 +35,9 @@ public class SearchedBook {
 
     public void setBookDesc(String bookDesc) { this.bookDesc = bookDesc; }
 
+    public String getBookIsbn() {
+        return bookIsbn;
+    }
+
+    public void setBookIsbn(String bookIsbn) { this.bookIsbn = bookIsbn; }
 }
