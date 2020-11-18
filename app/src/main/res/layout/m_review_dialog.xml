@@ -55,6 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
+            android:isIndicator = "false"
+            android:stepSize="1"
             style="?android:attr/ratingBarStyleIndicator"
             />
     </LinearLayout>

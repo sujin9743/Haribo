@@ -52,12 +52,17 @@ public class MBookInfoDetail extends AppCompatActivity {
     FirebaseFirestore db;
     private ImageView back;
     TextView upload;
-    RatingBar stars;
+    RatingBar stars,stars_show;
     EditText edt;
-    String str, isbn;
-    Boolean deleted;
-    int rv_num;
+    String isbn ="9788954641630";
+    Boolean deleted = true; //todo deleted, rv_num 수정 필요
+    int rv_num = 0;
 
+    int saveDStars;
+
+    int starsAvg;
+    int docSize;
+    int []rStars = new int[docSize];
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
@@ -99,6 +104,39 @@ public class MBookInfoDetail extends AppCompatActivity {
         });
 
 
+        //별 점수 db에서 받아와서 값 넣어주기
+        stars_show = findViewById(R.id.star);
+        db = FirebaseFirestore.getInstance();
+        db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("TAG", document.getId() + " => " + document.getData());
+                        for(int i = 0; i < task.getResult().size(); i++){ //쿼리실행으로 가져온 문서수만큼만 돌아라
+
+                            Log.d(docSize+"","그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래그래");
+                            String []rStars_txt = new String[task.getResult().size()];
+                            rStars_txt[i] = document.get("stars").toString();
+                            rStars[i] = Integer.parseInt(rStars_txt[i]);
+
+                            docSize =task.getResult().size();
+                        }
+
+                    }
+                } else {
+                    Log.d("TAG", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+        for(int i = 0; i<docSize;i++){
+            int starsSum=0;
+            starsSum += rStars[i];
+            starsAvg = Math.round(starsSum/docSize);
+
+        }
+
         reviewBtn = findViewById(R.id.reviewBtn);
         reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,19 +163,18 @@ public class MBookInfoDetail extends AppCompatActivity {
 
 //todo 투진...isbn...넣어즁나ㅣ우ㅡ미
 
-                        saveReview.put("book_isbn","2391203");
+                        saveReview.put("book_isbn",isbn);
                         saveReview.put("deleted",deleted);
                         saveReview.put("inputtime",formatDate);
                         saveReview.put("mem_id","test");
                         saveReview.put("rv_content",edt.getText().toString());
                         saveReview.put("rv_num",rv_num);
-                        saveReview.put("stars",str);
+                        saveReview.put("stars",saveDStars);
 
                         //입력한 모든 데이터 서버에 저장
                         db.collection("review").document().set(saveReview).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-
                             }
                         });
                         reviewDialog.dismiss();
@@ -154,11 +191,13 @@ public class MBookInfoDetail extends AppCompatActivity {
                 stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                      /*
                         //별개수에 따른 별 한칸당 평균
                         float st = 10.0f/ratingBar.getNumStars();
-
                         //String 객체를 이용해서 구한 평균값을 소수점 한자리로 표현..
                         str = String.format("%.1f",(st * rating) );
+                       */
+                      saveDStars = Math.round(rating);
                     }
                 });
 
