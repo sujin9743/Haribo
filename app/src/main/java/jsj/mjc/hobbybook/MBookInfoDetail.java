@@ -48,8 +48,8 @@ public class MBookInfoDetail extends AppCompatActivity {
 
     RecyclerView recyclerView;
     MBookCommentAdapter adapter;
-    ArrayList<MBookCom> list = new ArrayList<>();
-    MBookCom item;
+    ArrayList<MBookCom> list = new ArrayList<MBookCom>();
+
 
 
     ImageView backBtn, bookImage;
@@ -60,7 +60,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     String getBookImage, getBookTitle,getBookAuthor, getBookDesc;
     Dialog reviewDialog;
 
-    FirebaseFirestore db;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();;
     private ImageView back;
     TextView upload;
     RatingBar stars,stars_show;
@@ -79,48 +79,37 @@ public class MBookInfoDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_info_detail);
 
+
         //댓글 리사이클러뷰
         recyclerView = findViewById(R.id.reviewLayout);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
-
-
         adapter = new MBookCommentAdapter(list);
         recyclerView.setAdapter(adapter);
 
-        db = FirebaseFirestore.getInstance();
         db.collection("review").whereEqualTo("book_isbn",isbn).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("TAG", document.getId() + " => " + document.getData());
-                                    MBookCom data = new MBookCom(document.get("inputtime").toString(),
-                                            document.get("mem_id").toString(),
-                                            document.get("rv_content").toString());
+                                Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", document.getId() + " => " + document.getData());
 
-                                    list.add(data);
-                                    adapter.notifyDataSetChanged();
-/*
-                                    adapter.setOnItemClickListener(new MBookCommentAdapter.OnItemClickListenr() {
-                                        @Override
-                                        public void onItemClick(View v, int position) {
-
-                                        }
-                                    });
-
- */
-
+                                MBookCom data = new MBookCom(document.get("mem_id").toString()
+                                        , document.get("inputtime").toString()
+                                        , document.get("rv_content").toString());
+                                list.add(data);
+                                adapter.notifyDataSetChanged();
 
 
                             }
-                        }else {
+                        } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
 
         bookImage = findViewById(R.id.bookImage);
         bookName = findViewById(R.id.bookName);
@@ -163,7 +152,7 @@ public class MBookInfoDetail extends AppCompatActivity {
 
         //별 점수 db에서 받아와서 값 넣어주기
         stars_show = findViewById(R.id.star);
-        db = FirebaseFirestore.getInstance();
+
         db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

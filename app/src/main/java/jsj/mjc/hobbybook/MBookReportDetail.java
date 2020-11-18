@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,7 +40,7 @@ public class MBookReportDetail extends AppCompatActivity {
     ImageView bookImgPage;
     LinearLayout forBookInfo,forReview,porfileLayout;
     CircleImageView profileImg;
-    FirebaseFirestore db;
+    FirebaseFirestore db= FirebaseFirestore.getInstance();;
     StorageReference storageRef;
 
     String doc;
@@ -50,6 +51,7 @@ public class MBookReportDetail extends AppCompatActivity {
     String br_num, bookInfo;
     Boolean open;
 
+    int imSort;
     int i =0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,67 +78,121 @@ public class MBookReportDetail extends AppCompatActivity {
 
         report_content = findViewById(R.id.content);
 
-        final String mem_id, br_title;
+        final String bookre_num, br_title;
+        String imSortText;
+
         Intent intent = getIntent();
-        mem_id = intent.getStringExtra("mem_id");
+        imSortText = intent.getStringExtra("imMyFeed");
+
+        imSort = Integer.parseInt(imSortText);
+        bookre_num = intent.getStringExtra("bookre_num");
         br_title = intent.getStringExtra("br_title");
-        Log.d(br_title, "onCreate:ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ ");
 
 
-        // TODO: 2020-11-17 whereEqualTo 2번째 인자 동적으로 바꿔야됨. 지금은 고정값임
-        db = FirebaseFirestore.getInstance();
-        db.collection("bookre").whereEqualTo("br_title",br_title)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+        if(imSort == 1){
+            //마이피드나 유저피드에서 넘어왔을 때
+            db.collection("bookre").document(bookre_num).get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
 
-                        doc = document.getId();
-                        profileText.setText(document.get("mem_id").toString());
-
-
-                        h1 = document.getString("has1");
-                        h2 = document.getString("has2");
-                        h3 = document.getString("has3");
-                        h4 = document.getString("has4");
-                        hashTag1.setText(h1);
-                        hashTag2.setText(h2);
-                        hashTag3.setText(h3);
-                        hashTag4.setText(h4);
+                    doc = document.getId();
+                    profileText.setText(document.get("mem_id").toString());
 
 
-                        content = document.getString("br_content");
-                        bMaker = document.getString("book_author");
-                        bName = document.getString("book_title");
-                        bookInfo = document.getString("book_description");
-                        report_content.setText(content);
-                        report_bookMaker.setText(bMaker);
-                        report_bookName.setText(bName);
-                        reportTitle.setText(document.get("br_title").toString());
+                    h1 = document.getString("has1");
+                    h2 = document.getString("has2");
+                    h3 = document.getString("has3");
+                    h4 = document.getString("has4");
+                    hashTag1.setText(h1);
+                    hashTag2.setText(h2);
+                    hashTag3.setText(h3);
+                    hashTag4.setText(h4);
 
 
-                        bookImg = document.get("br_img").toString();
-                        Glide.with(getApplicationContext()).load(bookImg).into(bookImgPage);
+                    content = document.getString("br_content");
+                    bMaker = document.getString("book_author");
+                    bName = document.getString("book_title");
+                    bookInfo = document.getString("book_description");
+                    report_content.setText(content);
+                    report_bookMaker.setText(bMaker);
+                    report_bookName.setText(bName);
+                    reportTitle.setText(document.get("br_title").toString());
 
 
-                        heartCnt.setText(document.get("book_like").toString());
+                    bookImg = document.get("br_img").toString();
+                    Glide.with(getApplicationContext()).load(bookImg).into(bookImgPage);
 
-                        date = document.getString("date");
-                        isbn = document.getString("bookisbn");
-                        //br_num = document.get("br_num").toString();
-                        open = document.getBoolean("open");
-                    }
-                } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
+
+                    heartCnt.setText(document.get("book_like").toString());
+
+
+                   // date = document.getString("date");
+                    isbn = document.getString("bookisbn");
+                    //br_num = document.get("br_num").toString();
+                    open = document.getBoolean("open");
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("HHTT", "onFailure: "+e.toString());
-            }
-        });
+            });
+
+
+        }else{
+            // TODO: 2020-11-17 whereEqualTo 2번째 인자 동적으로 바꿔야됨. 지금은 고정값임
+
+            db.collection("bookre").whereEqualTo("br_title", br_title)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            doc = document.getId();
+                            profileText.setText(document.get("mem_id").toString());
+
+
+                            h1 = document.getString("has1");
+                            h2 = document.getString("has2");
+                            h3 = document.getString("has3");
+                            h4 = document.getString("has4");
+                            hashTag1.setText(h1);
+                            hashTag2.setText(h2);
+                            hashTag3.setText(h3);
+                            hashTag4.setText(h4);
+
+
+                            content = document.getString("br_content");
+                            bMaker = document.getString("book_author");
+                            bName = document.getString("book_title");
+                            bookInfo = document.getString("book_description");
+                            report_content.setText(content);
+                            report_bookMaker.setText(bMaker);
+                            report_bookName.setText(bName);
+                            reportTitle.setText(document.get("br_title").toString());
+
+
+                            bookImg = document.get("br_img").toString();
+                            Glide.with(getApplicationContext()).load(bookImg).into(bookImgPage);
+
+
+                            heartCnt.setText(document.get("book_like").toString());
+
+                            date = document.getString("date");
+                            isbn = document.getString("bookisbn");
+                            //br_num = document.get("br_num").toString();
+                            open = document.getBoolean("open");
+                        }
+                    } else {
+                        Log.d("TAG", "Error getting documents: ", task.getException());
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("HHTT", "onFailure: " + e.toString());
+                }
+            });}
+
+
 /*
         String loginId = "test";
         storageRef = FirebaseStorage.getInstance().getReference();

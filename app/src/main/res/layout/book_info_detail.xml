@@ -123,6 +123,7 @@
 
                    </LinearLayout>
                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reviewLayout"
                     android:backgroundTint="@color/white"
