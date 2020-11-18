@@ -14,9 +14,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class BlockUserListActivity extends AppCompatActivity {
     ArrayList<UserlistItem> userlist;
     BlockListAdapter blockListAdapter;
+
+    String blockUser;
+    FirebaseFirestore db= FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +45,16 @@ public class BlockUserListActivity extends AppCompatActivity {
         //recyclerView 구분선 추가
         blockList_recycler.addItemDecoration(new DividerItemDecoration(blockList_recycler.getContext(), 1));
 
+
+
+        /*
         //임시 데이터 삽입
         for(int i=0; i<20; i++) {
             UserlistItem data = new UserlistItem("하리보", "차단해제");
             userlist.add(data);
         }
+
+ */
 
         blockList_recycler.setAdapter(blockListAdapter);
     }
