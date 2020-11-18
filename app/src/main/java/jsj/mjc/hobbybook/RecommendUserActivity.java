@@ -37,11 +37,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 import com.google.firestore.v1.StructuredQuery;
 
 public class RecommendUserActivity extends AppCompatActivity {
-    ArrayList<UserlistItem> userlist;
+    ArrayList<User> userlist;
     UserListAdapter userListAdapter;
     UserlistItem[] data;
     String[] list,arrlist,mam;

@@ -25,7 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
 public class FollowingFragment extends Fragment { //팔로잉 TAB
-    ArrayList<UserlistItem> userlist;
+    ArrayList<User> userlist;
     UserListAdapter userListAdapter;
     String loginId, userId;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -57,8 +57,8 @@ public class FollowingFragment extends Fragment { //팔로잉 TAB
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         //TODO 사용자 추천과 겹치니 나중에
-                        UserlistItem data = new UserlistItem(document.getString("followee"), "팔로우");
-                        userlist.add(data);
+                        //UserlistItem data = new UserlistItem(document.getString("followee"));
+                        //userlist.add(data);
                         //RecyclerView 항목 클릭 구현
                         userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
                             @Override

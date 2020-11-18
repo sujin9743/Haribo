@@ -16,7 +16,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
 
-    private ArrayList<UserlistItem> userlist;
+    private ArrayList<User> userlist;
 
     public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
         void onItemClick(View v, int position);
@@ -32,7 +32,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
        CircleImageView user_profileImg;
        TextView user_id;
-       Button user_btn;
+       //Button user_btn;
        int i=0;
 
 
@@ -40,10 +40,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
            super(itemView);
            user_profileImg = itemView.findViewById(R.id.user_profileImg);
            user_id = itemView.findViewById(R.id.user_id);
-           user_btn = itemView.findViewById(R.id.user_btn);
+           //user_btn = itemView.findViewById(R.id.user_btn);
 
 
-           user_btn.setOnClickListener(new View.OnClickListener() {
+           /*user_btn.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
                    if(i==0){
@@ -56,7 +56,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                        i--;
                }}
 
-           });
+           });*/
            itemView.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) { //항목마다 ClickListener 설정
@@ -72,7 +72,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
    }
 
    //데이터 리스트 객체 전달
-   UserListAdapter(ArrayList<UserlistItem> userlist) {
+   UserListAdapter(ArrayList<User> userlist) {
        this.userlist = userlist;
    }
 
@@ -92,8 +92,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder viewHolder, int position) {
         viewHolder.user_profileImg.setImageResource(R.drawable.ic_baseline_android_24);
-        viewHolder.user_id.setText(userlist.get(position).getId());
-        viewHolder.user_btn.setText(userlist.get(position).getBtnTxt());
+        viewHolder.user_id.setText(userlist.get(position).getUserId());
     }
 
     @Override
