@@ -43,10 +43,13 @@ public class RecommendUserActivity extends AppCompatActivity {
     ArrayList<User> userlist;
     UserListAdapter userListAdapter;
     UserlistItem[] data;
+    String loginId;
+    ArrayList<Integer> loginGen;
     String[] list,arrlist,mam;
     ArrayList<String> newData;
     ArrayList<String> noRearrayList;
     ArrayList<String> arrayList;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class RecommendUserActivity extends AppCompatActivity {
             }
         });
 
+        loginId = getIntent().getStringExtra("loginId");
+
         //RecyclerView
         userlist = new ArrayList<>();
         userListAdapter = new UserListAdapter(userlist);
@@ -73,16 +78,40 @@ public class RecommendUserActivity extends AppCompatActivity {
         //recyclerView 구분선 추가
         userRc_recycler.addItemDecoration(new DividerItemDecoration(userRc_recycler.getContext(), 1));
 
-        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        //RecyclerView 항목 클릭 구현
+        userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(RecommendUserActivity.this, UserFeedActivity.class);
+                intent.putExtra("loginId", loginId);
+                intent.putExtra("userId", userlist.get(position).getUserId());
+                startActivity(intent);
+            }
+        });
 
-        CollectionReference cateRef = firebaseFirestore.collection("category");
-        Query query = cateRef.whereEqualTo("1", true);
+        loginGen = new ArrayList<>();
 
-        final ArrayList<String> mem_ca = new ArrayList<>();
+        db.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                QueryDocumentSnapshot doc = (QueryDocumentSnapshot) task.getResult();
+                for (int i = 1; i <= 24; i++) {
+                    if (doc.getBoolean(String.valueOf(i)))
+                        loginGen.add(i);
+                }
+                //db.collection("category").whereEqualTo(String.valueOf(loginGen.get(0)), true).get()
+            }
+        });
 
+        //final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+        //CollectionReference cateRef = firebaseFirestore.collection("category");
+        //Query query = cateRef.whereEqualTo("1", true);
+        //final ArrayList<String> mem_ca = new ArrayList<>();
+
+        /*
         //로그인한 계정의 필드값이 true인 항목을 가져옴
-        firebaseFirestore.collection("category").whereEqualTo("mem_id", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("category").whereEqualTo("mem_id", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
@@ -91,7 +120,7 @@ public class RecommendUserActivity extends AppCompatActivity {
                         //Log.d("rjc", document.getId() + "=>" + document.getData().values());
 
                         for (int i = 1; i <= document.getData().size() - 1; i++)
-                            if (document.get("" + i).equals(true)) {
+                            if (document.get(""+i).equals(true)) {
                                 mem_ca.add("" + i);
                             }
                         Log.d("rjc", String.valueOf(mem_ca));
@@ -136,35 +165,26 @@ public class RecommendUserActivity extends AppCompatActivity {
                 }
 
 
-                /*for (String item : mem_ca)
+                for (String item : mem_ca)
                     if (noRearrayList.contains(item))
-                        newData.add(item);*/
+                        newData.add(item);
 
-                /*list = new String[newData.size()];
+                list = new String[newData.size()];
                 for (int i = 0; i < newData.size(); i++) {
                     list[i] = newData.get(i);
-                }*/
+                }
 
                 for(int i=0;i<arrlist.length;i++){
                     if(arrlist[i].equals(mem_ca))
                         Log.d("mem_ca", ""+(arrlist[i]));
                 }
-                /*for (int i = 0; i < newData.size(); i++) {
+                for (int i = 0; i < newData.size(); i++) {
                     //data[i] = new UserlistItem("" + list[i], "팔로우");
                     //userlist.add(data[i]);
-                }*/
+                }
                 //userListAdapter.notifyDataSetChanged();
                 //userRc_recycler.setAdapter(userListAdapter);
             }
-        });
-
-        //RecyclerView 항목 클릭 구현
-        userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListenr() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Intent intent = new Intent(getApplicationContext(), UserFeedActivity.class);
-                startActivity(intent);
-            }
-        });
+        });*/
     }
 }
