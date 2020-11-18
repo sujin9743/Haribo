@@ -29,9 +29,4 @@ public class SearchedBook {
         this.bookWriter = bookWriter;
     }
 
-    public SearchedBook(String bookImageUrl, String bookTitle, String bookWriter) {
-        this.bookImageUrl = bookImageUrl;
-        this.bookTitle = bookTitle;
-        this.bookWriter = bookWriter;
-    }
 }

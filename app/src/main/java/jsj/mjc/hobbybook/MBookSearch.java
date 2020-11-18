@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.internal.Version;
 
@@ -40,7 +41,7 @@ public class MBookSearch extends AppCompatActivity {
 
     Button btnBookSearch;
     EditText edtBookSearch;
-    String bookTitle;
+    String keyword;
 
     float bookRating;
     public String dataKey = "ttbw_wowoo1406002";
@@ -78,9 +79,15 @@ public class MBookSearch extends AppCompatActivity {
         btnBookSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookTitle = edtBookSearch.getText().toString();
-                BookSearchAsyncTask bookSearchAsyncTask = new BookSearchAsyncTask();
-                bookSearchAsyncTask.execute();
+                keyword = edtBookSearch.getText().toString();
+                if (keyword.getBytes().length <= 0) {
+                    Toast.makeText(MBookSearch.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    booklist.clear();
+                    BookSearchAsyncTask bookSearchAsyncTask = new BookSearchAsyncTask();
+                    bookSearchAsyncTask.execute();
+                }
             }
         });
     }
@@ -91,7 +98,7 @@ public class MBookSearch extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=" +dataKey+
-                    "&Query=" + bookTitle + "&QueryType=Title&Cover=Big&start=1&SearchTarget=Book&output=xml&Version=20131101";
+                    "&Query=" + keyword + "&Cover=Big&start=1&SearchTarget=Book&output=xml&Version=20131101";
 
             try {
                 URL url = new URL(requestUrl);

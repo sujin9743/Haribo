@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +65,7 @@ public class SearchedBookAdapter extends RecyclerView.Adapter<SearchedBookAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SearchedBookViewHolder viewHolder, int position) {
-        viewHolder.searchedBookIv.setImageResource(R.drawable.testimg); //추후 Glide 통해 이미지 변경
+        Glide.with(viewHolder.itemView.getContext()).load(searchedBookList.get(position).getBookImageUrl()).into(viewHolder.searchedBookIv);
         viewHolder.searchedBookTitleTv.setText(searchedBookList.get(position).getBookTitle());
         viewHolder.searchedBookWriterTv.setText(searchedBookList.get(position).getBookWriter());
     }
