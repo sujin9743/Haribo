@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,14 @@ import android.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -46,6 +55,11 @@ public class HomeFragment extends Fragment {
     public String dataKey = "ttbw_wowoo1406002";
     Ranking item = null;
     String requestUrl;
+
+    //Firebase 연동
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ArrayList isbnArray = new ArrayList();
+    String isbn;
 
     @Nullable
     @Override
@@ -95,12 +109,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //TODO 사용자가 선택한 장르만 Adapt 설정
+        //장르 선택 스피너
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedGenre = genreSpinner.getSelectedItem().toString();
-                //TODO 선택 장르 변경 시 해당 장르로 순위 업데이트
+                //선택한 장르를 알라딘 API에서 사용하는 CategoryId로 변환
                 switch (selectedGenre) {
                     case "종합 베스트셀러": selectGenreNum = 0; break;
                     case "가정/요리/뷰티": selectGenreNum = 1230; break;
@@ -138,10 +152,35 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //하비북 베스트도서
+        /*db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(DocumentSnapshot doc : task.getResult()) {
+                        isbnArray.add(doc.getString("book_isbn"));
+                    }
+
+                    for(int i=0; i<isbnArray.size(); i++) {
+                        for(int j=i+1; j<i; i++) {
+                            if(isbnArray.get(i) == isbnArray.get(j)) {
+                                isbnArray.remove(j);
+                            }
+                        }
+                    }
+
+                    for(int c=0; c<isbnArray.size(); c++) {
+
+                        Log.d("TAG", "isbn(i) : " + isbnArray.get(c));
+                    }
+                }
+            }
+        });*/
+
         return view;
     }
 
-    //알라딘 API에서 데이터 불러오기
+    //알라딘 API에서 데이터 불러오기(장르별 랭킹)
     public class BestsellerAsyncTask extends AsyncTask<String, String, String> {
 
         @Override
