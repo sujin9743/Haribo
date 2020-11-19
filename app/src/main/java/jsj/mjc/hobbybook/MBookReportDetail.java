@@ -40,8 +40,10 @@ public class MBookReportDetail extends AppCompatActivity {
     ImageView bookImgPage;
     LinearLayout forBookInfo,forReview,porfileLayout;
     CircleImageView profileImg;
+
     FirebaseFirestore db= FirebaseFirestore.getInstance();;
-    StorageReference storageRef;
+    StorageReference storageRef= FirebaseStorage.getInstance().getReference();;
+    StorageReference imgRef;
 
     String doc;
     String content, bMaker, bName;
@@ -52,6 +54,7 @@ public class MBookReportDetail extends AppCompatActivity {
     int br_num;
     Boolean open;
 
+    String mem_id;
     int imSort;
     int i =0;
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,8 @@ public class MBookReportDetail extends AppCompatActivity {
         bookre_num = intent.getStringExtra("bookre_num");
         br_title = intent.getStringExtra("br_title");
         bookInfo = intent.getStringExtra("description");
+        mem_id = intent.getStringExtra(getResources().getString(R.string.mid));
+
        // bookNum = intent.getStringExtra("br_num");
        // br_num = Integer.parseInt(bookNum);
 
@@ -102,7 +107,7 @@ public class MBookReportDetail extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
 
                             doc = document.getId();
-                            profileText.setText(document.get(getResources().getString(R.string.mid)).toString());
+                          //  profileText.setText(document.get(getResources().getString(R.string.mid)).toString());
 
 
                             h1 = document.getString("has1");
@@ -138,6 +143,7 @@ public class MBookReportDetail extends AppCompatActivity {
                             open = document.getBoolean("open");
                         }
                     });
+            
 
 
         } else {
@@ -151,7 +157,7 @@ public class MBookReportDetail extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
                             doc = document.getId();
-                            profileText.setText(document.get(getResources().getString(R.string.mid)).toString());
+                         //   profileText.setText(document.get(getResources().getString(R.string.mid)).toString());
 
 
                             h1 = document.getString("has1");
@@ -192,6 +198,34 @@ public class MBookReportDetail extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.e("HHTT", "onFailure: " + e.toString());
+                }
+            });
+
+            //닉네임
+            db.collection("member").document(mem_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc.exists()) {
+                            profileText.setText(doc.getString(getResources().getString(R.string.name)));
+                        }
+                    } else {
+                        Log.d("lll", "작성자 로드 실패 : " + task.getException());
+                    }
+                }
+            });
+            //프로필 사진 변경
+            imgRef = storageRef.child("profile_img/" + mem_id + ".jpg");
+            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(MBookReportDetail.this).load(uri).into(profileImg);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d("e", "프로필 사진 로드 실패 : " + exception);
                 }
             });
 /*
