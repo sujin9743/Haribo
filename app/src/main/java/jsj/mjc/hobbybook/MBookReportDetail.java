@@ -143,7 +143,7 @@ public class MBookReportDetail extends AppCompatActivity {
                             open = document.getBoolean("open");
                         }
                     });
-            
+
 
 
         } else {
