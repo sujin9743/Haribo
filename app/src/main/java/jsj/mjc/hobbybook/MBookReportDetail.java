@@ -89,9 +89,8 @@ public class MBookReportDetail extends AppCompatActivity {
         bookre_num = intent.getStringExtra("bookre_num");
         br_title = intent.getStringExtra("br_title");
         bookInfo = intent.getStringExtra("description");
-        bookNum = intent.getStringExtra("br_num");
-        br_num = Integer.parseInt(bookNum);
-        Log.d(br_title, "onCreate:ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ ");
+       // bookNum = intent.getStringExtra("br_num");
+       // br_num = Integer.parseInt(bookNum);
 
 
         if (imSort == 1) {
