@@ -79,7 +79,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         item.setBookInfo(doc.getData().get("book_description").toString());
                         item.setLikeCnt(doc.getData().get("book_like").toString());
-                        item.setBookNum(doc.getData().get("br_num").toString());
+//                        item.setBookNum(doc.getData().get("br_num").toString());
                         Log.d("TAG", "좋아요!!" + doc.getLong("book_like").intValue());
 
                         list.add(item);

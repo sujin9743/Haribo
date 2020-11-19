@@ -86,7 +86,7 @@ public class MBookReportDetail extends AppCompatActivity {
         final String bookre_num, br_title;
         String imSortText;
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         imSortText = intent.getStringExtra("imMyFeed");
         mem_id_feed = intent.getStringExtra("mem_id");
 
@@ -216,8 +216,11 @@ public class MBookReportDetail extends AppCompatActivity {
 
                             date = document.getDate("date");
                             isbn = document.getString("bookisbn");
-                            //br_num = document.get("br_num").toString();
+                            br_num =document.getLong("br_num").intValue();
                             open = document.getBoolean("open");
+
+                            intent.putExtra("br_num",br_num);
+                            intent.putExtra("mem_id",mem_id);
                         }
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
