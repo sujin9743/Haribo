@@ -81,7 +81,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
 
         //갤러리 사진 받기
         storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".png");
+        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".jpg");
         modify_profile_Img = findViewById(R.id.modify_profile_Img);
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

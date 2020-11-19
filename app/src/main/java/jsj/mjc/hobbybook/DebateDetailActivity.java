@@ -198,7 +198,9 @@ public class DebateDetailActivity extends AppCompatActivity {
                         comment.put("inputtime", new Date());
                         comment.put(getResources().getString(R.string.mid), loginId);
                         comment.put("receive_com", recieve_com);
-                        db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("inputtime", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        db.collection("debate_com").whereEqualTo("d_num", dNum)
+                                .orderBy("inputtime", Query.Direction.DESCENDING).limit(1)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {

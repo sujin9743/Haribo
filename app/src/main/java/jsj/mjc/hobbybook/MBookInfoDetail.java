@@ -74,6 +74,14 @@ public class MBookInfoDetail extends AppCompatActivity {
         setContentView(R.layout.book_info_detail);
 
 
+
+
+
+
+
+
+
+
         //댓글 리사이클러뷰
         recyclerView = findViewById(R.id.reviewLayout);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -90,6 +98,7 @@ public class MBookInfoDetail extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
+                        if(doc.get("book_isbn").toString().equals(isbn)){
                         Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", doc.getId() + " => " + doc.getData());
 
                         Timestamp ts = (Timestamp) doc.getData().get("inputtime");
@@ -104,11 +113,11 @@ public class MBookInfoDetail extends AppCompatActivity {
 
                         */
                         list.add(data);
-                        adapter.notifyDataSetChanged();
+
 
 
                     }
-                }
+                } }adapter.notifyDataSetChanged();
 
             }
         });

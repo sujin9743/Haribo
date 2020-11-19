@@ -120,7 +120,8 @@ public class MBookWriteMain extends AppCompatActivity {
                     saveReport.put("book_like", bookLike);
 
                     //독후감 번호
-                    db.collection("bookre").orderBy("date", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection("bookre").orderBy("date", Query.Direction.DESCENDING)
+                            .limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
