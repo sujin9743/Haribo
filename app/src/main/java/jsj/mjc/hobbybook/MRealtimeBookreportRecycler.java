@@ -73,7 +73,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (int i = 0; i < task.getResult().size(); i++) {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(i);
-                        item.setProfileText(doc.getData().get("mem_id").toString());
+                        item.setProfileText(doc.getData().get(getResources().getString(R.string.mid)).toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         item.setBookInfo(doc.getData().get("book_description").toString());
@@ -88,7 +88,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                                 description = list.get(position).getBookInfo();
 
                                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
-                                i.putExtra("mem_id",mem_id);
+                                i.putExtra(getResources().getString(R.string.mid),mem_id);
                                 i.putExtra("br_title",br_title);
                                 i.putExtra("imMyFeed","0");
                                 i.putExtra("description", description);

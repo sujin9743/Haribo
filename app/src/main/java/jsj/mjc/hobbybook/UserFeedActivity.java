@@ -45,7 +45,7 @@ public class UserFeedActivity extends AppCompatActivity {
     TextView user_id, book_count_txt, follower_count_txt, following_count_txt;
     Button message_btn,followBtn;
     CircleImageView userFeed_profileImg;
-    String loginId = "test", userId = "test2";
+    String loginId, userId;
     boolean isFollow = false;// 팔로우 유무 확인(조민주 -> 지은)
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
@@ -57,7 +57,7 @@ public class UserFeedActivity extends AppCompatActivity {
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        loginId = getIntent().getStringExtra("loginId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
         userId = getIntent().getStringExtra("userId");
 
         book_count_txt = findViewById(R.id.book_count_txt);
@@ -74,12 +74,12 @@ public class UserFeedActivity extends AppCompatActivity {
                     followBtn.setBackgroundResource(R.drawable.round_btn_darkgreen);
                     followBtn.setText("팔로우");
                     isFollow = false;
-                    follower_count_txt.setText(""+(follower-1));
+                    follower_count_txt.setText(String.valueOf(follower-1));
                 }else {
                     followBtn.setBackgroundResource(R.drawable.round_btn_gray);
                     followBtn.setText("팔로잉");
                     isFollow = true;
-                    follower_count_txt.setText(""+(follower+1));
+                    follower_count_txt.setText(String.valueOf(follower+1));
                 }
             }
         });
@@ -107,8 +107,8 @@ public class UserFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
-                intent.putExtra("loginId", loginId);
-                intent.putExtra("userId", userId);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getResources().getString(R.string.uid), userId);
                 intent.putExtra("index", 0);
                 startActivity(intent);
             }
@@ -118,8 +118,8 @@ public class UserFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
-                intent.putExtra("loginId", loginId);
-                intent.putExtra("userId", userId);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getResources().getString(R.string.uid), userId);
                 intent.putExtra("index", 1);
                 startActivity(intent);
             }
@@ -131,7 +131,7 @@ public class UserFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MessageSendActivity.class);
-                intent.putExtra("userID", userId);
+                intent.putExtra(getResources().getString(R.string.uid), userId);
                 startActivity(intent);
             }
         });
@@ -190,7 +190,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        user_id.setText(doc.getString("nickname"));
+                        user_id.setText(doc.getString(getResources().getString(R.string.name)));
                     }
                 }
             }
@@ -206,7 +206,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 } else {
                     Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
                 }
-                following_count_txt.setText(""+following);
+                following_count_txt.setText(String.valueOf(following));
             }
         });
         //팔로워 로드
@@ -226,13 +226,13 @@ public class UserFeedActivity extends AppCompatActivity {
                 } else {
                     Log.d("lll", "팔로워 로드 오류 : ", task.getException());
                 }
-                follower_count_txt.setText(""+follower);
+                follower_count_txt.setText(String.valueOf(follower));
             }
         });
         if (followBtn.getText().equals("팔로잉")) isFollow = true;
         //독서 기록, 독후감 로드
         uF_readBookList.clear();
-        db.collection("bookre").whereEqualTo("mem_id", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("bookre").whereEqualTo(getResources().getString(R.string.mid), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -257,7 +257,7 @@ public class UserFeedActivity extends AppCompatActivity {
                     Log.d("lll", "독후감 오류 : ", task.getException());
                 }
                 uF_feedReadBookAdapter.notifyDataSetChanged();
-                book_count_txt.setText(""+read);
+                book_count_txt.setText(String.valueOf(read));
             }
         });
     }

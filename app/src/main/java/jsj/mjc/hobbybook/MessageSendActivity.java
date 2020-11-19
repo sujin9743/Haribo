@@ -39,7 +39,7 @@ public class MessageSendActivity extends AppCompatActivity {
 
         // UserFeedActivity 에서 userID 받아옴
         Intent i = getIntent();
-        final String receive_user = i.getStringExtra("userID");
+        final String receive_user = i.getStringExtra(getResources().getString(R.string.uid));
         sendName.setText(receive_user+"에게");
 
         db = FirebaseFirestore.getInstance();

@@ -25,8 +25,8 @@ public class FollowListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.follow_list);
 
-        loginId = getIntent().getStringExtra("loginId");
-        userId = getIntent().getStringExtra("userId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
+        userId = getIntent().getStringExtra(getResources().getString(R.string.uid));
         seetab = getIntent().getIntExtra("seetab", 0);
 
         //툴바 설정

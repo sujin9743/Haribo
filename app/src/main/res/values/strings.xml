@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">HobbyBook</string>
+    <string name="empty"></string>
+
     <string name="g0">가정/요리/뷰티</string>
     <string name="g1">건강/취미/레저</string>
     <string name="g2">경제경영</string>
@@ -32,4 +34,11 @@
     <string name="g29">고등학교참고서</string>
 
     <string name="pw_ReCk_Txt">비밀번호를 확인해 주세요.</string>
+
+    <string name="lid">loginId</string>
+    <string name="uid">userId</string>
+    <string name="name">nickname</string>
+    <string name="mid">mem_id</string>
+
+    <string name="nonamed">알 수 없음</string>
 </resources>

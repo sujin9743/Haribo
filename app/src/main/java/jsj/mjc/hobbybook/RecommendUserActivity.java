@@ -67,7 +67,7 @@ public class RecommendUserActivity extends AppCompatActivity {
             }
         });
 
-        loginId = getIntent().getStringExtra("loginId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
         //RecyclerView
         userlist = new ArrayList<>();
@@ -82,8 +82,8 @@ public class RecommendUserActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(RecommendUserActivity.this, UserFeedActivity.class);
-                intent.putExtra("loginId", loginId);
-                intent.putExtra("userId", userlist.get(position).getUserId());
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getResources().getString(R.string.uid), userlist.get(position).getUserId());
                 startActivity(intent);
             }
         });
@@ -137,7 +137,7 @@ public class RecommendUserActivity extends AppCompatActivity {
                                                     sameLike = false;
                                             }
                                             if (sameLike) {
-                                                User data = new User(doc.getString("mem_id"));
+                                                User data = new User(doc.getString(getResources().getString(R.string.mid)));
                                                 userlist.add(data);
                                                 cnt++;
                                             }

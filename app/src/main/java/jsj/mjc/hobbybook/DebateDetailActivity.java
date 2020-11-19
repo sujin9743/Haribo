@@ -69,7 +69,7 @@ public class DebateDetailActivity extends AppCompatActivity {
 
         debateDetailActivity = this;
 
-        loginId = getIntent().getStringExtra("loginId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
         docId = getIntent().getStringExtra("docId");
         dNum = getIntent().getIntExtra("debateNum", -1);
         writerId = getIntent().getStringExtra("debateWriter");
@@ -96,7 +96,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(DebateDetailActivity.this, UserFeedActivity.class);
-                    intent.putExtra("userId", writerId);
+                    intent.putExtra(getResources().getString(R.string.uid), writerId);
                     startActivity(intent);
                 }
             });
@@ -120,7 +120,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         if (doc.exists()) {
-                            dDetail_writerTv.setText(doc.getString("nickname"));
+                            dDetail_writerTv.setText(doc.getString(getResources().getString(R.string.name)));
                         }
                     } else {
                         Log.d("lll", "작성자 로드 실패 : " + task.getException());
@@ -189,14 +189,14 @@ public class DebateDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     String comCon = dDetail_comment_edt.getText().toString();
-                    if(!comCon.equals("")) {
+                    if(!comCon.equals(getResources().getString(R.string.empty))) {
                         comment.put("d_num", dNum);
                         comment.put("dc_num", dcNum);
                         comment.put("dc_bundle", dcNum);
                         comment.put("dc_content", comCon);
                         comment.put("deleted", false);
                         comment.put("inputtime", new Date());
-                        comment.put("mem_id", loginId);
+                        comment.put(getResources().getString(R.string.mid), loginId);
                         comment.put("receive_com", recieve_com);
                         db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("inputtime", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -222,7 +222,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                                 setCommentList();
                             }
                         });
-                        dDetail_comment_edt.setText("");
+                        dDetail_comment_edt.setText(getResources().getString(R.string.empty));
                     }
                 }
             });
@@ -262,14 +262,14 @@ public class DebateDetailActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         if (doc.getBoolean("deleted")) {
-                            DebateComment data = new DebateComment("", doc.getLong("receive_com").intValue(), 0, 0,"삭제된 댓글입니다.",
-                                    "알 수 없음", "");
+                            DebateComment data = new DebateComment(getResources().getString(R.string.empty), doc.getLong("receive_com").intValue(), 0, 0,
+                                    "삭제된 댓글입니다.", getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
                             debateCommentArrayList.add(data);
                         } else {
                             Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
                             String dateStr = dateFormatter.format(timestamp.toDate());
                             DebateComment data = new DebateComment(doc.getId(), doc.getLong("dc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getLong("dc_bundle").intValue(), doc.getString("dc_content"),
-                                    doc.getString("mem_id"), dateStr);
+                                    doc.getString(getResources().getString(R.string.mid)), dateStr);
                             debateCommentArrayList.add(data);
                             comNum++;
                         }

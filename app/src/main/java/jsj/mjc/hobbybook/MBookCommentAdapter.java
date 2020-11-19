@@ -76,7 +76,7 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
                 if(task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()) {
-                        holder.profileText.setText(doc.getString("nickname"));
+                        holder.profileText.setText(doc.getString(holder.profileText.getContext().getResources().getString(R.string.name)));
                     }
                 }
             }

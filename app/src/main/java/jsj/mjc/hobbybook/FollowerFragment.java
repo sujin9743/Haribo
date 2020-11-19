@@ -32,8 +32,8 @@ public class FollowerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_follower, container, false);
-        loginId = getActivity().getIntent().getStringExtra("loginId");
-        userId = getActivity().getIntent().getStringExtra("userId");
+        loginId = getActivity().getIntent().getStringExtra(getResources().getString(R.string.lid));
+        userId = getActivity().getIntent().getStringExtra(getResources().getString(R.string.uid));
 
         //RecyclerView
         userlist = new ArrayList<>();
@@ -49,8 +49,8 @@ public class FollowerFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(getContext(), UserFeedActivity.class);
-                intent.putExtra("loginId", loginId);
-                intent.putExtra("userId", userlist.get(position).getUserId());
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getResources().getString(R.string.uid), userlist.get(position).getUserId());
                 startActivity(intent);
             }
         });

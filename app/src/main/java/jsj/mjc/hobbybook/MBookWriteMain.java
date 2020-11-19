@@ -106,7 +106,7 @@ public class MBookWriteMain extends AppCompatActivity {
                 saveReport.put("has3", hash3);
                 saveReport.put("has4", hash4);
                 saveReport.put("date", formatDate);
-                saveReport.put("mem_id", loginId);
+                saveReport.put(getResources().getString(R.string.mid), loginId);
                 saveReport.put("open", true);
                 saveReport.put("book_description", description);
                 saveReport.put("book_like", bookLike);

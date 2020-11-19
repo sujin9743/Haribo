@@ -43,7 +43,7 @@ public class DebateListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debate_list);
 
-        loginId = getIntent().getStringExtra("loginId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
         RecyclerView recyclerView = findViewById(R.id.dList_RV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -60,7 +60,7 @@ public class DebateListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(DebateListActivity.this, DebateDetailActivity.class);
-                intent.putExtra("loginId", loginId);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
                 intent.putExtra("docId", debateArrayList.get(position).getDebateDocId());
                 intent.putExtra("debateNum", debateArrayList.get(position).getDebateNum());
                 intent.putExtra("debateWriter", debateArrayList.get(position).getDebateWriter());
@@ -76,7 +76,7 @@ public class DebateListActivity extends AppCompatActivity {
                         Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
                         String dateStr = dateFormatter.format(timestamp.toDate());
                         Debate data = new Debate(doc.getId(), doc.getLong("d_num").intValue(), doc.getString("d_title"), doc.getString("d_content"),
-                                dateStr, doc.getString("mem_id"));
+                                dateStr, doc.getString(getResources().getString(R.string.mid)));
                         debateArrayList.add(data);
                     }
                 } else {
@@ -109,7 +109,7 @@ public class DebateListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DebateListActivity.this, DebateAddActivity.class);
-                intent.putExtra("loginId", loginId);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
                 startActivity(intent);
             }
         });

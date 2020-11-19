@@ -40,7 +40,6 @@ public class DebateSearchActivity extends AppCompatActivity {
         ImageButton dSearchAdd_btn = findViewById(R.id.debateS_write_btn);
 
         final EditText dKeyword_et = findViewById(R.id.debateSearch_keyword_et);
-        dKeyword_et.setText("업데이트 예정");
 
         dSearchBack_btn.setOnClickListener(new View.OnClickListener() {
             @Override

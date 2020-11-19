@@ -146,13 +146,15 @@ public class SignActivity extends AppCompatActivity {
                     pw_chk = false;
                     pw_ReCk_Txt.setVisibility(View.VISIBLE);
                 }
-                if (id_Edt.getText().toString().equals("") || pw_Edt.getText().toString().equals("") || pw_CkQA_Edt.getText().toString().equals("") || email_id_edt.getText().toString().equals("") || !id_chk || !pw_chk || !clause_Ck.isChecked() || !info_Ck.isChecked()) {
+                if (id_Edt.getText().toString().equals(getResources().getString(R.string.empty)) || pw_Edt.getText().toString().equals(getResources().getString(R.string.empty))
+                        || pw_CkQA_Edt.getText().toString().equals(getResources().getString(R.string.empty)) || email_id_edt.getText().toString().equals(getResources().getString(R.string.empty))
+                        || !id_chk || !pw_chk || !clause_Ck.isChecked() || !info_Ck.isChecked()) {
                     Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     //member 컬렉션 데이터 등록
                     Map<String, Object> user = new HashMap<>();
                     user.put("id", id_Edt.getText().toString());
-                    user.put("nickname", id_Edt.getText().toString());
+                    user.put(getResources().getString(R.string.name), id_Edt.getText().toString());
                     user.put("pw", pw_Edt.getText().toString());
                     user.put("pw_q", pw_spinner.getSelectedItem().toString());
                     user.put("pw_a", pw_CkQA_Edt.getText().toString());
@@ -173,9 +175,9 @@ public class SignActivity extends AppCompatActivity {
 
                     //category 컬렉션 데이터 등록
                     Map<String, Object> cate = new HashMap<>();
-                    cate.put("mem_id", id_Edt.getText().toString());
+                    cate.put(getResources().getString(R.string.mid), id_Edt.getText().toString());
                     for(int i = 1; i <= 24; i++) {
-                        cate.put("" + i, false);
+                        cate.put(getResources().getString(R.string.empty) + i, false);
                     }
                     db.collection("category").document(id_Edt.getText().toString()).set(cate).addOnFailureListener(new OnFailureListener() {
                         @Override

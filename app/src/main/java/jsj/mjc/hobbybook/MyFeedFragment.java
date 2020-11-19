@@ -101,8 +101,8 @@ public class MyFeedFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowListActivity.class);
                 intent.putExtra("seetab", 0);
-                intent.putExtra("loginId", loginId);
-                intent.putExtra("userId", loginId);
+                intent.putExtra(getContext().getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getResources().getString(R.string.uid), loginId);
                 startActivity(intent);
             }
         });
@@ -112,8 +112,8 @@ public class MyFeedFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowListActivity.class);
                 intent.putExtra("seetab", 1);
-                intent.putExtra("loginId", loginId);
-                intent.putExtra("userId", loginId);
+                intent.putExtra(getContext().getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getResources().getString(R.string.uid), loginId);
                 startActivity(intent);
             }
         });
@@ -176,7 +176,7 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
-                intent.putExtra("loginId", loginId);
+                intent.putExtra(getContext().getResources().getString(R.string.lid), loginId);
                 startActivity(intent);
             }
         });
@@ -210,7 +210,7 @@ public class MyFeedFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        myFeed_user_id.setText(doc.getString("nickname"));
+                        myFeed_user_id.setText(doc.getString(getContext().getResources().getString(R.string.name)));
                     }
                 }
             }
@@ -245,7 +245,7 @@ public class MyFeedFragment extends Fragment {
         });
         //독서 기록, 독후감 로드
         mF_readBookList.clear();
-        db.collection("bookre").whereEqualTo("mem_id", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("bookre").whereEqualTo(getResources().getString(R.string.mid), loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

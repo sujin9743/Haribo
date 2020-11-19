@@ -100,7 +100,7 @@ public class MBookReportDetail extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
 
                             doc = document.getId();
-                            profileText.setText(document.get("mem_id").toString());
+                            profileText.setText(document.get(getResources().getString(R.string.mid)).toString());
 
 
                             h1 = document.getString("has1");
@@ -149,7 +149,7 @@ public class MBookReportDetail extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
                             doc = document.getId();
-                            profileText.setText(document.get("mem_id").toString());
+                            profileText.setText(document.get(getResources().getString(R.string.mid)).toString());
 
 
                             h1 = document.getString("has1");
@@ -274,7 +274,7 @@ public class MBookReportDetail extends AppCompatActivity {
                     save.put("has2", h2);
                     save.put("has3", h3);
                     save.put("has4", h4);
-                    save.put("mem_id", profileText.getText().toString());
+                    save.put(getResources().getString(R.string.mid), profileText.getText().toString());
                     save.put("open", open);
                     save.put("book_description", bookInfo);
 

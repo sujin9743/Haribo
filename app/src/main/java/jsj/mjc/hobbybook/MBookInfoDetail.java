@@ -95,7 +95,7 @@ public class MBookInfoDetail extends AppCompatActivity {
                         Timestamp ts = (Timestamp) doc.getData().get("inputtime");
                         String date = dateFormatter.format(ts.toDate());
 
-                        MBookCom data = new MBookCom(doc.get("mem_id").toString()
+                        MBookCom data = new MBookCom(doc.get(getResources().getString(R.string.mid)).toString()
                         ,date, doc.get("rv_content").toString());
                        /*
                         item.setProfileText(doc.getData().get("mem_id").toString());

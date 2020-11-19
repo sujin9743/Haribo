@@ -34,7 +34,7 @@ public class DebateAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debate_add);
 
-        loginId = getIntent().getStringExtra("loginId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
         ImageButton dAdd_back_btn = findViewById(R.id.dAdd_back_btn);
         TextView dAdd_add_btn = findViewById(R.id.dAdd_add_btn);
@@ -60,7 +60,7 @@ public class DebateAddActivity extends AppCompatActivity {
                 else {
                     post.put("d_title", strTitle);
                     post.put("d_content", strText);
-                    post.put("mem_id", loginId);
+                    post.put(getResources().getString(R.string.mid), loginId);
                     post.put("deleted", false);
                     post.put("inputtime", date);
                     db.collection("debate").orderBy("inputtime", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

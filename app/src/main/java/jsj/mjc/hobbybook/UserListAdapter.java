@@ -125,7 +125,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        viewHolder.user_id.setText(doc.getString("nickname"));
+                        viewHolder.user_id.setText(doc.getString(viewHolder.user_id.getContext().getResources().getString(R.string.name)));
                     }
                 }
             }

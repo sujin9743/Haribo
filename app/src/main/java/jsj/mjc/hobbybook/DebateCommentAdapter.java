@@ -79,7 +79,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
 
     @Override
     public void onBindViewHolder(@NonNull final DebateCommentViewHolder viewHolder, final int position) {
-        if (debateCommentList.get(position).getDcDate().equals("")) {
+        if (debateCommentList.get(position).getDcDate().equals(viewHolder.dcWriterTv.getResources().getString(R.string.empty))) {
             viewHolder.dcWriterTv.setText(debateCommentList.get(position).getDcWriter());
             viewHolder.dCommentMoreBtn.setVisibility(View.INVISIBLE);
             viewHolder.dcWriterIv.setImageResource(R.drawable.ic_outline_person_outline_24);
@@ -104,7 +104,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         if (doc.exists()) {
-                            viewHolder.dcWriterTv.setText(doc.getString("nickname"));
+                            viewHolder.dcWriterTv.setText(doc.getString(viewHolder.dcWriterTv.getContext().getResources().getString(R.string.name)));
                         }
                     }
                 }
@@ -114,7 +114,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(viewHolder.dcWriterIv.getContext(), UserFeedActivity.class);
-                    intent.putExtra("userId", debateCommentList.get(position).getDcWriter());
+                    intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.uid), debateCommentList.get(position).getDcWriter());
                     viewHolder.dcWriterIv.getContext().startActivity(intent);
                 }
             });
@@ -123,7 +123,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(viewHolder.dcWriterTv.getContext(), UserFeedActivity.class);
-                    intent.putExtra("userId", debateCommentList.get(position).getDcWriter());
+                    intent.putExtra(viewHolder.dcWriterTv.getContext().getString(R.string.uid), debateCommentList.get(position).getDcWriter());
                     viewHolder.dcWriterTv.getContext().startActivity(intent);
                 }
             });

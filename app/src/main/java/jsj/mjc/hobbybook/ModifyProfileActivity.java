@@ -56,7 +56,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myprofile_modify);
 
-        loginId = getIntent().getStringExtra("loginId");
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
         docRef = db.collection("member").document(loginId);
 
         //툴바 설정
@@ -116,7 +116,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
                         //TODO 사진 업로드
-                        modify_id_edt.setText(doc.getString("nickname"));
+                        modify_id_edt.setText(doc.getString(getResources().getString(R.string.name)));
                         modify_email_id_edt.setText(doc.getString("email_f"));
                         int email_b_num = 0;
                         for (int i = 0; i < getResources().getStringArray(R.array.email).length; i++) {
@@ -175,8 +175,8 @@ public class ModifyProfileActivity extends AppCompatActivity {
             case R.id.modifyBtn:
                 Map<String, Object> user = new HashMap<>();
                 //TODO 사진 업로드 처리, 이메일 인증 처리
-                user.put("nickname", modify_id_edt.getText().toString());
-                if (modify_pw_edt.getText().toString().equals("")) {
+                user.put(getResources().getString(R.string.name), modify_id_edt.getText().toString());
+                if (modify_pw_edt.getText().toString().equals(getResources().getString(R.string.empty))) {
                     modify_pwReCk_txt.setVisibility(View.GONE);
                     pw_chk = true;
                 } else {

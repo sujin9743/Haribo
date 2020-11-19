@@ -84,7 +84,7 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        String strDate = debateList.get(position).getDebateDate() + "  |  " + doc.getString("nickname");
+                        String strDate = debateList.get(position).getDebateDate() + "  |  " + doc.getString(viewHolder.debateDateTv.getContext().getResources().getString(R.string.name));
                         viewHolder.debateDateTv.setText(strDate);
                     }
                 }
