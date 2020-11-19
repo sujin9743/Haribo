@@ -47,8 +47,9 @@ public class MBookReportDetail extends AppCompatActivity {
     String content, bMaker, bName;
     String h1,h2,h3,h4;
     String bookImg, isbn;
-    String date;
-    String br_num, bookInfo;
+    Date date;
+    String bookInfo, bookNum;
+    int br_num;
     Boolean open;
 
     int imSort;
@@ -88,6 +89,8 @@ public class MBookReportDetail extends AppCompatActivity {
         bookre_num = intent.getStringExtra("bookre_num");
         br_title = intent.getStringExtra("br_title");
         bookInfo = intent.getStringExtra("description");
+        bookNum = intent.getStringExtra("br_num");
+        br_num = Integer.parseInt(bookNum);
         Log.d(br_title, "onCreate:ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ ");
 
 
@@ -177,7 +180,7 @@ public class MBookReportDetail extends AppCompatActivity {
 
                             heartCnt.setText(document.get("book_like").toString());
 
-                            date = document.getString("date");
+                            date = document.getDate("date");
                             isbn = document.getString("bookisbn");
                             //br_num = document.get("br_num").toString();
                             open = document.getBoolean("open");
@@ -267,7 +270,7 @@ public class MBookReportDetail extends AppCompatActivity {
                     save.put("bookisbn", isbn);
                     save.put("br_content", content);
                     save.put("br_img", bookImg);
-                    //save.put("br_num",br_num);
+                    save.put("br_num",br_num);
                     save.put("br_title", reportTitle.getText().toString());
                     save.put("date", date);
                     save.put("has1", h1);

@@ -19,6 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -67,7 +68,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         //firebase
         rtBook_DB = FirebaseFirestore.getInstance();
 
-        rtBook_DB.collection("bookre").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        rtBook_DB.collection("bookre").orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -77,21 +78,27 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         item.setBookInfo(doc.getData().get("book_description").toString());
+                        item.setLikeCnt(doc.getData().get("book_like").toString());
+                        item.setBookNum(doc.getData().get("br_num").toString());
+                        Log.d("TAG", "좋아요!!" + doc.getLong("book_like").intValue());
+
                         list.add(item);
 
                         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
                             @Override
                             public void onItemClick(View v, int position) {
-                                String mem_id, br_title, description;
+                                String mem_id, br_title, description, br_num;
                                 mem_id = list.get(position).getProfileText();
                                 br_title = list.get(position).getBrTitle();
                                 description = list.get(position).getBookInfo();
+                                br_num = list.get(position).getBookNum();
 
                                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                                 i.putExtra(getResources().getString(R.string.mid),mem_id);
                                 i.putExtra("br_title",br_title);
                                 i.putExtra("imMyFeed","0");
                                 i.putExtra("description", description);
+                                i.putExtra("br_num", br_num);
                                 startActivity(i);
                             }
                         });

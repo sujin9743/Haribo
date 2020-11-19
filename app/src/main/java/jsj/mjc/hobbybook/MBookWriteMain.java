@@ -18,14 +18,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,36 +96,61 @@ public class MBookWriteMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                long now = System.currentTimeMillis();
-                Date formatDate = new Date(now);
+                if(bookName.getText() == null || reportName.getText() == null | contents.getText() == null) {
+                    Toast.makeText(MBookWriteMain.this, "빈칸을 확인해주세요.", Toast.LENGTH_LONG).show();
+                } else {
+                    long now = System.currentTimeMillis();
+                    Date formatDate = new Date(now);
 
-                saveReport.put("bookisbn",isbn);
-                saveReport.put("br_content",contents.getText().toString());
-                //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
-                saveReport.put("br_img", bookCoverImg);
-                saveReport.put("br_title",reportName.getText().toString());
-                saveReport.put("book_title", bTitle);
-                saveReport.put("book_author", author);
-                saveReport.put("has1", hash1);
-                saveReport.put("has2", hash2);
-                saveReport.put("has3", hash3);
-                saveReport.put("has4", hash4);
-                saveReport.put("date", formatDate);
-                saveReport.put(getResources().getString(R.string.mid), loginId);
-                saveReport.put("open", true);
-                saveReport.put("book_description", description);
-                saveReport.put("book_like", bookLike);
+                    saveReport.put("bookisbn", isbn);
+                    saveReport.put("br_content", contents.getText().toString());
+                    //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
+                    saveReport.put("br_img", bookCoverImg);
+                    saveReport.put("br_title", reportName.getText().toString());
+                    saveReport.put("book_title", bTitle);
+                    saveReport.put("book_author", author);
+                    saveReport.put("has1", hash1);
+                    saveReport.put("has2", hash2);
+                    saveReport.put("has3", hash3);
+                    saveReport.put("has4", hash4);
+                    saveReport.put("date", formatDate);
+                    saveReport.put(getResources().getString(R.string.mid), loginId);
+                    saveReport.put("open", true);
+                    saveReport.put("book_description", description);
+                    saveReport.put("book_like", bookLike);
+
+                    //독후감 번호
+                    db.collection("bookre").orderBy("date", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot doc : task.getResult()) {
+                                    int brNum = doc.getLong("br_num").intValue() + 1;
+                                    saveReport.put("br_Num", brNum);
+                                }
+                            } else {
+                                Log.d("lll", "독후감 로드 오류 : ", task.getException());
+                            }
+                            db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("e", "user 데이터 등록 실패 : ", e);
+                                }
+                            });
+                        }
+                    });
 
 
-                //입력한 모든 데이터 서버에 저장
-                db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                    /*//입력한 모든 데이터 서버에 저장
+                    db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+                        }
+                    });*/
 
-                finish();
+                    finish();
+                }
 
             }
         });

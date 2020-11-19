@@ -291,6 +291,10 @@ public class RecommendBookActivity extends AppCompatActivity {
                                 bookItem.setBookRate(bookRating/2);
                                 bookItem.setBookRateTxt(String.valueOf(bookRating/2));
                             }
+                            else if(parser.getName().equals("description")) {
+                                parser.next();
+                                if(bookItem!=null) bookItem.setBookDesc(parser.getText());
+                            }
                             break;
                         case XmlPullParser.TEXT:
                             break;
@@ -325,13 +329,17 @@ public class RecommendBookActivity extends AppCompatActivity {
             recommendBookAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
                 @Override
                 public void onItemClick(View v, int position) { //책 누르면 도서 상세정보 페이지로 이동
-                    String title, image;
+                    String title, image, description, author;
                     title = booklist.get(position).getBookTitle();
                     image = booklist.get(position).getBookImgUrl();
+                    description = booklist.get(position).getBookDesc();
+                    author = booklist.get(position).getBookWriter();
 
                     Intent intent = new Intent(getApplicationContext(), MBookInfoDetail.class);
                     intent.putExtra("title", title);
                     intent.putExtra("image", image);
+                    intent.putExtra("description", description);
+                    intent.putExtra("author", author);
                     startActivity(intent);
                 }
             });

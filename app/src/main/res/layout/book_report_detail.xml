@@ -83,7 +83,7 @@
                 android:layout_width="205dp"
                 android:layout_height="305dp"
                 android:layout_margin="10dp"
-                android:background="@color/beige"
+                android:background="@null"
                 android:layout_gravity="center"
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="17dp">

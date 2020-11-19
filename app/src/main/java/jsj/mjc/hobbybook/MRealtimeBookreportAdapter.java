@@ -85,7 +85,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
                 }
             });
 
-            String lCnt = likeCnt.getText().toString();
+            /*String lCnt = likeCnt.getText().toString();
             intLikeCnt = Integer.parseInt(lCnt);
 
             heart.setImageResource(heart_line);
@@ -107,7 +107,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
 
                 }
 
-            });
+            });*/
         }
     }
 
