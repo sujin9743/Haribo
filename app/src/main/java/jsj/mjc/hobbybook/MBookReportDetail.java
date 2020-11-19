@@ -263,24 +263,12 @@ public class MBookReportDetail extends AppCompatActivity {
                         heart_cnt--;
                         heartCnt.setText(Integer.toString(heart_cnt));
                     }
-                    save.put("book_author", bMaker);
-                    save.put("book_like", heart_cnt);
-                    save.put("book_title", bName);
-                    save.put("bookisbn", isbn);
-                    save.put("br_content", content);
-                    save.put("br_img", bookImg);
-                    save.put("br_num",br_num);
-                    save.put("br_title", reportTitle.getText().toString());
-                    save.put("date", date);
-                    save.put("has1", h1);
-                    save.put("has2", h2);
-                    save.put("has3", h3);
-                    save.put("has4", h4);
-                    save.put(getResources().getString(R.string.mid), profileText.getText().toString());
-                    save.put("open", open);
-                    save.put("book_description", bookInfo);
 
-                    db.collection("bookre").document(doc).set(save).addOnFailureListener(new OnFailureListener() {
+                    save.put("book_like", heart_cnt);
+
+
+
+                    db.collection("bookre").document(doc).update(save).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
 
