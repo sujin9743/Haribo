@@ -19,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity mainActivity;
-    public static String loginId = "test";
+    public static String loginId;
     HomeFragment homeFragment = new HomeFragment();
     MessageFragment messageFragment = new MessageFragment();
     RankingFragment rankingFragment = new RankingFragment();
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //뒤로가기 버튼(햄버거버튼으로 사용)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24); //햄버거 버튼 아이콘 지정
+
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
         //hamburger Button -> Navigation Drawer
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawerLayout);
