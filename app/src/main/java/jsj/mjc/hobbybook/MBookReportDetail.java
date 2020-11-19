@@ -55,6 +55,7 @@ public class MBookReportDetail extends AppCompatActivity {
     Boolean open;
 
     String mem_id;
+    String mem_id_feed;
     int imSort;
     int i =0;
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class MBookReportDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         imSortText = intent.getStringExtra("imMyFeed");
+        mem_id_feed = intent.getStringExtra("mem_id");
 
         imSort = Integer.parseInt(imSortText);
         bookre_num = intent.getStringExtra("bookre_num");
@@ -143,6 +145,33 @@ public class MBookReportDetail extends AppCompatActivity {
                             open = document.getBoolean("open");
                         }
                     });
+            //닉네임
+            db.collection("member").document(mem_id_feed).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc.exists()) {
+                            profileText.setText(doc.getString(getResources().getString(R.string.name)));
+                        }
+                    } else {
+                        Log.d("lll", "작성자 로드 실패 : " + task.getException());
+                    }
+                }
+            });
+            //프로필 사진 변경
+            imgRef = storageRef.child("profile_img/" + mem_id_feed + ".jpg");
+            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(MBookReportDetail.this).load(uri).into(profileImg);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                }
+            });
 
 
 

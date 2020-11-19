@@ -83,6 +83,7 @@ public class MyFeedFragment extends Fragment {
 
                 String a =mF_readBookList.get(position).getbookReNum();
                 Intent intent = new Intent(getContext(), MBookReportDetail.class);
+                intent.putExtra("mem_id", loginId);
                 intent.putExtra("bookre_num", mF_readBookList.get(position).getbookReNum());
                 intent.putExtra("imMyFeed","1");
                 startActivity(intent);
