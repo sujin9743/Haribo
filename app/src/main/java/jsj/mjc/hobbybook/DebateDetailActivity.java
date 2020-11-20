@@ -60,7 +60,7 @@ public class DebateDetailActivity extends AppCompatActivity {
     StorageReference storageRef;
     public static DebateDetailActivity debateDetailActivity;
     public int dc_bundle = 0, recieve_com = 0;
-    Map<String, Object> comment = new HashMap<>();
+    Map<String, Object> comment = new HashMap<>(), notice = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(DebateDetailActivity.this, UserFeedActivity.class);
                     intent.putExtra(getResources().getString(R.string.uid), writerId);
+                    intent.putExtra(getResources().getString(R.string.lid), loginId);
                     startActivity(intent);
                 }
             });
@@ -192,7 +193,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                     if(!comCon.equals(getResources().getString(R.string.empty))) {
                         comment.put("d_num", dNum);
                         comment.put("dc_num", dcNum);
-                        comment.put("dc_bundle", dcNum);
+                        comment.put("dc_bundle", dc_bundle);
                         comment.put("dc_content", comCon);
                         comment.put("deleted", false);
                         comment.put("inputtime", new Date());
@@ -219,6 +220,35 @@ public class DebateDetailActivity extends AppCompatActivity {
                                         Log.d("e", "user 데이터 등록 실패 : ", e);
                                     }
                                 });
+                                if (recieve_com == 0) {
+                                    if (! loginId.equals(writerId)) {
+                                        notice.put("docId", docId);
+                                        notice.put("send_mem", loginId);
+                                        notice.put(getResources().getString(R.string.mid), writerId);
+                                        notice.put("type", 3);
+                                        notice.put("inputtime", new Date());
+                                        db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("e", "notice 데이터 등록 실패 : ", e);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    if (! loginId.equals(debateCommentArrayList.get(debateCommentAdapter.selected).getDcWriter())) {
+                                        notice.put("docId", docId);
+                                        notice.put("send_mem", loginId);
+                                        notice.put(getResources().getString(R.string.mid), debateCommentArrayList.get(debateCommentAdapter.selected).getDcWriter());
+                                        notice.put("type", 5);
+                                        notice.put("inputtime", new Date());
+                                        db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("e", "notice 데이터 등록 실패 : ", e);
+                                            }
+                                        });
+                                    }
+                                }
                                 debateCommentAdapter.selected = -1;
                                 recieve_com = 0;
                                 setCommentList();
@@ -264,7 +294,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         if (doc.getBoolean("deleted")) {
-                            DebateComment data = new DebateComment(getResources().getString(R.string.empty), doc.getLong("receive_com").intValue(), 0, 0,
+                            DebateComment data = new DebateComment(getResources().getString(R.string.empty), 0, doc.getLong("receive_com").intValue(), 0,
                                     "삭제된 댓글입니다.", getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
                             debateCommentArrayList.add(data);
                         } else {
