@@ -54,10 +54,13 @@ public class MBookReportDetail extends AppCompatActivity {
     int br_num;
     Boolean open;
 
+    String review_max,review_max_mem;
     String mem_id;
     String mem_id_feed;
     int imSort;
     int i =0;
+    String memID;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_report_detail);
@@ -95,6 +98,9 @@ public class MBookReportDetail extends AppCompatActivity {
         br_title = intent.getStringExtra("br_title");
         bookInfo = intent.getStringExtra("description");
         mem_id = intent.getStringExtra(getResources().getString(R.string.mid));
+
+        //도서 상세 페이지에서 넘어옴
+        review_max = intent.getStringExtra("book_isbn");
 
        // bookNum = intent.getStringExtra("br_num");
        // br_num = Integer.parseInt(bookNum);
@@ -175,7 +181,7 @@ public class MBookReportDetail extends AppCompatActivity {
 
 
 
-        } else {
+        } else{
             // TODO: 2020-11-17 whereEqualTo 2번째 인자 동적으로 바꿔야됨. 지금은 고정값임
 
             db.collection("bookre").whereEqualTo("br_title", br_title)
