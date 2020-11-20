@@ -81,7 +81,6 @@ public class MBookInfoDetail extends AppCompatActivity {
 
 
 
-
         //댓글 리사이클러뷰
         recyclerView = findViewById(R.id.reviewLayout);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -158,13 +157,14 @@ public class MBookInfoDetail extends AppCompatActivity {
         isbn = getIntent().getStringExtra("isbn");
 
 
+
         Glide.with(getApplicationContext()).load(getBookImage).into(bookImage);
         bookName.setText(getBookTitle);
         editor.setText(getBookAuthor);
         bookInfo.setText(getBookDesc);
 
         //bookInfo 책소개(정보) api 연결
-
+        final Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,30 +172,40 @@ public class MBookInfoDetail extends AppCompatActivity {
                 finish();
             }
         });
+/*
         letsGoReport = findViewById(R.id.letsGoReport);
         letsGoReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+
+                i.putExtra("book_isbn",isbn);
+                i.putExtra("imMyFeed","2");
                 startActivity(i);
 
                 Toast.makeText(getApplicationContext(),"좋아요가 가장 많은 독후감 게시물로 이동됩니다.",Toast.LENGTH_SHORT).show();
             }
         });
 
+ */
+
 
         //별 점수 db에서 받아와서 값 넣어주기
         stars_show = findViewById(R.id.star);
+/*
+      final ArrayList a = new ArrayList();
+      final ArrayList s = new ArrayList();
+      final ArrayList m = new ArrayList();
 
+ */
         db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
-
                         docSize = task.getResult().size();
                         starArray.add(document.getData().get("stars").toString());
+
 
                     }
                     //평점 출력

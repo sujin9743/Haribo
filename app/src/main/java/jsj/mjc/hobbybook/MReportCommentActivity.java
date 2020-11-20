@@ -74,6 +74,7 @@ public class MReportCommentActivity extends AppCompatActivity{
                             for(QueryDocumentSnapshot doc : task.getResult()){
                                 Timestamp timestamp  = (Timestamp) doc.getData().get("inputtime");
                                 String date = dateFormatter.format(timestamp.toDate());
+
                                 MReportComment data = new MReportComment(doc.getId(), doc.get("mem_id").toString(), date, doc.get("brc_content").toString(),doc.getLong("brc_num").intValue(),doc.getLong("br_num").intValue());
                             mlist.add(data);
                             mReportCommentAdapter.notifyDataSetChanged();
