@@ -53,14 +53,13 @@
 
         <activity android:name=".MBookInfoDetail"/>
         <activity android:name=".MBookReportDetail"/>
-        <activity android:name=".MBookComment"/>
         <activity android:name=".MBookWriteMain"/>
         <activity android:name=".MHashTagSearch"/>
         <activity android:name=".MBookSearch"/>
         <activity android:name=".MReviewDialog"/>
         <activity android:name=".MCutOffDialog"/>
         <activity android:name=".MRealtimeBookreportRecycler"/>
-        <activity android:name=".MRealtimeBookreportAdapter"/>
+        <activity android:name=".MReportCommentActivity"/>
 
 
     </application>

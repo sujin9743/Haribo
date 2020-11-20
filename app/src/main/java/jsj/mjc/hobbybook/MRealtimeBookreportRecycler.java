@@ -48,9 +48,14 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
     MRealtime item;
     FirebaseFirestore rtBook_DB;
 
+    String loginId;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_realtime_bookreport_recycler);
+
+
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
+
 
 
         recyclerView = findViewById(R.id.mRecycler);
@@ -99,6 +104,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                                 i.putExtra("imMyFeed","0");
                                 i.putExtra("description", description);
                                 i.putExtra("br_num", br_num);
+                                i.putExtra(getResources().getString(R.string.lid), loginId);
                                 startActivity(i);
                             }
                         });

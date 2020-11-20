@@ -41,8 +41,8 @@ public class MBookReportDetail extends AppCompatActivity {
     LinearLayout forBookInfo,forReview,porfileLayout;
     CircleImageView profileImg;
 
-    FirebaseFirestore db= FirebaseFirestore.getInstance();;
-    StorageReference storageRef= FirebaseStorage.getInstance().getReference();;
+    FirebaseFirestore db= FirebaseFirestore.getInstance();
+    StorageReference storageRef= FirebaseStorage.getInstance().getReference();
     StorageReference imgRef;
 
     String doc;
@@ -54,6 +54,7 @@ public class MBookReportDetail extends AppCompatActivity {
     int br_num;
     Boolean open;
 
+    String mem_id_report;
     String review_max,review_max_mem;
     String mem_id;
     String mem_id_feed;
@@ -61,9 +62,13 @@ public class MBookReportDetail extends AppCompatActivity {
     int i =0;
     String memID;
 
+    String loginId;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_report_detail);
+
+        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
         backBtn = findViewById(R.id.backBtn);
         heartIcon = findViewById(R.id.heartIcon);
@@ -89,21 +94,15 @@ public class MBookReportDetail extends AppCompatActivity {
         final String bookre_num, br_title;
         String imSortText;
 
+        //피드에서 받아옴
         final Intent intent = getIntent();
         imSortText = intent.getStringExtra("imMyFeed");
         mem_id_feed = intent.getStringExtra("mem_id");
-
         imSort = Integer.parseInt(imSortText);
         bookre_num = intent.getStringExtra("bookre_num");
         br_title = intent.getStringExtra("br_title");
         bookInfo = intent.getStringExtra("description");
         mem_id = intent.getStringExtra(getResources().getString(R.string.mid));
-
-        //도서 상세 페이지에서 넘어옴
-        review_max = intent.getStringExtra("book_isbn");
-
-       // bookNum = intent.getStringExtra("br_num");
-       // br_num = Integer.parseInt(bookNum);
 
 
         if (imSort == 1) {
@@ -225,8 +224,17 @@ public class MBookReportDetail extends AppCompatActivity {
                             br_num =document.getLong("br_num").intValue();
                             open = document.getBoolean("open");
 
-                            intent.putExtra("br_num",br_num);
-                            intent.putExtra("mem_id",mem_id);
+                            final Intent intentComment = new Intent(getApplicationContext(), MReportCommentActivity.class);
+                            intentComment.putExtra("br_num",Integer.toString(br_num));
+                            intentComment.putExtra(getResources().getString(R.string.lid),loginId);
+                            //리뷰 페이지으로 이동
+                            forReview = findViewById(R.id.forReview);
+                            forReview.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                  startActivity(intentComment);
+                                }
+                            });
                         }
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
@@ -350,15 +358,7 @@ public class MBookReportDetail extends AppCompatActivity {
             });
 
 
-            //리뷰 페이지으로 이동
-            forReview = findViewById(R.id.forReview);
-            forReview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), MBookComment.class);
-                    startActivity(i);
-                }
-            });
+
         }
 
     }}
