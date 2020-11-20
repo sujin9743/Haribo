@@ -1,5 +1,6 @@
 package jsj.mjc.hobbybook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,8 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class MessageViewActivity extends AppCompatActivity {
-    FirebaseFirestore db;
-    String send,receive;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    String docId, loginId, userId;
+    Boolean isSend;
     TextView mView_sender,mView_receiver,mView_sendDate,mView_text;
 
     String receiver,sender;
@@ -49,13 +52,56 @@ public class MessageViewActivity extends AppCompatActivity {
         mView_text = findViewById(R.id.mView_text);
 
         Intent intent = getIntent();
-        send = intent.getStringExtra("send");
+        docId = intent.getStringExtra("docId");
+        loginId = intent.getStringExtra(getResources().getString(R.string.lid));
+        userId = intent.getStringExtra(getResources().getString(R.string.uid));
+        isSend = intent.getBooleanExtra("isSend", false);
 
-        //db를 시작해볼까나
-        db = FirebaseFirestore.getInstance();
+        mView_sendDate.setText(intent.getStringExtra("dateStr"));
+        mView_text.setText(intent.getStringExtra("mContent"));
 
+        if (isSend) {
+            db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        mView_sender.setText(doc.getString(getResources().getString(R.string.name)) + " > ");
+                    }
+                }
+            });
+            db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        mView_receiver.setText(doc.getString(getResources().getString(R.string.name)));
+                    }
+                }
+            });
+        } else {
 
-        db.collection("message").whereEqualTo("inputtime",send).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        mView_sender.setText(doc.getString(getResources().getString(R.string.name)) + " > ");
+                    }
+                }
+            });
+            db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        mView_receiver.setText(doc.getString(getResources().getString(R.string.name)));
+                    }
+                }
+            });
+        }
+
+        /*db.collection("message").whereEqualTo("inputtime",send).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -76,7 +122,7 @@ public class MessageViewActivity extends AppCompatActivity {
                     Log.d("TAG", "Error getting documents: ", task.getException());
                 }
             }
-        });
+        });*/
 
 
     }
@@ -96,16 +142,29 @@ public class MessageViewActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.overflow_report:
-                ReportDialog reportDialog = new ReportDialog(MessageViewActivity.this);
-                reportDialog.show();
-                break;
-            case R.id.overflow_block:
-                String blockUser;
-                blockUser = mView_receiver.getText().toString();
-                Toast.makeText(getApplicationContext(),blockUser+"님을 차단했습니다.",Toast.LENGTH_SHORT).show();
             case R.id.overflow_delete:
-                // TODO: 2020-11-18 샘플 데이터는 소중하니까.. 마지막에 할게요
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("삭제하시겠습니까?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        db.collection("message").document(docId).delete().addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("e", "message 데이터 삭제 실패" + e);
+                            }
+                        });
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
         }
         return super.onOptionsItemSelected(item);
     }

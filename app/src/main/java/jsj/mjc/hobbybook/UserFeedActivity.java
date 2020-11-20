@@ -172,6 +172,7 @@ public class UserFeedActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MessageSendActivity.class);
                 intent.putExtra(getResources().getString(R.string.uid), userId);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
                 startActivity(intent);
             }
         });
@@ -195,11 +196,6 @@ public class UserFeedActivity extends AppCompatActivity {
                 ReportDialog reportDialog = new ReportDialog(UserFeedActivity.this);
                 reportDialog.show();
                 return true;
-            case R.id.overflow_block: {
-                MCutOffDialog mCutOffDialog = new MCutOffDialog(UserFeedActivity.this);
-                mCutOffDialog.show();
-                return true;
-            }
             default:
                 return super.onOptionsItemSelected(item);
         }

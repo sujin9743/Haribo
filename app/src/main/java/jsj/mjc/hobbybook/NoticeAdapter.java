@@ -78,20 +78,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
                     switch (noticeList.get(position).getType()) {
                         case 1:
                             str = " 님이 회원님의 게시물을 좋아합니다.";
-                            Log.d("lll", "?");
                             break;
                         case 2:
                             str = " 님이 회원님을 팔로우합니다.";
-                            Log.d("lll", "??");
                             break;
                         case 3:
                         case 4:
                             str = " 님이 회원님의 게시물에 댓글을 남겼습니다.";
-                            Log.d("lll", "???");
                             break;
                         case 5:
                             str = " 님이 회원님의 댓글에 답글을 남겼습니다.";
-                            Log.d("lll", "????");
                             break;
                         default:
                     }

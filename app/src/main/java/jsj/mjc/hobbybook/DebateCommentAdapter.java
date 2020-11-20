@@ -165,10 +165,6 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                                         ReportDialog reportDialog = new ReportDialog(viewHolder.dCommentMoreBtn.getContext());
                                         reportDialog.show();
                                         return true;
-                                    case R.id.dcoption_block:
-                                        MCutOffDialog mCutOffDialog = new MCutOffDialog(viewHolder.dCommentMoreBtn.getContext());
-                                        mCutOffDialog.show();
-                                        return true;
                                     default:
                                         return false;
                                 }

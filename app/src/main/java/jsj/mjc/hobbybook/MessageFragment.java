@@ -20,43 +20,80 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MessageFragment extends Fragment {
     private ArrayList<Message> messageArrayList;
     private MessageAdapter messageAdapter;
-    Context mContext;
-
-    String doc;
-    String send,receive;
-    FirebaseFirestore db;
+    String loginId;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
+    Spinner spinner;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.message_recycler);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        loginId = MainActivity.loginId;
 
         messageArrayList = new ArrayList<>();
         messageAdapter = new MessageAdapter(messageArrayList);
         recyclerView.setAdapter(messageAdapter);
 
+        DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(gDividerItemDecoration);
+
+        messageAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                if (!messageArrayList.get(position).getSeen()) {
+                    messageArrayList.get(position).setSeen(true);
+                    db.collection("message").document(messageArrayList.get(position).getDocId()).update("seen", true);
+                }
+                Intent intent = new Intent(getContext(), MessageViewActivity.class);
+                intent.putExtra("docId", messageArrayList.get(position).getDocId());
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                if (messageArrayList.get(position).getmSender().equals(loginId)) {
+                    intent.putExtra("userId", messageArrayList.get(position).getmReciever());
+                    intent.putExtra("inSend", true);
+                } else {
+                    intent.putExtra("userId", messageArrayList.get(position).getmSender());
+                    intent.putExtra("inSend", false);
+                }
+                intent.putExtra("dateStr", messageArrayList.get(position).getmDate());
+                intent.putExtra("mContent", messageArrayList.get(position).getmText());
+                startActivity(intent);
+            }
+        });
+
         //chang
-        Spinner spinner = view.findViewById(R.id.message_spinner);
+        spinner = view.findViewById(R.id.message_spinner);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                 loadMessage();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
-
+/*
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             String s, r;
 
@@ -147,21 +184,6 @@ public class MessageFragment extends Fragment {
                                     }
                                 }
                             });
-
-
-
-                    /*
-                    messageArrayList.clear();
-                    for (int i = 0; i < 20; i++) {
-                        s = "보낸사람";
-                        r = " > 나";
-
-                        Message data = new Message("1", s, r, "2020.06.14 15:55", "이것은 쪽지 내용 미리 보기~ 아~ 과제 힘들다~ 하지만 해야 하지~ 시시싫어요 도망갈래");
-                        messageArrayList.add(data);
-                        messageAdapter.notifyDataSetChanged();
-
-
-                    } */
                 } else if (position == 2) {
 
                     messageArrayList.clear();
@@ -200,49 +222,45 @@ public class MessageFragment extends Fragment {
 
             }
         });
-
-        DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(mContext, linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(gDividerItemDecoration);
-
-        messageAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListenr() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Intent intent = new Intent(mContext, MessageViewActivity.class);
-                doc = messageArrayList.get(position).getmDate();
-                intent.putExtra("send",doc);
-                startActivity(intent);
-            }
-        });
-
+*/
         return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = context;
+    public void onResume() {
+        super.onResume();
+        loadMessage();
+    }
+
+    public void loadMessage() {
+        db.collection("message").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    messageArrayList.clear();
+                    for (DocumentSnapshot doc : task.getResult()) {
+                        boolean isOk = false;
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                isOk = true;
+                                break;
+                            case 1:
+                                if (doc.getString("receive_mem").equals(loginId)) isOk = true;
+                                break;
+                            case 2:
+                                if (doc.getString("send_mem").equals(loginId)) isOk = true;
+                                break;
+                        }
+                        if (isOk) {
+                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            String dateStr = dateFormatter.format(timestamp.toDate());
+                            Message data = new Message(doc.getId(),  doc.getString("send_mem"), doc.getString("receive_mem"), dateStr, doc.getString("msg_content"), doc.getBoolean("seen"));
+                            messageArrayList.add(data);
+                        }
+                    }
+                    messageAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }
-
-
-/*
-                    for (int i = 0; i < 20; i++) {
-                        int color;
-                        int j = (int) (Math.random() * 3);
-                        String s = "보낸사람";
-                        String r = " > 나";
-                        if (j == 1) {
-                            color = getResources().getColor(R.color.beige);
-                        } else {
-                            color = getResources().getColor(R.color.white);
-                            if (j == 2) {
-                                s = "나";
-                                r = " > 받는사람";
-                            }
-                        }
-
-                        Message data = new Message("" + color, s, r, "2020.06.14 15:55", "이것은 쪽지 내용 미리 보기~ 아~ 과제 힘들다~ 하지만 해야 하지~ 시시싫어요 도망갈래");
-                        messageArrayList.add(data);
-                        messageAdapter.notifyDataSetChanged();
-                    }
-                    */
