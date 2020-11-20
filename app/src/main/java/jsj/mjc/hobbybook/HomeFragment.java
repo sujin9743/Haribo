@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment {
 
     //Firebase 연동
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList isbnArray = new ArrayList();
     String isbn;
 
     @Nullable
@@ -156,22 +155,16 @@ public class HomeFragment extends Fragment {
         /*db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<String> isbnArray = new ArrayList<String>();
                 if(task.isSuccessful()) {
                     for(DocumentSnapshot doc : task.getResult()) {
                         isbnArray.add(doc.getString("book_isbn"));
                     }
 
-                    for(int i=0; i<isbnArray.size(); i++) {
-                        for(int j=i+1; j<i; i++) {
-                            if(isbnArray.get(i) == isbnArray.get(j)) {
-                                isbnArray.remove(j);
-                            }
-                        }
-                    }
 
                     for(int c=0; c<isbnArray.size(); c++) {
 
-                        Log.d("TAG", "isbn(i) : " + isbnArray.get(c));
+                        Log.d("TAG", "isbn" + c  + "=>" + isbnArray.get(c));
                     }
                 }
             }
