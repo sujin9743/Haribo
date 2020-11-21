@@ -70,7 +70,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
             this.profileText = itemView.findViewById(R.id.profileText);
             this.bookName = itemView.findViewById(R.id.bookName);
             this.likeCnt = itemView.findViewById(R.id.likeCnt);
-            this.commentCnt = itemView.findViewById(R.id.commentCnt);
+//            this.commentCnt = itemView.findViewById(R.id.commentCnt);
             this.bookImgPage = itemView.findViewById(R.id.bookImgPage);
             this.heart = itemView.findViewById(R.id.heart);
 
@@ -156,7 +156,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
         });
         holder.bookName.setText(mRealtime.get(position).getBrTitle());
         holder.likeCnt.setText(mRealtime.get(position).getLikeCnt());
-        holder.commentCnt.setText(mRealtime.get(position).getCommentCnt());
+//        holder.commentCnt.setText(mRealtime.get(position).getCommentCnt());
         Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getBookImgPage()).into(holder.bookImgPage);
         //holder.heart.setHeart(item.getHeart());
 
