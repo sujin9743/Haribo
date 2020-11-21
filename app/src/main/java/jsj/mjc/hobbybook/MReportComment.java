@@ -7,17 +7,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MReportComment{
 
-    String profileText,date,comment;
-    String docId;
-    int brcNum, brNum;
+    private String profileText,date,comment;
+    private String docId;
+    private int brcNum, brNum;
 
-    public MReportComment(String mem_id, int brc_num, int br_num, String content, String date, String id) {
-        this.profileText =mem_id;
-        this.brcNum = brc_num;
-        this.brNum = br_num;
-        this.comment = content;
-        this.date = date;
-        this.docId = id;
+    public MReportComment() {
     }
 
     public void setProfileText(String profileText) {

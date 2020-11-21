@@ -29,6 +29,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jsj.mjc.hobbybook.MReportComment;
 
 public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAdapter.ViewHolder>{
+
+    public int selected;
     private ArrayList<MReportComment> mReportCommentArrayList;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
