@@ -48,14 +48,9 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
     MRealtime item;
     FirebaseFirestore rtBook_DB;
 
-    String loginId;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_realtime_bookreport_recycler);
-
-
-        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
-
 
 
         recyclerView = findViewById(R.id.mRecycler);
@@ -70,6 +65,22 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         adapter = new MRealtimeBookreportAdapter(list);
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                String mem_id, br_title, description, br_num;
+                mem_id = list.get(position).getProfileText();
+                br_title = list.get(position).getBrTitle();
+                description = list.get(position).getBookInfo();
+                br_num = list.get(position).getBookNum();
+
+                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
+                i.putExtra(getResources().getString(R.string.lid), MainActivity.loginId);
+                i.putExtra("docId", list.get(position).getDocId());
+                startActivity(i);
+            }
+        });
+
         //firebase
         rtBook_DB = FirebaseFirestore.getInstance();
 
@@ -77,41 +88,18 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (int i = 0; i < task.getResult().size(); i++) {
-                        DocumentSnapshot doc = task.getResult().getDocuments().get(i);
+                    for (DocumentSnapshot doc : task.getResult()) {
+                        item = new MRealtime();
+                        item.setDocId(doc.getId());
                         item.setProfileText(doc.getData().get(getResources().getString(R.string.mid)).toString());
                         item.setBookImgPage(doc.getData().get("br_img").toString());
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         item.setBookInfo(doc.getData().get("book_description").toString());
                         item.setLikeCnt(doc.getData().get("book_like").toString());
 //                        item.setBookNum(doc.getData().get("br_num").toString());
-                        Log.d("TAG", "좋아요!!" + doc.getLong("book_like").intValue());
-
                         list.add(item);
-
-                        adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
-                            @Override
-                            public void onItemClick(View v, int position) {
-                                String mem_id, br_title, description, br_num;
-                                mem_id = list.get(position).getProfileText();
-                                br_title = list.get(position).getBrTitle();
-                                description = list.get(position).getBookInfo();
-                                br_num = list.get(position).getBookNum();
-
-                                Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
-                                i.putExtra(getResources().getString(R.string.mid),mem_id);
-                                i.putExtra("br_title",br_title);
-                                i.putExtra("imMyFeed","0");
-                                i.putExtra("description", description);
-                                i.putExtra("br_num", br_num);
-                                i.putExtra(getResources().getString(R.string.lid), loginId);
-                                startActivity(i);
-                            }
-                        });
-                        adapter.notifyDataSetChanged();
-                        item = new MRealtime();
-                        //adapter = new MRealtimeBookreportAdapter(list);
                     }
+                    adapter.notifyDataSetChanged();
                     //recyclerView.setAdapter(adapter);
                 }
             }
