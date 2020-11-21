@@ -65,7 +65,7 @@ public class MReportCommentActivity extends AppCompatActivity{
         brNumString = intent.getStringExtra("br_num");
         brNum = Integer.parseInt(brNumString);
 
-        mlist.clear();
+        //mlist.clear();
         db.collection("bookre_com").whereEqualTo("br_num",brNum).orderBy("brc_num").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -78,15 +78,15 @@ public class MReportCommentActivity extends AppCompatActivity{
                                 data = new MReportComment();
                                 data.setDocId(doc.getId());
                                 data.setProfileText(doc.getString("mem_id"));
-                                data.setDate(doc.get(date).toString());
+                                data.setDate(date);
                                 data.setComment(doc.getString("brc_content"));
                                 data.setBrcNum(doc.getLong("brc_num").intValue());
                                 data.setBrNum(doc.getLong("br_num").intValue());
                                 //MReportComment data = new MReportComment(doc.getId(), doc.get("mem_id").toString(), date, doc.get("brc_content").toString(),doc.getLong("brc_num").intValue(),doc.getLong("br_num").intValue());
                             mlist.add(data);
-                            mReportCommentAdapter.notifyDataSetChanged();
+                            //mReportCommentAdapter.notifyDataSetChanged();
                             }
-                            mReportCommentAdapter =  new MReportCommentAdapter(mlist);
+                            mReportCommentAdapter =  new MReportCommentAdapter(recyclerView.getContext(), mlist);
                             recyclerView.setAdapter(mReportCommentAdapter);
                         }
                     }

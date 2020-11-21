@@ -30,7 +30,7 @@ import jsj.mjc.hobbybook.MReportComment;
 public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAdapter.ViewHolder>{
     //private ArrayList<MReportComment> mReportCommentArrayList =null;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    //StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private LayoutInflater mInflater;
     private Context mContext;
@@ -64,8 +64,10 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
         }
     }
 
-    MReportCommentAdapter(ArrayList<MReportComment> list){
+    MReportCommentAdapter(Context context, ArrayList<MReportComment> list){
         this.mReportCommentArrayList = list;
+        this.mInflater = LayoutInflater.from(context);
+        this.mContext = context;
     }
 
     @NonNull
@@ -82,7 +84,7 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        StorageReference imgRef = storageRef.child("profile_img/"+mReportCommentArrayList.get(position).getProfileText()+".jpg");
+        /*StorageReference imgRef = storageRef.child("profile_img/"+mReportCommentArrayList.get(position).getProfileText()+".jpg");
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -93,7 +95,7 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
             public void onFailure(@NonNull Exception exception) {
                 Log.d("e", "프로필 사진 로드 실패 : " + exception);
             }
-        });
+        });*/
         db.collection("member").document(mReportCommentArrayList.get(position).getProfileText()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

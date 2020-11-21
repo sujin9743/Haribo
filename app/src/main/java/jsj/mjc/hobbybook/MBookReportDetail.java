@@ -355,7 +355,8 @@ public class MBookReportDetail extends AppCompatActivity {
             forReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), MBookComment.class);
+                    Intent i = new Intent(getApplicationContext(), MReportCommentActivity.class);
+                    i.putExtra("br_num", "8");
                     startActivity(i);
                 }
             });
