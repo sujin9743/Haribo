@@ -44,7 +44,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
     private static final int PICK_FROM_ALBUM=1;
     CircleImageView modify_profile_Img;
     EditText modify_id_edt, modify_pw_edt, modify_pwCk_edt, modify_email_id_edt;
-    TextView modify_del_tv, modify_pwReCk_txt;
+    TextView modify_del_tv, modify_pwReCk_txt, modify_email_txt;
     Button add_profile_Img;
     boolean pw_chk = false;
     StorageReference storageRef;
@@ -70,14 +70,16 @@ public class ModifyProfileActivity extends AppCompatActivity {
         modify_pw_edt = findViewById(R.id.modify_pw_edt);
         modify_pwCk_edt = findViewById(R.id.modify_pwCk_edt);
         modify_pwReCk_txt = findViewById(R.id.modify_pwReCk_txt);
-        modify_email_id_edt = findViewById(R.id.modify_email_id_edt);
+        modify_email_txt = findViewById(R.id.emailConTxt);
+
+        //modify_email_id_edt = findViewById(R.id.modify_email_id_edt);
 
         //이메일 Spinner 설정
-        modify_email_spinner = findViewById(R.id.modify_email_spinner); //이메일 spinner
+        /*modify_email_spinner = findViewById(R.id.modify_email_spinner); //이메일 spinner
         final ArrayAdapter<String> email_spinner_adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_text, (String[])getResources().getStringArray(R.array.email));
         email_spinner_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        modify_email_spinner.setAdapter(email_spinner_adapter);
+        modify_email_spinner.setAdapter(email_spinner_adapter);*/
 
         //갤러리 사진 받기
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -117,14 +119,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     if (doc.exists()) {
                         //TODO 사진 업로드
                         modify_id_edt.setText(doc.getString(getResources().getString(R.string.name)));
-                        modify_email_id_edt.setText(doc.getString("email_f"));
-                        int email_b_num = 0;
-                        for (int i = 0; i < getResources().getStringArray(R.array.email).length; i++) {
-                            modify_email_spinner.setSelection(i);
-                            if (modify_email_spinner.getSelectedItem().toString().equals(doc.getString("email_b")))
-                                email_b_num = i;
-                        }
-                        modify_email_spinner.setSelection(email_b_num);
+                        modify_email_txt.setText(doc.getString("email_f") + "@" + doc.getString("email_b"));
                     }
                 }
             }
