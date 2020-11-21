@@ -59,7 +59,7 @@ public class MBookInfoDetail extends AppCompatActivity {
     TextView upload;
     RatingBar stars,stars_show;
     EditText edt;
-    String isbn;
+    String isbn, loginId;
     Boolean deleted = true; //todo deleted, rv_num 수정 필요
     int rv_num = 0;
     int starsSum=0;
@@ -74,12 +74,7 @@ public class MBookInfoDetail extends AppCompatActivity {
         setContentView(R.layout.book_info_detail);
 
 
-
-
-
-
-
-
+        loginId = MainActivity.loginId;
 
         //댓글 리사이클러뷰
         recyclerView = findViewById(R.id.reviewLayout);
@@ -252,12 +247,11 @@ public class MBookInfoDetail extends AppCompatActivity {
                         long now = System.currentTimeMillis();;
                         Date formatDate = new Date(now);
 
-//todo 투진...isbn...넣어즁나ㅣ우ㅡ미
 
                         saveReview.put("book_isbn",isbn);
                         saveReview.put("deleted",deleted);
                         saveReview.put("inputtime",formatDate);
-                        saveReview.put("mem_id","test");
+                        saveReview.put("mem_id",loginId);
                         saveReview.put("rv_content",edt.getText().toString());
                         saveReview.put("rv_num",rv_num);
                         saveReview.put("stars",saveDStars);

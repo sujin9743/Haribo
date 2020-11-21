@@ -11,7 +11,7 @@ public class MReportComment{
     String docId;
     int brcNum, brNum;
 
-    public MReportComment(String id, String mem_id, String date, String brc_content, int brc_num, int br_num) {
+    /*public MReportComment(String id, String mem_id, String date, String brc_content, int brc_num, int br_num) {
         this.docId = id;
         this.profileText = mem_id;
         this.date = date;
@@ -19,7 +19,7 @@ public class MReportComment{
         this.brcNum = brc_num;
         this.brNum = br_num;
 
-    }
+    }*/
 
     public void setProfileText(String profileText) {
         this.profileText = profileText;

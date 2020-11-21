@@ -179,7 +179,26 @@ public class MBookReportDetail extends AppCompatActivity {
                 }
             });
 
+            //도서 정보 상세 페이지로 이동
+            forBookInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(), MBookInfoDetail.class);
+                    i.putExtra("title", bName);
+                    i.putExtra("image", bookImg);
+                    i.putExtra("author", bMaker);
+                    i.putExtra("description", bookInfo);
+                    i.putExtra("isbn", isbn);
+                    startActivity(i);
+                }
+            });
 
+            backBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
 
         } else{
             // TODO: 2020-11-17 whereEqualTo 2번째 인자 동적으로 바꿔야됨. 지금은 고정값임
@@ -288,6 +307,7 @@ public class MBookReportDetail extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(getApplicationContext(), UserFeedActivity.class);
+                    i.putExtra("userId", mem_id);
                     startActivity(i);
                 }
             });
@@ -355,7 +375,8 @@ public class MBookReportDetail extends AppCompatActivity {
             forReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), MBookComment.class);
+                    Intent i = new Intent(getApplicationContext(), MReportCommentActivity.class);
+                    i.putExtra("br_num", "8");
                     startActivity(i);
                 }
             });

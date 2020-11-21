@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignActivity"/>
+        <activity android:name=".AccessTermActivity"/>
+        <activity android:name=".PersonalInfoActivity"/>
         <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".SignCompleteActivity"/>
@@ -50,7 +52,7 @@
         <activity android:name=".MessageViewActivity"/>
         <activity android:name=".MessageSendActivity"/>
         <activity android:name=".MRealtimeBookReportSearch"/>
-
+        <activity android:name=".MReportCommentActivity"/>
         <activity android:name=".MBookInfoDetail"/>
         <activity android:name=".MBookReportDetail"/>
         <activity android:name=".MBookComment"/>

@@ -9,9 +9,7 @@ public class HobbyBookRanking {
     private String bookDesc;
     private String bookIsbn;
 
-    public String getRankingNum() {
-        return rankingNum;
-    }
+    public String getRankingNum() { return rankingNum; }
 
     public void setRankingNum(String rankingNum) {
         this.rankingNum = rankingNum;
@@ -21,9 +19,7 @@ public class HobbyBookRanking {
         return rankingImageUrl;
     }
 
-    public void setRankingImageUrl(String rankingImageUrl) {
-        this.rankingImageUrl = rankingImageUrl;
-    }
+    public void setRankingImageUrl(String rankingImageUrl) { this.rankingImageUrl = rankingImageUrl; }
 
     public String getRankingTitle() {
         return rankingTitle;
@@ -48,4 +44,8 @@ public class HobbyBookRanking {
     public void setBookIsbn(String bookIsbn) { this.bookIsbn = bookIsbn; }
 
     public String getBookIsbn() { return bookIsbn; }
+
+    public HobbyBookRanking(String num) {
+        this.rankingNum = num;
+    }
 }

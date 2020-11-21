@@ -58,7 +58,7 @@ public class HBRankingAdapter extends RecyclerView.Adapter<HBRankingAdapter.HBRa
     }
 
     public void removeHFItem(int position) { //HomeFragment
-        for(int i=0; i<5; i++) {
+        for(int i=5; i<6; i++) {
             rankingList.remove(position);
             notifyItemRemoved(position);
             notifyDataSetChanged();
@@ -66,7 +66,7 @@ public class HBRankingAdapter extends RecyclerView.Adapter<HBRankingAdapter.HBRa
     }
 
     public void removeRFItem(int position) { //RankingFragment
-        for(int i=0; i<20; i++) {
+        for(int i=20; i<21; i++) {
             rankingList.remove(position);
             notifyItemRemoved(position);
             notifyDataSetChanged();
@@ -90,7 +90,7 @@ public class HBRankingAdapter extends RecyclerView.Adapter<HBRankingAdapter.HBRa
     @Override
     public void onBindViewHolder(@NonNull HBRankingAdapter.HBRankingViewHolder viewHolder, int position) {
         viewHolder.rankingNumTv.setTag(position);
-        //viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
+        viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
         //viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
         viewHolder.rankingWriterTv.setText(rankingList.get(position).getRankingWriter());
