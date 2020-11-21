@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignActivity"/>
+        <activity android:name=".AccessTermActivity"/>
+        <activity android:name=".PersonalInfoActivity"/>
         <activity android:name=".SelectGenreActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".SignCompleteActivity"/>
