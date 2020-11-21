@@ -1,18 +1,19 @@
 package jsj.mjc.hobbybook;
 
 public class Message {
-    String mNum;
+    String docId;
     String mSender;
     String mReciever;
     String mDate;
     String mText;
+    Boolean seen;
 
-    public String getmNum() {
-        return mNum;
+    public String getDocId() {
+        return docId;
     }
 
-    public void setmNum(String mNum) {
-        this.mNum = mNum;
+    public void setDocId(String mNum) {
+        this.docId = mNum;
     }
 
     public String getmSender() {
@@ -47,11 +48,20 @@ public class Message {
         this.mText = mtext;
     }
 
-    Message(String mNum, String mSender, String mReciever, String mDate, String mText) {
-        this.mNum = mNum;
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Boolean mtext) {
+        this.seen = seen;
+    }
+
+    Message(String docId, String mSender, String mReciever, String mDate, String mText, Boolean seen) {
+        this.docId = docId;
         this.mSender = mSender;
         this.mReciever = mReciever;
         this.mDate = mDate;
         this.mText = mText;
+        this.seen = seen;
     }
 }

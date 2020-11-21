@@ -143,14 +143,14 @@ public class MyFeedFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        block_setting = v.findViewById(R.id.blocking_setting);
+        /*block_setting = v.findViewById(R.id.blocking_setting);
         block_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BlockUserListActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         genre_setting = v.findViewById(R.id.genre_setting);
         genre_setting.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,14 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/overflow_report"
-        android:title="신고"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/overflow_block"
-        android:title="차단"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/overflow_delete"
         android:title="삭제"
         app:showAsAction="never"/>

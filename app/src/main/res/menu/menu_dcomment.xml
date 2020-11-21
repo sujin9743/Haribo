@@ -9,8 +9,4 @@
         android:id="@+id/dcoption_report"
         android:title="신고"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/dcoption_block"
-        android:title="차단"
-        app:showAsAction="never"/>
 </menu>
