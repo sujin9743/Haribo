@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,9 @@ public class RecommendBookActivity extends AppCompatActivity {
     ArrayList<RecommendBookItem> booklist = new ArrayList<>();
     RecommendBookAdapter recommendBookAdapter;
     RecyclerView bookRc_recycler;
+    TextView tv;
+    ArrayList<Integer> loginGen;
+    ArrayList<String> textGen;
 
     String loginId;
 
@@ -63,8 +67,6 @@ public class RecommendBookActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     ArrayList<Integer> genre_array = new ArrayList<>();
     RecommendBookAsyncTask recommendBookAsyncTask;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class RecommendBookActivity extends AppCompatActivity {
 
         //RecyclerView
         bookRc_recycler = findViewById(R.id.bookRc_recycler);
+        tv = findViewById(R.id.txt);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         bookRc_recycler.setLayoutManager(linearLayoutManager);
@@ -100,15 +103,15 @@ public class RecommendBookActivity extends AppCompatActivity {
         rcBook_DB.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if(document.exists()) {
+                    if (document.exists()) {
                         HashMap map = (HashMap) document.getData();
                         Log.d("TAG", "data: " + map);
-                        for(int i=0; i<map.size()-1; i++) {
-                            String selectGenreNum = Integer.toString(i+1);
+                        for (int i = 0; i < map.size() - 1; i++) {
+                            String selectGenreNum = Integer.toString(i + 1);
                             String selectGenreBool = map.get(selectGenreNum).toString();
-                            if(selectGenreBool == "true") {
+                            if (selectGenreBool == "true") {
                                 switch (selectGenreNum) {
                                     //장르 여러 개 선택했을 때 구현해야 함
                                     case "1": {
@@ -210,10 +213,10 @@ public class RecommendBookActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        for(int i=0; i<genre_array.size(); i++) {
-                        Log.d("TAG", "data: " + genre_array.get(i));
+                        for (int i = 0; i < genre_array.size(); i++) {
+                            Log.d("TAG", "data: " + genre_array.get(i));
                         }
-                        for(int i=0; i<genre_array.size(); i++) {
+                        for (int i = 0; i < genre_array.size(); i++) {
                             recommendBookAsyncTask = new RecommendBookAsyncTask();
                             recommendBookAsyncTask.execute(genre_array.get(i));
                         }
@@ -223,6 +226,153 @@ public class RecommendBookActivity extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
+            }
+        });
+
+        loginGen = new ArrayList<>();
+        textGen = new ArrayList<>();
+
+        //todo. 본인이 선택한 장르 보여주기 textview
+        rcBook_DB.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                for (int i = 1; i <= 24; i++) {
+                    if (doc.getBoolean(String.valueOf(i)))
+                        loginGen.add(i);
+                }
+                String genre_name = null;
+                Log.d("rjc", "" + loginGen);
+                for (int i : loginGen) {
+                    switch (i) {
+                        case 1:
+                            genre_name = "가정/요리/뷰티";
+                            textGen.add(genre_name);
+                            break;
+                        case 2:
+                            genre_name = "건강/취미/레저";
+                            textGen.add(genre_name);
+                            break;
+                        case 3:
+                            genre_name = "경제경영";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 4:
+                            genre_name = "고 전";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 5:
+                            genre_name = "공무원 수험서";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 6:
+                            genre_name = "과학";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 7:
+                            genre_name = "대학교재/전문서적";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 8:
+                            genre_name = "만화";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 9:
+                            genre_name = "사회과학";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 10:
+                            genre_name = "소설/시/희곡";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 11:
+                            genre_name = "수험서/자격증";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 12:
+                            genre_name = "어린이";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 13:
+                            genre_name = "에세이";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 14:
+                            genre_name = "여 행";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 15:
+                            genre_name = "역 사";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 16:
+                            genre_name = "예술/대중문화";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 17:
+                            genre_name = "외국어";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 18:
+                            genre_name = "유아";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 19:
+                            genre_name = "인문학";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 20:
+                            genre_name = "자기계발";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 21:
+                            genre_name = "장르소설";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 22:
+                            genre_name = "잡 지";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 23:
+                            genre_name = "전집/중고전집";
+                            textGen.add(genre_name);
+                            break;
+
+                        case 24:
+                            genre_name = "종교/역학";
+                            textGen.add(genre_name);
+                            break;
+
+
+                    }
+                }
+
+                for(int i=0;i<textGen.size();i++)
+                    Log.d("rjc",""+textGen);
+                String a=""+textGen;
+                Log.d("rjc",""+a);
+                tv.setText("선호 장르 : "+a);
+
             }
         });
 
@@ -249,7 +399,8 @@ public class RecommendBookActivity extends AppCompatActivity {
         protected Integer doInBackground(Integer... values) {
 
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + dataKey +
-                    "&QueryType=ItemEditorChoice&CategoryId=" + values[0].intValue() + "&MaxResults=5&start=1&SearchTarget=Book&output=xml&Version=20131101";;
+                    "&QueryType=ItemEditorChoice&CategoryId=" + values[0].intValue() + "&MaxResults=5&start=1&SearchTarget=Book&output=xml&Version=20131101";
+            ;
 
             try {
                 URL url = new URL(requestUrl);
@@ -266,40 +417,35 @@ public class RecommendBookActivity extends AppCompatActivity {
                         case XmlPullParser.START_DOCUMENT:
                             break;
                         case XmlPullParser.START_TAG:
-                            if(parser.getName().equals("item")) {
+                            if (parser.getName().equals("item")) {
                                 bookItem = new RecommendBookItem();
-                            }
-                            else if(parser.getName().equals("cover")) {
+                            } else if (parser.getName().equals("cover")) {
                                 parser.next();
-                                if(bookItem!=null) bookItem.setBookImgUrl(parser.getText());
-                            }
-                            else if(parser.getName().equals("title")) {
+                                if (bookItem != null) bookItem.setBookImgUrl(parser.getText());
+                            } else if (parser.getName().equals("title")) {
                                 parser.next();
-                                if(bookItem!=null) bookItem.setBookTitle(parser.getText());
-                            }
-                            else if(parser.getName().equals("author")) {
+                                if (bookItem != null) bookItem.setBookTitle(parser.getText());
+                            } else if (parser.getName().equals("author")) {
                                 parser.next();
-                                if(bookItem!=null) bookItem.setBookWriter(parser.getText());
-                            }
-                            else if(parser.getName().equals("publisher")) {
+                                if (bookItem != null) bookItem.setBookWriter(parser.getText());
+                            } else if (parser.getName().equals("publisher")) {
                                 parser.next();
-                                if(bookItem!=null) bookItem.setBookPublisher(parser.getText());
-                            }
-                            else if(parser.getName().equals("customerReviewRank")) {
+                                if (bookItem != null) bookItem.setBookPublisher(parser.getText());
+                            } else if (parser.getName().equals("customerReviewRank")) {
                                 parser.next();
-                                if(bookItem!=null) bookRating = Float.parseFloat(parser.getText());
-                                bookItem.setBookRate(bookRating/2);
-                                bookItem.setBookRateTxt(String.valueOf(bookRating/2));
-                            }
-                            else if(parser.getName().equals("description")) {
+                                if (bookItem != null)
+                                    bookRating = Float.parseFloat(parser.getText());
+                                bookItem.setBookRate(bookRating / 2);
+                                bookItem.setBookRateTxt(String.valueOf(bookRating / 2));
+                            } else if (parser.getName().equals("description")) {
                                 parser.next();
-                                if(bookItem!=null) bookItem.setBookDesc(parser.getText());
+                                if (bookItem != null) bookItem.setBookDesc(parser.getText());
                             }
                             break;
                         case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
-                            if(parser.getName().equals("item") && bookItem != null) {
+                            if (parser.getName().equals("item") && bookItem != null) {
                                 booklist.add(bookItem);
                                 bookItem = new RecommendBookItem();
                             }

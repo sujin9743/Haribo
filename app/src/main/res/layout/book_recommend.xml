@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="70dp"
-        android:text="보다 정확한 추천을 위해 선호 장르를 선택해주세요."
+        android:text=""
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bookRc_toolbar"/>
 
