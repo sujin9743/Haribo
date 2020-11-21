@@ -9,9 +9,6 @@ public class DebateComment {
     String dcWriter;
     String dcDate;
 
-    public DebateComment(int dc_num, int receive_com, String dc_content, String mem_id, String dateStr) {
-    }
-
     public String getDocId() {
         return docId;
     }

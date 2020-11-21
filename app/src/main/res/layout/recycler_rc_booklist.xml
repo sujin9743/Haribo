@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        android:text="책 제목라라라라라라라"
         android:textColor="@color/darkGreen"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:text="지은이"
         android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@id/bookImg"
         app:layout_constraintTop_toBottomOf="@id/bookTitle"/>
@@ -44,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
-        android:text="출판사"
         android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@id/bookWirter"
         app:layout_constraintTop_toBottomOf="@id/bookTitle"/>
@@ -66,7 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"
-        android:text="(4.5)"
         android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@id/bookRate"
         app:layout_constraintTop_toBottomOf="@id/bookPublisher"/>

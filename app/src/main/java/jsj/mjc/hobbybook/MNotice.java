@@ -56,8 +56,28 @@ public class MNotice extends Fragment {
             @Override
             public void onItemClick(View v, final int position) {
                 switch (noticeArrayList.get(position).getType()) {
-                    case 1:
-                    case 4://독후감 이동
+                    case 4:
+                    case 6://독후감 이동
+                        intent = new Intent(getContext(), MBookReportDetail.class);
+                        intent.putExtra(getResources().getString(R.string.lid), loginId);
+                        intent.putExtra("docId", noticeArrayList.get(position).getDocId());
+                        startActivity(intent);
+                        db.collection("bookre").document(noticeArrayList.get(position).getDocId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot doc = task.getResult();
+                                    Intent i = new Intent(getContext(), MReportCommentActivity.class);
+                                    i.putExtra(getResources().getString(R.string.lid), loginId);
+                                    i.putExtra("docId", noticeArrayList.get(position).getDocId());
+                                    i.putExtra("brNum", doc.getLong("br_num").intValue());
+                                    i.putExtra("brWriter", doc.getString(getResources().getString(R.string.mid)));
+                                    startActivity(i);
+                                } else {
+                                    Log.d("lll", "토론글 로드 실패 : " + task.getException());
+                                }
+                            }
+                        });
                         break;
                     case 2://유저피드 이동
                         intent = new Intent(getContext(), UserFeedActivity.class);
