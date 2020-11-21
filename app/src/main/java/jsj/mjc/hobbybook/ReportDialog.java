@@ -3,12 +3,19 @@ package jsj.mjc.hobbybook;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReportDialog extends Dialog{
@@ -51,7 +58,21 @@ public class ReportDialog extends Dialog{
                 ok_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //db.collection("member").document(userId).get().addOnCompleteListener()
+                        db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot doc = task.getResult();
+                                    int report_c = doc.getLong("report_c").intValue() + 1;
+                                    db.collection("member").document(userId).update("report_c", report_c).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("e", "데이터 수정 실패 : " + e);
+                                        }
+                                    });
+                                }
+                            }
+                        });
                         Toast.makeText(mContext, "신고가 성공적으로 접수됐습니다.", Toast.LENGTH_SHORT).show();
                         dismiss();
                     }

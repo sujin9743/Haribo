@@ -194,6 +194,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 return true;
             case R.id.overflow_report:
                 ReportDialog reportDialog = new ReportDialog(UserFeedActivity.this);
+                reportDialog.userId = userId;
                 reportDialog.show();
                 return true;
             default:

@@ -163,6 +163,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                                         return true;
                                     case R.id.dcoption_report:
                                         ReportDialog reportDialog = new ReportDialog(viewHolder.dCommentMoreBtn.getContext());
+                                        reportDialog.userId = debateCommentList.get(position).getDcWriter();
                                         reportDialog.show();
                                         return true;
                                     default:

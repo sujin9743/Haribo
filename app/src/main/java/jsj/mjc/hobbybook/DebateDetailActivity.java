@@ -277,6 +277,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                 break;
             case R.id.overflow_report:
                 ReportDialog reportDialog = new ReportDialog(DebateDetailActivity.this);
+                reportDialog.userId = writerId;
                 reportDialog.show();
                 break;
         }
