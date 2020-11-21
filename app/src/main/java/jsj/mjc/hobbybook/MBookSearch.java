@@ -154,6 +154,7 @@ public class MBookSearch extends AppCompatActivity {
                         case XmlPullParser.END_TAG:
                             if(parser.getName().equals("item") && bookItem != null) {
                                 booklist.add(bookItem);
+                                bookItem = new RecommendBookItem();
                             }
                             break;
                         case XmlPullParser.END_DOCUMENT:
