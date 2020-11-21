@@ -35,9 +35,11 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class HomeFragment extends Fragment {
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment {
     private Context mContext;
     public static String selectedGenre;
     public static int selectGenreNum;
+    public static ArrayList<String> resultIsbn;
 
     //API연동
     final String TAG = "HomeFragment";
@@ -95,8 +98,8 @@ public class HomeFragment extends Fragment {
         //    gRankingArrayList.add(data);
         //}
 
-        //for (count = 1; count <= max; count++) {
-        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
+        //for (count = 1; count <= 5; count++) {
+        //    HobbyBookRanking data = new HobbyBookRanking(Integer.toString(count));
         //    hbbRankingArrayList.add(data);
         //}
 
@@ -159,7 +162,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 ArrayList<String> isbnArray = new ArrayList<>();
-                ArrayList<String> resultIsbn;
                 ArrayList<Float> starArray = new ArrayList<>();
                 int count=0, sumStars=0;
                 float avgStars, max;
@@ -173,11 +175,6 @@ public class HomeFragment extends Fragment {
                     //isbn중복제거
                     HashSet<String> duplicateData = new HashSet<>(isbnArray);
                     resultIsbn = new ArrayList<>(duplicateData);
-
-                    for (int c = 0; c < resultIsbn.size(); c++) {
-
-                        Log.d("TAG", "isbn" + c + "=>" + resultIsbn.get(c));
-                    }
 
                     //isbn별 평점 계산
                     for (String i : resultIsbn) {
@@ -193,6 +190,7 @@ public class HomeFragment extends Fragment {
                         count = 0; sumStars = 0;
                     }
 
+                    //평점 순 정렬(내림차순)
                     for(int i=0; i<resultIsbn.size(); i++) {
                         for (int j = i +1; j < resultIsbn.size(); j++) {
                             if (starArray.get(j) > starArray.get(i)) {
@@ -206,12 +204,14 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     }
-                    for(int i=0; i<5; i++) {
-                        Log.d("TAG","isbn = > " + resultIsbn.get(i) + " 평점 => " + starArray.get(i));
-                    }
-                    for(int i=0; i<5; i++) {
+
+                    for(int i=0; i<resultIsbn.size(); i++)
+                    Log.d("TAG", "ISBN" + i +  "=>" + resultIsbn.get(i) + " 평점=>" + starArray.get(i));
+
+                    for(int i=0; i<resultIsbn.size(); i++) {
+                        String num = Integer.toString(i+1);
                         HobbyBookBestAsyncTask hobbyBookBestAsyncTask = new HobbyBookBestAsyncTask();
-                        hobbyBookBestAsyncTask.execute(resultIsbn.get(i));
+                        hobbyBookBestAsyncTask.execute(resultIsbn.get(i), num);
                     }
                 }
             }
@@ -339,6 +339,8 @@ public class HomeFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
 
+            String rankingNum = strings[1];
+
             requestUrl = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=" + dataKey + "&itemIdType=ISBN&ItemId=" +
                     strings[0] + "&output=xml&Version=20131101";
 
@@ -358,7 +360,7 @@ public class HomeFragment extends Fragment {
                             break;
                         case XmlPullParser.START_TAG:
                             if(parser.getName().equals("item")) {
-                                hItem = new HobbyBookRanking();
+                                hItem = new HobbyBookRanking(rankingNum);
                             }
                             else if(parser.getName().equals("title")) {
                                 parser.next();
@@ -386,6 +388,7 @@ public class HomeFragment extends Fragment {
                         case XmlPullParser.END_TAG:
                             if(parser.getName().equals("item") && hItem != null) {
                                 hbbRankingArrayList.add(hItem);
+                                hItem = new HobbyBookRanking(rankingNum);
                             }
                             break;
                         case XmlPullParser.END_DOCUMENT:
@@ -409,7 +412,7 @@ public class HomeFragment extends Fragment {
 
             hbbRankingAdapter = new HBRankingAdapter(mContext, hbbRankingArrayList);
             if(hbbRankingArrayList.size() > 5) {
-                hbbRankingAdapter.removeHFItem(0);
+                hbbRankingAdapter.removeHFItem(5);
             }
             hbbRecyclerView.setAdapter(hbbRankingAdapter);
 
