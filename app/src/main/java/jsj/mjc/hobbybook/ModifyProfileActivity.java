@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,11 +40,12 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ModifyProfileActivity extends AppCompatActivity {
-    Spinner modify_email_spinner;
+    TextView modify_email_spinner;
     String loginId;
     private static final int PICK_FROM_ALBUM=1;
     CircleImageView modify_profile_Img;
-    EditText modify_id_edt, modify_pw_edt, modify_pwCk_edt, modify_email_id_edt;
+    EditText modify_id_edt, modify_pw_edt, modify_pwCk_edt;
+    TextView modify_email_id_edt;
     TextView modify_del_tv, modify_pwReCk_txt, modify_email_txt;
     Button add_profile_Img;
     boolean pw_chk = false;
@@ -71,7 +73,8 @@ public class ModifyProfileActivity extends AppCompatActivity {
         modify_pwCk_edt = findViewById(R.id.modify_pwCk_edt);
         modify_pwReCk_txt = findViewById(R.id.modify_pwReCk_txt);
         modify_email_txt = findViewById(R.id.emailConTxt);
-
+        modify_email_id_edt = findViewById(R.id.emailTxt);
+        modify_email_spinner = findViewById(R.id.emailConTxt);
         //modify_email_id_edt = findViewById(R.id.modify_email_id_edt);
 
         //이메일 Spinner 설정
@@ -185,8 +188,9 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     }
                 }
                 if (pw_chk) {
+
                     user.put("email_f", modify_email_id_edt.getText().toString());
-                    user.put("email_b", modify_email_spinner.getSelectedItem().toString());
+                    user.put("email_b", modify_email_spinner.getText().toString());
 
                     db.collection("member").document(loginId).update(user).addOnFailureListener(new OnFailureListener() {
                         @Override
