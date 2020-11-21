@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment = new HomeFragment();
     MessageFragment messageFragment = new MessageFragment();
     RankingFragment rankingFragment = new RankingFragment();
+    HBRankingFragment hbRankingFragment = new HBRankingFragment();
     MyFeedFragment myFeedFragment = new MyFeedFragment();
     MNotice mNotice = new MNotice();
     Toolbar mainToolbar, moreToolbar;
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
     //하비북 사용자 순위 더보기 클릭 시
     public void moreHBBClick(View v) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_frameLayout, rankingFragment).commit();
+        transaction.replace(R.id.main_frameLayout, hbRankingFragment).commit();
         mainToolbar.setVisibility(View.INVISIBLE);
         moreToolbar.setVisibility(View.VISIBLE);
         inHome = false;

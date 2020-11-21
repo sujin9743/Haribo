@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,9 +25,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
-
-
-
+    private ArrayList<Message> messageList;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public interface OnItemClickListenr {
         void onItemClick(View v, int position);
@@ -38,17 +38,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         this.messageListener = listener;
     }
 
-    private ArrayList<Message> messageList;
-
     public class MessageViewHolder extends RecyclerView.ViewHolder {
         protected TextView messageSenderTv;
         protected TextView messageRecieverTv;
         protected TextView messageDateTv;
         protected TextView messageTextTv;
-        protected Layout mLayout;
-
-
-
+        protected ConstraintLayout mLayout;
 
         public MessageViewHolder(View view) {
             super(view);
@@ -56,6 +51,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             this.messageRecieverTv = view.findViewById(R.id.message_receiver);
             this.messageDateTv = view.findViewById(R.id.message_sendDate);
             this.messageTextTv = view.findViewById(R.id.message_text);
+            this.mLayout = view.findViewById(R.id.mLayout);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,10 +64,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     }
                 }
             });
-
-
-
-
         }
     }
 
@@ -88,13 +80,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageViewHolder viewHolder, int position) {
-        viewHolder.messageSenderTv.setText(messageList.get(position).getmSender());
-        viewHolder.messageRecieverTv.setText(messageList.get(position).getmReciever());
+    public void onBindViewHolder(@NonNull final MessageViewHolder viewHolder, int position) {
+        db.collection("member").document(messageList.get(position).getmSender()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    viewHolder.messageSenderTv.setText(doc.getString(viewHolder.messageSenderTv.getContext().getResources().getString(R.string.name)) + " > ");
+                }
+            }
+        });
+        db.collection("member").document(messageList.get(position).getmReciever()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    viewHolder.messageRecieverTv.setText(doc.getString(viewHolder.messageRecieverTv.getContext().getResources().getString(R.string.name)));
+                }
+            }
+        });
         viewHolder.messageDateTv.setText(messageList.get(position).getmDate());
         viewHolder.messageTextTv.setText(messageList.get(position).getmText());
-
-        viewHolder.itemView.setBackgroundColor(Integer.parseInt(messageList.get(position).getmNum()));
+        if (!messageList.get(position).getSeen())
+            viewHolder.mLayout.setBackgroundColor(viewHolder.mLayout.getContext().getResources().getColor(R.color.beige));
+        else viewHolder.mLayout.setBackground(null);
     }
 
     public int getItemCount() {

@@ -115,6 +115,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                 public void onClick(View view) {
                     Intent intent = new Intent(viewHolder.dcWriterIv.getContext(), UserFeedActivity.class);
                     intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.uid), debateCommentList.get(position).getDcWriter());
+                    intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.lid), MainActivity.loginId);
                     viewHolder.dcWriterIv.getContext().startActivity(intent);
                 }
             });
@@ -124,6 +125,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                 public void onClick(View view) {
                     Intent intent = new Intent(viewHolder.dcWriterTv.getContext(), UserFeedActivity.class);
                     intent.putExtra(viewHolder.dcWriterTv.getContext().getString(R.string.uid), debateCommentList.get(position).getDcWriter());
+                    intent.putExtra(viewHolder.dcWriterTv.getContext().getResources().getString(R.string.lid), MainActivity.loginId);
                     viewHolder.dcWriterTv.getContext().startActivity(intent);
                 }
             });
@@ -162,10 +164,6 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                                     case R.id.dcoption_report:
                                         ReportDialog reportDialog = new ReportDialog(viewHolder.dCommentMoreBtn.getContext());
                                         reportDialog.show();
-                                        return true;
-                                    case R.id.dcoption_block:
-                                        MCutOffDialog mCutOffDialog = new MCutOffDialog(viewHolder.dCommentMoreBtn.getContext());
-                                        mCutOffDialog.show();
                                         return true;
                                     default:
                                         return false;

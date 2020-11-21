@@ -35,30 +35,35 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class HomeFragment extends Fragment {
     private ArrayList<Ranking> gRankingArrayList = new ArrayList<>();
-    private ArrayList<Ranking> hbbRankingArrayList;
-    private RankingAdapter gRankingAdapter, hbbRankingAdapter;
+    private ArrayList<HobbyBookRanking> hbbRankingArrayList = new ArrayList<>();
+    private RankingAdapter gRankingAdapter;
+    private HBRankingAdapter hbbRankingAdapter;
     RecyclerView gRecyclerView, hbbRecyclerView;
     private int count;
     private int max = 5; //불러올 순위 수
     private Context mContext;
     public static String selectedGenre;
     public static int selectGenreNum;
+    public static ArrayList<String> resultIsbn;
 
     //API연동
     final String TAG = "HomeFragment";
     public String dataKey = "ttbw_wowoo1406002";
     Ranking item = null;
+    HobbyBookRanking hItem = null;
     String requestUrl;
 
     //Firebase 연동
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList isbnArray = new ArrayList();
     String isbn;
 
     @Nullable
@@ -79,35 +84,35 @@ public class HomeFragment extends Fragment {
         //gRankingAdapter = new RankingAdapter(getContext(), gRankingArrayList);
         //gRecyclerView.setAdapter(gRankingAdapter);
 
-        hbbRankingArrayList = new ArrayList<>();
-        hbbRankingAdapter = new RankingAdapter(getContext(), hbbRankingArrayList);
-        hbbRecyclerView.setAdapter(hbbRankingAdapter);
+        //hbbRankingArrayList = new ArrayList<>();
+        //hbbRankingAdapter = new HBRankingAdapter(getContext(), hbbRankingArrayList);
+        //hbbRecyclerView.setAdapter(hbbRankingAdapter);
 
         DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(mContext, gLinearLayoutManager.getOrientation());
         gRecyclerView.addItemDecoration(gDividerItemDecoration);
 
         DividerItemDecoration hbbDividerItemDecoration = new DividerItemDecoration(mContext, hbbLinearLayoutManager.getOrientation());
-        gRecyclerView.addItemDecoration(hbbDividerItemDecoration);
+        hbbRecyclerView.addItemDecoration(hbbDividerItemDecoration);
         //for (count = 1; count <= max; count++) {
         //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
         //    gRankingArrayList.add(data);
         //}
 
-        //for (count = 1; count <= max; count++) {
-        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
+        //for (count = 1; count <= 5; count++) {
+        //    HobbyBookRanking data = new HobbyBookRanking(Integer.toString(count));
         //    hbbRankingArrayList.add(data);
         //}
 
         //gRankingAdapter.notifyDataSetChanged();
-        hbbRankingAdapter.notifyDataSetChanged();
+        //hbbRankingAdapter.notifyDataSetChanged();
 
-        hbbRankingAdapter.setOnItemClickListener(new RankingAdapter.OnItemClickListenr() {
+        /*hbbRankingAdapter.setOnItemClickListener(new HBRankingAdapter.OnItemClickListenr() {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(mContext, MBookInfoDetail.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         //장르 선택 스피너
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -153,29 +158,64 @@ public class HomeFragment extends Fragment {
         });
 
         //하비북 베스트도서
-        /*db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("review").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<String> isbnArray = new ArrayList<>();
+                ArrayList<Float> starArray = new ArrayList<>();
+                int count=0, sumStars=0;
+                float avgStars, max;
+                String maxIsbn;
+
                 if(task.isSuccessful()) {
-                    for(DocumentSnapshot doc : task.getResult()) {
+                    for (DocumentSnapshot doc : task.getResult()) {
                         isbnArray.add(doc.getString("book_isbn"));
                     }
 
-                    for(int i=0; i<isbnArray.size(); i++) {
-                        for(int j=i+1; j<i; i++) {
-                            if(isbnArray.get(i) == isbnArray.get(j)) {
-                                isbnArray.remove(j);
+                    //isbn중복제거
+                    HashSet<String> duplicateData = new HashSet<>(isbnArray);
+                    resultIsbn = new ArrayList<>(duplicateData);
+
+                    //isbn별 평점 계산
+                    for (String i : resultIsbn) {
+                        for (DocumentSnapshot doc : task.getResult()) {
+                            String isbn = doc.getString("book_isbn");
+                            if (i.equals(isbn)) {
+                                sumStars += doc.getLong("stars").intValue();
+                                count++;
+                            }
+                        }
+                        avgStars = (float) sumStars/count;
+                        starArray.add(Float.parseFloat(String.format("%.1f", avgStars)));
+                        count = 0; sumStars = 0;
+                    }
+
+                    //평점 순 정렬(내림차순)
+                    for(int i=0; i<resultIsbn.size(); i++) {
+                        for (int j = i +1; j < resultIsbn.size(); j++) {
+                            if (starArray.get(j) > starArray.get(i)) {
+                                max = starArray.get(j);
+                                starArray.set(j, starArray.get(i));
+                                starArray.set(i, max);
+
+                                maxIsbn = resultIsbn.get(j);
+                                resultIsbn.set(j, resultIsbn.get(i));
+                                resultIsbn.set(i, maxIsbn);
                             }
                         }
                     }
 
-                    for(int c=0; c<isbnArray.size(); c++) {
+                    for(int i=0; i<resultIsbn.size(); i++)
+                    Log.d("TAG", "ISBN" + i +  "=>" + resultIsbn.get(i) + " 평점=>" + starArray.get(i));
 
-                        Log.d("TAG", "isbn(i) : " + isbnArray.get(c));
+                    for(int i=0; i<resultIsbn.size(); i++) {
+                        String num = Integer.toString(i+1);
+                        HobbyBookBestAsyncTask hobbyBookBestAsyncTask = new HobbyBookBestAsyncTask();
+                        hobbyBookBestAsyncTask.execute(resultIsbn.get(i), num);
                     }
                 }
             }
-        });*/
+        });
 
         return view;
     }
@@ -280,6 +320,111 @@ public class HomeFragment extends Fragment {
                     author = gRankingArrayList.get(position).getRankingWriter();
                     description = gRankingArrayList.get(position).getBookDesc();
                     isbn = gRankingArrayList.get(position).getBookIsbn();
+
+                    Intent intent = new Intent(mContext, MBookInfoDetail.class);
+                    intent.putExtra("title", title);
+                    intent.putExtra("image", image);
+                    intent.putExtra("author", author);
+                    intent.putExtra("description", description);
+                    intent.putExtra("isbn", isbn);
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    //알라딘 API에서 데이터 불러오기(하비북 랭킹)
+    public class HobbyBookBestAsyncTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String rankingNum = strings[1];
+
+            requestUrl = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=" + dataKey + "&itemIdType=ISBN&ItemId=" +
+                    strings[0] + "&output=xml&Version=20131101";
+
+            try {
+                URL url = new URL(requestUrl);
+                InputStream is = url.openStream();
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+
+                XmlPullParser parser = factory.newPullParser();
+                parser.setInput(new InputStreamReader(is, "UTF-8"));
+
+                int eventType = parser.getEventType();
+
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    switch (eventType) {
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
+                        case XmlPullParser.START_TAG:
+                            if(parser.getName().equals("item")) {
+                                hItem = new HobbyBookRanking(rankingNum);
+                            }
+                            else if(parser.getName().equals("title")) {
+                                parser.next();
+                                if(hItem!=null) hItem.setRankingTitle(parser.getText());
+                            }
+                            else if(parser.getName().equals("author")) {
+                                parser.next();
+                                if(hItem!=null) hItem.setRankingWriter(parser.getText());
+                            }
+                            else if(parser.getName().equals("cover")) {
+                                parser.next();
+                                if(hItem!=null) hItem.setRankingImageUrl(parser.getText());
+                            }
+                            else if(parser.getName().equals("description")) {
+                                parser.next();
+                                if(hItem!=null) hItem.setBookDesc(parser.getText());
+                            }
+                            else if(parser.getName().equals("isbn")) {
+                                parser.next();
+                                if(hItem!=null) hItem.setBookIsbn(parser.getText());
+                            }
+                            break;
+                        case XmlPullParser.TEXT:
+                            break;
+                        case XmlPullParser.END_TAG:
+                            if(parser.getName().equals("item") && hItem != null) {
+                                hbbRankingArrayList.add(hItem);
+                                hItem = new HobbyBookRanking(rankingNum);
+                            }
+                            break;
+                        case XmlPullParser.END_DOCUMENT:
+                            break;
+                    }
+                    eventType = parser.next();
+                }
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            hbbRankingAdapter = new HBRankingAdapter(mContext, hbbRankingArrayList);
+            if(hbbRankingArrayList.size() > 5) {
+                hbbRankingAdapter.removeHFItem(5);
+            }
+            hbbRecyclerView.setAdapter(hbbRankingAdapter);
+
+            hbbRankingAdapter.setOnItemClickListener(new HBRankingAdapter.OnItemClickListenr() {
+                @Override
+                public void onItemClick(View v, int position) { //책 누르면 도서 상세페이지로 이동
+                    String title, image, author, description, isbn;
+                    title = hbbRankingArrayList.get(position).getRankingTitle();
+                    image = hbbRankingArrayList.get(position).getRankingImageUrl();
+                    author = hbbRankingArrayList.get(position).getRankingWriter();
+                    description = hbbRankingArrayList.get(position).getBookDesc();
+                    isbn = hbbRankingArrayList.get(position).getBookIsbn();
 
                     Intent intent = new Intent(mContext, MBookInfoDetail.class);
                     intent.putExtra("title", title);

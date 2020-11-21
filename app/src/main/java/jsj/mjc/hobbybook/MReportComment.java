@@ -7,55 +7,62 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MReportComment{
 
-    private String profileText,date,comment;
-    private String docId;
-    private int brcNum, brNum;
+    String profileText,date,comment;
+    String docId;
+    int brcNum, brNum;
 
-    public MReportComment() {
-    }
+    /*public MReportComment(String id, String mem_id, String date, String brc_content, int brc_num, int br_num) {
+        this.docId = id;
+        this.profileText = mem_id;
+        this.date = date;
+        this.comment = brc_content;
+        this.brcNum = brc_num;
+        this.brNum = br_num;
+
+    }*/
 
     public void setProfileText(String profileText) {
         this.profileText = profileText;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public void setBrcNum(int brcNum) {
-        this.brcNum = brcNum;
-    }
-
-    public void setBrNum(int brNum) {
-        this.brNum = brNum;
-    }
-
-    public void setDocId(String docId) {
-        this.docId = docId;
     }
 
     public String getProfileText() {
         return profileText;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getDate() {
         return date;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setBrcNum(int brcNum) {
+        this.brcNum = brcNum;
     }
 
     public int getBrcNum() {
         return brcNum;
     }
 
+    public void setBrNum(int brNum) {
+        this.brNum = brNum;
+    }
+
     public int getBrNum() {
         return brNum;
     }
 
-    public String getComment() {
-        return comment;
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public String getDocId() {

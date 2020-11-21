@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -50,6 +53,7 @@ public class UserFeedActivity extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
     int following, follower, read;
+    Map<String, Object> follow = new HashMap<>(), notice = new HashMap<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +79,47 @@ public class UserFeedActivity extends AppCompatActivity {
                     followBtn.setText("팔로우");
                     isFollow = false;
                     follower_count_txt.setText(String.valueOf(follower-1));
+                    db.collection("follow").whereEqualTo("followee", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot doc : task.getResult()) {
+                                    if (doc.getString("follower").equals(loginId)) {
+                                        db.collection("follow").document(doc.getId()).delete().addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("e", "follow 데이터 삭제 실패 : ", e);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    });
                 }else {
                     followBtn.setBackgroundResource(R.drawable.round_btn_gray);
                     followBtn.setText("팔로잉");
                     isFollow = true;
                     follower_count_txt.setText(String.valueOf(follower+1));
+                    follow.put("follower", loginId);
+                    follow.put("followee", userId);
+                    db.collection("follow").add(follow).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("e", "follow 데이터 등록 실패 : ", e);
+                        }
+                    });
+                    notice.put("docId", userId);
+                    notice.put("send_mem", loginId);
+                    notice.put(getResources().getString(R.string.mid), userId);
+                    notice.put("type", 2);
+                    notice.put("inputtime", new Date());
+                    db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("e", "notice 데이터 등록 실패 : ", e);
+                        }
+                    });
                 }
             }
         });
@@ -132,6 +172,7 @@ public class UserFeedActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MessageSendActivity.class);
                 intent.putExtra(getResources().getString(R.string.uid), userId);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
                 startActivity(intent);
             }
         });
@@ -155,11 +196,6 @@ public class UserFeedActivity extends AppCompatActivity {
                 ReportDialog reportDialog = new ReportDialog(UserFeedActivity.this);
                 reportDialog.show();
                 return true;
-            case R.id.overflow_block: {
-                MCutOffDialog mCutOffDialog = new MCutOffDialog(UserFeedActivity.this);
-                mCutOffDialog.show();
-                return true;
-            }
             default:
                 return super.onOptionsItemSelected(item);
         }

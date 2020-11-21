@@ -127,7 +127,7 @@ public class MBookWriteMain extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
                                     int brNum = doc.getLong("br_num").intValue() + 1;
-                                    saveReport.put("br_Num", brNum);
+                                    saveReport.put("br_num", brNum);
                                 }
                             } else {
                                 Log.d("lll", "독후감 로드 오류 : ", task.getException());

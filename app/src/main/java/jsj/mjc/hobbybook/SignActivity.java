@@ -59,7 +59,7 @@ public class SignActivity extends AppCompatActivity {
     Button id_Ck_Btn, sign_btn;
     EditText id_Edt, pw_Edt, pw_Ck_Edt, pw_CkQA_Edt, email_id_edt, email_num_edt;
     CheckBox clause_Ck, info_Ck;
-    TextView pw_ReCk_Txt, id_Ck_Txt;
+    TextView pw_ReCk_Txt, id_Ck_Txt, access_term_btn, personal_info_btn;
     boolean id_chk = false, pw_chk = false, email_chk = false;
     LayoutInflater layoutInflater;
     //firebase firestore 선언(지은)
@@ -82,6 +82,8 @@ public class SignActivity extends AppCompatActivity {
         info_Ck = findViewById(R.id.info_Ck);
         pw_ReCk_Txt = findViewById(R.id.pw_ReCk_Txt);
         id_Ck_Txt = findViewById(R.id.id_Ck_Txt);
+        access_term_btn = findViewById(R.id.access_term_btn);
+        personal_info_btn = findViewById(R.id.personal_info_btn);
 
         //비밀번호 확인 Spinner 설정
         pw_spinner = findViewById(R.id.pwQ_spinner); //비밀번호 확인 질문 spinner
@@ -130,6 +132,22 @@ public class SignActivity extends AppCompatActivity {
                         } else Log.d("e", "데이터 조회 실패", task.getException());
                     }
                 });
+            }
+        });
+
+        access_term_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AccessTermActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        personal_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PersonalInfoActivity.class);
+                startActivity(intent);
             }
         });
 
