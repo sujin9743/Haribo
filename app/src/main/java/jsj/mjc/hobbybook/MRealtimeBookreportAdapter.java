@@ -1,6 +1,7 @@
 package jsj.mjc.hobbybook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.text.Layout;
 import android.util.Log;
@@ -156,6 +157,15 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
         });
         holder.bookName.setText(mRealtime.get(position).getBrTitle());
         holder.likeCnt.setText(mRealtime.get(position).getLikeCnt());
+        holder.profileImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.profileImg.getContext(),UserFeedActivity.class);
+                intent.putExtra("userId",mRealtime.get(position).getProfileText());
+                intent.putExtra("loginId",MainActivity.loginId);
+                holder.profileImg.getContext().startActivity(intent);
+            }
+        });
 //        holder.commentCnt.setText(mRealtime.get(position).getCommentCnt());
         Glide.with(holder.itemView.getContext()).load(mRealtime.get(position).getBookImgPage()).into(holder.bookImgPage);
         //holder.heart.setHeart(item.getHeart());
