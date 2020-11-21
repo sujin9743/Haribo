@@ -46,10 +46,12 @@ public class MReportCommentActivity extends AppCompatActivity{
 
     RecyclerView recyclerView = null;
     MReportCommentAdapter mReportCommentAdapter = null;
-    ArrayList<MReportComment> mlist = new ArrayList<MReportComment>();
+    ArrayList<MReportComment> mlist = new ArrayList<>();
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     String brNumString, memID;
     int brNum;
+    MReportComment data = null;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_book_comment);
@@ -58,8 +60,6 @@ public class MReportCommentActivity extends AppCompatActivity{
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),1));
-        mReportCommentAdapter =  new MReportCommentAdapter(mlist);
-        recyclerView.setAdapter(mReportCommentAdapter);
 
         Intent intent = getIntent();
         brNumString = intent.getStringExtra("br_num");
@@ -75,10 +75,19 @@ public class MReportCommentActivity extends AppCompatActivity{
                                 Timestamp timestamp  = (Timestamp) doc.getData().get("inputtime");
                                 String date = dateFormatter.format(timestamp.toDate());
 
-                                MReportComment data = new MReportComment(doc.getId(), doc.get("mem_id").toString(), date, doc.get("brc_content").toString(),doc.getLong("brc_num").intValue(),doc.getLong("br_num").intValue());
+                                data = new MReportComment();
+                                data.setDocId(doc.getId());
+                                data.setProfileText(doc.getString("mem_id"));
+                                data.setDate(doc.get(date).toString());
+                                data.setComment(doc.getString("brc_content"));
+                                data.setBrcNum(doc.getLong("brc_num").intValue());
+                                data.setBrNum(doc.getLong("br_num").intValue());
+                                //MReportComment data = new MReportComment(doc.getId(), doc.get("mem_id").toString(), date, doc.get("brc_content").toString(),doc.getLong("brc_num").intValue(),doc.getLong("br_num").intValue());
                             mlist.add(data);
                             mReportCommentAdapter.notifyDataSetChanged();
                             }
+                            mReportCommentAdapter =  new MReportCommentAdapter(mlist);
+                            recyclerView.setAdapter(mReportCommentAdapter);
                         }
                     }
                 });

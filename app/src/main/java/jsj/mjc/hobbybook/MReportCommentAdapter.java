@@ -28,27 +28,60 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jsj.mjc.hobbybook.MReportComment;
 
 public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAdapter.ViewHolder>{
-    private ArrayList<MReportComment> mReportCommentArrayList =null;
+    //private ArrayList<MReportComment> mReportCommentArrayList =null;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    MReportCommentAdapter(ArrayList<MReportComment> list){
-        mReportCommentArrayList = list;
+    private LayoutInflater mInflater;
+    private Context mContext;
+
+    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
+        void onItemClick(View v, int position);
     }
+
+    private OnItemClickListenr mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListenr listener) {
+        this.mListener = listener;
+    }
+
+    private ArrayList<MReportComment> mReportCommentArrayList;
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView profileImg;
+        TextView profileText;
+        ImageButton overflowBtn;
+        TextView date,comment;
+
+        public ViewHolder(@NonNull View item) {
+            super(item);
+
+            profileText = item.findViewById(R.id.profileText);
+            overflowBtn = item.findViewById(R.id.overflowBtn);
+            date = item.findViewById(R.id.date);
+            comment = item.findViewById(R.id.comment);
+
+        }
+    }
+
+    MReportCommentAdapter(ArrayList<MReportComment> list){
+        this.mReportCommentArrayList = list;
+    }
+
     @NonNull
     @Override
-    public MReportCommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.m_report_comment_item, parent, false);
-        MReportCommentAdapter.ViewHolder vh = new MReportCommentAdapter.ViewHolder(view);
+        ViewHolder vh = new ViewHolder(view);
 
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MReportCommentAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         StorageReference imgRef = storageRef.child("profile_img/"+mReportCommentArrayList.get(position).getProfileText()+".jpg");
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -75,7 +108,7 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
         holder.date.setText(mReportCommentArrayList.get(position).getDate());
         holder.comment.setText(mReportCommentArrayList.get(position).getComment());
 
-        MReportComment item = mReportCommentArrayList.get(position);
+        //MReportComment item = mReportCommentArrayList.get(position);
 
 
     }
@@ -85,20 +118,4 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
         return mReportCommentArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView profileImg;
-        TextView profileText;
-        ImageButton overflowBtn;
-        TextView date,comment;
-
-        public ViewHolder(@NonNull View item) {
-            super(item);
-
-            profileText = item.findViewById(R.id.profileText);
-            overflowBtn = item.findViewById(R.id.overflowBtn);
-            date = item.findViewById(R.id.date);
-            comment = item.findViewById(R.id.comment);
-
-        }
-    }
 }
