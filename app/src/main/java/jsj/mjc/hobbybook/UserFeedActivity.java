@@ -68,7 +68,6 @@ public class UserFeedActivity extends AppCompatActivity {
         user_id = findViewById(R.id.user_id);
         userFeed_profileImg = findViewById(R.id.userFeed_profileImg);
 
-        //조민주 추가 : 팔로잉 버튼 클릭 반응 기능
         followBtn = findViewById(R.id.follow_btn);
         followBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -48,6 +48,7 @@ public class MBookReportDetail extends AppCompatActivity {
 
     String docId, loginId, writerId;
     Boolean isLike = false;
+    int brNum;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +114,7 @@ public class MBookReportDetail extends AppCompatActivity {
                     Glide.with(getApplicationContext()).load(doc.getString("br_img")).into(bookImgPage);
                     heartCnt.setText(String.valueOf(doc.getLong("book_like").intValue()));
                     writerId = doc.getString(getResources().getString(R.string.mid));
+                    brNum = doc.getLong("br_num").intValue();
 
                     //도서 정보 상세 페이지로 이동
                     forBookInfo.setOnClickListener(new View.OnClickListener() {
@@ -219,7 +221,10 @@ public class MBookReportDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MReportCommentActivity.class);
-                i.putExtra("br_num", "8");
+                i.putExtra(getResources().getString(R.string.lid), loginId);
+                i.putExtra("docId", docId);
+                i.putExtra("brNum", brNum);
+                i.putExtra("brWriter", writerId);
                 startActivity(i);
             }
         });

@@ -87,6 +87,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
                             str = " 님이 회원님의 게시물에 댓글을 남겼습니다.";
                             break;
                         case 5:
+                        case 6:
                             str = " 님이 회원님의 댓글에 답글을 남겼습니다.";
                             break;
                         default:

@@ -1,15 +1,21 @@
 package jsj.mjc.hobbybook;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -27,97 +33,160 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jsj.mjc.hobbybook.MReportComment;
 
-public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAdapter.ViewHolder>{
-    //private ArrayList<MReportComment> mReportCommentArrayList =null;
+public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAdapter.MReportCommentViewHolder>{
+    private ArrayList<MReportComment> commentList;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    public int selected = -1;
 
-    private LayoutInflater mInflater;
-    private Context mContext;
+    public class MReportCommentViewHolder extends RecyclerView.ViewHolder {
+        protected ConstraintLayout dc_layout;
+        protected TextView dcWriterTv;
+        protected TextView dcDateTv;
+        protected TextView dcTextTv;
+        protected CircleImageView dcWriterIv;
+        protected ImageView reCommentIv;
+        protected ImageButton dCommentMoreBtn;  //조민주
 
-    public interface OnItemClickListenr {  //RecyclerView 항목별 클릭 구현
-        void onItemClick(View v, int position);
-    }
+        public MReportCommentViewHolder(View view) {
+            super(view);
+            this.dc_layout = view.findViewById(R.id.dc_layout);
+            this.dcWriterTv = view.findViewById(R.id.dComment_writer_tv);
+            this.dcDateTv = view.findViewById(R.id.dComment_date_tv);
+            this.dcTextTv = view.findViewById(R.id.dComment_text_tv);
+            this.dcWriterIv = view.findViewById(R.id.dComment_iv);
+            this.reCommentIv = view.findViewById(R.id.dReply_iv);
+            this.dCommentMoreBtn = view.findViewById(R.id.dComment_more_btn);
 
-    private OnItemClickListenr mListener = null;
+            dCommentMoreBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-    public void setOnItemClickListener(OnItemClickListenr listener) {
-        this.mListener = listener;
-    }
-
-    private ArrayList<MReportComment> mReportCommentArrayList;
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView profileImg;
-        TextView profileText;
-        ImageButton overflowBtn;
-        TextView date,comment;
-
-        public ViewHolder(@NonNull View item) {
-            super(item);
-
-            profileText = item.findViewById(R.id.profileText);
-            overflowBtn = item.findViewById(R.id.overflowBtn);
-            date = item.findViewById(R.id.date);
-            comment = item.findViewById(R.id.comment);
-
+                }
+            });
         }
     }
 
-    MReportCommentAdapter(Context context, ArrayList<MReportComment> list){
-        this.mReportCommentArrayList = list;
-        this.mInflater = LayoutInflater.from(context);
-        this.mContext = context;
+    public MReportCommentAdapter(ArrayList<MReportComment> list) {
+        this.commentList = list;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View view = inflater.inflate(R.layout.m_report_comment_item, parent, false);
-        ViewHolder vh = new ViewHolder(view);
-
-        return vh;
+    public MReportCommentAdapter.MReportCommentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_debate_comment, viewGroup, false);
+        MReportCommentAdapter.MReportCommentViewHolder viewHolder = new MReportCommentAdapter.MReportCommentViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        /*StorageReference imgRef = storageRef.child("profile_img/"+mReportCommentArrayList.get(position).getProfileText()+".jpg");
-        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(holder.profileImg.getContext()).load(uri).into(holder.profileImg);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
-            }
-        });*/
-        db.collection("member").document(mReportCommentArrayList.get(position).getProfileText()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot doc = task.getResult();
-                    if(doc.exists()){
-                        holder.profileText.setText(doc.getString(holder.profileText.getContext().getResources().getString(R.string.name)));
+    public void onBindViewHolder(@NonNull final MReportCommentAdapter.MReportCommentViewHolder viewHolder, final int position) {
+        if (commentList.get(position).getCDate().equals(viewHolder.dcWriterTv.getResources().getString(R.string.empty))) {
+            viewHolder.dcWriterTv.setText(commentList.get(position).getCWriter());
+            viewHolder.dCommentMoreBtn.setVisibility(View.INVISIBLE);
+            viewHolder.dcWriterIv.setImageResource(R.drawable.ic_outline_person_outline_24);
+        }
+        else {
+            StorageReference imgRef = storageRef.child("profile_img/" + commentList.get(position).getCWriter() +".jpg");
+            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(viewHolder.dcWriterIv.getContext()).load(uri).into(viewHolder.dcWriterIv);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                }
+            });
+            db.collection("member").document(commentList.get(position).getCWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc.exists()) {
+                            viewHolder.dcWriterTv.setText(doc.getString(viewHolder.dcWriterTv.getContext().getResources().getString(R.string.name)));
+                        }
                     }
                 }
-            }
-        });
-        holder.date.setText(mReportCommentArrayList.get(position).getDate());
-        holder.comment.setText(mReportCommentArrayList.get(position).getComment());
+            });
+            viewHolder.dcDateTv.setText(commentList.get(position).getCDate());
+            viewHolder.dcWriterIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(viewHolder.dcWriterIv.getContext(), UserFeedActivity.class);
+                    intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.uid), commentList.get(position).getCWriter());
+                    intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.lid), MainActivity.loginId);
+                    viewHolder.dcWriterIv.getContext().startActivity(intent);
+                }
+            });
 
-        //MReportComment item = mReportCommentArrayList.get(position);
+            viewHolder.dcWriterTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(viewHolder.dcWriterTv.getContext(), UserFeedActivity.class);
+                    intent.putExtra(viewHolder.dcWriterTv.getContext().getString(R.string.uid), commentList.get(position).getCWriter());
+                    intent.putExtra(viewHolder.dcWriterTv.getContext().getResources().getString(R.string.lid), MainActivity.loginId);
+                    viewHolder.dcWriterTv.getContext().startActivity(intent);
+                }
+            });
 
+            viewHolder.dCommentMoreBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(viewHolder.dCommentMoreBtn.getContext(), viewHolder.dCommentMoreBtn);
+                    if (commentList.get(position).getCWriter().equals(MReportCommentActivity.mReportCommentActivity.loginId)) {
+                        popup.inflate(R.menu.menu_mydcomment);
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.dcoption_del:
+                                        db.collection("bookre_com").document(commentList.get(position).docId).update("deleted", true);
+                                        MReportCommentActivity.mReportCommentActivity.setCommentList();
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                    } else {
+                        popup.inflate(R.menu.menu_dcomment);
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.dcoption_reply:
+                                        MReportCommentActivity.mReportCommentActivity.c_bundle = commentList.get(position).getCBundle();
+                                        MReportCommentActivity.mReportCommentActivity.recieve_com = commentList.get(position).getCNum();
+                                        selected = position;
+                                        notifyDataSetChanged();
+                                        return true;
+                                    case R.id.dcoption_report:
+                                        ReportDialog reportDialog = new ReportDialog(viewHolder.dCommentMoreBtn.getContext());
+                                        reportDialog.userId = commentList.get(position).getCWriter();
+                                        reportDialog.show();
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                    }
+                    popup.show();
+                }
+            });
+        }
+        viewHolder.dcTextTv.setText(commentList.get(position).getCText());
+        if (position == selected)
+            viewHolder.dc_layout.setBackgroundColor(viewHolder.dc_layout.getContext().getResources().getColor(R.color.beige));
+        else viewHolder.dc_layout.setBackground(null);
 
+        if (commentList.get(position).getRcNum() != 0)
+            viewHolder.reCommentIv.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public int getItemCount() {
-        return mReportCommentArrayList.size();
+        return (null != commentList ? commentList.size() : 0);
     }
-
 }

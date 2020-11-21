@@ -217,7 +217,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                                 db.collection("debate_com").add(comment).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d("e", "user 데이터 등록 실패 : ", e);
+                                        Log.d("e", "debate_com 데이터 등록 실패 : ", e);
                                     }
                                 });
                                 if (recieve_com == 0) {
