@@ -9,6 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class ReportDialog extends Dialog{
     private Context mContext;
 
@@ -18,6 +20,8 @@ public class ReportDialog extends Dialog{
     RadioGroup radioGroup;
     RadioButton [] radioButtons = new RadioButton[cNum];
     static int [] rbtnIds = new int[cNum];
+    public String userId;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public ReportDialog(Context context) {
         super(context);
@@ -47,6 +51,7 @@ public class ReportDialog extends Dialog{
                 ok_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //db.collection("member").document(userId).get().addOnCompleteListener()
                         Toast.makeText(mContext, "신고가 성공적으로 접수됐습니다.", Toast.LENGTH_SHORT).show();
                         dismiss();
                     }

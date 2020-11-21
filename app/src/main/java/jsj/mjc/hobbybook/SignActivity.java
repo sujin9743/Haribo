@@ -56,10 +56,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SignActivity extends AppCompatActivity {
     Spinner pw_spinner, email_spinner;
     ImageButton sign_backBtn;
-    Button id_Ck_Btn, sign_btn;
+    Button id_Ck_Btn, email_ck_btn, sign_btn;
     EditText id_Edt, pw_Edt, pw_Ck_Edt, pw_CkQA_Edt, email_id_edt, email_num_edt;
     CheckBox clause_Ck, info_Ck;
-    TextView pw_ReCk_Txt, id_Ck_Txt, access_term_btn, personal_info_btn;
+    TextView pw_ReCk_Txt, id_Ck_Txt, email_Ck_Txt, access_term_btn, personal_info_btn;
     boolean id_chk = false, pw_chk = false, email_chk = false;
     LayoutInflater layoutInflater;
     //firebase firestore 선언(지은)
@@ -77,7 +77,7 @@ public class SignActivity extends AppCompatActivity {
         pw_Ck_Edt = findViewById(R.id.pw_Ck_Edt);
         pw_CkQA_Edt = findViewById(R.id.pw_CkQA_Edt);
         email_id_edt = findViewById(R.id.email_id_edt);
-        email_num_edt = findViewById(R.id.email_num_edt);
+        email_Ck_Txt = findViewById(R.id.email_Ck_Txt);
         clause_Ck = findViewById(R.id.clause_Ck);
         info_Ck = findViewById(R.id.info_Ck);
         pw_ReCk_Txt = findViewById(R.id.pw_ReCk_Txt);
@@ -135,6 +135,31 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
+        //이메일 중복확인 버튼
+        email_ck_btn = findViewById(R.id.email_ck_btn);
+        email_ck_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email_chk = true;
+                email_Ck_Txt.setVisibility(View.VISIBLE);
+                db.collection("member").whereEqualTo("email_f", email_id_edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult()) {
+                                if (email_spinner.getSelectedItem().toString().equals(doc.getString("email_b"))) {
+                                    email_Ck_Txt.setText("이메일을 사용할 수 없습니다.");
+                                    email_chk = false;
+                                }
+                            }
+                        } else Log.d("e", "데이터 조회 실패", task.getException());
+                    }
+                });
+                if (email_chk)
+                    email_Ck_Txt.setText("사용 가능한 이메일입니다.");
+            }
+        });
+
         access_term_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +191,7 @@ public class SignActivity extends AppCompatActivity {
                 }
                 if (id_Edt.getText().toString().equals(getResources().getString(R.string.empty)) || pw_Edt.getText().toString().equals(getResources().getString(R.string.empty))
                         || pw_CkQA_Edt.getText().toString().equals(getResources().getString(R.string.empty)) || email_id_edt.getText().toString().equals(getResources().getString(R.string.empty))
-                        || !id_chk || !pw_chk || !clause_Ck.isChecked() || !info_Ck.isChecked()) {
+                        || !id_chk || !pw_chk || !email_chk|| !clause_Ck.isChecked() || !info_Ck.isChecked()) {
                     Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     //member 컬렉션 데이터 등록

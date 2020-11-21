@@ -64,7 +64,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //recyclerView 구분선 추가
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
 
         item = new MRealtime();
         adapter = new MRealtimeBookreportAdapter(list);
