@@ -269,6 +269,16 @@ public class UserFeedActivity extends AppCompatActivity {
         if (followBtn.getText().equals("팔로잉")) isFollow = true;
         //독서 기록, 독후감 로드
         uF_readBookList.clear();
+        //RecyclerView 항목 클릭 구현
+        uF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(UserFeedActivity.this, MBookReportDetail.class);
+                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                intent.putExtra("docId", uF_readBookList.get(position).getbookReNum());
+                startActivity(intent);
+            }
+        });
         db.collection("bookre").whereEqualTo(getResources().getString(R.string.mid), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -277,16 +287,6 @@ public class UserFeedActivity extends AppCompatActivity {
                         if (doc.getBoolean("open")) {
                             FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString("br_img"));
                             uF_readBookList.add(data);
-                            //RecyclerView 항목 클릭 구현
-                            uF_feedReadBookAdapter.setOnItemClickListener(new FeedReadBookAdapter.OnItemClickListenr() {
-                                @Override
-                                public void onItemClick(View v, int position) {
-                                    Intent intent = new Intent(UserFeedActivity.this, MBookReportDetail.class);
-                                    intent.putExtra("bookre_num", uF_readBookList.get(position).getbookReNum());
-                                    intent.putExtra("imMyFeed","1");
-                                    startActivity(intent);
-                                }
-                            });
                         }
                         read++;
                     }
