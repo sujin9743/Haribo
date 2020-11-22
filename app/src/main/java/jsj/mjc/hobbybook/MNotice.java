@@ -60,21 +60,21 @@ public class MNotice extends Fragment {
                     case 6://독후감 이동
                         intent = new Intent(getContext(), MBookReportDetail.class);
                         intent.putExtra(getResources().getString(R.string.lid), loginId);
-                        intent.putExtra("docId", noticeArrayList.get(position).getDocId());
+                        intent.putExtra(getString(R.string.did), noticeArrayList.get(position).getDocId());
                         startActivity(intent);
-                        db.collection("bookre").document(noticeArrayList.get(position).getDocId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        db.collection(getString(R.string.br)).document(noticeArrayList.get(position).getDocId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot doc = task.getResult();
                                     Intent i = new Intent(getContext(), MReportCommentActivity.class);
                                     i.putExtra(getResources().getString(R.string.lid), loginId);
-                                    i.putExtra("docId", noticeArrayList.get(position).getDocId());
-                                    i.putExtra("brNum", doc.getLong("br_num").intValue());
-                                    i.putExtra("brWriter", doc.getString(getResources().getString(R.string.mid)));
+                                    i.putExtra(getString(R.string.did), noticeArrayList.get(position).getDocId());
+                                    i.putExtra(getString(R.string.brn), doc.getLong(getString(R.string.br_n)).intValue());
+                                    i.putExtra(getString(R.string.brw), doc.getString(getResources().getString(R.string.mid)));
                                     startActivity(i);
                                 } else {
-                                    Log.d("lll", "토론글 로드 실패 : " + task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                                 }
                             }
                         });
@@ -86,19 +86,19 @@ public class MNotice extends Fragment {
                         break;
                     case 3:
                     case 5://토론글 이동
-                        db.collection("debate").document(noticeArrayList.get(position).getDocId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        db.collection(getString(R.string.dbt)).document(noticeArrayList.get(position).getDocId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot doc = task.getResult();
                                     intent = new Intent(getContext(), DebateDetailActivity.class);
                                     intent.putExtra(getResources().getString(R.string.lid), loginId);
-                                    intent.putExtra("docId", noticeArrayList.get(position).getDocId());
-                                    intent.putExtra("debateNum", doc.getLong("d_num").intValue());
-                                    intent.putExtra("debateWriter", doc.getString(getResources().getString(R.string.mid)));
+                                    intent.putExtra(getString(R.string.did), noticeArrayList.get(position).getDocId());
+                                    intent.putExtra(getString(R.string.dbtn), doc.getLong(getString(R.string.dn)).intValue());
+                                    intent.putExtra(getString(R.string.dWriter), doc.getString(getResources().getString(R.string.mid)));
                                     startActivity(intent);
                                 } else {
-                                    Log.d("lll", "토론글 로드 실패 : " + task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                                 }
                             }
                         });
@@ -119,18 +119,18 @@ public class MNotice extends Fragment {
     public void onResume() {
         super.onResume();
         noticeArrayList.clear();
-        db.collection("notice").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.ntc)).whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot doc : task.getResult()) {
-                        Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                        Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                         String dateStr = dateFormatter.format(timestamp.toDate());
-                        Notice data = new Notice(doc.getString("docId"), doc.getString("send_mem"), dateStr, doc.getLong("type").intValue());
+                        Notice data = new Notice(doc.getString(getString(R.string.did)), doc.getString(getString(R.string.sm)), dateStr, doc.getLong(getString(R.string.tp)).intValue());
                         noticeArrayList.add(data);
                     }
                 } else {
-                    Log.d("lll", "알림 로드 실패 : " + task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                 }
                 noticeAdapter.notifyDataSetChanged();
             }

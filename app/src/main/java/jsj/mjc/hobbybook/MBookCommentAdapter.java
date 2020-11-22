@@ -70,7 +70,7 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
         MBookCom item = mlist.get(position);
 
         id = item.getProfileText();
-        db.collection("member").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(holder.itemView.getContext().getResources().getString(R.string.mem)).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()) {
@@ -82,7 +82,7 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
             }
         });
         //프로필 사진 출력
-        StorageReference imgRef = storageRef.child("profile_img/" + id + ".jpg");
+        StorageReference imgRef = storageRef.child(holder.itemView.getContext().getResources().getString(R.string.pimg) + id + holder.itemView.getContext().getResources().getString(R.string.jpg));
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -91,7 +91,7 @@ public class MBookCommentAdapter extends RecyclerView.Adapter<MBookCommentAdapte
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(holder.itemView.getContext().getResources().getString(R.string.logTag), holder.itemView.getContext().getResources().getString(R.string.dataLoadError) + exception);
             }
         });
 

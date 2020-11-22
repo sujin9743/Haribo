@@ -40,6 +40,7 @@ public class MessageFragment extends Fragment {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     Spinner spinner;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -63,20 +64,20 @@ public class MessageFragment extends Fragment {
             public void onItemClick(View v, int position) {
                 if (!messageArrayList.get(position).getSeen()) {
                     messageArrayList.get(position).setSeen(true);
-                    db.collection("message").document(messageArrayList.get(position).getDocId()).update("seen", true);
+                    db.collection(getString(R.string.msg)).document(messageArrayList.get(position).getDocId()).update(getString(R.string.seen), true);
                 }
                 Intent intent = new Intent(getContext(), MessageViewActivity.class);
-                intent.putExtra("docId", messageArrayList.get(position).getDocId());
-                intent.putExtra(getResources().getString(R.string.lid), loginId);
+                intent.putExtra(getString(R.string.did), messageArrayList.get(position).getDocId());
+                intent.putExtra(getString(R.string.lid), loginId);
                 if (messageArrayList.get(position).getmSender().equals(loginId)) {
-                    intent.putExtra("userId", messageArrayList.get(position).getmReciever());
-                    intent.putExtra("inSend", true);
+                    intent.putExtra(getString(R.string.uid), messageArrayList.get(position).getmReciever());
+                    intent.putExtra(getString(R.string.isSend), true);
                 } else {
-                    intent.putExtra("userId", messageArrayList.get(position).getmSender());
-                    intent.putExtra("inSend", false);
+                    intent.putExtra(getString(R.string.uid), messageArrayList.get(position).getmSender());
+                    intent.putExtra(getString(R.string.isSend), false);
                 }
-                intent.putExtra("dateStr", messageArrayList.get(position).getmDate());
-                intent.putExtra("mContent", messageArrayList.get(position).getmText());
+                intent.putExtra(getString(R.string.dstr), messageArrayList.get(position).getmDate());
+                intent.putExtra(getString(R.string.mCon), messageArrayList.get(position).getmText());
                 startActivity(intent);
             }
         });
@@ -86,10 +87,12 @@ public class MessageFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
-                 loadMessage();
+                loadMessage();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
         return view;
     }
@@ -101,7 +104,7 @@ public class MessageFragment extends Fragment {
     }
 
     public void loadMessage() {
-        db.collection("message").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.msg)).whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -113,16 +116,18 @@ public class MessageFragment extends Fragment {
                                 isOk = true;
                                 break;
                             case 1:
-                                if (doc.getString("receive_mem").equals(loginId)) isOk = true;
+                                if (doc.getString(getString(R.string.rmem)).equals(loginId))
+                                    isOk = true;
                                 break;
                             case 2:
-                                if (doc.getString("send_mem").equals(loginId)) isOk = true;
+                                if (doc.getString(getString(R.string.sm)).equals(loginId))
+                                    isOk = true;
                                 break;
                         }
                         if (isOk) {
-                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
-                            Message data = new Message(doc.getId(),  doc.getString("send_mem"), doc.getString("receive_mem"), dateStr, doc.getString("msg_content"), doc.getBoolean("seen"));
+                            Message data = new Message(doc.getId(), doc.getString(getString(R.string.sm)), doc.getString(getString(R.string.rmem)), dateStr, doc.getString(getString(R.string.msgCon)), doc.getBoolean(getString(R.string.seen)));
                             messageArrayList.add(data);
                         }
                     }

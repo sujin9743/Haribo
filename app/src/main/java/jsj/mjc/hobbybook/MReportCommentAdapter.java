@@ -87,7 +87,7 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
             viewHolder.dcWriterIv.setImageResource(R.drawable.ic_outline_person_outline_24);
         }
         else {
-            StorageReference imgRef = storageRef.child("profile_img/" + commentList.get(position).getCWriter() +".jpg");
+            StorageReference imgRef = storageRef.child(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.pimg) + commentList.get(position).getCWriter() +viewHolder.dcWriterIv.getContext().getResources().getString(R.string.jpg));
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -96,10 +96,10 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                    Log.d(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.logTag), viewHolder.dcWriterIv.getContext().getResources().getString(R.string.dataLoadError) + exception);
                 }
             });
-            db.collection("member").document(commentList.get(position).getCWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.mem)).document(commentList.get(position).getCWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -140,7 +140,7 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.dcoption_del:
-                                        db.collection("bookre_com").document(commentList.get(position).docId).update("deleted", true);
+                                        db.collection(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.brc)).document(commentList.get(position).docId).update(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.isDel), true);
                                         MReportCommentActivity.mReportCommentActivity.setCommentList();
                                         return true;
                                     default:

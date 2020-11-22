@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         mainToolbar.setVisibility(View.INVISIBLE);
         moreToolbar.setVisibility(View.VISIBLE);
         inHome = false;
-        rankingToolbarText.setText("하비북 베스트셀러");
+        rankingToolbarText.setText(R.string.Hbest);
     }
 
     public void goHome() { //홈 화면으로 이동하는 함수

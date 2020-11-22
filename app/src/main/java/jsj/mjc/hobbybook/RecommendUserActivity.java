@@ -46,12 +46,6 @@ public class RecommendUserActivity extends AppCompatActivity {
     ArrayList<Integer> loginGen;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     RecyclerView userRc_recycler;
-    /*UserlistItem[] data;
-    String[] list,arrlist,mam;
-    ArrayList<String> newData;
-    ArrayList<String> noRearrayList;
-    ArrayList<String> arrayList;
-    RecyclerView userRc_recycler;*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +87,7 @@ public class RecommendUserActivity extends AppCompatActivity {
 
         loginGen = new ArrayList<>();
 
-        db.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(getString(R.string.cate)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -103,27 +97,27 @@ public class RecommendUserActivity extends AppCompatActivity {
                             loginGen.add(i);
                     }
                     if (loginGen.size() == 0) {
-                        db.collection("member").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        db.collection(getString(R.string.mem)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     int cnt = 0;
                                     for (DocumentSnapshot doc : task.getResult()) {
                                         if (!loginId.equals(doc.getId())) {
-                                            User data = new User(doc.getString("id"));
+                                            User data = new User(doc.getString(getString(R.string.id)));
                                             userlist.add(data);
                                         }
                                         if (cnt >= 20)
                                             break;
                                     }
                                 }else {
-                                    Log.d("lll", "회원 정보 로드 오류 : ", task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                                 }
                                 userListAdapter.notifyDataSetChanged();
                             }
                         });
                     } else {
-                        db.collection("category").whereEqualTo(String.valueOf(loginGen.get(0)), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        db.collection(getString(R.string.cate)).whereEqualTo(String.valueOf(loginGen.get(0)), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
@@ -145,100 +139,16 @@ public class RecommendUserActivity extends AppCompatActivity {
                                             break;
                                     }
                                 }else {
-                                    Log.d("lll", "회원 정보 로드 오류 : ", task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                                 }
                                 userListAdapter.notifyDataSetChanged();
                             }
                         });
                     }
                 } else {
-                    Log.d("lll", "회원 정보 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
             }
         });
-
-        //final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        //CollectionReference cateRef = firebaseFirestore.collection("category");
-        //Query query = cateRef.whereEqualTo("1", true);
-        //final ArrayList<String> mem_ca = new ArrayList<>();
-
-        /*
-        //로그인한 계정의 필드값이 true인 항목을 가져옴
-        firebaseFirestore.collection("category").whereEqualTo("mem_id", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        //Log.d("rjc", document.getId() + "=>" + document.getData().values());
-
-                        for (int i = 1; i <= document.getData().size() - 1; i++)
-                            if (document.get(""+i).equals(true)) {
-                                mem_ca.add("" + i);
-                            }
-                        Log.d("rjc", String.valueOf(mem_ca));
-                    }
-                }
-            }
-        });
-
-        arrayList = new ArrayList<>();
-        noRearrayList = new ArrayList<>();
-        newData = new ArrayList<>();
-
-
-        //필드값이 true인 문서 전체
-        firebaseFirestore.collection("category").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        for (int i = 1; i <= document.getData().size() - 1; i++)
-                            if (document.get("" + i).equals(true))
-                                arrayList.add(document.getId());
-                    }
-                    //Log.d("rjc", String.valueOf(arrayList));
-
-                    for (String item : arrayList) {
-                        if (!noRearrayList.contains((CharSequence) item))
-                            noRearrayList.add(item);
-                    }
-                    Log.d("rjc", String.valueOf(noRearrayList));
-                }
-                //Log.d("rjc >>>", String.valueOf(arrayList));
-
-                arrlist = new String[noRearrayList.size()];
-                for (int i = 0; i < noRearrayList.size(); i++) {
-                    arrlist[i] = noRearrayList.get(i);
-                }
-
-                mam = new String[mem_ca.size()];
-                for (int i = 0; i < mem_ca.size(); i++) {
-                    mam[i] = mem_ca.get(i);
-                }
-
-
-                for (String item : mem_ca)
-                    if (noRearrayList.contains(item))
-                        newData.add(item);
-
-                list = new String[newData.size()];
-                for (int i = 0; i < newData.size(); i++) {
-                    list[i] = newData.get(i);
-                }
-
-                for(int i=0;i<arrlist.length;i++){
-                    if(arrlist[i].equals(mem_ca))
-                        Log.d("mem_ca", ""+(arrlist[i]));
-                }
-                for (int i = 0; i < newData.size(); i++) {
-                    //data[i] = new UserlistItem("" + list[i], "팔로우");
-                    //userlist.add(data[i]);
-                }
-                //userListAdapter.notifyDataSetChanged();
-                //userRc_recycler.setAdapter(userListAdapter);
-            }
-        });*/
     }
 }

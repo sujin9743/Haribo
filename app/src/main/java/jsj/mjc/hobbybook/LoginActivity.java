@@ -39,23 +39,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!loginID.getText().toString().equals(getResources().getString(R.string.empty)) && !loginPW.getText().toString().equals(getResources().getString(R.string.empty))) {
-                    db.collection("member").document(loginID.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    db.collection(getResources().getString(R.string.mem)).document(loginID.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot doc = task.getResult();
-                                if (loginPW.getText().toString().equals(doc.getString("pw"))) {
+                                if (loginPW.getText().toString().equals(doc.getString(getString(R.string.password)))) {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra(getResources().getString(R.string.lid), loginID.getText().toString());
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, R.string.idPwCkTxt, Toast.LENGTH_SHORT).show();
                                     loginID.setText(getResources().getString(R.string.empty));
                                     loginPW.setText(getResources().getString(R.string.empty));
                                 }
                             } else {
-                                Log.d("lll", "회원 정보 로드 오류 : " + task.getException());
+                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                             }
                         }
                     });

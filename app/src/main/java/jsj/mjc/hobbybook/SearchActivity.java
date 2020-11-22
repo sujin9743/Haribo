@@ -68,7 +68,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 keyword = search_et.getText().toString();
                 if (keyword.getBytes().length <= 0) {
-                    Toast.makeText(SearchActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, getString(R.string.inputKeyword), Toast.LENGTH_SHORT).show();
                 }
                 else {
                     bookArrayList.clear();
@@ -110,26 +110,26 @@ public class SearchActivity extends AppCompatActivity {
                         case XmlPullParser.START_DOCUMENT:
                             break;
                         case XmlPullParser.START_TAG:
-                            if(parser.getName().equals("item")) {
+                            if(parser.getName().equals(getString(R.string.item))) {
                                 searchedBook = new SearchedBook();
                             }
-                            else if(parser.getName().equals("cover")) {
+                            else if(parser.getName().equals(getString(R.string.cover))) {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookImageUrl(parser.getText());
                             }
-                            else if(parser.getName().equals("title")) {
+                            else if(parser.getName().equals(getString(R.string.ttle))) {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookTitle(parser.getText());
                             }
-                            else if(parser.getName().equals("author")) {
+                            else if(parser.getName().equals(getString(R.string.auth))) {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookWriter(parser.getText());
                             }
-                            else if(parser.getName().equals("description")) {
+                            else if(parser.getName().equals(getString(R.string.desc))) {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookDesc(parser.getText());
                             }
-                            else if(parser.getName().equals("isbn")) {
+                            else if(parser.getName().equals(getString(R.string.ibn))) {
                                 parser.next();
                                 if(searchedBook!=null) searchedBook.setBookIsbn(parser.getText());
                             }
@@ -137,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
                         case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
-                            if(parser.getName().equals("item") && searchedBook != null) {
+                            if(parser.getName().equals(getString(R.string.item)) && searchedBook != null) {
                                 bookArrayList.add(searchedBook);
                             }
                             break;
@@ -174,11 +174,11 @@ public class SearchActivity extends AppCompatActivity {
                     description = bookArrayList.get(position).getBookDesc();
                     isbn = bookArrayList.get(position).getBookIsbn();
 
-                    intent.putExtra("image", image);
-                    intent.putExtra("title", title);
-                    intent.putExtra("author", author);
-                    intent.putExtra("description", description);
-                    intent.putExtra("isbn", isbn);
+                    intent.putExtra(getString(R.string.img), image);
+                    intent.putExtra(getString(R.string.ttle), title);
+                    intent.putExtra(getString(R.string.auth), author);
+                    intent.putExtra(getString(R.string.desc), description);
+                    intent.putExtra(getString(R.string.ibn), isbn);
 
                     startActivity(intent);
                 }

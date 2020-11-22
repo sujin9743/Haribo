@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btnBookSearch"
-        android:hint="도서 검색"/>
+        android:hint="@string/inputKeyword"/>
 
     <Button
         android:id="@+id/btnBookSearch"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
-        android:text="검색"
+        android:text="@string/search"
         android:textColor="@color/white"
         android:background="@color/darkGreen"
         app:layout_constraintLeft_toRightOf="@+id/edtBookSearch"

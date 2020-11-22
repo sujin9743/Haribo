@@ -59,7 +59,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.myprofile_modify);
 
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
-        docRef = db.collection("member").document(loginId);
+        docRef = db.collection(getString(R.string.mem)).document(loginId);
 
         //툴바 설정
         Toolbar profile_modify_toolbar = (Toolbar) findViewById(R.id.profile_modify_toolbar);
@@ -86,7 +86,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
 
         //갤러리 사진 받기
         storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".jpg");
+        StorageReference imgRef = storageRef.child(getString(R.string.pimg) + loginId +getString(R.string.jpg));
         modify_profile_Img = findViewById(R.id.modify_profile_Img);
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -96,7 +96,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         modify_profile_Img.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     if (doc.exists()) {
                         //TODO 사진 업로드
                         modify_id_edt.setText(doc.getString(getResources().getString(R.string.name)));
-                        modify_email_txt.setText(doc.getString("email_f") + "@" + doc.getString("email_b"));
+                        modify_email_txt.setText(doc.getString(getString(R.string.emf)) + getString(R.string.golbang) + doc.getString(getString(R.string.emb)));
                     }
                 }
             }
@@ -133,14 +133,14 @@ public class ModifyProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ModifyProfileActivity.this);
-                builder.setTitle("회원 탈퇴").setMessage("정말로 탈퇴하시겠습니까? 탈퇴할 경우 데이터를 복구할 수 없습니다.").setCancelable(true);
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                builder.setTitle(R.string.memdel).setMessage(R.string.realMemDel).setCancelable(true);
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
-                builder.setPositiveButton("탈퇴", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(ModifyProfileActivity.this, LoginActivity.class);
@@ -179,7 +179,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     pw_chk = true;
                 } else {
                     if (modify_pw_edt.getText().toString().equals(modify_pwCk_edt.getText().toString())) {
-                        user.put("pw", modify_pw_edt.getText().toString());
+                        user.put(getString(R.string.password), modify_pw_edt.getText().toString());
                         modify_pwReCk_txt.setVisibility(View.GONE);
                         pw_chk = true;
                     } else {
@@ -189,13 +189,13 @@ public class ModifyProfileActivity extends AppCompatActivity {
                 }
                 if (pw_chk) {
 
-                    user.put("email_f", modify_email_id_edt.getText().toString());
-                    user.put("email_b", modify_email_spinner.getText().toString());
+                    user.put(getString(R.string.emf), modify_email_id_edt.getText().toString());
+                    user.put(getString(R.string.emb), modify_email_spinner.getText().toString());
 
-                    db.collection("member").document(loginId).update(user).addOnFailureListener(new OnFailureListener() {
+                    db.collection(getString(R.string.mem)).document(loginId).update(user).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "user 데이터 수정 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataUpdateError), e);
                         }
                     });
                     finish();

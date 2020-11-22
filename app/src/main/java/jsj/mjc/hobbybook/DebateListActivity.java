@@ -61,26 +61,26 @@ public class DebateListActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(DebateListActivity.this, DebateDetailActivity.class);
                 intent.putExtra(getResources().getString(R.string.lid), loginId);
-                intent.putExtra("docId", debateArrayList.get(position).getDebateDocId());
-                intent.putExtra("debateNum", debateArrayList.get(position).getDebateNum());
-                intent.putExtra("debateWriter", debateArrayList.get(position).getDebateWriter());
+                intent.putExtra(getResources().getString(R.string.did), debateArrayList.get(position).getDebateDocId());
+                intent.putExtra(getResources().getString(R.string.dbtn), debateArrayList.get(position).getDebateNum());
+                intent.putExtra(getResources().getString(R.string.dbwriter), debateArrayList.get(position).getDebateWriter());
                 startActivity(intent);
             }
         });
 
-        db.collection("debate").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getResources().getString(R.string.dbt)).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                        Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                         String dateStr = dateFormatter.format(timestamp.toDate());
-                        Debate data = new Debate(doc.getId(), doc.getLong("d_num").intValue(), doc.getString("d_title"), doc.getString("d_content"),
-                                dateStr, doc.getString(getResources().getString(R.string.mid)));
+                        Debate data = new Debate(doc.getId(), doc.getLong(getResources().getString(R.string.dn)).intValue(), doc.getString(getResources().getString(R.string.dt)),
+                                doc.getString(getResources().getString(R.string.dCon)), dateStr, doc.getString(getResources().getString(R.string.mid)));
                         debateArrayList.add(data);
                     }
                 } else {
-                    Log.d("lll", "토론글 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 debateAdapter.notifyDataSetChanged();
             }

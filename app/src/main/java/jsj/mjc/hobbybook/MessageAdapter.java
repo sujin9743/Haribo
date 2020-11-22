@@ -81,16 +81,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(@NonNull final MessageViewHolder viewHolder, int position) {
-        db.collection("member").document(messageList.get(position).getmSender()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(viewHolder.messageSenderTv.getContext().getResources().getString(R.string.mem)).document(messageList.get(position).getmSender()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
-                    viewHolder.messageSenderTv.setText(doc.getString(viewHolder.messageSenderTv.getContext().getResources().getString(R.string.name)) + " > ");
+                    viewHolder.messageSenderTv.setText(doc.getString(viewHolder.messageSenderTv.getContext().getResources().getString(R.string.name)) + viewHolder.messageSenderTv.getContext().getResources().getString(R.string.right));
                 }
             }
         });
-        db.collection("member").document(messageList.get(position).getmReciever()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(viewHolder.messageSenderTv.getContext().getResources().getString(R.string.mem)).document(messageList.get(position).getmReciever()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {

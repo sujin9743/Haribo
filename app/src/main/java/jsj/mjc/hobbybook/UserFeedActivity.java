@@ -62,7 +62,7 @@ public class UserFeedActivity extends AppCompatActivity {
         storageRef = FirebaseStorage.getInstance().getReference();
 
         loginId = MainActivity.loginId;
-        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getStringExtra(getString(R.string.uid));
 
         book_count_txt = findViewById(R.id.book_count_txt);
         user_id = findViewById(R.id.user_id);
@@ -75,19 +75,19 @@ public class UserFeedActivity extends AppCompatActivity {
                 follower = Integer.parseInt(follower_count_txt.getText().toString());
                 if(isFollow){
                     followBtn.setBackgroundResource(R.drawable.round_btn_darkgreen);
-                    followBtn.setText("팔로우");
+                    followBtn.setText(R.string.followTxt);
                     isFollow = false;
                     follower_count_txt.setText(String.valueOf(follower-1));
-                    db.collection("follow").whereEqualTo("followee", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection(getString(R.string.fl)).whereEqualTo(getString(R.string.flee), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (DocumentSnapshot doc : task.getResult()) {
-                                    if (doc.getString("follower").equals(loginId)) {
-                                        db.collection("follow").document(doc.getId()).delete().addOnFailureListener(new OnFailureListener() {
+                                    if (doc.getString(getString(R.string.fler)).equals(loginId)) {
+                                        db.collection(getString(R.string.fl)).document(doc.getId()).delete().addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("e", "follow 데이터 삭제 실패 : ", e);
+                                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataDelError), e);
                                             }
                                         });
                                     }
@@ -97,26 +97,26 @@ public class UserFeedActivity extends AppCompatActivity {
                     });
                 }else {
                     followBtn.setBackgroundResource(R.drawable.round_btn_gray);
-                    followBtn.setText("팔로잉");
+                    followBtn.setText(getString(R.string.followingTxt));
                     isFollow = true;
                     follower_count_txt.setText(String.valueOf(follower+1));
-                    follow.put("follower", loginId);
-                    follow.put("followee", userId);
-                    db.collection("follow").add(follow).addOnFailureListener(new OnFailureListener() {
+                    follow.put(getString(R.string.fler), loginId);
+                    follow.put(getString(R.string.flee), userId);
+                    db.collection(getString(R.string.fl)).add(follow).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "follow 데이터 등록 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                         }
                     });
-                    notice.put("docId", userId);
-                    notice.put("send_mem", loginId);
+                    notice.put(getString(R.string.did), userId);
+                    notice.put(getString(R.string.sm), loginId);
                     notice.put(getResources().getString(R.string.mid), userId);
-                    notice.put("type", 2);
-                    notice.put("inputtime", new Date());
-                    db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                    notice.put(getString(R.string.tp), 2);
+                    notice.put(getResources().getString(R.string.time), new Date());
+                    db.collection(getString(R.string.ntc)).add(notice).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "notice 데이터 등록 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                         }
                     });
                 }
@@ -148,7 +148,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
                 intent.putExtra(getResources().getString(R.string.lid), loginId);
                 intent.putExtra(getResources().getString(R.string.uid), userId);
-                intent.putExtra("index", 0);
+                intent.putExtra(getString(R.string.idx), 0);
                 startActivity(intent);
             }
         });
@@ -159,7 +159,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
                 intent.putExtra(getResources().getString(R.string.lid), loginId);
                 intent.putExtra(getResources().getString(R.string.uid), userId);
-                intent.putExtra("index", 1);
+                intent.putExtra(getString(R.string.idx), 1);
                 startActivity(intent);
             }
         });
@@ -207,7 +207,7 @@ public class UserFeedActivity extends AppCompatActivity {
         follower = 0;
         read = 0;
         //프로필 사진 로드
-        StorageReference imgRef = storageRef.child("profile_img/" + userId +".jpg");
+        StorageReference imgRef = storageRef.child(getString(R.string.pimg) + userId + getString(R.string.jpg));
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -216,11 +216,11 @@ public class UserFeedActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         //닉네임 로드
-        db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(getString(R.string.mem)).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -232,7 +232,7 @@ public class UserFeedActivity extends AppCompatActivity {
             }
         });
         //팔로잉 로드
-        db.collection("follow").whereEqualTo("follower", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.fl)).whereEqualTo(getString(R.string.fler), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -240,32 +240,32 @@ public class UserFeedActivity extends AppCompatActivity {
                         following++;
                     }
                 } else {
-                    Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 following_count_txt.setText(String.valueOf(following));
             }
         });
         //팔로워 로드
-        db.collection("follow").whereEqualTo("followee", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.fl)).whereEqualTo(getString(R.string.flee), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         follower++;
                         //팔로우 여부 확인
-                        if (document.getString("follower").equals(loginId)) {
+                        if (document.getString(getString(R.string.fler)).equals(loginId)) {
                             isFollow = true;
                             followBtn.setBackgroundResource(R.drawable.round_btn_gray);
-                            followBtn.setText("팔로잉");
+                            followBtn.setText(R.string.followingTxt);
                         }
                     }
                 } else {
-                    Log.d("lll", "팔로워 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 follower_count_txt.setText(String.valueOf(follower));
             }
         });
-        if (followBtn.getText().equals("팔로잉")) isFollow = true;
+        if (followBtn.getText().equals(getString(R.string.followingTxt))) isFollow = true;
         //독서 기록, 독후감 로드
         uF_readBookList.clear();
         //RecyclerView 항목 클릭 구현
@@ -274,23 +274,23 @@ public class UserFeedActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(UserFeedActivity.this, MBookReportDetail.class);
                 intent.putExtra(getResources().getString(R.string.lid), loginId);
-                intent.putExtra("docId", uF_readBookList.get(position).getbookReNum());
+                intent.putExtra(getString(R.string.did), uF_readBookList.get(position).getbookReNum());
                 startActivity(intent);
             }
         });
-        db.collection("bookre").whereEqualTo(getResources().getString(R.string.mid), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.br)).whereEqualTo(getResources().getString(R.string.mid), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        if (doc.getBoolean("open")) {
-                            FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString("br_img"));
+                        if (doc.getBoolean(getString(R.string.open))) {
+                            FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString(getString(R.string.brImg)));
                             uF_readBookList.add(data);
                         }
                         read++;
                     }
                 } else {
-                    Log.d("lll", "독후감 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 uF_feedReadBookAdapter.notifyDataSetChanged();
                 book_count_txt.setText(String.valueOf(read));

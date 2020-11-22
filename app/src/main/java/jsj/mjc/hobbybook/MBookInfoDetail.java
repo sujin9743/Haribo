@@ -85,19 +85,15 @@ public class MBookInfoDetail extends AppCompatActivity {
 
 
         db = FirebaseFirestore.getInstance();
-        db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getResources().getString(R.string.rv)).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        if(doc.get("book_isbn").toString().equals(isbn)){
-                        Log.d("TAG", doc.getId() + " => " + doc.getData());
-
-                        Timestamp ts = (Timestamp) doc.getData().get("inputtime");
+                        if(doc.get(getResources().getString(R.string.b_isbn)).toString().equals(isbn)){
+                        Timestamp ts = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                         String date = dateFormatter.format(ts.toDate());
-
-                        MBookCom data = new MBookCom(doc.get(getResources().getString(R.string.mid)).toString()
-                        ,date, doc.get("rv_content").toString());
+                        MBookCom data = new MBookCom(doc.get(getResources().getString(R.string.mid)).toString(), date, doc.get(getResources().getString(R.string.rvCon)).toString());
 
                         list.add(data);
 
@@ -114,11 +110,11 @@ public class MBookInfoDetail extends AppCompatActivity {
         editor = findViewById(R.id.editor);
         bookInfo = findViewById(R.id.bookInfo);
 
-        getBookImage = getIntent().getStringExtra("image");
-        getBookTitle = getIntent().getStringExtra("title");
-        getBookAuthor = getIntent().getStringExtra("author");
-        getBookDesc = getIntent().getStringExtra("description");
-        isbn = getIntent().getStringExtra("isbn");
+        getBookImage = getIntent().getStringExtra(getString(R.string.img));
+        getBookTitle = getIntent().getStringExtra(getString(R.string.ttle));
+        getBookAuthor = getIntent().getStringExtra(getString(R.string.auth));
+        getBookDesc = getIntent().getStringExtra(getString(R.string.desc));
+        isbn = getIntent().getStringExtra(getString(R.string.ibn));
 
 
 
@@ -141,13 +137,13 @@ public class MBookInfoDetail extends AppCompatActivity {
         //별 점수 db에서 받아와서 값 넣어주기
         stars_show = findViewById(R.id.star);
 
-        db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getResources().getString(R.string.rv)).whereEqualTo(getResources().getString(R.string.b_isbn),isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         docSize = task.getResult().size();
-                        starArray.add(document.getData().get("stars").toString());
+                        starArray.add(document.getData().get(getResources().getString(R.string.star)).toString());
                     }
                     //평점 출력
                     for(int i=0; i<starArray.size(); i++) {
@@ -159,7 +155,7 @@ public class MBookInfoDetail extends AppCompatActivity {
                     }
                     stars_show.setRating(starsAvg);
                 } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
             }
         });
@@ -187,16 +183,16 @@ public class MBookInfoDetail extends AppCompatActivity {
                         long now = System.currentTimeMillis();;
                         Date formatDate = new Date(now);
 
-                        saveReview.put("book_isbn",isbn);
-                        saveReview.put("deleted",deleted);
-                        saveReview.put("inputtime",formatDate);
-                        saveReview.put("mem_id",loginId);
-                        saveReview.put("rv_content",edt.getText().toString());
-                        saveReview.put("rv_num",rv_num);
-                        saveReview.put("stars",saveDStars);
+                        saveReview.put(getString(R.string.b_isbn),isbn);
+                        saveReview.put(getResources().getString(R.string.isDel),deleted);
+                        saveReview.put(getResources().getString(R.string.time),formatDate);
+                        saveReview.put(getResources().getString(R.string.mid),loginId);
+                        saveReview.put(getString(R.string.rvCon),edt.getText().toString());
+                        saveReview.put(getString(R.string.rvN),rv_num);
+                        saveReview.put(getString(R.string.star),saveDStars);
 
                         //입력한 모든 데이터 서버에 저장
-                        db.collection("review").document().set(saveReview).addOnFailureListener(new OnFailureListener() {
+                        db.collection(getString(R.string.rv)).document().set(saveReview).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                             }

@@ -2,7 +2,9 @@
     <string name="app_name">HobbyBook</string>
     <string name="empty"></string>
     <string name="pipe">  |  </string>
+    <string name="right"> \> </string>
     <string name="logTag">loglog</string>
+    <string name="shop">#</string>
 
     <string name="g0">가정/요리/뷰티</string>
     <string name="g1">건강/취미/레저</string>
@@ -35,18 +37,88 @@
     <string name="g28">중학교참고서</string>
     <string name="g29">고등학교참고서</string>
 
+    <string name="cg">changeGen</string>
+    <string name="idedt">id_Edt</string>
+
+    <string name="crr">customerReviewRank</string>
+    <string name="tru">true</string>
+    <string name="fals">false</string>
+
     <string name="lid">loginId</string>
     <string name="uid">userId</string>
     <string name="name">nickname</string>
     <string name="mid">mem_id</string>
+    <string name="id">id</string>
+    <string name="report">report_c</string>
 
     <string name="mem">member</string>
+    <string name="msg">message</string>
+    <string name="cate">category</string>
+    <string name="rv">review</string>
     <string name="ntc">notice</string>
+
+    <string name="password">pw</string>
+    <string name="fl">follow</string>
+    <string name="img">image</string>
+    <string name="date">date</string>
+    <string name="open">open</string>
+    <string name="dstr">dateStr</string>
 
     <string name="did">docId</string>
     <string name="time">inputtime</string>
     <string name="rc">receive_com</string>
     <string name="isDel">deleted</string>
+
+    <string name="ttle">title</string>
+    <string name="auth">author</string>
+    <string name="desc">description</string>
+    <string name="b_auth">book_author</string>
+    <string name="bTitle">book_title</string>
+    <string name="b_desc">book_description</string>
+    <string name="bisbn">bookisbn</string>
+    <string name="ibn">isbn</string>
+    <string name="b_isbn">book_isbn</string>
+    <string name="item">item</string>
+    <string name="cover">cover</string>
+    <string name="pub">publisher</string>
+
+    <string name="br">bookre</string>
+    <string name="brCon">br_content</string>
+    <string name="bl">book_like</string>
+    <string name="brTitle">br_title</string>
+    <string name="brImg">br_img</string>
+    <string name="brn">brNum</string>
+    <string name="br_n">br_num</string>
+    <string name="brw">brWriter</string>
+    <string name="h1">has1</string>
+    <string name="h2">has2</string>
+    <string name="h3">has3</string>
+    <string name="h4">has4</string>
+    <string name="bropen">br_open</string>
+
+    <string name="emf">email_f</string>
+    <string name="golbang">\@</string>
+    <string name="emb">email_b</string>
+
+    <string name="dWriter">debateWriter</string>
+    <string name="brc_n">brc_num</string>
+    <string name="cbundle">c_bundle</string>
+    <string name="brcCon">brc_content</string>
+    <string name="brc">bookre_com</string>
+
+    <string name="noticeFl"> 님이 회원님을 팔로우합니다.</string>
+    <string name="noticeRe"> 님이 회원님의 게시물에 댓글을 남겼습니다.</string>
+    <string name="noticeReRe"> 님이 회원님의 댓글에 답글을 남겼습니다.</string>
+
+    <string name="seen">seen</string>
+    <string name="isSend">isSend</string>
+    <string name="mCon">mContent</string>
+    <string name="rmem">receive_mem</string>
+    <string name="msgCon">msg_content</string>
+
+    <string name="rvCon">rv_content</string>
+    <string name="rvN">rv_num</string>
+    <string name="star">stars</string>
 
     <string name="dbt">debate</string>
     <string name="dbtn">debateNum</string>
@@ -61,22 +133,49 @@
     <string name="dbundle">dc_bundle</string>
     <string name="dcc">dc_content</string>
 
+    <string name="flee">followee</string>
+    <string name="fler">follower</string>
+    <string name="st">seetab</string>
+
     <string name="sm">send_mem</string>
     <string name="tp">type</string>
 
+    <string name="likeGenre">선호 장르 : </string>
+
     <string name="dataLoadError">데이터 로드 오류 : </string>
     <string name="dataAddError">데이터 등록 오류 : </string>
+    <string name="dataUpdateError">데이터 수정 오류 : </string>
+    <string name="dataDelError">데이터 삭제 오류 : </string>
 
     <string name="pimg">profile_img/</string>
     <string name="jpg">.jpg</string>
 
     <string name="nonamed">알 수 없음</string>
+    <string name="fornim"> 님 에게</string>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="memdel">회원 탈퇴</string>
+    <string name="reply">댓글</string>
 
     <string name="uploadOk">"게시물이 등록됐습니다."</string>
     <string name="error">오류가 발생했습니다.</string>
     <string name="pw_ReCk_Txt">비밀번호를 확인해 주세요.</string>
     <string name="empotyCkTxt">빈칸을 확인해 주세요.</string>
+    <string name="wannaDel">삭제하시겠습니까?</string>
     <string name="deleted">삭제된 댓글입니다.</string>
+    <string name="idPwCkTxt">아이디와 비밀번호를 확인해 주세요.</string>
+    <string name="inputKeyword">검색어를 입력하세요</string>
+    <string name="nohash">입력된 해시태그가 없습니다!</string>
+    <string name="realMemDel">정말로 탈퇴하시겠습니까? 탈퇴할 경우 데이터를 복구할 수 없습니다.</string>
+    <string name="successReport">신고가 성공적으로 접수됐습니다.</string>
+    <string name="changeGen">선호장르 변경 완료</string>
+    <string name="unableId">아이디를 사용할 수 없습니다.</string>
+    <string name="ableId">사용 가능한 아이디입니다.</string>
+    <string name="unableEmail">이메일을 사용할 수 없습니다.</string>
+    <string name="ableEmail">사용 가능한 이메일입니다.</string>
+    <string name="needCkTxt">필수 항목을 확인해 주세요.</string>
+
+    <string name="Hbest">하비북 베스트 도서</string>
 
     <string name="access_term">\n\n\n제 1 장 총칙\n\n\n
 제 1 조 (목적)\n\n
@@ -240,4 +339,24 @@ HobbyBook은 무료로 제공되는 서비스와 관련하여 회원에게 어�
 ■ 개인정보의 위탁 처리 \n\n\n
 
 HobbyBook은 서비스 향상을 위해 관계법령에 따라 회원의 동의를 얻거나 관련 사항을 공개 또는 고지합니다.\n</string>
+    <string name="pwq">pw_q</string>
+    <string name="pwa">pw_a</string>
+    <string name="notiCm">noti_cm</string>
+    <string name="notiFl">noti_fl</string>
+    <string name="notiLk">noti_lk</string>
+    <string name="notiMs">noti_ms</string>
+    <string name="followingTxt">팔로잉</string>
+    <string name="followTxt">팔로우</string>
+    <string name="idx">index</string>
+    <string name="inputTitle">제목을 입력해 주세요.</string>
+    <string name="upload">등록</string>
+    <string name="close">닫기</string>
+    <string name="debateBoard">토론게시판</string>
+    <string name="blockSetting">차단관리</string>
+    <string name="bookinfo">책 소개</string>
+    <string name="addReview">리뷰 남기기</string>
+    <string name="bookdesc">책소개</string>
+    <string name="rcBook">도서 추천</string>
+    <string name="rcurbook">취향에 맞는 도서를 추천해드립니다.</string>
+    <string name="search">검색</string>
 </resources>

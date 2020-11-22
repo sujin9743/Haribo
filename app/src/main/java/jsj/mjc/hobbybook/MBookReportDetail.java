@@ -49,7 +49,7 @@ public class MBookReportDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_report_detail);
 
-        docId = getIntent().getStringExtra("docId");
+        docId = getIntent().getStringExtra(getString(R.string.did));
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
         backBtn = findViewById(R.id.backBtn);
@@ -74,39 +74,39 @@ public class MBookReportDetail extends AppCompatActivity {
         report_content = findViewById(R.id.content);
 
 
-        db.collection("bookre").document(docId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(getString(R.string.br)).document(docId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     doc = task.getResult();
-                    hashTag1.setText(doc.getString("has1"));
-                    hashTag2.setText(doc.getString("has2"));
-                    hashTag3.setText(doc.getString("has3"));
-                    hashTag4.setText(doc.getString("has4"));
-                    report_content.setText(doc.getString("br_content"));
-                    report_bookMaker.setText(doc.getString("book_author"));
-                    report_bookName.setText(doc.getString("book_title"));
-                    reportTitle.setText(doc.getString("br_title"));
-                    Glide.with(getApplicationContext()).load(doc.getString("br_img")).into(bookImgPage);
-                    heartCnt.setText(String.valueOf(doc.getLong("book_like").intValue()));
+                    hashTag1.setText(doc.getString(getString(R.string.h1)));
+                    hashTag2.setText(doc.getString(getString(R.string.h2)));
+                    hashTag3.setText(doc.getString(getString(R.string.h3)));
+                    hashTag4.setText(doc.getString(getString(R.string.h4)));
+                    report_content.setText(doc.getString(getString(R.string.brCon)));
+                    report_bookMaker.setText(doc.getString(getString(R.string.b_auth)));
+                    report_bookName.setText(doc.getString(getString(R.string.bTitle)));
+                    reportTitle.setText(doc.getString(getString(R.string.brTitle)));
+                    Glide.with(getApplicationContext()).load(doc.getString(getString(R.string.brImg))).into(bookImgPage);
+                    heartCnt.setText(String.valueOf(doc.getLong(getString(R.string.bl)).intValue()));
                     writerId = doc.getString(getResources().getString(R.string.mid));
-                    brNum = doc.getLong("br_num").intValue();
+                    brNum = doc.getLong(getString(R.string.br_n)).intValue();
 
                     //도서 정보 상세 페이지로 이동
                     forBookInfo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent i = new Intent(getApplicationContext(), MBookInfoDetail.class);
-                            i.putExtra("title", doc.getString("book_title"));
-                            i.putExtra("image", doc.getString("br_img"));
-                            i.putExtra("author", doc.getString("book_author"));
-                            i.putExtra("description", doc.getString("book_description"));
-                            i.putExtra("isbn", doc.getString("bookisbn"));
+                            i.putExtra(getString(R.string.ttle), doc.getString(getString(R.string.bTitle)));
+                            i.putExtra(getString(R.string.img), doc.getString(getString(R.string.brImg)));
+                            i.putExtra(getString(R.string.auth), doc.getString(getString(R.string.b_auth)));
+                            i.putExtra(getString(R.string.desc), doc.getString(getString(R.string.b_desc)));
+                            i.putExtra(getString(R.string.ibn), doc.getString(getString(R.string.bisbn)));
                             startActivity(i);
                         }
                     });
 
-                    imgRef = storageRef.child("profile_img/" + writerId + ".jpg");
+                    imgRef = storageRef.child(getString(R.string.pimg) + writerId + getString(R.string.jpg));
                     imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -115,11 +115,11 @@ public class MBookReportDetail extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
                         }
                     });
 
-                    db.collection("member").document(doc.getString(getResources().getString(R.string.mid))).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    db.collection(getString(R.string.mem)).document(doc.getString(getResources().getString(R.string.mid))).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
@@ -128,13 +128,13 @@ public class MBookReportDetail extends AppCompatActivity {
                                     profileText.setText(doc.getString(getResources().getString(R.string.name)));
                                 }
                             } else {
-                                Log.d("lll", "작성자 로드 실패 : " + task.getException());
+                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                             }
                         }
                     });
 
                 } else {
-                    Log.d("e", "데이터 로드 실패 : " + task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                 }
             }
         });
@@ -175,9 +175,9 @@ public class MBookReportDetail extends AppCompatActivity {
                     heart_cnt++;
                     heartCnt.setText(Integer.toString(heart_cnt));
                 }
-                save.put("book_like", heart_cnt);
+                save.put(getString(R.string.bl), heart_cnt);
 
-                db.collection("bookre").document(docId).update("book_like", heart_cnt).addOnFailureListener(new OnFailureListener() {
+                db.collection(getString(R.string.br)).document(docId).update(getString(R.string.bl), heart_cnt).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
@@ -193,9 +193,9 @@ public class MBookReportDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MReportCommentActivity.class);
                 i.putExtra(getResources().getString(R.string.lid), loginId);
-                i.putExtra("docId", docId);
-                i.putExtra("brNum", brNum);
-                i.putExtra("brWriter", writerId);
+                i.putExtra(getString(R.string.did), docId);
+                i.putExtra(getString(R.string.brn), brNum);
+                i.putExtra(getString(R.string.brw), writerId);
                 startActivity(i);
             }
         });

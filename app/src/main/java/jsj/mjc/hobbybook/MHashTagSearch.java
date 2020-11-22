@@ -57,29 +57,29 @@ public class MHashTagSearch extends AppCompatActivity{
                 String edt = edtHash.getText().toString();
 
                 if(edt.equals(getResources().getString(R.string.empty))){//공백일경우
-                    Toast.makeText(getApplicationContext(),"입력된 해시태그가 없습니다!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.nohash,Toast.LENGTH_SHORT).show();
                 }else{
                    if(hash1.getText().toString().equals(getResources().getString(R.string.empty))){
-                       hash1.setText("#"+edt);
-                       h1 = "#"+edt;
+                       hash1.setText(getString(R.string.shop)+edt);
+                       h1 = getString(R.string.shop)+edt;
                        edtHash.setText(getResources().getString(R.string.empty));
                        xBtn1.setVisibility(View.VISIBLE);
                    }else{
                        if(hash2.getText().toString().equals(getResources().getString(R.string.empty))){
-                           hash2.setText("#"+edt);
-                           h2 ="#"+edt;
+                           hash2.setText(getString(R.string.shop)+edt);
+                           h2 =getString(R.string.shop)+edt;
                            edtHash.setText(getResources().getString(R.string.empty));
                            xBtn2.setVisibility(View.VISIBLE);
                        }else{
                            if(hash3.getText().toString().equals(getResources().getString(R.string.empty))){
-                               hash3.setText("#"+edt);
-                               h3="#"+edt;
+                               hash3.setText(getString(R.string.shop)+edt);
+                               h3=getString(R.string.shop)+edt;
                                edtHash.setText(getResources().getString(R.string.empty));
                                xBtn3.setVisibility(View.VISIBLE);
                            }else{
                                if(hash4.getText().toString().equals(getResources().getString(R.string.empty))){
-                                   hash4.setText("#"+edt);
-                                   h4="#"+edt;
+                                   hash4.setText(getString(R.string.shop)+edt);
+                                   h4=getString(R.string.shop)+edt;
                                    edtHash.setText(getResources().getString(R.string.empty));
                                    xBtn4.setVisibility(View.VISIBLE);
                                }
@@ -87,7 +87,6 @@ public class MHashTagSearch extends AppCompatActivity{
                        }
                    }
                 }
-                Log.d("TAG", "해시태그: " + h1 + h2 + h3 + h4);
             }
         });
 
@@ -129,15 +128,12 @@ public class MHashTagSearch extends AppCompatActivity{
             public void onClick(View v) {
 
                 Intent i = new Intent();
-                i.putExtra("hash1",h1);
-                i.putExtra("hash2",h2);
-                i.putExtra("hash3",h3);
-                i.putExtra("hash4",h4);
+                i.putExtra(getString(R.string.h1),h1);
+                i.putExtra(getString(R.string.h2),h2);
+                i.putExtra(getString(R.string.h3),h3);
+                i.putExtra(getString(R.string.h4),h4);
                 setResult(RESULT_OK,i);
                 finish();
-
-                //Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-
             }
         });
 

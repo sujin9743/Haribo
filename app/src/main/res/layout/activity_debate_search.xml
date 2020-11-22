@@ -27,7 +27,7 @@
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
-            android:hint="검색어를 입력하세요." />
+            android:hint="@string/inputKeyword" />
 
         <ImageButton
             android:id="@+id/debateSearch_con_btn"

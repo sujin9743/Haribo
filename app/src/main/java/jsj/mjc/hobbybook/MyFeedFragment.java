@@ -84,7 +84,7 @@ public class MyFeedFragment extends Fragment {
                 String a =mF_readBookList.get(position).getbookReNum();
                 Intent intent = new Intent(getContext(), MBookReportDetail.class);
                 intent.putExtra(getResources().getString(R.string.lid), loginId);
-                intent.putExtra("docId", mF_readBookList.get(position).getbookReNum());
+                intent.putExtra(getString(R.string.did), mF_readBookList.get(position).getbookReNum());
                 startActivity(intent);
             }
         });
@@ -100,7 +100,7 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowListActivity.class);
-                intent.putExtra("seetab", 0);
+                intent.putExtra(getString(R.string.st), 0);
                 intent.putExtra(getContext().getResources().getString(R.string.lid), loginId);
                 intent.putExtra(getResources().getString(R.string.uid), loginId);
                 startActivity(intent);
@@ -111,7 +111,7 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowListActivity.class);
-                intent.putExtra("seetab", 1);
+                intent.putExtra(getString(R.string.st), 1);
                 intent.putExtra(getContext().getResources().getString(R.string.lid), loginId);
                 intent.putExtra(getResources().getString(R.string.uid), loginId);
                 startActivity(intent);
@@ -155,8 +155,8 @@ public class MyFeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SelectGenreActivity.class);
-                intent.putExtra("changeGen", 1);    //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지 구분하려고
-                intent.putExtra("id_Edt", loginId);
+                intent.putExtra(getString(R.string.cg), 1);    //cho 회원가입시 선호장르 선택인지, 선호장르 변경인지 구분하려고
+                intent.putExtra(getString(R.string.idedt), loginId);
                 startActivity(intent);
 
             }
@@ -191,7 +191,7 @@ public class MyFeedFragment extends Fragment {
         follower = 0;
         read = 0;
         //프로필 사진 로드
-        StorageReference imgRef = storageRef.child("profile_img/" + loginId +".jpg");
+        StorageReference imgRef = storageRef.child(getString(R.string.pimg) + loginId + getString(R.string.jpg));
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -200,11 +200,11 @@ public class MyFeedFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         //닉네임 로드
-        db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(getString(R.string.mem)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -216,7 +216,7 @@ public class MyFeedFragment extends Fragment {
             }
         });
         //팔로잉 로드
-        db.collection("follow").whereEqualTo("follower", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.fl)).whereEqualTo(getString(R.string.fler), loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -224,13 +224,13 @@ public class MyFeedFragment extends Fragment {
                         following++;
                     }
                 } else {
-                    Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 myFeed_following_count_txt.setText(String.valueOf(following));
             }
         });
         //팔로워 로드
-        db.collection("follow").whereEqualTo("followee", loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.fl)).whereEqualTo(getString(R.string.flee), loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -238,24 +238,24 @@ public class MyFeedFragment extends Fragment {
                         follower++;
                     }
                 } else {
-                    Log.d("lll", "팔로워 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 myFeed_follower_count_txt.setText(String.valueOf(follower));
             }
         });
         //독서 기록, 독후감 로드
         mF_readBookList.clear();
-        db.collection("bookre").whereEqualTo(getResources().getString(R.string.mid), loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.br)).whereEqualTo(getResources().getString(R.string.mid), loginId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString("br_img"));
+                        FeedReadBookItem data = new FeedReadBookItem(doc.getId(), doc.getString(getString(R.string.brImg)));
                         mF_readBookList.add(data);
                         read++;
                     }
                 } else {
-                    Log.d("lll", "독후감 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 mF_feedReadBookAdapter.notifyDataSetChanged();
                 myFeed_book_count_txt.setText(String.valueOf(read));
