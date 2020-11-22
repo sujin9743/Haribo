@@ -74,7 +74,7 @@ public class MNotice extends Fragment {
                                     i.putExtra("brWriter", doc.getString(getResources().getString(R.string.mid)));
                                     startActivity(i);
                                 } else {
-                                    Log.d("lll", "토론글 로드 실패 : " + task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                                 }
                             }
                         });
@@ -98,7 +98,7 @@ public class MNotice extends Fragment {
                                     intent.putExtra("debateWriter", doc.getString(getResources().getString(R.string.mid)));
                                     startActivity(intent);
                                 } else {
-                                    Log.d("lll", "토론글 로드 실패 : " + task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                                 }
                             }
                         });
@@ -119,18 +119,18 @@ public class MNotice extends Fragment {
     public void onResume() {
         super.onResume();
         noticeArrayList.clear();
-        db.collection("notice").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("notice").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot doc : task.getResult()) {
-                        Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                        Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                         String dateStr = dateFormatter.format(timestamp.toDate());
                         Notice data = new Notice(doc.getString("docId"), doc.getString("send_mem"), dateStr, doc.getLong("type").intValue());
                         noticeArrayList.add(data);
                     }
                 } else {
-                    Log.d("lll", "알림 로드 실패 : " + task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                 }
                 noticeAdapter.notifyDataSetChanged();
             }

@@ -129,7 +129,7 @@ public class SignActivity extends AppCompatActivity {
                                 id_Ck_Txt.setText("사용 가능한 아이디입니다.");
                                 id_chk = true;
                             }
-                        } else Log.d("e", "데이터 조회 실패", task.getException());
+                        } else Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                     }
                 });
             }
@@ -152,7 +152,7 @@ public class SignActivity extends AppCompatActivity {
                                     email_chk = false;
                                 }
                             }
-                        } else Log.d("e", "데이터 조회 실패", task.getException());
+                        } else Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                     }
                 });
                 if (email_chk)
@@ -212,7 +212,7 @@ public class SignActivity extends AppCompatActivity {
                     db.collection("member").document(id_Edt.getText().toString()).set(user).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "user 데이터 등록 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                         }
                     });
 
@@ -225,7 +225,7 @@ public class SignActivity extends AppCompatActivity {
                     db.collection("category").document(id_Edt.getText().toString()).set(cate).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "category 데이터 등록 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                         }
                     });
 

@@ -87,7 +87,7 @@ public class UserFeedActivity extends AppCompatActivity {
                                         db.collection("follow").document(doc.getId()).delete().addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("e", "follow 데이터 삭제 실패 : ", e);
+                                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataDelError), e);
                                             }
                                         });
                                     }
@@ -105,18 +105,18 @@ public class UserFeedActivity extends AppCompatActivity {
                     db.collection("follow").add(follow).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "follow 데이터 등록 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                         }
                     });
                     notice.put("docId", userId);
                     notice.put("send_mem", loginId);
                     notice.put(getResources().getString(R.string.mid), userId);
                     notice.put("type", 2);
-                    notice.put("inputtime", new Date());
+                    notice.put(getResources().getString(R.string.time), new Date());
                     db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "notice 데이터 등록 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                         }
                     });
                 }
@@ -216,7 +216,7 @@ public class UserFeedActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         //닉네임 로드
@@ -240,7 +240,7 @@ public class UserFeedActivity extends AppCompatActivity {
                         following++;
                     }
                 } else {
-                    Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 following_count_txt.setText(String.valueOf(following));
             }
@@ -260,7 +260,7 @@ public class UserFeedActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    Log.d("lll", "팔로워 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 follower_count_txt.setText(String.valueOf(follower));
             }
@@ -290,7 +290,7 @@ public class UserFeedActivity extends AppCompatActivity {
                         read++;
                     }
                 } else {
-                    Log.d("lll", "독후감 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 uF_feedReadBookAdapter.notifyDataSetChanged();
                 book_count_txt.setText(String.valueOf(read));

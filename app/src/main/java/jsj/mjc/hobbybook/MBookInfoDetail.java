@@ -85,19 +85,15 @@ public class MBookInfoDetail extends AppCompatActivity {
 
 
         db = FirebaseFirestore.getInstance();
-        db.collection("review").orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("review").orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         if(doc.get("book_isbn").toString().equals(isbn)){
-                        Log.d("TAG", doc.getId() + " => " + doc.getData());
-
-                        Timestamp ts = (Timestamp) doc.getData().get("inputtime");
+                        Timestamp ts = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                         String date = dateFormatter.format(ts.toDate());
-
-                        MBookCom data = new MBookCom(doc.get(getResources().getString(R.string.mid)).toString()
-                        ,date, doc.get("rv_content").toString());
+                        MBookCom data = new MBookCom(doc.get(getResources().getString(R.string.mid)).toString(), date, doc.get("rv_content").toString());
 
                         list.add(data);
 
@@ -159,7 +155,7 @@ public class MBookInfoDetail extends AppCompatActivity {
                     }
                     stars_show.setRating(starsAvg);
                 } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
             }
         });
@@ -189,7 +185,7 @@ public class MBookInfoDetail extends AppCompatActivity {
 
                         saveReview.put("book_isbn",isbn);
                         saveReview.put("deleted",deleted);
-                        saveReview.put("inputtime",formatDate);
+                        saveReview.put(getResources().getString(R.string.time),formatDate);
                         saveReview.put("mem_id",loginId);
                         saveReview.put("rv_content",edt.getText().toString());
                         saveReview.put("rv_num",rv_num);

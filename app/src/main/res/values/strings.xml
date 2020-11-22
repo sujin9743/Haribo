@@ -66,6 +66,8 @@
 
     <string name="dataLoadError">데이터 로드 오류 : </string>
     <string name="dataAddError">데이터 등록 오류 : </string>
+    <string name="dataUpdateError">데이터 수정 오류 : </string>
+    <string name="dataDelError">데이터 삭제 오류 : </string>
 
     <string name="pimg">profile_img/</string>
     <string name="jpg">.jpg</string>
@@ -240,4 +242,11 @@ HobbyBook은 무료로 제공되는 서비스와 관련하여 회원에게 어�
 ■ 개인정보의 위탁 처리 \n\n\n
 
 HobbyBook은 서비스 향상을 위해 관계법령에 따라 회원의 동의를 얻거나 관련 사항을 공개 또는 고지합니다.\n</string>
+    <string name="fl">follow</string>
+    <string name="flee">followee</string>
+    <string name="fler">follower</string>
+    <string name="st">seetab</string>
+    <string name="password">pw</string>
+    <string name="idPwCkTxt">아이디와 비밀번호를 확인해 주세요.</string>
+    <string name="Hbest">하비북 베스트 도서</string>
 </resources>

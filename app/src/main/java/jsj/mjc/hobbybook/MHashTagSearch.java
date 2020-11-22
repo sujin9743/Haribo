@@ -87,7 +87,6 @@ public class MHashTagSearch extends AppCompatActivity{
                        }
                    }
                 }
-                Log.d("TAG", "해시태그: " + h1 + h2 + h3 + h4);
             }
         });
 
@@ -135,9 +134,6 @@ public class MHashTagSearch extends AppCompatActivity{
                 i.putExtra("hash4",h4);
                 setResult(RESULT_OK,i);
                 finish();
-
-                //Log.d(h1, "onClick: ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
-
             }
         });
 

@@ -235,7 +235,6 @@ public class SelectGenreActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         if(doc.exists()) {
-                            Log.d("TAG", "data!!!!!!!!!!!!!!!!!" + doc.getData());
                             for(int i=0; i<doc.getData().size()-1; i++) {
                                 String index = Integer.toString(i+1);
                                 if(doc.getData().get(index).toString() == "true") {

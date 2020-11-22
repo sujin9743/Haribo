@@ -101,7 +101,7 @@ public class MessageFragment extends Fragment {
     }
 
     public void loadMessage() {
-        db.collection("message").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy("inputtime", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("message").whereEqualTo(getResources().getString(R.string.mid), loginId).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -120,7 +120,7 @@ public class MessageFragment extends Fragment {
                                 break;
                         }
                         if (isOk) {
-                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
                             Message data = new Message(doc.getId(),  doc.getString("send_mem"), doc.getString("receive_mem"), dateStr, doc.getString("msg_content"), doc.getBoolean("seen"));
                             messageArrayList.add(data);

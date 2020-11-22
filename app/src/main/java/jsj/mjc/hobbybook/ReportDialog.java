@@ -67,7 +67,7 @@ public class ReportDialog extends Dialog{
                                     db.collection("member").document(userId).update("report_c", report_c).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.d("e", "데이터 수정 실패 : " + e);
+                                            Log.d(getContext().getResources().getString(R.string.logTag), getContext().getResources().getString(R.string.dataUpdateError) + e);
                                         }
                                     });
                                 }

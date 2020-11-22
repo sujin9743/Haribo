@@ -109,7 +109,7 @@ public class MReportCommentActivity extends AppCompatActivity{
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.d("lll", "프로필 사진 로드 실패 : " + exception);
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
                 }
             });
 
@@ -140,11 +140,11 @@ public class MReportCommentActivity extends AppCompatActivity{
                         comment.put("c_bundle", c_bundle);
                         comment.put("brc_content", comCon);
                         comment.put("deleted", false);
-                        comment.put("inputtime", new Date());
+                        comment.put(getResources().getString(R.string.time), new Date());
                         comment.put(getResources().getString(R.string.mid), loginId);
                         comment.put("receive_com", recieve_com);
                         db.collection("bookre_com").whereEqualTo("br_num", brNum)
-                                .orderBy("inputtime", Query.Direction.DESCENDING).limit(1)
+                                .orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).limit(1)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -156,12 +156,12 @@ public class MReportCommentActivity extends AppCompatActivity{
                                             comment.put("c_bundle", brcNum);
                                     }
                                 } else {
-                                    Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                                 }
                                 db.collection("bookre_com").add(comment).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d("e", "bookre_com 데이터 등록 실패 : ", e);
+                                        Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                     }
                                 });
                                 if (recieve_com == 0) {
@@ -170,11 +170,11 @@ public class MReportCommentActivity extends AppCompatActivity{
                                         notice.put("send_mem", loginId);
                                         notice.put(getResources().getString(R.string.mid), writerId);
                                         notice.put("type", 4);
-                                        notice.put("inputtime", new Date());
+                                        notice.put(getResources().getString(R.string.time), new Date());
                                         db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("e", "notice 데이터 등록 실패 : ", e);
+                                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                             }
                                         });
                                     }
@@ -184,11 +184,11 @@ public class MReportCommentActivity extends AppCompatActivity{
                                         notice.put("send_mem", loginId);
                                         notice.put(getResources().getString(R.string.mid), commentArrayList.get(commentAdapter.selected).getCWriter());
                                         notice.put("type", 6);
-                                        notice.put("inputtime", new Date());
+                                        notice.put(getResources().getString(R.string.time), new Date());
                                         db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("e", "notice 데이터 등록 실패 : ", e);
+                                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                             }
                                         });
                                     }
@@ -234,7 +234,7 @@ public class MReportCommentActivity extends AppCompatActivity{
                                     "삭제된 댓글입니다.", getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
                             commentArrayList.add(data);
                         } else {
-                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
                             MReportComment data = new MReportComment(doc.getId(), doc.getLong("brc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getLong("c_bundle").intValue(), doc.getString("brc_content"),
                                     doc.getString(getResources().getString(R.string.mid)), dateStr);
@@ -242,7 +242,7 @@ public class MReportCommentActivity extends AppCompatActivity{
                         }
                     }
                 } else {
-                    Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), task.getException());
                 }
                 commentAdapter.notifyDataSetChanged();
             }

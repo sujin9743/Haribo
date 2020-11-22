@@ -115,7 +115,7 @@ public class MBookReportDetail extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
                         }
                     });
 
@@ -128,13 +128,13 @@ public class MBookReportDetail extends AppCompatActivity {
                                     profileText.setText(doc.getString(getResources().getString(R.string.name)));
                                 }
                             } else {
-                                Log.d("lll", "작성자 로드 실패 : " + task.getException());
+                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                             }
                         }
                     });
 
                 } else {
-                    Log.d("e", "데이터 로드 실패 : " + task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                 }
             }
         });

@@ -107,7 +107,6 @@ public class RecommendBookActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         HashMap map = (HashMap) document.getData();
-                        Log.d("TAG", "data: " + map);
                         for (int i = 0; i < map.size() - 1; i++) {
                             String selectGenreNum = Integer.toString(i + 1);
                             String selectGenreBool = map.get(selectGenreNum).toString();
@@ -145,10 +144,10 @@ public class RecommendBookActivity extends AppCompatActivity {
                             recommendBookAsyncTask.execute(genre_array.get(i));
                         }
                     } else {
-                        Log.d("TAG", "No such document");
+                        Log.d(TAG, "No such document");
                     }
                 } else {
-                    Log.d("TAG", "get failed with ", task.getException());
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
@@ -165,7 +164,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                         loginGen.add(i);
                 }
                 String genre_name = null;
-                Log.d("rjc", "" + loginGen);
+                Log.d(TAG, "" + loginGen);
                 for (int i : loginGen) {
                     switch (i) {
                         case 1:
@@ -291,9 +290,9 @@ public class RecommendBookActivity extends AppCompatActivity {
                 }
 
                 for(int i=0;i<textGen.size();i++)
-                    Log.d("rjc",""+textGen);
+                    Log.d(TAG,""+textGen);
                 String a=""+textGen;
-                Log.d("rjc",""+a);
+                Log.d(TAG,""+a);
                 tv.setText("선호 장르 : "+a);
 
             }

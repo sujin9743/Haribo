@@ -27,7 +27,7 @@ public class FollowListActivity extends AppCompatActivity {
 
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
         userId = getIntent().getStringExtra(getResources().getString(R.string.uid));
-        seetab = getIntent().getIntExtra("seetab", 0);
+        seetab = getIntent().getIntExtra(getString(R.string.st), 0);
 
         //툴바 설정
         Toolbar profile_modify_toolbar = (Toolbar) findViewById(R.id.followList_toolbar);

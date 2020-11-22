@@ -64,14 +64,14 @@ public class MessageSendActivity extends AppCompatActivity {
                     message.put("receive_mem", userId);
                     message.put("msg_content", mContent);
                     message.put("deleted", false);
-                    message.put("inputtime", new Date());
+                    message.put(getResources().getString(R.string.time), new Date());
 
                     message.put("seen", true);
                     message.put(getResources().getString(R.string.mid), loginId);
                     db.collection("message").add(message).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "message 데이터 등록 실패 : " + e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError) + e);
                         }
                     });
 
@@ -80,7 +80,7 @@ public class MessageSendActivity extends AppCompatActivity {
                     db.collection("message").add(message).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "message 데이터 등록 실패 : " + e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError) + e);
                         }
                     });;
                 }

@@ -200,7 +200,7 @@ public class MyFeedFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         //닉네임 로드
@@ -224,7 +224,7 @@ public class MyFeedFragment extends Fragment {
                         following++;
                     }
                 } else {
-                    Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 myFeed_following_count_txt.setText(String.valueOf(following));
             }
@@ -238,7 +238,7 @@ public class MyFeedFragment extends Fragment {
                         follower++;
                     }
                 } else {
-                    Log.d("lll", "팔로워 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 myFeed_follower_count_txt.setText(String.valueOf(follower));
             }
@@ -255,7 +255,7 @@ public class MyFeedFragment extends Fragment {
                         read++;
                     }
                 } else {
-                    Log.d("lll", "독후감 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 mF_feedReadBookAdapter.notifyDataSetChanged();
                 myFeed_book_count_txt.setText(String.valueOf(read));

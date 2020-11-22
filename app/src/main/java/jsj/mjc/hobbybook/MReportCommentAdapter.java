@@ -96,7 +96,7 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                    Log.d(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.logTag), viewHolder.dcWriterIv.getContext().getResources().getString(R.string.dataLoadError) + exception);
                 }
             });
             db.collection("member").document(commentList.get(position).getCWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

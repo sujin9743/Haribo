@@ -60,17 +60,17 @@ public class FollowingFragment extends Fragment { //팔로잉 TAB
         following_recycler.setAdapter(userListAdapter);
 
         //팔로잉 로드
-        db.collection("follow").whereEqualTo("follower", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getResources().getString(R.string.fl)).whereEqualTo(getResources().getString(R.string.fler), userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        User data = new User(document.getString("followee"));
+                        User data = new User(document.getString(getResources().getString(R.string.flee)));
                         userlist.add(data);
                     }
                     userListAdapter.notifyDataSetChanged();
                 } else {
-                    Log.d("lll", "팔로잉 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
             }
         });

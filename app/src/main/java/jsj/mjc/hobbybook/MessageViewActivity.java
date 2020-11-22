@@ -100,31 +100,6 @@ public class MessageViewActivity extends AppCompatActivity {
                 }
             });
         }
-
-        /*db.collection("message").whereEqualTo("inputtime",send).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("TAG", document.getId() + " => " + document.getData());
-
-                        mView_sender.setText(document.get("send_mem").toString() + " > ");
-                        mView_receiver.setText(document.get("receive_mem").toString());
-                        mView_sendDate.setText(document.get("inputtime").toString());
-                        mView_text.setText(document.get("msg_content").toString());
-
-
-                        receiver = document.get("receive_mem").toString();
-                        sender = document.get("send_mem").toString();
-
-                    }
-                } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
-                }
-            }
-        });*/
-
-
     }
 
     @Override
@@ -152,7 +127,7 @@ public class MessageViewActivity extends AppCompatActivity {
                         db.collection("message").document(docId).delete().addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d("e", "message 데이터 삭제 실패" + e);
+                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataDelError) + e);
                             }
                         });
                         finish();

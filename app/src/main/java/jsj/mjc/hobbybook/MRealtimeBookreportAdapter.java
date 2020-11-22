@@ -127,7 +127,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(holder.itemView.getContext().getResources().getString(R.string.logTag), holder.itemView.getContext().getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         holder.bookName.setText(mRealtime.get(position).getBrTitle());

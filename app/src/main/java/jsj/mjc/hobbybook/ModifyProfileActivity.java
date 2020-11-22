@@ -96,7 +96,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         modify_profile_Img.setOnClickListener(new View.OnClickListener() {
@@ -195,7 +195,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     db.collection("member").document(loginId).update(user).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("e", "user 데이터 수정 실패 : ", e);
+                            Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataUpdateError), e);
                         }
                     });
                     finish();
