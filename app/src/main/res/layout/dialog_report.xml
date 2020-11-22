@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5sp"
-        android:text="신고 사유 선택"
+        android:text="@string/reportTitle"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,35 +30,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:text="부적절한 언어 표현/비속어/비하" />
+            android:text="@string/report1" />
 
         <RadioButton
             android:id="@+id/report_rbtn_c1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:text="상업적 광고 및 판매" />
+            android:text="@string/report2" />
 
         <RadioButton
             android:id="@+id/report_rbtn_c2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:text="음란물/불건전한 만남 및 대화" />
+            android:text="@string/report3" />
 
         <RadioButton
             android:id="@+id/report_rbtn_c3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:text="도배/낚시" />
+            android:text="@string/report4" />
 
         <RadioButton
             android:id="@+id/report_rbtn_c4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:text="기타" />
+            android:text="@string/extra" />
     </RadioGroup>
 
     <EditText
@@ -66,7 +66,7 @@
         android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_box_line"
-        android:hint="내용을 입력해 주세요."
+        android:hint="@string/inputCon"
         android:padding="5sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textColor="#ffffff"
             android:id="@+id/report_cancel_btn"
             />
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="확인"
+            android:text="@string/ok"
             android:textColor="#ffffff"
             android:id="@+id/report_ok_btn"/>
     </LinearLayout>

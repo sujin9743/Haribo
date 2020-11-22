@@ -23,7 +23,7 @@
             android:id="@+id/okBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="완료"
+            android:text="@string/done"
             android:textSize="18sp"
             android:layout_gravity="center"
             android:layout_marginLeft="320dp"
@@ -43,20 +43,20 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
-            android:text="#"
+            android:text="@string/shop"
             android:textColor="@color/darkGreen"
             android:textSize="25sp"/>
         <EditText
             android:id="@+id/edtHash"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:hint="해시태그 검색"
+            android:hint="@string/searchHash"
             android:layout_marginLeft="5dp"/>
         <TextView
             android:id="@+id/addBtn"
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:text="추가"
+            android:text="@string/add"
             android:layout_marginLeft="20dp"
             android:background="@color/white" />
     </LinearLayout>

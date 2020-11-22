@@ -26,7 +26,7 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/toolLayout"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/userRc_bnv">
+            app:layout_constraintBottom_toBottomOf="parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="400dp"

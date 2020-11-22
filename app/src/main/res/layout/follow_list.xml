@@ -24,12 +24,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="팔로워"/>
+            android:text="@string/followerKo"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="팔로잉" />
+            android:text="@string/followingTxt" />
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout

@@ -17,7 +17,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_launcher"></de.hdodenhof.circleimageview.CircleImageView>
+            android:src="@drawable/ic_outline_person_outline_24"/>
 
         <TextView
             android:id="@+id/profileText"
@@ -26,7 +26,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:text="Dorothy"
             android:textSize="15sp" />
 
 
@@ -36,7 +35,6 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2020.05.05"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -47,10 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15dp"
-        android:text="I know I want it 입에 바른 소린 이제 그만할게
-Cause I deserve it deserve it 혹시 잠깐 내가 미워지더라도 걱정 안 할게
-Cause I know you I know you 내 눈을 자꾸 피해봐 네 맘을 자꾸 숨겨봐 나에게서
-도망쳐봐 No no 감았던 눈을 떴을 때 문득 내가 떠오를 때 "
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         app:layout_constraintTop_toBottomOf="@+id/profileLayout"

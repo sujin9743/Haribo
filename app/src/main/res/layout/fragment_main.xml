@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="end"
-                    android:text="더보기"
+                    android:text="@string/more"
                     android:onClick="moreGenreClick" />
             </LinearLayout>
             <!-- 사용자가 선택한 장르 순위를 보여주는 RecyclerView -->
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="end"
-                    android:text="더보기"
+                    android:text="@string/more"
                     android:onClick="moreHBBClick"/>
             </LinearLayout>
             <!-- 하비북 사용자 베스트셀러를 보여주는 RecyclerView -->

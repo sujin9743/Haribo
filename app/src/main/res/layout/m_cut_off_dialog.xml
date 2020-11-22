@@ -15,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent">
     <TextView
         android:id="@+id/user"
-        android:text="하리보"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
@@ -25,7 +24,7 @@
         android:id="@+id/pin1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="님을 차단하시겠습니까?"
+        android:text="@string/realBlock"
         android:textSize="18sp"
         android:textColor="@color/black"/>
     </LinearLayout>
@@ -41,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="차단하시면 더이상 "/>
+            android:text="@string/realblock2"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="님의 게시물을 볼 수 없습니다."/>
+            android:text="@string/realblock3"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -67,7 +66,7 @@
             android:layout_height="30dp"
             android:background="@drawable/round_btn_gray"
             android:layout_marginRight="5dp"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textColor="@color/white" />
 
         <Button
@@ -75,7 +74,7 @@
             android:layout_width="130dp"
             android:layout_height="30dp"
             android:background="@drawable/round_btn_darkgreen"
-            android:text="확인"
+            android:text="@string/ok"
             android:textColor="@color/white"
             android:layout_marginLeft="5dp"/>
 
