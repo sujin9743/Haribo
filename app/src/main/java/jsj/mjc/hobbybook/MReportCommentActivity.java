@@ -94,6 +94,7 @@ public class MReportCommentActivity extends AppCompatActivity{
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
         getSupportActionBar().setTitle("댓글");
 
+        
         if (brNum == -1) {
             getSupportActionBar().setTitle("오류가 발생했습니다.");
         } else {
