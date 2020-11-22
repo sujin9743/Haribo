@@ -75,7 +75,7 @@
     <string name="b_auth">book_author</string>
     <string name="bTitle">book_title</string>
     <string name="b_desc">book_description</string>
-    <string name="bisbn">bookisbn</string>
+    <string name="bisbn">book_isbn</string>
     <string name="ibn">isbn</string>
     <string name="b_isbn">book_isbn</string>
     <string name="item">item</string>
