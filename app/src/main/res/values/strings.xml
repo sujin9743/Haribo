@@ -41,9 +41,11 @@
     <string name="mid">mem_id</string>
 
     <string name="mem">member</string>
+    <string name="ntc">notice</string>
 
     <string name="did">docId</string>
     <string name="time">inputtime</string>
+    <string name="rc">receive_com</string>
     <string name="isDel">deleted</string>
 
     <string name="dbt">debate</string>
@@ -51,11 +53,16 @@
     <string name="dbwriter">debateWriter</string>
 
     <string name="dn">d_num</string>
+    <string name="dt">d_title</string>
     <string name="dCon">d_content</string>
+
     <string name="dc">debate_com</string>
     <string name="dcn">dc_num</string>
-    <string name="dt">d_title</string>
-    <string name="dcc">d_content</string>
+    <string name="dbundle">dc_bundle</string>
+    <string name="dcc">dc_content</string>
+    
+    <string name="sm">send_mem</string>
+    <string name="tp">type</string>
 
     <string name="dataLoadError">데이터 로드 오류 : </string>
     <string name="dataAddError">데이터 등록 오류 : </string>
@@ -233,10 +240,4 @@ HobbyBook은 무료로 제공되는 서비스와 관련하여 회원에게 어�
 ■ 개인정보의 위탁 처리 \n\n\n
 
 HobbyBook은 서비스 향상을 위해 관계법령에 따라 회원의 동의를 얻거나 관련 사항을 공개 또는 고지합니다.\n</string>
-    <string name="dbundle">dc_bundle</string>
-    <string name="rc">receive_com</string>
-    <string name="dFormat">y. M. d. hh:mm</string>
-    <string name="sm">send_mem</string>
-    <string name="tp">type</string>
-    <string name="ntc">notice</string>
 </resources>

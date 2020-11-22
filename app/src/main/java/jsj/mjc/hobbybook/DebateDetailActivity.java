@@ -55,7 +55,7 @@ public class DebateDetailActivity extends AppCompatActivity {
     String writerId, docId;
     public String loginId;
     int dcNum = 1, dNum, comNum;
-    final SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.dFormat));
+    final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
     public static DebateDetailActivity debateDetailActivity;
