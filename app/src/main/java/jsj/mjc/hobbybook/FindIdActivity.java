@@ -33,7 +33,7 @@ public class FindIdActivity extends AppCompatActivity {
     ImageButton findId_backBtn;
     Button findId_Btn;
 
-    String email_f, email_b;
+    String email_b;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -60,38 +60,29 @@ public class FindIdActivity extends AppCompatActivity {
             }
         });
 
-        //spinner 선택
-        email_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                email_b = parent.getItemAtPosition(position).toString();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         //확인 버튼 클릭 시
         findId_Btn = findViewById(R.id.findId_Btn);
         findId_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String putEmail = email_fId_edt.getText().toString() + "@" + email_spinner.getSelectedItem().toString();
                 db.collection("member").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(DocumentSnapshot doc : task.getResult()) {
-                                if(doc.getString("email_f").equals(email_fId_edt.getText().toString())
-                                        && doc.getString("email_b").equals(email_spinner.getSelectedItem().toString())) {
+                                String getEmail_f = doc.getString("email_f");
+                                String getEmail_b = doc.getString("email_b");
+                                String email = getEmail_f + "@" + getEmail_b;
+
+                                if(email.equals(putEmail)) {
+                                    Toast.makeText(getApplicationContext(), "이메일이 일치합니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), FindIdResultActivity.class);
                                     intent.putExtra("id", doc.getString("id"));
                                     startActivity(intent);
                                     break;
-                                }
-                                else {
-                                    Log.d("TAG", "이메일 뒤 다름");
-                                    Toast.makeText(FindIdActivity.this, "해당하는 이메일이 없습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "해당하는 이메일이 없습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
