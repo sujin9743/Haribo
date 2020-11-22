@@ -151,7 +151,6 @@ public class MBookReportDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), UserFeedActivity.class);
                 i.putExtra(getResources().getString(R.string.uid), writerId);
-                i.putExtra(getResources().getString(R.string.lid), loginId);
                 startActivity(i);
             }
         });

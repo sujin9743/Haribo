@@ -50,7 +50,6 @@ public class FollowingFragment extends Fragment { //팔로잉 TAB
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(getContext(), UserFeedActivity.class);
-                intent.putExtra(getResources().getString(R.string.lid), loginId);
                 intent.putExtra(getResources().getString(R.string.uid), userlist.get(position).getUserId());
                 startActivity(intent);
             }

@@ -116,7 +116,6 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
                 public void onClick(View view) {
                     Intent intent = new Intent(viewHolder.dcWriterIv.getContext(), UserFeedActivity.class);
                     intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.uid), commentList.get(position).getCWriter());
-                    intent.putExtra(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.lid), MainActivity.loginId);
                     viewHolder.dcWriterIv.getContext().startActivity(intent);
                 }
             });
@@ -126,7 +125,6 @@ public class MReportCommentAdapter extends RecyclerView.Adapter<MReportCommentAd
                 public void onClick(View view) {
                     Intent intent = new Intent(viewHolder.dcWriterTv.getContext(), UserFeedActivity.class);
                     intent.putExtra(viewHolder.dcWriterTv.getContext().getString(R.string.uid), commentList.get(position).getCWriter());
-                    intent.putExtra(viewHolder.dcWriterTv.getContext().getResources().getString(R.string.lid), MainActivity.loginId);
                     viewHolder.dcWriterTv.getContext().startActivity(intent);
                 }
             });

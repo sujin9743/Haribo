@@ -61,7 +61,7 @@ public class UserFeedActivity extends AppCompatActivity {
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
+        loginId = MainActivity.loginId;
         userId = getIntent().getStringExtra("userId");
 
         book_count_txt = findViewById(R.id.book_count_txt);

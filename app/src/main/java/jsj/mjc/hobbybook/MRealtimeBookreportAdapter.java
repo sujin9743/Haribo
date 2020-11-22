@@ -137,7 +137,6 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
             public void onClick(View v) {
                 Intent intent = new Intent(holder.profileImg.getContext(),UserFeedActivity.class);
                 intent.putExtra("userId",mRealtime.get(position).getProfileText());
-                intent.putExtra("loginId",MainActivity.loginId);
                 holder.profileImg.getContext().startActivity(intent);
             }
         });

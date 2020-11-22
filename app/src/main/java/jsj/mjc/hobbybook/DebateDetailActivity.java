@@ -97,7 +97,6 @@ public class DebateDetailActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(DebateDetailActivity.this, UserFeedActivity.class);
                     intent.putExtra(getResources().getString(R.string.uid), writerId);
-                    intent.putExtra(getResources().getString(R.string.lid), loginId);
                     startActivity(intent);
                 }
             });

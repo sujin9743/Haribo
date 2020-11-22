@@ -82,7 +82,6 @@ public class RecommendUserActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(RecommendUserActivity.this, UserFeedActivity.class);
-                intent.putExtra(getResources().getString(R.string.lid), loginId);
                 intent.putExtra(getResources().getString(R.string.uid), userlist.get(position).getUserId());
                 startActivity(intent);
             }

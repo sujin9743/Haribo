@@ -81,7 +81,6 @@ public class MNotice extends Fragment {
                         break;
                     case 2://유저피드 이동
                         intent = new Intent(getContext(), UserFeedActivity.class);
-                        intent.putExtra(getResources().getString(R.string.lid), loginId);
                         intent.putExtra(getResources().getString(R.string.uid), noticeArrayList.get(position).getSendId());
                         startActivity(intent);
                         break;
