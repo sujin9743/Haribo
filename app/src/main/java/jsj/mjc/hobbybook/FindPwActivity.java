@@ -68,10 +68,12 @@ public class FindPwActivity extends AppCompatActivity {
         findPw_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(id_Edt.getText().toString() == null || pw_CkQA_Edt.getText().toString() == null) {
-                    Toast.makeText(getApplicationContext(), "빈 칸을 채워주세요.", Toast.LENGTH_LONG).show();
-                }
-                db.collection(getString(R.string.mem)).document(id_Edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                if((id_Edt.getText().toString()).equals("") || (pw_CkQA_Edt.getText().toString()).equals("")) {
+                    Toast.makeText(getApplicationContext(), "빈 칸을 확인해주세요.", Toast.LENGTH_LONG).show();
+
+
+                }else{
+                db.collection("member").document(id_Edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -86,7 +88,9 @@ public class FindPwActivity extends AppCompatActivity {
                     }
                 });
                 Intent intent = new Intent(getApplicationContext(), ResetPwActivity.class);
+                intent.putExtra("sendID",id_Edt.getText().toString());
                 startActivity(intent);
+                }
             }
         });
     }
