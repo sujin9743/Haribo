@@ -68,11 +68,6 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         adapter.setOnItemClickListener(new MRealtimeBookreportAdapter.OnItemClickListenr() {
             @Override
             public void onItemClick(View v, int position) {
-                String mem_id, br_title, description, br_num;
-                mem_id = list.get(position).getProfileText();
-                br_title = list.get(position).getBrTitle();
-                description = list.get(position).getBookInfo();
-                br_num = list.get(position).getBookNum();
 
                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                 i.putExtra(getResources().getString(R.string.lid), MainActivity.loginId);
@@ -96,22 +91,12 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item.setBrTitle(doc.getData().get("br_title").toString());
                         item.setBookInfo(doc.getData().get("book_description").toString());
                         item.setLikeCnt(doc.getData().get("book_like").toString());
-//                        item.setBookNum(doc.getData().get("br_num").toString());
                         list.add(item);
                     }
                     adapter.notifyDataSetChanged();
-                    //recyclerView.setAdapter(adapter);
                 }
             }
         });
-
-        //for(int i = 0;i<10;i++){
-        //    MRealtime data = new MRealtime("도로시","82년생의 김지영"+ " | ","82살 김지영을 읽고","150","30");
-        //    list.add(data);
-        //}
-
-        //recyclerView.setAdapter(adapter);
-
 
         addBtn = findViewById(R.id.addBookReport);
         backBtn = findViewById(R.id.backBtn);

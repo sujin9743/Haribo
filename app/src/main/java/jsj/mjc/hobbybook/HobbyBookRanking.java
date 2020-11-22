@@ -5,7 +5,6 @@ public class HobbyBookRanking {
     private String rankingImageUrl;
     private String rankingTitle;
     private String rankingWriter;
-    private String rankingAuthor;
     private String bookDesc;
     private String bookIsbn;
 

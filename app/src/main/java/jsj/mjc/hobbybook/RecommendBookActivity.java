@@ -113,108 +113,32 @@ public class RecommendBookActivity extends AppCompatActivity {
                             String selectGenreBool = map.get(selectGenreNum).toString();
                             if (selectGenreBool == "true") {
                                 switch (selectGenreNum) {
-                                    //장르 여러 개 선택했을 때 구현해야 함
-                                    case "1": {
-                                        genre_array.add(1230);
-                                        break;
-                                    }
-                                    case "2": {
-                                        genre_array.add(55890);
-                                        break;
-                                    }
-                                    case "3": {
-                                        genre_array.add(170);
-                                        break;
-                                    }
-                                    case "4": {
-                                        genre_array.add(38414);
-                                        break;
-                                    }
-                                    case "5": {
-                                        genre_array.add(39398);
-                                        break;
-                                    }
-                                    case "6": {
-                                        genre_array.add(987);
-                                        break;
-                                    }
-                                    case "7": {
-                                        genre_array.add(8257);
-                                        break;
-                                    }
-                                    case "8": {
-                                        genre_array.add(2551);
-                                        break;
-                                    }
-                                    case "9": {
-                                        genre_array.add(8259);
-                                        break;
-                                    }
-                                    case "10": {
-                                        genre_array.add(1);
-                                        break;
-                                    }
-                                    case "11": {
-                                        genre_array.add(1383);
-                                        break;
-                                    }
-                                    case "12": {
-                                        genre_array.add(1108);
-                                        break;
-                                    }
-                                    case "13": {
-                                        genre_array.add(55889);
-                                        break;
-                                    }
-                                    case "14": {
-                                        genre_array.add(1196);
-                                        break;
-                                    }
-                                    case "15": {
-                                        genre_array.add(74);
-                                        break;
-                                    }
-                                    case "16": {
-                                        genre_array.add(517);
-                                        break;
-                                    }
-                                    case "17": {
-                                        genre_array.add(1322);
-                                        break;
-                                    }
-                                    case "18": {
-                                        genre_array.add(13789);
-                                        break;
-                                    }
-                                    case "19": {
-                                        genre_array.add(656);
-                                        break;
-                                    }
-                                    case "20": {
-                                        genre_array.add(336);
-                                        break;
-                                    }
-                                    case "21": {
-                                        genre_array.add(112011);
-                                        break;
-                                    }
-                                    case "22": {
-                                        genre_array.add(28402);
-                                        break;
-                                    }
-                                    case "23": {
-                                        genre_array.add(17195);
-                                        break;
-                                    }
-                                    case "24": {
-                                        genre_array.add(38410);
-                                        break;
-                                    }
+                                    case "1": { genre_array.add(1230); break; }
+                                    case "2": { genre_array.add(55890); break; }
+                                    case "3": { genre_array.add(170); break; }
+                                    case "4": { genre_array.add(38414); break; }
+                                    case "5": { genre_array.add(39398); break; }
+                                    case "6": { genre_array.add(987); break; }
+                                    case "7": { genre_array.add(8257); break; }
+                                    case "8": { genre_array.add(2551); break; }
+                                    case "9": { genre_array.add(8259); break; }
+                                    case "10": { genre_array.add(1); break; }
+                                    case "11": { genre_array.add(1383); break; }
+                                    case "12": { genre_array.add(1108); break; }
+                                    case "13": { genre_array.add(55889); break; }
+                                    case "14": { genre_array.add(1196); break; }
+                                    case "15": { genre_array.add(74); break; }
+                                    case "16": { genre_array.add(517); break; }
+                                    case "17": { genre_array.add(1322); break; }
+                                    case "18": { genre_array.add(13789); break; }
+                                    case "19": { genre_array.add(656); break; }
+                                    case "20": { genre_array.add(336); break; }
+                                    case "21": { genre_array.add(112011); break; }
+                                    case "22": { genre_array.add(28402); break; }
+                                    case "23": { genre_array.add(17195); break; }
+                                    case "24": { genre_array.add(38410); break; }
                                 }
                             }
-                        }
-                        for (int i = 0; i < genre_array.size(); i++) {
-                            Log.d("TAG", "data: " + genre_array.get(i));
                         }
                         for (int i = 0; i < genre_array.size(); i++) {
                             recommendBookAsyncTask = new RecommendBookAsyncTask();
@@ -232,7 +156,6 @@ public class RecommendBookActivity extends AppCompatActivity {
         loginGen = new ArrayList<>();
         textGen = new ArrayList<>();
 
-        //todo. 본인이 선택한 장르 보여주기 textview
         rcBook_DB.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -375,22 +298,6 @@ public class RecommendBookActivity extends AppCompatActivity {
 
             }
         });
-
-
-        /*//임시 데이터 삽입
-        for(int i=0; i<10; i++) {
-            RecommendBookItem data = new RecommendBookItem("책 제목"+i, "지은이"+i, "출판사"+i, (float)4.5, "(4.5)");
-            booklist.add(data);
-        }*/
-
-        /*//RecyclerView 항목 클릭 구현
-        bookListAdapter.setOnItemClickListener(new RecommendBookAdapter.OnItemClickListenr() {
-            @Override
-            public void onItemClick(Vi ew v, int position) {
-                Intent intent = new Intent(getApplicationContext(), MBookInfoDetail.class);
-                startActivity(intent);
-            }
-        });*/
     }
 
     //알라딘 API에서 데이터 불러오기

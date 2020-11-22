@@ -93,7 +93,6 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
     public void onBindViewHolder(@NonNull RankingViewHolder viewHolder, int position) {
         viewHolder.rankingNumTv.setTag(position);
         viewHolder.rankingNumTv.setText(rankingList.get(position).getRankingNum());
-        //viewHolder.rankingIv.setImageResource(R.drawable.test_img); //추후 Glide 통해 이미지 변경
         viewHolder.rankingTitleTv.setText(rankingList.get(position).getRankingTitle());
         viewHolder.rankingWriterTv.setText(rankingList.get(position).getRankingWriter());
         //이미지 로딩 라이브러리 Glide 사용

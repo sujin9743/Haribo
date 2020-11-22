@@ -176,9 +176,6 @@ public class HomeFragment extends Fragment {
                         }
                     }
 
-                    for(int i=0; i<resultIsbn.size(); i++)
-                    Log.d("TAG", "ISBN" + i +  "=>" + resultIsbn.get(i) + " 평점=>" + starArray.get(i));
-
                     for(int i=0; i<resultIsbn.size(); i++) {
                         String num = Integer.toString(i+1);
                         HobbyBookBestAsyncTask hobbyBookBestAsyncTask = new HobbyBookBestAsyncTask();
