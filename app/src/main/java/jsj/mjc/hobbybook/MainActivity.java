@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton search_btn = findViewById(R.id.main_search_btn);
         ImageButton main_back_btn = findViewById(R.id.main_back_btn);
-        //mainToolbar = findViewById(R.id.mainToolbar);
         moreToolbar = findViewById(R.id.moreToolbar);
         rankingToolbarText = findViewById(R.id.more_title_tv);
 
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
 
-        //hamburger Button -> Navigation Drawer
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawerLayout);
         drawerView = (View) findViewById(R.id.nav_view);
         drawerLayout.setDrawerListener(listener);

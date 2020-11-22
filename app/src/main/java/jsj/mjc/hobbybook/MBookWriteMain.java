@@ -49,11 +49,9 @@ public class MBookWriteMain extends AppCompatActivity {
     private FirebaseFirestore db;
 
     int i = 1;
-    int count = 0; //firebase 문서명 카운트
 
     int img_request_Code = 1;
     int hash_request_Code = 2;
-    final static int CODE=1;    //해시태그 intent 구분
 
     String bookCoverImg, author;
     String hash1, hash2, hash3, hash4;
@@ -104,7 +102,6 @@ public class MBookWriteMain extends AppCompatActivity {
 
                     saveReport.put("bookisbn", isbn);
                     saveReport.put("br_content", contents.getText().toString());
-                    //saveReport.put("br_num",brNum); 책넘버 어떤거 받는지 몰라서 일단 주석처리
                     saveReport.put("br_img", bookCoverImg);
                     saveReport.put("br_title", reportName.getText().toString());
                     saveReport.put("book_title", bTitle);
@@ -141,15 +138,6 @@ public class MBookWriteMain extends AppCompatActivity {
                         }
                     });
 
-
-                    /*//입력한 모든 데이터 서버에 저장
-                    db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                        }
-                    });*/
-
                     finish();
                 }
 
@@ -163,7 +151,6 @@ public class MBookWriteMain extends AppCompatActivity {
                 startActivityForResult(intentA, img_request_Code);
             }
         });
-
         addImgIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -223,7 +210,7 @@ public class MBookWriteMain extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //수진 (검색한 책 표지 불러오기)
+        //검색한 책 표지 불러오기
         if(requestCode == 1 && resultCode == RESULT_OK) {
             bookCoverImg = data.getStringExtra("image");
             isbn = data.getStringExtra("isbn");
@@ -231,7 +218,6 @@ public class MBookWriteMain extends AppCompatActivity {
             description = data.getStringExtra("description");
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
-            //cho 도서명
             bTitle = data.getStringExtra("title");
             bookName.setText(bTitle);
         }

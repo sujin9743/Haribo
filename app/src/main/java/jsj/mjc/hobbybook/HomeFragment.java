@@ -78,39 +78,12 @@ public class HomeFragment extends Fragment {
         gRecyclerView.setLayoutManager(gLinearLayoutManager);
         hbbRecyclerView.setLayoutManager(hbbLinearLayoutManager);
 
-        //gRankingArrayList = new ArrayList<>();
-        //gRankingAdapter = new RankingAdapter(getContext(), gRankingArrayList);
-        //gRecyclerView.setAdapter(gRankingAdapter);
-
-        //hbbRankingArrayList = new ArrayList<>();
-        //hbbRankingAdapter = new HBRankingAdapter(getContext(), hbbRankingArrayList);
-        //hbbRecyclerView.setAdapter(hbbRankingAdapter);
-
         DividerItemDecoration gDividerItemDecoration = new DividerItemDecoration(mContext, gLinearLayoutManager.getOrientation());
         gRecyclerView.addItemDecoration(gDividerItemDecoration);
 
         DividerItemDecoration hbbDividerItemDecoration = new DividerItemDecoration(mContext, hbbLinearLayoutManager.getOrientation());
         hbbRecyclerView.addItemDecoration(hbbDividerItemDecoration);
-        //for (count = 1; count <= max; count++) {
-        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
-        //    gRankingArrayList.add(data);
-        //}
 
-        //for (count = 1; count <= 5; count++) {
-        //    HobbyBookRanking data = new HobbyBookRanking(Integer.toString(count));
-        //    hbbRankingArrayList.add(data);
-        //}
-
-        //gRankingAdapter.notifyDataSetChanged();
-        //hbbRankingAdapter.notifyDataSetChanged();
-
-        /*hbbRankingAdapter.setOnItemClickListener(new HBRankingAdapter.OnItemClickListenr() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Intent intent = new Intent(mContext, MBookInfoDetail.class);
-                startActivity(intent);
-            }
-        });*/
 
         //장르 선택 스피너
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

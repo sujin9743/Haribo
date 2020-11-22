@@ -1,8 +1,6 @@
 package jsj.mjc.hobbybook;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +9,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MBookCommentItem extends AppCompatActivity {
-
-
-
     CircleImageView profileImg;
     TextView profileText;
     TextView date, reviewText, delete;
