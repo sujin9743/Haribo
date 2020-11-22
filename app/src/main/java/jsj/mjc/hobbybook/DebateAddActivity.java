@@ -56,33 +56,33 @@ public class DebateAddActivity extends AppCompatActivity {
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
                 if (strTitle.getBytes().length <= 0 || strText.getBytes().length <= 0)
-                    Toast.makeText(DebateAddActivity.this, "빈칸을 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DebateAddActivity.this, getResources().getString(R.string.empotyCkTxt), Toast.LENGTH_SHORT).show();
                 else {
-                    post.put("d_title", strTitle);
-                    post.put("d_content", strText);
+                    post.put(getResources().getString(R.string.dt), strTitle);
+                    post.put(getResources().getString(R.string.dc), strText);
                     post.put(getResources().getString(R.string.mid), loginId);
-                    post.put("deleted", false);
-                    post.put("inputtime", date);
-                    db.collection("debate").orderBy("inputtime", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    post.put(getResources().getString(R.string.isDel), false);
+                    post.put(getResources().getString(R.string.time), date);
+                    db.collection(getResources().getString(R.string.dbt)).orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    int dNum = doc.getLong("d_num").intValue() + 1;
-                                    post.put("d_num", dNum);
+                                    int dNum = doc.getLong(getResources().getString(R.string.dn)).intValue() + 1;
+                                    post.put(getResources().getString(R.string.dn), dNum);
                                 }
                             } else {
-                                Log.d("lll", "토론글 로드 오류 : ", task.getException());
+                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                             }
-                            db.collection("debate").add(post).addOnFailureListener(new OnFailureListener() {
+                            db.collection(getResources().getString(R.string.dbt)).add(post).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("e", "user 데이터 등록 실패 : ", e);
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                 }
                             });
                         }
                     });
-                    Toast.makeText(DebateAddActivity.this, "게시물이 등록됐습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DebateAddActivity.this, getResources().getString(R.string.uploadOk), Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

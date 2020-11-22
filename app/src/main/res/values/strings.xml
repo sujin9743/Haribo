@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">HobbyBook</string>
     <string name="empty"></string>
+    <string name="pipe">  |  </string>
+    <string name="logTag">loglog</string>
 
     <string name="g0">가정/요리/뷰티</string>
     <string name="g1">건강/취미/레저</string>
@@ -33,14 +35,41 @@
     <string name="g28">중학교참고서</string>
     <string name="g29">고등학교참고서</string>
 
-    <string name="pw_ReCk_Txt">비밀번호를 확인해 주세요.</string>
-
     <string name="lid">loginId</string>
     <string name="uid">userId</string>
     <string name="name">nickname</string>
     <string name="mid">mem_id</string>
 
+    <string name="mem">member</string>
+
+    <string name="did">docId</string>
+    <string name="time">inputtime</string>
+    <string name="isDel">deleted</string>
+
+    <string name="dbt">debate</string>
+    <string name="dbtn">debateNum</string>
+    <string name="dbwriter">debateWriter</string>
+
+    <string name="dn">d_num</string>
+    <string name="dCon">d_content</string>
+    <string name="dc">debate_com</string>
+    <string name="dcn">dc_num</string>
+    <string name="dt">d_title</string>
+    <string name="dcc">d_content</string>
+
+    <string name="dataLoadError">데이터 로드 오류 : </string>
+    <string name="dataAddError">데이터 등록 오류 : </string>
+
+    <string name="pimg">profile_img/</string>
+    <string name="jpg">.jpg</string>
+
     <string name="nonamed">알 수 없음</string>
+
+    <string name="uploadOk">"게시물이 등록됐습니다."</string>
+    <string name="error">오류가 발생했습니다.</string>
+    <string name="pw_ReCk_Txt">비밀번호를 확인해 주세요.</string>
+    <string name="empotyCkTxt">빈칸을 확인해 주세요.</string>
+    <string name="deleted">삭제된 댓글입니다.</string>
 
     <string name="access_term">\n\n\n제 1 장 총칙\n\n\n
 제 1 조 (목적)\n\n
@@ -204,4 +233,10 @@ HobbyBook은 무료로 제공되는 서비스와 관련하여 회원에게 어�
 ■ 개인정보의 위탁 처리 \n\n\n
 
 HobbyBook은 서비스 향상을 위해 관계법령에 따라 회원의 동의를 얻거나 관련 사항을 공개 또는 고지합니다.\n</string>
+    <string name="dbundle">dc_bundle</string>
+    <string name="rc">receive_com</string>
+    <string name="dFormat">y. M. d. hh:mm</string>
+    <string name="sm">send_mem</string>
+    <string name="tp">type</string>
+    <string name="ntc">notice</string>
 </resources>

@@ -69,38 +69,36 @@ public class DebateAdapter extends RecyclerView.Adapter<DebateAdapter.DebateView
     @Override
     public DebateViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_debate, viewGroup, false);
-        DebateViewHolder viewHolder = new DebateViewHolder(view);
-        return viewHolder;
+        return new DebateViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final DebateViewHolder viewHolder, final int position) {
         viewHolder.debateTitleTv.setText(debateList.get(position).getDebateTitle());
         viewHolder.debateTextTv.setText(debateList.get(position).getDebateText());
-        db.collection("member").document(debateList.get(position).getDebateWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @SuppressLint("SetTextI18n")
+        db.collection(viewHolder.debateDateTv.getContext().getResources().getString(R.string.mem)).document(debateList.get(position).getDebateWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        String strDate = debateList.get(position).getDebateDate() + "  |  " + doc.getString(viewHolder.debateDateTv.getContext().getResources().getString(R.string.name));
+                        String strDate = debateList.get(position).getDebateDate() + viewHolder.debateDateTv.getContext().getResources().getString(R.string.pipe) + doc.getString(viewHolder.debateDateTv.getContext().getResources().getString(R.string.name));
                         viewHolder.debateDateTv.setText(strDate);
                     }
                 }
             }
         });
-        db.collection("debate_com").whereEqualTo("d_num", debateList.get(position).getDebateNum()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(viewHolder.debateDateTv.getContext().getResources().getString(R.string.dc)).whereEqualTo(viewHolder.debateDateTv.getContext().getResources().getString(R.string.dn), debateList.get(position).getDebateNum()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 int comment = 0;
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (!document.getBoolean("deleted"))
+                        if (!document.getBoolean(viewHolder.debateDateTv.getContext().getResources().getString(R.string.isDel)))
                             comment++;
                     }
                 } else {
-                    Log.d("lll", "댓글 수 로드 오류 : ", task.getException());
+                    Log.d(viewHolder.debateDateTv.getContext().getResources().getString(R.string.logTag), viewHolder.debateDateTv.getContext().getResources().getString(R.string.dataLoadError) + task.getException());
                 }
                 viewHolder.debateCommentTv.setText(String.valueOf(comment));
             }

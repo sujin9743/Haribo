@@ -55,7 +55,7 @@ public class DebateDetailActivity extends AppCompatActivity {
     String writerId, docId;
     public String loginId;
     int dcNum = 1, dNum, comNum;
-    final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
+    final SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.dFormat));
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageRef;
     public static DebateDetailActivity debateDetailActivity;
@@ -70,9 +70,9 @@ public class DebateDetailActivity extends AppCompatActivity {
         debateDetailActivity = this;
 
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
-        docId = getIntent().getStringExtra("docId");
-        dNum = getIntent().getIntExtra("debateNum", -1);
-        writerId = getIntent().getStringExtra("debateWriter");
+        docId = getIntent().getStringExtra(getString(R.string.did));
+        dNum = getIntent().getIntExtra(getString(R.string.dbtn), -1);
+        writerId = getIntent().getStringExtra(getString(R.string.dbwriter));
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -86,7 +86,7 @@ public class DebateDetailActivity extends AppCompatActivity {
         dDetail_title_tv = findViewById(R.id.dDetail_title_tv);
 
         if (dNum == -1) {
-            dDetail_title_tv.setText("오류가 발생했습니다.");
+            dDetail_title_tv.setText(getResources().getString(R.string.error));
         } else {
             //토론글 작성자 프로필 사진, 닉네임 클릭 시 해당 사용자의 피드로 이동
             LinearLayout writer = findViewById(R.id.dDetail_writer);
@@ -102,7 +102,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                 }
             });
             //작성자 프로필 사진
-            StorageReference imgRef = storageRef.child("profile_img/" + writerId +".jpg");
+            StorageReference imgRef = storageRef.child(getResources().getString(R.string.pimg) + writerId + getResources().getString(R.string.jpg));
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -111,11 +111,11 @@ public class DebateDetailActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.d("lll", "프로필 사진 로드 실패 : " + exception);
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
                 }
             });
             //작성자 닉네임
-            db.collection("member").document(writerId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getResources().getString(R.string.mem)).document(writerId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -124,7 +124,7 @@ public class DebateDetailActivity extends AppCompatActivity {
                             dDetail_writerTv.setText(doc.getString(getResources().getString(R.string.name)));
                         }
                     } else {
-                        Log.d("lll", "작성자 로드 실패 : " + task.getException());
+                        Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + task.getException());
                     }
                 }
             });
@@ -132,15 +132,15 @@ public class DebateDetailActivity extends AppCompatActivity {
             dDetail_date_tv = findViewById(R.id.dDetail_date_tv);
             dDetail_comNum_tv = findViewById(R.id.dDetail_comNum_tv);
             //토론글 정보
-            db.collection("debate").document(docId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getResources().getString(R.string.dbt)).document(docId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         if (doc.exists()) {
-                            dDetail_title_tv.setText(doc.getString("d_title"));
-                            dDetail_text_tv.setText(doc.getString("d_content"));
-                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            dDetail_title_tv.setText(doc.getString(getResources().getString(R.string.dt)));
+                            dDetail_text_tv.setText(doc.getString(getResources().getString(R.string.dCon)));
+                            Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
                             dDetail_date_tv.setText(dateStr);
                         }
@@ -149,14 +149,14 @@ public class DebateDetailActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("lll", "게시물 로드 실패 : " + e);
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + e);
                 }
             });
 
 
             //본인 프로필 사진
             dDetail_myIv = findViewById(R.id.dDetail_myIv);
-            imgRef = storageRef.child("profile_img/" + loginId +".jpg");
+            imgRef = storageRef.child(getResources().getString(R.string.pimg) + loginId + getResources().getString(R.string.jpg));
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -165,7 +165,7 @@ public class DebateDetailActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.d("lll", "프로필 사진 로드 실패 : " + exception);
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError) + exception);
                 }
             });
 
@@ -191,60 +191,60 @@ public class DebateDetailActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String comCon = dDetail_comment_edt.getText().toString();
                     if(!comCon.equals(getResources().getString(R.string.empty))) {
-                        comment.put("d_num", dNum);
-                        comment.put("dc_num", dcNum);
-                        comment.put("dc_bundle", dc_bundle);
-                        comment.put("dc_content", comCon);
-                        comment.put("deleted", false);
-                        comment.put("inputtime", new Date());
+                        comment.put(getResources().getString(R.string.dn), dNum);
+                        comment.put(getResources().getString(R.string.dcn), dcNum);
+                        comment.put(getString(R.string.dbundle), dc_bundle);
+                        comment.put(getResources().getString(R.string.dcc), comCon);
+                        comment.put(getResources().getString(R.string.isDel), false);
+                        comment.put(getResources().getString(R.string.time), new Date());
                         comment.put(getResources().getString(R.string.mid), loginId);
-                        comment.put("receive_com", recieve_com);
-                        db.collection("debate_com").whereEqualTo("d_num", dNum)
-                                .orderBy("inputtime", Query.Direction.DESCENDING).limit(1)
+                        comment.put(getString(R.string.rc), recieve_com);
+                        db.collection(getResources().getString(R.string.dc)).whereEqualTo(getResources().getString(R.string.dn), dNum)
+                                .orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).limit(1)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        dcNum = doc.getLong("dc_num").intValue() + 1;
-                                        comment.put("dc_num", dcNum);
+                                        dcNum = doc.getLong(getResources().getString(R.string.dcn)).intValue() + 1;
+                                        comment.put(getResources().getString(R.string.dcn), dcNum);
                                         if(dc_bundle == 0)
-                                            comment.put("dc_bundle", dcNum);
+                                            comment.put(getResources().getString(R.string.dbundle), dcNum);
                                     }
                                 } else {
-                                    Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                                 }
-                                db.collection("debate_com").add(comment).addOnFailureListener(new OnFailureListener() {
+                                db.collection(getResources().getString(R.string.dc)).add(comment).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d("e", "debate_com 데이터 등록 실패 : ", e);
+                                        Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                     }
                                 });
                                 if (recieve_com == 0) {
                                     if (! loginId.equals(writerId)) {
-                                        notice.put("docId", docId);
-                                        notice.put("send_mem", loginId);
+                                        notice.put(getResources().getString(R.string.did), docId);
+                                        notice.put(getString(R.string.sm), loginId);
                                         notice.put(getResources().getString(R.string.mid), writerId);
-                                        notice.put("type", 3);
-                                        notice.put("inputtime", new Date());
-                                        db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                                        notice.put(getString(R.string.tp), 3);
+                                        notice.put(getResources().getString(R.string.time), new Date());
+                                        db.collection(getString(R.string.ntc)).add(notice).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("e", "notice 데이터 등록 실패 : ", e);
+                                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                             }
                                         });
                                     }
                                 } else {
                                     if (! loginId.equals(debateCommentArrayList.get(debateCommentAdapter.selected).getDcWriter())) {
-                                        notice.put("docId", docId);
-                                        notice.put("send_mem", loginId);
+                                        notice.put(getResources().getString(R.string.did), docId);
+                                        notice.put(getResources().getString(R.string.sm), loginId);
                                         notice.put(getResources().getString(R.string.mid), debateCommentArrayList.get(debateCommentAdapter.selected).getDcWriter());
-                                        notice.put("type", 5);
-                                        notice.put("inputtime", new Date());
-                                        db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                                        notice.put(getResources().getString(R.string.tp), 5);
+                                        notice.put(getResources().getString(R.string.time), new Date());
+                                        db.collection(getResources().getString(R.string.ntc)).add(notice).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("e", "notice 데이터 등록 실패 : ", e);
+                                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                             }
                                         });
                                     }
@@ -286,26 +286,26 @@ public class DebateDetailActivity extends AppCompatActivity {
 
     public void setCommentList() {
         debateCommentArrayList.clear();
-        db.collection("debate_com").whereEqualTo("d_num", dNum).orderBy("dc_bundle").orderBy("dc_num").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getResources().getString(R.string.dc)).whereEqualTo(getResources().getString(R.string.dn), dNum).orderBy(getResources().getString(R.string.dbundle)).orderBy(getResources().getString(R.string.dcn)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        if (doc.getBoolean("deleted")) {
-                            DebateComment data = new DebateComment(getResources().getString(R.string.empty), 0, doc.getLong("receive_com").intValue(), 0,
-                                    "삭제된 댓글입니다.", getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
+                        if (doc.getBoolean(getResources().getString(R.string.isDel))) {
+                            DebateComment data = new DebateComment(getResources().getString(R.string.empty), 0, doc.getLong(getResources().getString(R.string.rc)).intValue(), 0,
+                                    getResources().getString(R.string.deleted), getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
                             debateCommentArrayList.add(data);
                         } else {
-                            Timestamp timestamp = (Timestamp) doc.getData().get("inputtime");
+                            Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
-                            DebateComment data = new DebateComment(doc.getId(), doc.getLong("dc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getLong("dc_bundle").intValue(), doc.getString("dc_content"),
-                                    doc.getString(getResources().getString(R.string.mid)), dateStr);
+                            DebateComment data = new DebateComment(doc.getId(), doc.getLong(getResources().getString(R.string.dcn)).intValue(), doc.getLong(getResources().getString(R.string.rc)).intValue(),
+                                    doc.getLong(getResources().getString(R.string.dbundle)).intValue(), doc.getString(getResources().getString(R.string.dcc)), doc.getString(getResources().getString(R.string.mid)), dateStr);
                             debateCommentArrayList.add(data);
                             comNum++;
                         }
                     }
                 } else {
-                    Log.d("lll", "댓글 로드 오류 : ", task.getException());
+                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                 }
                 dDetail_comNum_tv.setText(String.valueOf(comNum));
                 debateCommentAdapter.notifyDataSetChanged();

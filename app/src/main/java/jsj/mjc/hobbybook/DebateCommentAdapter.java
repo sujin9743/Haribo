@@ -73,8 +73,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
     @Override
     public DebateCommentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_debate_comment, viewGroup, false);
-        DebateCommentViewHolder viewHolder = new DebateCommentViewHolder(view);
-        return viewHolder;
+        return new DebateCommentViewHolder(view);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
             viewHolder.dcWriterIv.setImageResource(R.drawable.ic_outline_person_outline_24);
         }
         else {
-            StorageReference imgRef = storageRef.child("profile_img/" + debateCommentList.get(position).getDcWriter() +".jpg");
+            StorageReference imgRef = storageRef.child(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.pimg) + debateCommentList.get(position).getDcWriter() + viewHolder.dcWriterIv.getContext().getResources().getString(R.string.jpg));
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -94,11 +93,10 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                    Log.d(viewHolder.dcWriterIv.getContext().getResources().getString(R.string.logTag), viewHolder.dcWriterIv.getContext().getResources().getString(R.string.dataLoadError) + exception);
                 }
             });
-            db.collection("member").document(debateCommentList.get(position).getDcWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @SuppressLint("SetTextI18n")
+            db.collection(viewHolder.dcWriterTv.getContext().getResources().getString(R.string.mem)).document(debateCommentList.get(position).getDcWriter()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -141,7 +139,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.dcoption_del:
-                                        db.collection("debate_com").document(debateCommentList.get(position).docId).update("deleted", true);
+                                        db.collection(viewHolder.dCommentMoreBtn.getContext().getResources().getString(R.string.dc)).document(debateCommentList.get(position).docId).update(viewHolder.dCommentMoreBtn.getContext().getResources().getString(R.string.isDel), true);
                                         DebateDetailActivity.debateDetailActivity.setCommentList();
                                         return true;
                                     default:
