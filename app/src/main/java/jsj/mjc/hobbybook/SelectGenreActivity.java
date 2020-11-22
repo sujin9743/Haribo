@@ -59,7 +59,7 @@ public class SelectGenreActivity extends AppCompatActivity {
         loginId = MainActivity.loginId;
 
         Intent intent = getIntent(); //cho
-        final int changeGen = intent.getExtras().getInt(getString(R.string.cg));
+        final int changeGen = intent.getExtras().getInt("changeGen");
 
         //선택된 장르 버튼 색상 변경
         int i;
@@ -237,7 +237,7 @@ public class SelectGenreActivity extends AppCompatActivity {
                         if(doc.exists()) {
                             for(int i=0; i<doc.getData().size()-1; i++) {
                                 String index = Integer.toString(i+1);
-                                if(doc.getData().get(index).toString() == getString(R.string.tru)) {
+                                if(doc.getData().get(index).toString() == "true") {
                                     genreBtn[i].setBackgroundResource(R.drawable.genre_select_btn_box);
                                 }
                             }
