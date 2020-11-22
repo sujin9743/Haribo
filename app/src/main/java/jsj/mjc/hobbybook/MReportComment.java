@@ -14,6 +14,7 @@ public class MReportComment{
     String cWriter;
     String cDate;
 
+    
     public String getDocId() {
         return docId;
     }
