@@ -57,6 +57,8 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
+
 public class MReportCommentActivity extends AppCompatActivity{
     private ArrayList<MReportComment> commentArrayList;
     public MReportCommentAdapter commentAdapter;
