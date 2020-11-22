@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,7 +46,6 @@ public class MBookInfoDetail extends AppCompatActivity {
 
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     ImageView backBtn, bookImage;
-    LinearLayout letsGoReport;
     TextView reviewBtn, bookName;
 
     TextView editor, bookInfo;
@@ -93,50 +91,21 @@ public class MBookInfoDetail extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         if(doc.get("book_isbn").toString().equals(isbn)){
-                        Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", doc.getId() + " => " + doc.getData());
+                        Log.d("TAG", doc.getId() + " => " + doc.getData());
 
                         Timestamp ts = (Timestamp) doc.getData().get("inputtime");
                         String date = dateFormatter.format(ts.toDate());
 
                         MBookCom data = new MBookCom(doc.get(getResources().getString(R.string.mid)).toString()
                         ,date, doc.get("rv_content").toString());
-                       /*
-                        item.setProfileText(doc.getData().get("mem_id").toString());
-                        item.setDate(date);
-                        item.setReviewText(doc.getData().get("rv_content").toString());
 
-                        */
                         list.add(data);
-
-
 
                     }
                 } }adapter.notifyDataSetChanged();
 
             }
         });
-
-/*
-        db.collection("review").whereEqualTo("book_isbn",isbn).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("TAG냐냐냐냐냐냐냐ㅑ냐", document.getId() + " => " + document.getData());
-                                item.setProfileText(document.getData().get("mem_id").toString());
-                                item.setDate(document.getData().get("inputtime").toString());
-                                item.setReviewText(document.getData().get("rv_content").toString());
-                                list.add(item);
-                                adapter.notifyDataSetChanged();
-                            }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
- */
 
 
         bookImage = findViewById(R.id.bookImage);
@@ -167,41 +136,18 @@ public class MBookInfoDetail extends AppCompatActivity {
                 finish();
             }
         });
-/*
-        letsGoReport = findViewById(R.id.letsGoReport);
-        letsGoReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                i.putExtra("book_isbn",isbn);
-                i.putExtra("imMyFeed","2");
-                startActivity(i);
-
-                Toast.makeText(getApplicationContext(),"좋아요가 가장 많은 독후감 게시물로 이동됩니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
-
- */
 
 
         //별 점수 db에서 받아와서 값 넣어주기
         stars_show = findViewById(R.id.star);
-/*
-      final ArrayList a = new ArrayList();
-      final ArrayList s = new ArrayList();
-      final ArrayList m = new ArrayList();
 
- */
         db.collection("review").whereEqualTo("book_isbn",isbn).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-
                         docSize = task.getResult().size();
                         starArray.add(document.getData().get("stars").toString());
-
-
                     }
                     //평점 출력
                     for(int i=0; i<starArray.size(); i++) {
@@ -218,12 +164,6 @@ public class MBookInfoDetail extends AppCompatActivity {
             }
         });
 
-        //for(int i = 0; i<docSize;i++){
-        //    int starsSum=0;
-        //    starsSum += rStars[i];
-        //    starsAvg = Math.round(starsSum/docSize);
-
-        //}
 
         reviewBtn = findViewById(R.id.reviewBtn);
         reviewBtn.setOnClickListener(new View.OnClickListener() {
@@ -247,7 +187,6 @@ public class MBookInfoDetail extends AppCompatActivity {
                         long now = System.currentTimeMillis();;
                         Date formatDate = new Date(now);
 
-
                         saveReview.put("book_isbn",isbn);
                         saveReview.put("deleted",deleted);
                         saveReview.put("inputtime",formatDate);
@@ -268,24 +207,19 @@ public class MBookInfoDetail extends AppCompatActivity {
                 back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         reviewDialog.dismiss();
                     }
                 });
-
                 stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                       saveDStars = Math.round(rating);
                     }
                 });
-
                 //다이얼로그 창 주변부분 터치 가능여부
                 //false면 터치 불가 true 터치 가능
                 reviewDialog.setCanceledOnTouchOutside(false);
-
                 reviewDialog.show();
-
             }
         });
 
