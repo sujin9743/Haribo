@@ -95,44 +95,44 @@ public class MBookWriteMain extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(bookName.getText() == null || reportName.getText() == null | contents.getText() == null) {
-                    Toast.makeText(MBookWriteMain.this, "빈칸을 확인해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MBookWriteMain.this, getString(R.string.empotyCkTxt), Toast.LENGTH_LONG).show();
                 } else {
                     long now = System.currentTimeMillis();
                     Date formatDate = new Date(now);
 
-                    saveReport.put("bookisbn", isbn);
-                    saveReport.put("br_content", contents.getText().toString());
-                    saveReport.put("br_img", bookCoverImg);
-                    saveReport.put("br_title", reportName.getText().toString());
-                    saveReport.put("book_title", bTitle);
-                    saveReport.put("book_author", author);
-                    saveReport.put("has1", hash1);
-                    saveReport.put("has2", hash2);
-                    saveReport.put("has3", hash3);
-                    saveReport.put("has4", hash4);
-                    saveReport.put("date", formatDate);
+                    saveReport.put(getString(R.string.bisbn), isbn);
+                    saveReport.put(getString(R.string.brCon), contents.getText().toString());
+                    saveReport.put(getString(R.string.brImg), bookCoverImg);
+                    saveReport.put(getString(R.string.brTitle), reportName.getText().toString());
+                    saveReport.put(getString(R.string.bTitle), bTitle);
+                    saveReport.put(getString(R.string.b_auth), author);
+                    saveReport.put(getString(R.string.h1), hash1);
+                    saveReport.put(getString(R.string.h2), hash2);
+                    saveReport.put(getString(R.string.h3), hash3);
+                    saveReport.put(getString(R.string.h4), hash4);
+                    saveReport.put(getString(R.string.date), formatDate);
                     saveReport.put(getResources().getString(R.string.mid), loginId);
-                    saveReport.put("open", true);
-                    saveReport.put("book_description", description);
-                    saveReport.put("book_like", bookLike);
+                    saveReport.put(getString(R.string.open), true);
+                    saveReport.put(getString(R.string.b_desc), description);
+                    saveReport.put(getString(R.string.bl), bookLike);
 
                     //독후감 번호
-                    db.collection("bookre").orderBy("date", Query.Direction.DESCENDING)
+                    db.collection(getString(R.string.br)).orderBy(getString(R.string.date), Query.Direction.DESCENDING)
                             .limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    int brNum = doc.getLong("br_num").intValue() + 1;
-                                    saveReport.put("br_num", brNum);
+                                    int brNum = doc.getLong(getString(R.string.brn)).intValue() + 1;
+                                    saveReport.put(getString(R.string.brn), brNum);
                                 }
                             } else {
-                                Log.d("lll", "독후감 로드 오류 : ", task.getException());
+                                Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                             }
-                            db.collection("bookre").document().set(saveReport).addOnFailureListener(new OnFailureListener() {
+                            db.collection(getString(R.string.br)).document().set(saveReport).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("e", "user 데이터 등록 실패 : ", e);
+                                    Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
                                 }
                             });
                         }
@@ -158,7 +158,6 @@ public class MBookWriteMain extends AppCompatActivity {
                 Intent intent=new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent,PICK_FROM_ALBUM);
-                //Log.d("태그","메시지");
 
             }
         });
@@ -168,11 +167,11 @@ public class MBookWriteMain extends AppCompatActivity {
             public void onClick(View view) {
                 //i변수로 공개윰 판별(1:공개, 0:비공개)
                 if(i==1){
-                    saveReport.put("br_open","true"); //서버 공개 저장
+                    saveReport.put(getString(R.string.bropen),getString(R.string.tru)); //서버 공개 저장
                     keyIcon.setImageResource(R.drawable.ic_lock_24dp);
                     i=0;
                 }else if(i==0){
-                    saveReport.put("br_open","false");
+                    saveReport.put(getString(R.string.bropen),getString(R.string.fals));
                     keyIcon.setImageResource(R.drawable.ic_lock_open_24dp);
                     i=1;
 
@@ -212,26 +211,23 @@ public class MBookWriteMain extends AppCompatActivity {
 
         //검색한 책 표지 불러오기
         if(requestCode == 1 && resultCode == RESULT_OK) {
-            bookCoverImg = data.getStringExtra("image");
-            isbn = data.getStringExtra("isbn");
-            author = data.getStringExtra("author");
-            description = data.getStringExtra("description");
+            bookCoverImg = data.getStringExtra(getString(R.string.img));
+            isbn = data.getStringExtra(getString(R.string.ibn));
+            author = data.getStringExtra(getString(R.string.auth));
+            description = data.getStringExtra(getString(R.string.desc));
             Glide.with(getApplicationContext()).load(bookCoverImg).into(imgSearchBookCover);
             imgDeleteBtn.setVisibility(View.VISIBLE);
-            bTitle = data.getStringExtra("title");
+            bTitle = data.getStringExtra(getString(R.string.ttle));
             bookName.setText(bTitle);
         }
 
         //입력한 해시태그 불러오기
         if (requestCode == 2 && resultCode == RESULT_OK) {
 
-            hash1 = data.getStringExtra("hash1");
-            hash2 = data.getStringExtra("hash2");
-            hash3 = data.getStringExtra("hash3");
-            hash4 = data.getStringExtra("hash4");
-
-            Log.d("TAG", "해시태그: " + hash1 + hash2 + hash3 + hash4);
-
+            hash1 = data.getStringExtra(getString(R.string.h1));
+            hash2 = data.getStringExtra(getString(R.string.h2));
+            hash3 = data.getStringExtra(getString(R.string.h3));
+            hash4 = data.getStringExtra(getString(R.string.h4));
             hashtag1.setText(hash1);
             hashtag2.setText(hash2);
             hashtag3.setText(hash3);

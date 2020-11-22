@@ -2,6 +2,7 @@
     <string name="app_name">HobbyBook</string>
     <string name="empty"></string>
     <string name="pipe">  |  </string>
+    <string name="right"> \> </string>
     <string name="logTag">loglog</string>
 
     <string name="g0">가정/요리/뷰티</string>
@@ -35,18 +36,59 @@
     <string name="g28">중학교참고서</string>
     <string name="g29">고등학교참고서</string>
 
+    <string name="crr">customerReviewRank</string>
+    <string name="tru">true</string>
+    <string name="fals">false</string>
+
     <string name="lid">loginId</string>
     <string name="uid">userId</string>
     <string name="name">nickname</string>
     <string name="mid">mem_id</string>
 
     <string name="mem">member</string>
+    <string name="rv">review</string>
+    <string name="password">pw</string>
     <string name="ntc">notice</string>
+    <string name="fl">follow</string>
+    <string name="img">image</string>
+    <string name="date">date</string>
+    <string name="open">open</string>
 
     <string name="did">docId</string>
     <string name="time">inputtime</string>
     <string name="rc">receive_com</string>
     <string name="isDel">deleted</string>
+
+    <string name="ttle">title</string>
+    <string name="auth">author</string>
+    <string name="desc">description</string>
+    <string name="b_auth">book_author</string>
+    <string name="bTitle">book_title</string>
+    <string name="b_desc">book_description</string>
+    <string name="bisbn">bookisbn</string>
+    <string name="ibn">isbn</string>
+    <string name="b_isbn">book_isbn</string>
+    <string name="item">item</string>
+    <string name="cover">cover</string>
+    <string name="pub">publisher</string>
+
+    <string name="br">bookre</string>
+    <string name="brCon">br_content</string>
+    <string name="bl">book_like</string>
+    <string name="brTitle">br_title</string>
+    <string name="brImg">br_img</string>
+    <string name="brn">brNum</string>
+    <string name="br_n">br_num</string>
+    <string name="brw">brWriter</string>
+    <string name="h1">has1</string>
+    <string name="h2">has2</string>
+    <string name="h3">has3</string>
+    <string name="h4">has4</string>
+    <string name="bropen">br_open</string>
+
+    <string name="rvCon">rv_content</string>
+    <string name="rvN">rv_num</string>
+    <string name="star">stars</string>
 
     <string name="dbt">debate</string>
     <string name="dbtn">debateNum</string>
@@ -60,6 +102,10 @@
     <string name="dcn">dc_num</string>
     <string name="dbundle">dc_bundle</string>
     <string name="dcc">dc_content</string>
+
+    <string name="flee">followee</string>
+    <string name="fler">follower</string>
+    <string name="st">seetab</string>
 
     <string name="sm">send_mem</string>
     <string name="tp">type</string>
@@ -79,6 +125,10 @@
     <string name="pw_ReCk_Txt">비밀번호를 확인해 주세요.</string>
     <string name="empotyCkTxt">빈칸을 확인해 주세요.</string>
     <string name="deleted">삭제된 댓글입니다.</string>
+    <string name="idPwCkTxt">아이디와 비밀번호를 확인해 주세요.</string>
+    <string name="inputKeyword">검색어를 입력하세요</string>
+
+    <string name="Hbest">하비북 베스트 도서</string>
 
     <string name="access_term">\n\n\n제 1 장 총칙\n\n\n
 제 1 조 (목적)\n\n
@@ -242,11 +292,11 @@ HobbyBook은 무료로 제공되는 서비스와 관련하여 회원에게 어�
 ■ 개인정보의 위탁 처리 \n\n\n
 
 HobbyBook은 서비스 향상을 위해 관계법령에 따라 회원의 동의를 얻거나 관련 사항을 공개 또는 고지합니다.\n</string>
-    <string name="fl">follow</string>
-    <string name="flee">followee</string>
-    <string name="fler">follower</string>
-    <string name="st">seetab</string>
-    <string name="password">pw</string>
-    <string name="idPwCkTxt">아이디와 비밀번호를 확인해 주세요.</string>
-    <string name="Hbest">하비북 베스트 도서</string>
+    <string name="msg">message</string>
+    <string name="seen">seen</string>
+    <string name="inSend">inSend</string>
+    <string name="dstr">dateStr</string>
+    <string name="mCon">mContent</string>
+    <string name="rmem">receive_mem</string>
+    <string name="msgCon">msg_content</string>
 </resources>

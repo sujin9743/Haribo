@@ -81,7 +81,7 @@ public class MBookSearch extends AppCompatActivity {
             public void onClick(View v) {
                 keyword = edtBookSearch.getText().toString();
                 if (keyword.getBytes().length <= 0) {
-                    Toast.makeText(MBookSearch.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MBookSearch.this, R.string.inputKeyword, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     booklist.clear();
@@ -115,36 +115,36 @@ public class MBookSearch extends AppCompatActivity {
                         case XmlPullParser.START_DOCUMENT:
                             break;
                         case XmlPullParser.START_TAG:
-                            if(parser.getName().equals("item")) {
+                            if(parser.getName().equals(getString(R.string.item))) {
                                 bookItem = new RecommendBookItem();
                             }
-                            else if(parser.getName().equals("cover")) {
+                            else if(parser.getName().equals(getString(R.string.cover))) {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookImgUrl(parser.getText());
                             }
-                            else if(parser.getName().equals("title")) {
+                            else if(parser.getName().equals(getResources().getString(R.string.ttle))) {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookTitle(parser.getText());
                             }
-                            else if(parser.getName().equals("author")) {
+                            else if(parser.getName().equals(getResources().getString(R.string.auth))) {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookWriter(parser.getText());
                             }
-                            else if(parser.getName().equals("publisher")) {
+                            else if(parser.getName().equals(getString(R.string.pub))) {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookPublisher(parser.getText());
                             }
-                            else if(parser.getName().equals("customerReviewRank")) {
+                            else if(parser.getName().equals(getString(R.string.crr))) {
                                 parser.next();
                                 if(bookItem!=null) bookRating = Float.parseFloat(parser.getText());
                                 bookItem.setBookRate(bookRating/2);
                                 bookItem.setBookRateTxt(String.valueOf(bookRating/2));
                             }
-                            else if(parser.getName().equals("isbn")) {
+                            else if(parser.getName().equals(getResources().getString(R.string.ibn))) {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookIsbn(parser.getText());
                             }
-                            else if(parser.getName().equals("description")) {
+                            else if(parser.getName().equals(getResources().getString(R.string.desc))) {
                                 parser.next();
                                 if(bookItem!=null) bookItem.setBookDesc(parser.getText());
                             }
@@ -152,7 +152,7 @@ public class MBookSearch extends AppCompatActivity {
                         case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
-                            if(parser.getName().equals("item") && bookItem != null) {
+                            if(parser.getName().equals(getResources().getString(R.string.item)) && bookItem != null) {
                                 booklist.add(bookItem);
                                 bookItem = new RecommendBookItem();
                             }
@@ -191,11 +191,11 @@ public class MBookSearch extends AppCompatActivity {
                     description = booklist.get(position).getBookDesc();
 
                     Intent intentB = new Intent();
-                    intentB.putExtra("image", image);
-                    intentB.putExtra("isbn", isbn);
-                    intentB.putExtra("title", title);
-                    intentB.putExtra("author", author);
-                    intentB.putExtra("description", description);
+                    intentB.putExtra(getResources().getString(R.string.img), image);
+                    intentB.putExtra(getResources().getString(R.string.ibn), isbn);
+                    intentB.putExtra(getResources().getString(R.string.ttle), title);
+                    intentB.putExtra(getResources().getString(R.string.auth), author);
+                    intentB.putExtra(getResources().getString(R.string.desc), description);
                     setResult(RESULT_OK, intentB);
                     finish();
                 }
