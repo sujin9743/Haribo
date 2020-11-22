@@ -49,7 +49,6 @@
         android:layout_marginLeft="120dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:password="true"
         android:background="@drawable/edit_box_line"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
