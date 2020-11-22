@@ -174,6 +174,8 @@
     <string name="unableEmail">이메일을 사용할 수 없습니다.</string>
     <string name="ableEmail">사용 가능한 이메일입니다.</string>
     <string name="needCkTxt">필수 항목을 확인해 주세요.</string>
+    <string name="notEqualId">일치하는 아이디가 없습니다.</string>
+    <string name="equalId">아이디가 일치합니다.</string>
 
     <string name="Hbest">하비북 베스트 도서</string>
 

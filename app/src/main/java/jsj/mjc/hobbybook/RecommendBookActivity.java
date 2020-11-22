@@ -110,7 +110,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                         for (int i = 0; i < map.size() - 1; i++) {
                             String selectGenreNum = Integer.toString(i + 1);
                             String selectGenreBool = map.get(selectGenreNum).toString();
-                            if (selectGenreBool == getString(R.string.tru)) {
+                            if (selectGenreBool == "true") {
                                 switch (selectGenreNum) {
                                     case "1": { genre_array.add(1230); break; }
                                     case "2": { genre_array.add(55890); break; }
