@@ -117,16 +117,16 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 id_chk = false;
-                db.collection("member").document(id_Edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                db.collection(getString(R.string.mem)).document(id_Edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot doc = task.getResult();
                             id_Ck_Txt.setVisibility(View.VISIBLE);
                             if (doc.exists()) {
-                                id_Ck_Txt.setText("아이디를 사용할 수 없습니다.");
+                                id_Ck_Txt.setText(R.string.unableId);
                             } else {
-                                id_Ck_Txt.setText("사용 가능한 아이디입니다.");
+                                id_Ck_Txt.setText(R.string.ableId);
                                 id_chk = true;
                             }
                         } else Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
@@ -142,13 +142,13 @@ public class SignActivity extends AppCompatActivity {
             public void onClick(View view) {
                 email_chk = true;
                 email_Ck_Txt.setVisibility(View.VISIBLE);
-                db.collection("member").whereEqualTo("email_f", email_id_edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                db.collection(getString(R.string.mem)).whereEqualTo(getString(R.string.emf), email_id_edt.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot doc : task.getResult()) {
-                                if (email_spinner.getSelectedItem().toString().equals(doc.getString("email_b"))) {
-                                    email_Ck_Txt.setText("이메일을 사용할 수 없습니다.");
+                                if (email_spinner.getSelectedItem().toString().equals(doc.getString(getString(R.string.emb)))) {
+                                    email_Ck_Txt.setText(R.string.unableEmail);
                                     email_chk = false;
                                 }
                             }
@@ -156,7 +156,7 @@ public class SignActivity extends AppCompatActivity {
                     }
                 });
                 if (email_chk)
-                    email_Ck_Txt.setText("사용 가능한 이메일입니다.");
+                    email_Ck_Txt.setText(R.string.ableEmail);
             }
         });
 
@@ -192,24 +192,24 @@ public class SignActivity extends AppCompatActivity {
                 if (id_Edt.getText().toString().equals(getResources().getString(R.string.empty)) || pw_Edt.getText().toString().equals(getResources().getString(R.string.empty))
                         || pw_CkQA_Edt.getText().toString().equals(getResources().getString(R.string.empty)) || email_id_edt.getText().toString().equals(getResources().getString(R.string.empty))
                         || !id_chk || !pw_chk || !email_chk|| !clause_Ck.isChecked() || !info_Ck.isChecked()) {
-                    Toast.makeText(SignActivity.this, "필수 항목을 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignActivity.this, R.string.needCkTxt, Toast.LENGTH_SHORT).show();
                 } else {
                     //member 컬렉션 데이터 등록
                     Map<String, Object> user = new HashMap<>();
-                    user.put("id", id_Edt.getText().toString());
+                    user.put(getString(R.string.id), id_Edt.getText().toString());
                     user.put(getResources().getString(R.string.name), id_Edt.getText().toString());
-                    user.put("pw", pw_Edt.getText().toString());
-                    user.put("pw_q", pw_spinner.getSelectedItem().toString());
-                    user.put("pw_a", pw_CkQA_Edt.getText().toString());
-                    user.put("email_f", email_id_edt.getText().toString());
-                    user.put("email_b", email_spinner.getSelectedItem().toString());
-                    user.put("report_c", 0);
-                    user.put("noti_cm", false);
-                    user.put("noti_fl", false);
-                    user.put("noti_lk", false);
-                    user.put("noti_ms", false);
+                    user.put(getString(R.string.password), pw_Edt.getText().toString());
+                    user.put(getString(R.string.pwq), pw_spinner.getSelectedItem().toString());
+                    user.put(getString(R.string.pwa), pw_CkQA_Edt.getText().toString());
+                    user.put(getString(R.string.emf), email_id_edt.getText().toString());
+                    user.put(getString(R.string.emb), email_spinner.getSelectedItem().toString());
+                    user.put(getString(R.string.report), 0);
+                    user.put(getString(R.string.notiCm), false);
+                    user.put(getString(R.string.notiFl), false);
+                    user.put(getString(R.string.notiLk), false);
+                    user.put(getString(R.string.notiMs), false);
 
-                    db.collection("member").document(id_Edt.getText().toString()).set(user).addOnFailureListener(new OnFailureListener() {
+                    db.collection(getString(R.string.mem)).document(id_Edt.getText().toString()).set(user).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
@@ -222,7 +222,7 @@ public class SignActivity extends AppCompatActivity {
                     for(int i = 1; i <= 24; i++) {
                         cate.put(getResources().getString(R.string.empty) + i, false);
                     }
-                    db.collection("category").document(id_Edt.getText().toString()).set(cate).addOnFailureListener(new OnFailureListener() {
+                    db.collection(getString(R.string.cate)).document(id_Edt.getText().toString()).set(cate).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
@@ -230,8 +230,8 @@ public class SignActivity extends AppCompatActivity {
                     });
 
                     Intent intent = new Intent(getApplicationContext(), SelectGenreActivity.class);
-                    intent.putExtra("changeGen",0);
-                    intent.putExtra("id_Edt", id_Edt.getText().toString());
+                    intent.putExtra(getString(R.string.cg),0);
+                    intent.putExtra(getString(R.string.idedt), id_Edt.getText().toString());
                     startActivity(intent);
                     finish();
                 }

@@ -58,13 +58,13 @@ public class ReportDialog extends Dialog{
                 ok_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        db.collection(getContext().getString(R.string.mem)).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot doc = task.getResult();
-                                    int report_c = doc.getLong("report_c").intValue() + 1;
-                                    db.collection("member").document(userId).update("report_c", report_c).addOnFailureListener(new OnFailureListener() {
+                                    int report_c = doc.getLong(mContext.getString(R.string.report)).intValue() + 1;
+                                    db.collection(mContext.getString(R.string.mem)).document(userId).update(mContext.getString(R.string.report), report_c).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.d(getContext().getResources().getString(R.string.logTag), getContext().getResources().getString(R.string.dataUpdateError) + e);
@@ -73,7 +73,7 @@ public class ReportDialog extends Dialog{
                                 }
                             }
                         });
-                        Toast.makeText(mContext, "신고가 성공적으로 접수됐습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, R.string.successReport, Toast.LENGTH_SHORT).show();
                         dismiss();
                     }
                 });

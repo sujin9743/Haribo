@@ -46,12 +46,6 @@ public class RecommendUserActivity extends AppCompatActivity {
     ArrayList<Integer> loginGen;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     RecyclerView userRc_recycler;
-    /*UserlistItem[] data;
-    String[] list,arrlist,mam;
-    ArrayList<String> newData;
-    ArrayList<String> noRearrayList;
-    ArrayList<String> arrayList;
-    RecyclerView userRc_recycler;*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +87,7 @@ public class RecommendUserActivity extends AppCompatActivity {
 
         loginGen = new ArrayList<>();
 
-        db.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(getString(R.string.cate)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -103,14 +97,14 @@ public class RecommendUserActivity extends AppCompatActivity {
                             loginGen.add(i);
                     }
                     if (loginGen.size() == 0) {
-                        db.collection("member").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        db.collection(getString(R.string.mem)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     int cnt = 0;
                                     for (DocumentSnapshot doc : task.getResult()) {
                                         if (!loginId.equals(doc.getId())) {
-                                            User data = new User(doc.getString("id"));
+                                            User data = new User(doc.getString(getString(R.string.id)));
                                             userlist.add(data);
                                         }
                                         if (cnt >= 20)
@@ -123,7 +117,7 @@ public class RecommendUserActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        db.collection("category").whereEqualTo(String.valueOf(loginGen.get(0)), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        db.collection(getString(R.string.cate)).whereEqualTo(String.valueOf(loginGen.get(0)), true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {

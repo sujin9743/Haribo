@@ -106,7 +106,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
     public void onBindViewHolder(@NonNull final MRealtimeBookreportAdapter.ViewHolder holder, final int position) {
         member_id = mRealtime.get(position).getProfileText();
         //독후감 쓴 사용자의 닉네임 출력
-        db.collection("member").document(member_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(holder.bookImgPage.getContext().getResources().getString(R.string.mem)).document(member_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()) {
@@ -118,7 +118,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
             }
         });
         //프로필 사진 출력
-        StorageReference imgRef = storageRef.child("profile_img/" + member_id + ".jpg");
+        StorageReference imgRef = storageRef.child(holder.itemView.getContext().getResources().getString(R.string.pimg) + member_id + holder.itemView.getContext().getResources().getString(R.string.jpg));
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -136,7 +136,7 @@ public class MRealtimeBookreportAdapter extends RecyclerView.Adapter<MRealtimeBo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.profileImg.getContext(),UserFeedActivity.class);
-                intent.putExtra("userId",mRealtime.get(position).getProfileText());
+                intent.putExtra(holder.profileImg.getContext().getResources().getString(R.string.uid),mRealtime.get(position).getProfileText());
                 holder.profileImg.getContext().startActivity(intent);
             }
         });

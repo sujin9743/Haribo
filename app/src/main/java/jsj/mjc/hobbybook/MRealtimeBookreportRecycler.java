@@ -71,7 +71,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
 
                 Intent i = new Intent(getApplicationContext(), MBookReportDetail.class);
                 i.putExtra(getResources().getString(R.string.lid), MainActivity.loginId);
-                i.putExtra("docId", list.get(position).getDocId());
+                i.putExtra(getString(R.string.did), list.get(position).getDocId());
                 startActivity(i);
             }
         });
@@ -79,7 +79,7 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
         //firebase
         rtBook_DB = FirebaseFirestore.getInstance();
 
-        rtBook_DB.collection("bookre").orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        rtBook_DB.collection(getString(R.string.br)).orderBy(getString(R.string.date), Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -87,10 +87,10 @@ public class MRealtimeBookreportRecycler extends AppCompatActivity {
                         item = new MRealtime();
                         item.setDocId(doc.getId());
                         item.setProfileText(doc.getData().get(getResources().getString(R.string.mid)).toString());
-                        item.setBookImgPage(doc.getData().get("br_img").toString());
-                        item.setBrTitle(doc.getData().get("br_title").toString());
-                        item.setBookInfo(doc.getData().get("book_description").toString());
-                        item.setLikeCnt(doc.getData().get("book_like").toString());
+                        item.setBookImgPage(doc.getData().get(getString(R.string.brImg)).toString());
+                        item.setBrTitle(doc.getData().get(getString(R.string.brTitle)).toString());
+                        item.setBookInfo(doc.getData().get(getString(R.string.b_desc)).toString());
+                        item.setLikeCnt(doc.getData().get(getString(R.string.bl)).toString());
                         list.add(item);
                     }
                     adapter.notifyDataSetChanged();

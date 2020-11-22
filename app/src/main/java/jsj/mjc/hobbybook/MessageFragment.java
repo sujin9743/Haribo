@@ -40,6 +40,7 @@ public class MessageFragment extends Fragment {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final SimpleDateFormat dateFormatter = new SimpleDateFormat("y. M. d. hh:mm");
     Spinner spinner;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -70,10 +71,10 @@ public class MessageFragment extends Fragment {
                 intent.putExtra(getString(R.string.lid), loginId);
                 if (messageArrayList.get(position).getmSender().equals(loginId)) {
                     intent.putExtra(getString(R.string.uid), messageArrayList.get(position).getmReciever());
-                    intent.putExtra(getString(R.string.inSend), true);
+                    intent.putExtra(getString(R.string.isSend), true);
                 } else {
                     intent.putExtra(getString(R.string.uid), messageArrayList.get(position).getmSender());
-                    intent.putExtra(getString(R.string.inSend), false);
+                    intent.putExtra(getString(R.string.isSend), false);
                 }
                 intent.putExtra(getString(R.string.dstr), messageArrayList.get(position).getmDate());
                 intent.putExtra(getString(R.string.mCon), messageArrayList.get(position).getmText());
@@ -86,10 +87,12 @@ public class MessageFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
-                 loadMessage();
+                loadMessage();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
         return view;
     }
@@ -113,16 +116,18 @@ public class MessageFragment extends Fragment {
                                 isOk = true;
                                 break;
                             case 1:
-                                if (doc.getString(getString(R.string.rmem)).equals(loginId)) isOk = true;
+                                if (doc.getString(getString(R.string.rmem)).equals(loginId))
+                                    isOk = true;
                                 break;
                             case 2:
-                                if (doc.getString(getString(R.string.sm)).equals(loginId)) isOk = true;
+                                if (doc.getString(getString(R.string.sm)).equals(loginId))
+                                    isOk = true;
                                 break;
                         }
                         if (isOk) {
                             Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
-                            Message data = new Message(doc.getId(),  doc.getString(getString(R.string.sm)), doc.getString(getString(R.string.rmem)), dateStr, doc.getString(getString(R.string.msgCon)),doc.getBoolean(getString(R.string.seen)));
+                            Message data = new Message(doc.getId(), doc.getString(getString(R.string.sm)), doc.getString(getString(R.string.rmem)), dateStr, doc.getString(getString(R.string.msgCon)), doc.getBoolean(getString(R.string.seen)));
                             messageArrayList.add(data);
                         }
                     }

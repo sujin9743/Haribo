@@ -100,7 +100,7 @@ public class RecommendBookActivity extends AppCompatActivity {
         //firebase
         final FirebaseFirestore rcBook_DB = FirebaseFirestore.getInstance();
 
-        rcBook_DB.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        rcBook_DB.collection(getString(R.string.cate)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -110,7 +110,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                         for (int i = 0; i < map.size() - 1; i++) {
                             String selectGenreNum = Integer.toString(i + 1);
                             String selectGenreBool = map.get(selectGenreNum).toString();
-                            if (selectGenreBool == "true") {
+                            if (selectGenreBool == getString(R.string.tru)) {
                                 switch (selectGenreNum) {
                                     case "1": { genre_array.add(1230); break; }
                                     case "2": { genre_array.add(55890); break; }
@@ -168,120 +168,120 @@ public class RecommendBookActivity extends AppCompatActivity {
                 for (int i : loginGen) {
                     switch (i) {
                         case 1:
-                            genre_name = "가정/요리/뷰티";
+                            genre_name = getString(R.string.g0);
                             textGen.add(genre_name);
                             break;
                         case 2:
-                            genre_name = "건강/취미/레저";
+                            genre_name = getString(R.string.g1);
                             textGen.add(genre_name);
                             break;
                         case 3:
-                            genre_name = "경제경영";
+                            genre_name = getString(R.string.g2);
                             textGen.add(genre_name);
                             break;
 
                         case 4:
-                            genre_name = "고 전";
+                            genre_name = getString(R.string.g3);
                             textGen.add(genre_name);
                             break;
 
                         case 5:
-                            genre_name = "공무원 수험서";
+                            genre_name = getString(R.string.g4);
                             textGen.add(genre_name);
                             break;
 
                         case 6:
-                            genre_name = "과학";
+                            genre_name = getString(R.string.g5);
                             textGen.add(genre_name);
                             break;
 
                         case 7:
-                            genre_name = "대학교재/전문서적";
+                            genre_name = getString(R.string.g6);
                             textGen.add(genre_name);
                             break;
 
                         case 8:
-                            genre_name = "만화";
+                            genre_name = getString(R.string.g7);
                             textGen.add(genre_name);
                             break;
 
                         case 9:
-                            genre_name = "사회과학";
+                            genre_name = getString(R.string.g8);
                             textGen.add(genre_name);
                             break;
 
                         case 10:
-                            genre_name = "소설/시/희곡";
+                            genre_name = getString(R.string.g9);
                             textGen.add(genre_name);
                             break;
 
                         case 11:
-                            genre_name = "수험서/자격증";
+                            genre_name = getString(R.string.g10);
                             textGen.add(genre_name);
                             break;
 
                         case 12:
-                            genre_name = "어린이";
+                            genre_name = getString(R.string.g11);
                             textGen.add(genre_name);
                             break;
 
                         case 13:
-                            genre_name = "에세이";
+                            genre_name = getString(R.string.g12);
                             textGen.add(genre_name);
                             break;
 
                         case 14:
-                            genre_name = "여 행";
+                            genre_name = getString(R.string.g13);
                             textGen.add(genre_name);
                             break;
 
                         case 15:
-                            genre_name = "역 사";
+                            genre_name = getString(R.string.g14);
                             textGen.add(genre_name);
                             break;
 
                         case 16:
-                            genre_name = "예술/대중문화";
+                            genre_name = getString(R.string.g15);
                             textGen.add(genre_name);
                             break;
 
                         case 17:
-                            genre_name = "외국어";
+                            genre_name = getString(R.string.g16);
                             textGen.add(genre_name);
                             break;
 
                         case 18:
-                            genre_name = "유아";
+                            genre_name = getString(R.string.g17);
                             textGen.add(genre_name);
                             break;
 
                         case 19:
-                            genre_name = "인문학";
+                            genre_name = getString(R.string.g18);
                             textGen.add(genre_name);
                             break;
 
                         case 20:
-                            genre_name = "자기계발";
+                            genre_name = getString(R.string.g19);
                             textGen.add(genre_name);
                             break;
 
                         case 21:
-                            genre_name = "장르소설";
+                            genre_name = getString(R.string.g20);
                             textGen.add(genre_name);
                             break;
 
                         case 22:
-                            genre_name = "잡 지";
+                            genre_name = getString(R.string.g21);
                             textGen.add(genre_name);
                             break;
 
                         case 23:
-                            genre_name = "전집/중고전집";
+                            genre_name = getString(R.string.g22);
                             textGen.add(genre_name);
                             break;
 
                         case 24:
-                            genre_name = "종교/역학";
+                            genre_name = getString(R.string.g23);
                             textGen.add(genre_name);
                             break;
 
@@ -293,7 +293,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                     Log.d(TAG,""+textGen);
                 String a=""+textGen;
                 Log.d(TAG,""+a);
-                tv.setText("선호 장르 : "+a);
+                tv.setText(getString(R.string.likeGenre)+a);
 
             }
         });
@@ -323,27 +323,27 @@ public class RecommendBookActivity extends AppCompatActivity {
                         case XmlPullParser.START_DOCUMENT:
                             break;
                         case XmlPullParser.START_TAG:
-                            if (parser.getName().equals("item")) {
+                            if (parser.getName().equals(getString(R.string.item))) {
                                 bookItem = new RecommendBookItem();
-                            } else if (parser.getName().equals("cover")) {
+                            } else if (parser.getName().equals(getString(R.string.cover))) {
                                 parser.next();
                                 if (bookItem != null) bookItem.setBookImgUrl(parser.getText());
-                            } else if (parser.getName().equals("title")) {
+                            } else if (parser.getName().equals(getString(R.string.ttle))) {
                                 parser.next();
                                 if (bookItem != null) bookItem.setBookTitle(parser.getText());
-                            } else if (parser.getName().equals("author")) {
+                            } else if (parser.getName().equals(getString(R.string.auth))) {
                                 parser.next();
                                 if (bookItem != null) bookItem.setBookWriter(parser.getText());
-                            } else if (parser.getName().equals("publisher")) {
+                            } else if (parser.getName().equals(getString(R.string.pub))) {
                                 parser.next();
                                 if (bookItem != null) bookItem.setBookPublisher(parser.getText());
-                            } else if (parser.getName().equals("customerReviewRank")) {
+                            } else if (parser.getName().equals(getString(R.string.crr))) {
                                 parser.next();
                                 if (bookItem != null)
                                     bookRating = Float.parseFloat(parser.getText());
                                 bookItem.setBookRate(bookRating / 2);
                                 bookItem.setBookRateTxt(String.valueOf(bookRating / 2));
-                            } else if (parser.getName().equals("description")) {
+                            } else if (parser.getName().equals(getString(R.string.desc))) {
                                 parser.next();
                                 if (bookItem != null) bookItem.setBookDesc(parser.getText());
                             }
@@ -351,7 +351,7 @@ public class RecommendBookActivity extends AppCompatActivity {
                         case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
-                            if (parser.getName().equals("item") && bookItem != null) {
+                            if (parser.getName().equals(getString(R.string.item)) && bookItem != null) {
                                 booklist.add(bookItem);
                                 bookItem = new RecommendBookItem();
                             }
@@ -388,10 +388,10 @@ public class RecommendBookActivity extends AppCompatActivity {
                     author = booklist.get(position).getBookWriter();
 
                     Intent intent = new Intent(getApplicationContext(), MBookInfoDetail.class);
-                    intent.putExtra("title", title);
-                    intent.putExtra("image", image);
-                    intent.putExtra("description", description);
-                    intent.putExtra("author", author);
+                    intent.putExtra(getString(R.string.ttle), title);
+                    intent.putExtra(getString(R.string.img), image);
+                    intent.putExtra(getString(R.string.desc), description);
+                    intent.putExtra(getString(R.string.auth), author);
                     startActivity(intent);
                 }
             });

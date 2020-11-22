@@ -79,9 +79,9 @@ public class MReportCommentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m_book_comment);
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
-        docId = getIntent().getStringExtra("docId");
-        brNum = getIntent().getIntExtra("brNum", -1);
-        writerId = getIntent().getStringExtra("brWriter");
+        docId = getIntent().getStringExtra(getString(R.string.did));
+        brNum = getIntent().getIntExtra(getString(R.string.brn), -1);
+        writerId = getIntent().getStringExtra(getString(R.string.brw));
 
         mReportCommentActivity = this;
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -92,15 +92,15 @@ public class MReportCommentActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
-        getSupportActionBar().setTitle("댓글");
+        getSupportActionBar().setTitle(R.string.reply);
 
         
         if (brNum == -1) {
-            getSupportActionBar().setTitle("오류가 발생했습니다.");
+            getSupportActionBar().setTitle(getString(R.string.error));
         } else {
             //본인 프로필 사진
             myIv = findViewById(R.id.comment_myIv);
-            StorageReference imgRef = storageRef.child("profile_img/" + loginId +".jpg");
+            StorageReference imgRef = storageRef.child(getString(R.string.pimg) + loginId + getString(R.string.jpg));
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -135,30 +135,30 @@ public class MReportCommentActivity extends AppCompatActivity{
                 public void onClick(View view) {
                     String comCon = comment_edt.getText().toString();
                     if (!comCon.equals(getResources().getString(R.string.empty))) {
-                        comment.put("br_num", brNum);
-                        comment.put("brc_num", brcNum);
-                        comment.put("c_bundle", c_bundle);
-                        comment.put("brc_content", comCon);
-                        comment.put("deleted", false);
+                        comment.put(getString(R.string.br_n), brNum);
+                        comment.put(getString(R.string.brc_n), brcNum);
+                        comment.put(getString(R.string.cbundle), c_bundle);
+                        comment.put(getString(R.string.brcCon), comCon);
+                        comment.put(getString(R.string.isDel), false);
                         comment.put(getResources().getString(R.string.time), new Date());
                         comment.put(getResources().getString(R.string.mid), loginId);
-                        comment.put("receive_com", recieve_com);
-                        db.collection("bookre_com").whereEqualTo("br_num", brNum)
+                        comment.put(getString(R.string.rc), recieve_com);
+                        db.collection(getString(R.string.brc)).whereEqualTo(getString(R.string.br_n), brNum)
                                 .orderBy(getResources().getString(R.string.time), Query.Direction.DESCENDING).limit(1)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        brcNum = doc.getLong("brc_num").intValue() + 1;
-                                        comment.put("brc_num", brcNum);
+                                        brcNum = doc.getLong(getString(R.string.brc_n)).intValue() + 1;
+                                        comment.put(getString(R.string.brc_n), brcNum);
                                         if (c_bundle == 0)
-                                            comment.put("c_bundle", brcNum);
+                                            comment.put(getString(R.string.cbundle), brcNum);
                                     }
                                 } else {
                                     Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataLoadError), task.getException());
                                 }
-                                db.collection("bookre_com").add(comment).addOnFailureListener(new OnFailureListener() {
+                                db.collection(getString(R.string.brc)).add(comment).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
@@ -166,12 +166,12 @@ public class MReportCommentActivity extends AppCompatActivity{
                                 });
                                 if (recieve_com == 0) {
                                     if (!loginId.equals(writerId)) {
-                                        notice.put("docId", docId);
-                                        notice.put("send_mem", loginId);
+                                        notice.put(getString(R.string.did), docId);
+                                        notice.put(getString(R.string.sm), loginId);
                                         notice.put(getResources().getString(R.string.mid), writerId);
-                                        notice.put("type", 4);
+                                        notice.put(getString(R.string.tp), 4);
                                         notice.put(getResources().getString(R.string.time), new Date());
-                                        db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                                        db.collection(getString(R.string.ntc)).add(notice).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
@@ -180,12 +180,12 @@ public class MReportCommentActivity extends AppCompatActivity{
                                     }
                                 } else {
                                     if (!loginId.equals(commentArrayList.get(commentAdapter.selected).getCWriter())) {
-                                        notice.put("docId", docId);
-                                        notice.put("send_mem", loginId);
+                                        notice.put(getString(R.string.did), docId);
+                                        notice.put(getString(R.string.sm), loginId);
                                         notice.put(getResources().getString(R.string.mid), commentArrayList.get(commentAdapter.selected).getCWriter());
-                                        notice.put("type", 6);
+                                        notice.put(getString(R.string.tp), 6);
                                         notice.put(getResources().getString(R.string.time), new Date());
-                                        db.collection("notice").add(notice).addOnFailureListener(new OnFailureListener() {
+                                        db.collection(getString(R.string.ntc)).add(notice).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError), e);
@@ -224,19 +224,19 @@ public class MReportCommentActivity extends AppCompatActivity{
 
     public void setCommentList() {
         commentArrayList.clear();
-        db.collection("bookre_com").whereEqualTo("br_num", brNum).orderBy("c_bundle").orderBy("brc_num").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(getString(R.string.brc)).whereEqualTo(getString(R.string.br_n), brNum).orderBy(getString(R.string.cbundle)).orderBy(getString(R.string.brc_n)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        if (doc.getBoolean("deleted")) {
-                            MReportComment data = new MReportComment(getResources().getString(R.string.empty), 0, doc.getLong("receive_com").intValue(), 0,
-                                    "삭제된 댓글입니다.", getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
+                        if (doc.getBoolean(getString(R.string.isDel))) {
+                            MReportComment data = new MReportComment(getResources().getString(R.string.empty), 0, doc.getLong(getString(R.string.rc)).intValue(), 0,
+                                    getString(R.string.deleted), getResources().getString(R.string.nonamed), getResources().getString(R.string.empty));
                             commentArrayList.add(data);
                         } else {
                             Timestamp timestamp = (Timestamp) doc.getData().get(getResources().getString(R.string.time));
                             String dateStr = dateFormatter.format(timestamp.toDate());
-                            MReportComment data = new MReportComment(doc.getId(), doc.getLong("brc_num").intValue(), doc.getLong("receive_com").intValue(), doc.getLong("c_bundle").intValue(), doc.getString("brc_content"),
+                            MReportComment data = new MReportComment(doc.getId(), doc.getLong(getString(R.string.brc_n)).intValue(), doc.getLong(getString(R.string.rc)).intValue(), doc.getLong(getString(R.string.cbundle)).intValue(), doc.getString(getString(R.string.brcCon)),
                                     doc.getString(getResources().getString(R.string.mid)), dateStr);
                             commentArrayList.add(data);
                         }

@@ -59,7 +59,7 @@ public class SelectGenreActivity extends AppCompatActivity {
         loginId = MainActivity.loginId;
 
         Intent intent = getIntent(); //cho
-        final int changeGen = intent.getExtras().getInt("changeGen");
+        final int changeGen = intent.getExtras().getInt(getString(R.string.cg));
 
         //선택된 장르 버튼 색상 변경
         int i;
@@ -229,7 +229,7 @@ public class SelectGenreActivity extends AppCompatActivity {
         
         //기존에 선택했던 장르 띄워주기
         if (changeGen == 1) {
-            db.collection("category").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getString(R.string.cate)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if(task.isSuccessful()) {
@@ -237,7 +237,7 @@ public class SelectGenreActivity extends AppCompatActivity {
                         if(doc.exists()) {
                             for(int i=0; i<doc.getData().size()-1; i++) {
                                 String index = Integer.toString(i+1);
-                                if(doc.getData().get(index).toString() == "true") {
+                                if(doc.getData().get(index).toString() == getString(R.string.tru)) {
                                     genreBtn[i].setBackgroundResource(R.drawable.genre_select_btn_box);
                                 }
                             }
@@ -265,7 +265,7 @@ public class SelectGenreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //CHO
                 if (changeGen == 1) {
-                    Toast.makeText(getApplicationContext(), "선호장르 변경 완료", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.changeGen, Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), SignCompleteActivity.class);
@@ -280,7 +280,7 @@ public class SelectGenreActivity extends AppCompatActivity {
     public void setBtnColorChange(View v, int i) {
 
         Intent intent = getIntent();
-        final String id_Edt = intent.getExtras().getString("id_Edt");
+        final String id_Edt = intent.getExtras().getString(getString(R.string.idedt));
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
 
@@ -288,10 +288,10 @@ public class SelectGenreActivity extends AppCompatActivity {
             v.setBackgroundResource(R.drawable.genre_select_btn_box);
             select_state[i]++;
 
-            firebaseFirestore.collection("category").document(id_Edt).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firebaseFirestore.collection(getString(R.string.cate)).document(id_Edt).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    firebaseFirestore.collection("category").document(id_Edt).update(String.valueOf(id_num+1), true);
+                    firebaseFirestore.collection(getString(R.string.cate)).document(id_Edt).update(String.valueOf(id_num+1), true);
                 }
             });
 
@@ -299,10 +299,10 @@ public class SelectGenreActivity extends AppCompatActivity {
             v.setBackgroundResource(R.drawable.genre_btn_box);
             select_state[i] = 0;
 
-            firebaseFirestore.collection("category").document(id_Edt).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firebaseFirestore.collection(getString(R.string.cate)).document(id_Edt).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    firebaseFirestore.collection("category").document(id_Edt).update(String.valueOf(id_num+1), false);
+                    firebaseFirestore.collection(getString(R.string.cate)).document(id_Edt).update(String.valueOf(id_num+1), false);
                 }
             });
         }

@@ -52,25 +52,25 @@ public class MessageViewActivity extends AppCompatActivity {
         mView_text = findViewById(R.id.mView_text);
 
         Intent intent = getIntent();
-        docId = intent.getStringExtra("docId");
+        docId = intent.getStringExtra(getString(R.string.did));
         loginId = intent.getStringExtra(getResources().getString(R.string.lid));
         userId = intent.getStringExtra(getResources().getString(R.string.uid));
-        isSend = intent.getBooleanExtra("isSend", false);
+        isSend = intent.getBooleanExtra(getString(R.string.isSend), false);
 
-        mView_sendDate.setText(intent.getStringExtra("dateStr"));
-        mView_text.setText(intent.getStringExtra("mContent"));
+        mView_sendDate.setText(intent.getStringExtra(getString(R.string.dstr)));
+        mView_text.setText(intent.getStringExtra(getString(R.string.mCon)));
 
         if (isSend) {
-            db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getString(R.string.mem)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
-                        mView_sender.setText(doc.getString(getResources().getString(R.string.name)) + " > ");
+                        mView_sender.setText(doc.getString(getResources().getString(R.string.name)) + getString(R.string.right));
                     }
                 }
             });
-            db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getString(R.string.mem)).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -81,16 +81,16 @@ public class MessageViewActivity extends AppCompatActivity {
             });
         } else {
 
-            db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getString(R.string.mem)).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
-                        mView_sender.setText(doc.getString(getResources().getString(R.string.name)) + " > ");
+                        mView_sender.setText(doc.getString(getResources().getString(R.string.name)) + getString(R.string.right));
                     }
                 }
             });
-            db.collection("member").document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(getString(R.string.mem)).document(loginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -119,12 +119,12 @@ public class MessageViewActivity extends AppCompatActivity {
                 break;
             case R.id.overflow_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("삭제하시겠습니까?");
+                builder.setMessage(R.string.wannaDel);
                 builder.setCancelable(true);
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        db.collection("message").document(docId).delete().addOnFailureListener(new OnFailureListener() {
+                        db.collection(getString(R.string.msg)).document(docId).delete().addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataDelError) + e);
@@ -133,7 +133,7 @@ public class MessageViewActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 

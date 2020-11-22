@@ -46,12 +46,12 @@ public class MessageSendActivity extends AppCompatActivity {
         loginId = getIntent().getStringExtra(getResources().getString(R.string.lid));
         userId = getIntent().getStringExtra(getResources().getString(R.string.uid));
 
-        db.collection("member").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(getString(R.string.mem)).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
-                    sendName.setText(doc.getString(getResources().getString(R.string.name)) + " 님 에게");
+                    sendName.setText(doc.getString(getResources().getString(R.string.name)) + getString(R.string.fornim));
                 }
             }
         });
@@ -60,24 +60,24 @@ public class MessageSendActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String mContent = mSend_et.getText().toString();
                 if (!mContent.equals(getResources().getString(R.string.empty))) {
-                    message.put("send_mem", loginId);
-                    message.put("receive_mem", userId);
-                    message.put("msg_content", mContent);
-                    message.put("deleted", false);
+                    message.put(getString(R.string.sm), loginId);
+                    message.put(getString(R.string.rmem), userId);
+                    message.put(getString(R.string.msgCon), mContent);
+                    message.put(getString(R.string.isDel), false);
                     message.put(getResources().getString(R.string.time), new Date());
 
-                    message.put("seen", true);
+                    message.put(getString(R.string.seen), true);
                     message.put(getResources().getString(R.string.mid), loginId);
-                    db.collection("message").add(message).addOnFailureListener(new OnFailureListener() {
+                    db.collection(getString(R.string.msg)).add(message).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError) + e);
                         }
                     });
 
-                    message.put("seen", false);
+                    message.put(getString(R.string.seen), false);
                     message.put(getResources().getString(R.string.mid), userId);
-                    db.collection("message").add(message).addOnFailureListener(new OnFailureListener() {
+                    db.collection(getString(R.string.msg)).add(message).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(getResources().getString(R.string.logTag), getResources().getString(R.string.dataAddError) + e);

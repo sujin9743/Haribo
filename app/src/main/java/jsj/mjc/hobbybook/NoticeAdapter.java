@@ -71,24 +71,21 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
 
     @Override
     public void onBindViewHolder(@NonNull final NoticeViewHolder viewHolder, final int position) {
-        db.collection("member").document(noticeList.get(position).getSendId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(viewHolder.noticeTv.getContext().getResources().getString(R.string.mem)).document(noticeList.get(position).getSendId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     switch (noticeList.get(position).getType()) {
-                        case 1:
-                            str = " 님이 회원님의 게시물을 좋아합니다.";
-                            break;
                         case 2:
-                            str = " 님이 회원님을 팔로우합니다.";
+                            str = viewHolder.noticeTv.getContext().getResources().getString(R.string.noticeFl);
                             break;
                         case 3:
                         case 4:
-                            str = " 님이 회원님의 게시물에 댓글을 남겼습니다.";
+                            str = viewHolder.noticeTv.getContext().getResources().getString(R.string.noticeRe);
                             break;
                         case 5:
                         case 6:
-                            str = " 님이 회원님의 댓글에 답글을 남겼습니다.";
+                            str = viewHolder.noticeTv.getContext().getResources().getString(R.string.noticeReRe);
                             break;
                         default:
                     }
