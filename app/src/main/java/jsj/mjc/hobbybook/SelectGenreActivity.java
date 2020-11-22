@@ -239,9 +239,7 @@ public class SelectGenreActivity extends AppCompatActivity {
                             for(int i=0; i<doc.getData().size()-1; i++) {
                                 String index = Integer.toString(i+1);
                                 if(doc.getData().get(index).toString() == "true") {
-                                    //Log.d("TAG", "@@@index@@@@" + index + "data" +  doc.getData().get(index).toString());
                                     genreBtn[i].setBackgroundResource(R.drawable.genre_select_btn_box);
-                                    //Log.d("TAG", "버튼색바꾼다" + i);
                                 }
                             }
                         }
@@ -260,7 +258,6 @@ public class SelectGenreActivity extends AppCompatActivity {
         });
 
         //완료 버튼 클릭 시
-
         genre_btn = findViewById(R.id.genre_btn);
         genre_btn.setOnClickListener(new View.OnClickListener() {
             @Override

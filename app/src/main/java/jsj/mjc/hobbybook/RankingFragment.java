@@ -62,12 +62,6 @@ public class RankingFragment extends Fragment {
         BestsellerAsyncTask bestsellerAsyncTask = new BestsellerAsyncTask();
         bestsellerAsyncTask.execute();
 
-        //for (count = 1; count <= max; count++) {
-        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
-        //    rankingArrayList.add(data);
-        //}
-        //rankingAdapter.notifyDataSetChanged();
-
         return view;
     }
 

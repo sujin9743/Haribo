@@ -163,7 +163,6 @@ public class SearchActivity extends AppCompatActivity {
             SearchedBookAdapter searchedBookAdapter = new SearchedBookAdapter(bookArrayList);
             recyclerView.setAdapter(searchedBookAdapter);
 
-            // TODO: 2020-11-18 도서상세페이지 데이터 넣어야함
             searchedBookAdapter.setOnItemClickListener(new SearchedBookAdapter.OnItemClickListenr() {
                 @Override
                 public void onItemClick(View v, int position) { //책 누르면 도서 표지 저장
