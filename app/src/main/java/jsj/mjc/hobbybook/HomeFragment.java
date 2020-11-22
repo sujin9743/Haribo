@@ -48,8 +48,6 @@ public class HomeFragment extends Fragment {
     private RankingAdapter gRankingAdapter;
     private HBRankingAdapter hbbRankingAdapter;
     RecyclerView gRecyclerView, hbbRecyclerView;
-    private int count;
-    private int max = 5; //불러올 순위 수
     private Context mContext;
     public static String selectedGenre;
     public static int selectGenreNum;

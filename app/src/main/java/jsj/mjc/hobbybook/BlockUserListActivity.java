@@ -46,16 +46,6 @@ public class BlockUserListActivity extends AppCompatActivity {
         blockList_recycler.addItemDecoration(new DividerItemDecoration(blockList_recycler.getContext(), 1));
 
 
-
-        /*
-        //임시 데이터 삽입
-        for(int i=0; i<20; i++) {
-            UserlistItem data = new UserlistItem("하리보", "차단해제");
-            userlist.add(data);
-        }
-
- */
-
         blockList_recycler.setAdapter(blockListAdapter);
     }
 

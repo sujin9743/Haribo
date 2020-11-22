@@ -64,11 +64,6 @@ public class HBRankingFragment extends Fragment {
             hobbyBookBestAsyncTask.execute(resultIsbn.get(i), num);
         }
 
-        //for (count = 1; count <= max; count++) {
-        //    Ranking data = new Ranking(Integer.toString(count), "", count + "위 책 제목", count + "위 책 저자");
-        //    rankingArrayList.add(data);
-        //}
-        //rankingAdapter.notifyDataSetChanged();
 
         return view;
     }

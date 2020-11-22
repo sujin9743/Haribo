@@ -44,7 +44,7 @@ public class DebateCommentAdapter extends RecyclerView.Adapter<DebateCommentAdap
         protected TextView dcTextTv;
         protected CircleImageView dcWriterIv;
         protected ImageView reCommentIv;
-        protected ImageButton dCommentMoreBtn;  //조민주
+        protected ImageButton dCommentMoreBtn;
 
         public DebateCommentViewHolder(View view) {
             super(view);
