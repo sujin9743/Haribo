@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:clickable="true"
-                android:text="닫기"
+                android:text="@string/close"
                 android:textSize="15sp"
                 android:textColor="@color/darkGreen"
                 android:textStyle="bold"

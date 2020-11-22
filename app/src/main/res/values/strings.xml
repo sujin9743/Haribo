@@ -348,4 +348,15 @@ HobbyBook은 서비스 향상을 위해 관계법령에 따라 회원의 동의�
     <string name="followingTxt">팔로잉</string>
     <string name="followTxt">팔로우</string>
     <string name="idx">index</string>
+    <string name="inputTitle">제목을 입력해 주세요.</string>
+    <string name="upload">등록</string>
+    <string name="close">닫기</string>
+    <string name="debateBoard">토론게시판</string>
+    <string name="blockSetting">차단관리</string>
+    <string name="bookinfo">책 소개</string>
+    <string name="addReview">리뷰 남기기</string>
+    <string name="bookdesc">책소개</string>
+    <string name="rcBook">도서 추천</string>
+    <string name="rcurbook">취향에 맞는 도서를 추천해드립니다.</string>
+    <string name="search">검색</string>
 </resources>

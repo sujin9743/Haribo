@@ -54,23 +54,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
            super(itemView);
            user_profileImg = itemView.findViewById(R.id.user_profileImg);
            user_id = itemView.findViewById(R.id.user_id);
-           //user_btn = itemView.findViewById(R.id.user_btn);
-
-
-           /*user_btn.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   if(i==0){
-                       user_btn.setBackgroundResource(R.drawable.round_btn_gray);
-                       user_btn.setText("팔로잉");
-                       i++;
-                   }else if(i==1){
-                       user_btn.setBackgroundResource(R.drawable.round_btn_darkgreen);
-                       user_btn.setText("팔로우");
-                       i--;
-               }}
-
-           });*/
            itemView.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) { //항목마다 ClickListener 설정
@@ -106,7 +89,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(@NonNull final UserListViewHolder viewHolder, int position) {
         //프로필 사진 로드
-        StorageReference imgRef = storageRef.child("profile_img/" + userlist.get(position).getUserId() +".jpg");
+        StorageReference imgRef = storageRef.child(viewHolder.user_profileImg.getContext().getResources().getString(R.string.pimg) + userlist.get(position).getUserId() + viewHolder.user_profileImg.getContext().getResources().getString(R.string.jpg));
         imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -115,11 +98,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("e", "프로필 사진 로드 실패 : " + exception);
+                Log.d(viewHolder.user_profileImg.getContext().getResources().getString(R.string.logTag), viewHolder.user_profileImg.getContext().getResources().getString(R.string.dataLoadError) + exception);
             }
         });
         //닉네임 로드
-        db.collection("member").document(userlist.get(position).getUserId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection(viewHolder.user_id.getContext().getResources().getString(R.string.mem)).document(userlist.get(position).getUserId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
